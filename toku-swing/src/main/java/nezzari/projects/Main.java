@@ -16,7 +16,7 @@ public class Main {
 	 * @param args arguments
 	 */
 	public static void main(String[] args) {
-		//TODO : To implement
+		System.out.println("Hello !");
 	}
 	
 }
