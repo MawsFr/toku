@@ -76,7 +76,4 @@
 		<module>toku-core</module>
 		<module>toku-swing</module>
 	</modules>
-	<scm>
-		<connection>scm:git:https://github.com/MawsFr/toku.git</connection>
-	</scm>
 </project>
