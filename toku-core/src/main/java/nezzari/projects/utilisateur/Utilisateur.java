@@ -13,7 +13,9 @@ public class Utilisateur {
 	private String prenom;
 	private String motDePasse;
 	
-	public Utilisateur(int role, String pseudo, String nom, String prenom, String motDePasse) {
+	public Utilisateur() {}
+	
+	public Utilisateur(int role, String pseudo, String motDePasse, String nom, String prenom) {
 		this.role = role;
 		this.pseudo = pseudo;
 		this.nom = nom;
