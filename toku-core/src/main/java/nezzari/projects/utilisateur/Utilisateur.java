@@ -1,5 +1,7 @@
 package nezzari.projects.utilisateur;
 
+import nezzari.projects.Application;
+
 /**
  * Cette classe represente un utilisateur
  * @author Mustapha NEZZARI
@@ -70,15 +72,32 @@ public class Utilisateur implements RoleUtilisateur {
 	public void setMotDePasse(String motDePasse) {
 		this.motDePasse = motDePasse;
 	}
-
+	
+	// Deplacer toutes ces fonctions dans le service des utilisateurs
+	
 	@Override
 	public void seConnecter() {
+		Application.getInstance().getSession().setUtilisateur(this);
+	}
+
+	@Override
+	public void seDeconnecter() {
+		Application.getInstance().getSession().setUtilisateur(null);
+	}
+
+	@Override
+	public void modifierMotDePasse(String nouveauMdp) {
+			
+	}
+
+	@Override
+	public void modifierNom(String nouveauNom) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void seDeconnecter() {
+	public void modifierPrenom(String nouveauPrenom) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -133,6 +152,12 @@ public class Utilisateur implements RoleUtilisateur {
 	}
 
 	@Override
+	public void quitterGroupe(int idGroupe) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
 	public void lireMessage(int id) {
 		// TODO Auto-generated method stub
 		
@@ -168,29 +193,7 @@ public class Utilisateur implements RoleUtilisateur {
 		
 	}
 
-	@Override
-	public void quitterGroupe(int idGroupe) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void modifierMotDePasse(String nouveauMdp) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void modifierNom(String nouveauNom) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void modifierPrenom(String nouveauPrenom) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	
 	

@@ -12,8 +12,10 @@ public class FenetrePrincipale {
 	public static final String TITRE = "Toku";
 	
 	private JFrame fenetre;
+	private Application application;
 	
 	public FenetrePrincipale() {
+		application = Application.getInstance();
 		fenetre = new JFrame();
 		fenetre.setTitle(TITRE);
 		fenetre.setContentPane(new PanneauPrincipal(this));
@@ -26,5 +28,23 @@ public class FenetrePrincipale {
 		fenetre.setLocationRelativeTo(null);
 		fenetre.setVisible(true);
 	}
+
+	public JFrame getFenetre() {
+		return fenetre;
+	}
+
+	public void setFenetre(JFrame fenetre) {
+		this.fenetre = fenetre;
+	}
+
+	public Application getApplication() {
+		return application;
+	}
+
+	public void setApplication(Application application) {
+		this.application = application;
+	}
+	
+	
 
 }
