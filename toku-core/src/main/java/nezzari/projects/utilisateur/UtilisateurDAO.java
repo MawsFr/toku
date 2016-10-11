@@ -183,17 +183,17 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		DAOFactory.setConnexion(c.getBddConnexion());
 		Utilisateur utilisateur = new Utilisateur(1, "admin", "admin", "Administrateur","Root");
 		DAOFactory.getUtilisateurDAO().creer(utilisateur);
-//		utilisateur.setPseudo("Maouss");
-//		DAOFactory.getUtilisateurDAO().modifier(utilisateur);
-//		Utilisateur trouve = DAOFactory.getUtilisateurDAO().rechercher(utilisateur.getId());
-//		Log.info("Id : " + trouve.getId());
-//		Log.info("Role : " + trouve.getRole());
-//		Log.info("Pseudo : " + trouve.getPseudo());
-//		Log.info("Mdp : " + trouve.getMotDePasse());
-//		Log.info("Nom : " + trouve.getNom());
-//		Log.info("Prenom : " + trouve.getPrenom());
-//		DAOFactory.getUtilisateurDAO().supprimer(utilisateur.getId());
-//		trouve = DAOFactory.getUtilisateurDAO().rechercher(utilisateur.getId());
+		utilisateur.setPseudo("Maouss");
+		DAOFactory.getUtilisateurDAO().modifier(utilisateur);
+		Utilisateur trouve = DAOFactory.getUtilisateurDAO().rechercher(utilisateur.getId());
+		Log.info("Id : " + trouve.getId());
+		Log.info("Role : " + trouve.getRole());
+		Log.info("Pseudo : " + trouve.getPseudo());
+		Log.info("Mdp : " + trouve.getMotDePasse());
+		Log.info("Nom : " + trouve.getNom());
+		Log.info("Prenom : " + trouve.getPrenom());
+		DAOFactory.getUtilisateurDAO().supprimer(utilisateur.getId());
+		trouve = DAOFactory.getUtilisateurDAO().rechercher(utilisateur.getId());
 		DAOFactory.fermerConnexion();
 	}
 

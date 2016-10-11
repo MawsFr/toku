@@ -1,7 +1,7 @@
 package nezzari.projects.groupe;
 
 /**
- * Cette classe represente un utilisateur
+ * Cette classe represente un groupe
  * @author Mustapha NEZZARI
  *
  */

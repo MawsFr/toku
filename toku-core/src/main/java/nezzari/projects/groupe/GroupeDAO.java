@@ -12,7 +12,7 @@ import nezzari.projects.factory.connexions.mysql.MYSQLConnexion;
 import nezzari.projects.utils.Log;
 
 /**
- * Cette classe permet de faire des requetes sur la table des utilisateurs.
+ * Cette classe permet de faire des requetes sur la table des groupes.
  * Elle est basee sur le pattern singleton
  * @author Mustapha NEZZARI
  *
