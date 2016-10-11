@@ -1,5 +1,7 @@
 package nezzari.projects;
 
+import javax.swing.SwingUtilities;
+
 /**
  * Main class
  * 
@@ -16,7 +18,13 @@ public class Main {
 	 * @param args arguments
 	 */
 	public static void main(String[] args) {
-		System.out.println("Hello !");
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				new FenetrePrincipale();
+				
+			}
+		});
 	}
 	
 }

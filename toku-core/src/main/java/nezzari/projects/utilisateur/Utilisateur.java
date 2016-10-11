@@ -5,7 +5,7 @@ package nezzari.projects.utilisateur;
  * @author Mustapha NEZZARI
  *
  */
-public class Utilisateur {
+public class Utilisateur implements RoleUtilisateur {
 	private int id;
 	private int role;
 	private String pseudo;
@@ -69,6 +69,127 @@ public class Utilisateur {
 	
 	public void setMotDePasse(String motDePasse) {
 		this.motDePasse = motDePasse;
+	}
+
+	@Override
+	public void seConnecter() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void seDeconnecter() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void demanderEnAmi(int idDestinataire) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void accepterDemandeAmi(int idDemande) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void refuserDemandeAmi(int idDemande) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void supprimerAmi(int idAmi) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void creerDiscussion(String nom) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void creerDiscussionPrive(int idAmi) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void envoyerMessage(int idGroupe, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void envoyerMessagePrive(int idGroupe, int idDestinataire, String message, boolean accuseReception,
+			int expiration, boolean prioritaire, boolean chiffre) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void lireMessage(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void lireMessagePrive(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void recevoirNotification(String texte) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void supprimerNotification(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ajouterCentreInteret(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void creerCentreInteret(String nom) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void quitterGroupe(int idGroupe) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void modifierMotDePasse(String nouveauMdp) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void modifierNom(String nouveauNom) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void modifierPrenom(String nouveauPrenom) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

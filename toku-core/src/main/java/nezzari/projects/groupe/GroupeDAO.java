@@ -189,4 +189,8 @@ public class GroupeDAO extends DAO<Groupe> {
 		DAOFactory.fermerConnexion();
 	}
 
+	public boolean estVide(int idGroupe) {
+		return false;
+	}
+
 }
