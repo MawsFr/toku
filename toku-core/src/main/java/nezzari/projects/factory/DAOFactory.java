@@ -3,6 +3,7 @@ package nezzari.projects.factory;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import nezzari.projects.groupe.GroupeDAO;
 import nezzari.projects.utilisateur.UtilisateurDAO;
 
 /**
@@ -18,6 +19,10 @@ public class DAOFactory {
 		return UtilisateurDAO.getInstance(connexion);
 	}
 	
+	public static GroupeDAO getGroupeDAO() {
+		return GroupeDAO.getInstance(connexion);
+	}
+	
 	public static void setConnexion(Connection connexion) {
 		DAOFactory.connexion = connexion;
 	}
@@ -25,5 +30,6 @@ public class DAOFactory {
 	public static void fermerConnexion() throws SQLException {
 		connexion.close();
 	}
+
 
 }
