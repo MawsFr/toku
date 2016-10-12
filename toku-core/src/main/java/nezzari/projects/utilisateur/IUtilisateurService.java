@@ -1,12 +1,12 @@
 package nezzari.projects.utilisateur;
 
-public interface RoleUtilisateur {
-	public void seConnecter();
-	public void seDeconnecter();
+public interface IUtilisateurService {
+	public void connecter(Utilisateur utilisateur);
+	public void deconnecter();
 	
-	public void modifierMotDePasse(String nouveauMdp);
-	public void modifierNom(String nouveauNom);
-	public void modifierPrenom(String nouveauPrenom);
+	public void modifierMotDePasse(int idUtilisateur, String nouveauMdp);
+	public void modifierNom(int idUtilisateur, String nouveauNom);
+	public void modifierPrenom(int idUtilisateur, String nouveauPrenom);
 	
 	public void demanderEnAmi(int idDestinataire);
 	public void accepterDemandeAmi(int idDemande);

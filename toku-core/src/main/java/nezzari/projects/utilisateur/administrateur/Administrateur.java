@@ -1,6 +1,9 @@
-package nezzari.projects.utilisateur;
+package nezzari.projects.utilisateur.administrateur;
 
-public class Administrateur extends Moderateur implements RoleAdministrateur {
+import nezzari.projects.utilisateur.Utilisateur;
+import nezzari.projects.utilisateur.moderateur.Moderateur;
+
+public class Administrateur extends Moderateur implements IAdministrateurService {
 
 	@Override
 	public void modifierPseudo(int idUtilisateur, String nouveauPseudo) {

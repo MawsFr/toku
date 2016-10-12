@@ -1,6 +1,8 @@
-package nezzari.projects.utilisateur;
+package nezzari.projects.utilisateur.administrateur;
 
-public interface RoleAdministrateur {
+import nezzari.projects.utilisateur.Utilisateur;
+
+public interface IAdministrateurService {
 	public void creerUtilisateur(Utilisateur utilisateur);
 	public void supprimerUtilisateur(int idUtilisateur);
 	
