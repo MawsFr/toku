@@ -22,12 +22,12 @@ public class FenetrePrincipale {
 	private JFrame fenetre;
 	private Application application;
 	private PanneauPrincipal panneauPrincipal;
-	private BarreMenu menu;
+	private BarreMenuPrincipale menu;
 	
 	public FenetrePrincipale(Application application) {
 		this.application = application;
 		fenetre = new JFrame();
-		menu = new BarreMenu();
+		menu = new BarreMenuPrincipale();
 		panneauPrincipal = new PanneauPrincipal(this);
 		
 		fenetre.setTitle(TITRE);

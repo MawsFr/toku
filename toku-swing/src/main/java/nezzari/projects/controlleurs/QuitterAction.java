@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import nezzari.projects.vue.BarreMenu;
+import nezzari.projects.vue.BarreMenuPrincipale;
 
 public class QuitterAction extends AbstractAction {
 	
@@ -21,7 +21,7 @@ public class QuitterAction extends AbstractAction {
 	}
 	
 	private QuitterAction() {
-		super(BarreMenu.MENU_QUITTER_NOM);
+		super(BarreMenuPrincipale.MENU_QUITTER_NOM);
 	}
 	
 	@Override
