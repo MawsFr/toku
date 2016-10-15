@@ -4,10 +4,21 @@ import nezzari.projects.Application;
 import nezzari.projects.service.Service;
 
 public class UtilisateurService extends Service<Utilisateur> implements IUtilisateurService {
+	private static IUtilisateurService instance;
+	
+	protected UtilisateurService() {}
+	
+	public static IUtilisateurService getInstance() {
+		if(instance == null) {
+			instance = new UtilisateurService();
+		}
+		
+		return instance;
+	}
 
 	@Override
-	public void connecter(String pseudo, String motDePasse) {
-		
+	public Utilisateur connecter(String pseudo, String motDePasse) {
+		return null;
 	}
 	
 	@Override

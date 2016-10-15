@@ -26,6 +26,5 @@ public class OutilsSwing {
 	public static void ajouterBarreMenu(JFrame fenetre, JMenuBar barreMenu) {
 		fenetre.setJMenuBar(barreMenu);
 	}
-	
 
 }

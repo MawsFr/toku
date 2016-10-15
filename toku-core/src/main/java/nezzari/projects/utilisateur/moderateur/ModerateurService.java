@@ -1,9 +1,23 @@
 package nezzari.projects.utilisateur.moderateur;
 
 import nezzari.projects.factory.DAOFactory;
+import nezzari.projects.service.Service;
+import nezzari.projects.utilisateur.IUtilisateurService;
 import nezzari.projects.utilisateur.UtilisateurService;
 
-public class ModerateurService extends UtilisateurService implements IModerateurService {
+public class ModerateurService implements IModerateurService {
+	
+	private static IModerateurService instance;
+	
+	private ModerateurService() {}
+	
+	public static IModerateurService getInstance() {
+		if(instance == null) {
+			instance = new ModerateurService();
+		}
+		
+		return instance;
+	}
 
 	@Override
 	public void ajouterAmiAuGroupe(int idAmi, int idGroupe) {
@@ -23,7 +37,7 @@ public class ModerateurService extends UtilisateurService implements IModerateur
 	@Override
 	public void supprimerGroupe(int idGroupe) {
 		if(DAOFactory.getGroupeDAO().estVide(idGroupe)) {
-			super.quitterGroupe(idGroupe);
+			Service.getUtilisateurService().quitterGroupe(idGroupe);
 		} else {
 			//throw exception
 		}

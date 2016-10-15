@@ -17,6 +17,8 @@ public class FenetrePrincipale {
 	public static final int POURCENTAGE_LONGUEUR = 25;
 	public static final int ESPACE_LARGEUR = 100;
 	
+	public static final int MIN_POURCENTAGE_LARGEUR = 50;
+	
 	public static final String TITRE = "Toku";
 	
 	private JFrame fenetre;
@@ -33,20 +35,13 @@ public class FenetrePrincipale {
 		fenetre.setTitle(TITRE);
 		Container c = fenetre.getContentPane();
 		c.setLayout(new BorderLayout());
-		JPanel p = new JPanel();
-		p.setSize(fenetre.getWidth(), 100);
-		p.setPreferredSize(p.getSize());
-		p.setBackground(Color.BLACK);
-		p.setOpaque(true);
 		
 		OutilsSwing.ajouterBarreMenu(fenetre, menu);
-		c.add(p, BorderLayout.NORTH);
 		c.add(panneauPrincipal, BorderLayout.CENTER);
-		
 		
 		final Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
 		fenetre.setSize(tailleEcran.width * POURCENTAGE_LONGUEUR / 100, tailleEcran.height - ESPACE_LARGEUR);
-		fenetre.setMinimumSize(new Dimension(fenetre.getWidth(), fenetre.getHeight() / 2));
+		fenetre.setMinimumSize(new Dimension(fenetre.getWidth(), fenetre.getHeight() * MIN_POURCENTAGE_LARGEUR / 100));
 		fenetre.setLocationRelativeTo(null);
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		fenetre.setVisible(true);
