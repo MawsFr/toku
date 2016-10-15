@@ -183,6 +183,41 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements IUtilisateurDAO 
 		return trouve ? utilisateur : null;
 	}
 
+	@Override
+	public Utilisateur rechercher(Utilisateur utilisateur) {
+		PreparedStatement ps = null;
+		ResultSet resultat = null;
+		boolean trouve = false;
+		try {
+			ps = connexion.prepareStatement(CONNECTER_UTILISATEUR);
+			ps.setString(1, utilisateur.getPseudo());
+			ps.setString(2, utilisateur.getMotDePasse());
+			resultat = ps.executeQuery();
+			trouve = resultat.next();
+			if(trouve) {
+				utilisateur.setId(resultat.getInt(1));
+				utilisateur.setRole(resultat.getInt(2));
+				utilisateur.setNom(resultat.getString(5));
+				utilisateur.setPrenom(resultat.getString(6));
+			}
+			Log.info(trouve ? "Utilisateur d'id  [" + utilisateur.getId() + "] trouvé" : "Aucun utilisateur trouvé avec ces informations");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(resultat != null) {
+					resultat.close();
+				}
+				if(ps != null) {
+					ps.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return trouve ? utilisateur : null;
+	}
+	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		MYSQLConnexion c = MYSQLConnexion.getInstance();
 		c.initier();

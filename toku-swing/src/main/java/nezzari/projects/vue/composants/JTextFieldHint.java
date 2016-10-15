@@ -10,8 +10,8 @@ public class JTextFieldHint extends JTextField {
 	private String hint = "";
 
 	public JTextFieldHint() {
-		this.setMinimumSize(new Dimension(100, 20));
-		this.setPreferredSize(new Dimension(100, 20));
+		this.setMinimumSize(new Dimension(150, 20));
+		this.setPreferredSize(new Dimension(150, 20));
 	}
 
 	public JTextFieldHint(final Document doc, final String text, final int columns) {

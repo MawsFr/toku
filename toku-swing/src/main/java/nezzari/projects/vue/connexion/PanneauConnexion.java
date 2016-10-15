@@ -3,6 +3,7 @@ package nezzari.projects.vue.connexion;
 import java.awt.GridBagLayout;
 import java.net.URL;
 
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -52,13 +53,14 @@ public class PanneauConnexion extends JPanel {
 		txtPseudo.setHint(LABEL_EX_PSEUDO);
 		txtMdp.setHint(LABEL_EX_MDP);
 
-
-		gbc.descendre().setWidth(GBC.REMAINDER).setAnchor(GBC.PAGE_START).ajouter(txtPseudo);
-		gbc.descendre().setWidth(GBC.REMAINDER).setAnchor(GBC.PAGE_START).ajouter(txtMdp);
+		gbc.reset().descendre().setWidth(GBC.REMAINDER).setAnchor(GBC.LINE_START).ajouter(lblPseudo);
+		gbc.reset().descendre().setWidth(GBC.REMAINDER).setAnchor(GBC.LINE_START).ajouter(txtPseudo);
+		gbc.reset().descendre().setWidth(GBC.REMAINDER).setAnchor(GBC.LINE_START).ajouter(lblMdp);
+		gbc.reset().descendre().setWidth(GBC.REMAINDER).setAnchor(GBC.LINE_START).ajouter(txtMdp);
 		
 		// Bouton connexion
 		btnConnexion = new JButton(new ConnexionAction(this));
-		gbc.descendre().setWidth(GBC.REMAINDER).setAnchor(GBC.PAGE_START).ajouter(btnConnexion);
+		gbc.reset().descendre().setWidth(GBC.REMAINDER).ajouter(btnConnexion);
 		
 	}
 
@@ -68,5 +70,9 @@ public class PanneauConnexion extends JPanel {
 	
 	public JTextFieldHint getTxtMdp() {
 		return txtMdp;
+	}
+	
+	public FenetrePrincipale getFenetre() {
+		return fenetre;
 	}
 }

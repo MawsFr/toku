@@ -1,6 +1,7 @@
 package nezzari.projects.utilisateur;
 
 import nezzari.projects.Application;
+import nezzari.projects.factory.DAOFactory;
 import nezzari.projects.service.Service;
 
 public class UtilisateurService extends Service<Utilisateur> implements IUtilisateurService {
@@ -18,7 +19,11 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 
 	@Override
 	public Utilisateur connecter(String pseudo, String motDePasse) {
-		return null;
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setPseudo(pseudo);
+		utilisateur.setMotDePasse(motDePasse);
+		utilisateur = DAOFactory.getUtilisateurDAO().rechercher(utilisateur);
+		return utilisateur;
 	}
 	
 	@Override

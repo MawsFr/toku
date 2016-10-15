@@ -3,6 +3,7 @@ package nezzari.projects.factory;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import nezzari.projects.factory.connexions.mysql.MYSQLConnexion;
 import nezzari.projects.groupe.GroupeDAO;
 import nezzari.projects.utilisateur.IUtilisateurDAO;
 import nezzari.projects.utilisateur.UtilisateurDAO;
