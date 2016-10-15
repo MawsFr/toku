@@ -1,7 +1,7 @@
 package nezzari.projects.utilisateur;
 
 public interface IUtilisateurService {
-	public void connecter(Utilisateur utilisateur);
+	public void connecter(String pseudo, String motDePasse);
 	public void deconnecter();
 	
 	public void modifierMotDePasse(int idUtilisateur, String nouveauMdp);

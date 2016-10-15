@@ -6,10 +6,10 @@ import nezzari.projects.service.Service;
 public class UtilisateurService extends Service<Utilisateur> implements IUtilisateurService {
 
 	@Override
-	public void connecter(Utilisateur utilisateur) {
-		Application.getInstance().getSession().setUtilisateur(utilisateur);
+	public void connecter(String pseudo, String motDePasse) {
+		
 	}
-
+	
 	@Override
 	public void deconnecter() {
 		Application.getInstance().getSession().setUtilisateur(null);

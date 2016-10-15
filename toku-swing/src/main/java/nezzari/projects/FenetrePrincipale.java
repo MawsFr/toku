@@ -4,6 +4,9 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
+import nezzari.projects.utils.Log;
 
 public class FenetrePrincipale {
 	public static final int ESPACE_LONGUEUR = 200;
@@ -14,8 +17,8 @@ public class FenetrePrincipale {
 	private JFrame fenetre;
 	private Application application;
 	
-	public FenetrePrincipale() {
-		application = Application.getInstance();
+	public FenetrePrincipale(Application application) {
+		this.application = application;
 		fenetre = new JFrame();
 		fenetre.setTitle(TITRE);
 		fenetre.setContentPane(new PanneauPrincipal(this));
