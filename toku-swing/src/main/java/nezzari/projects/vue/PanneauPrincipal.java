@@ -1,11 +1,11 @@
-package nezzari.projects;
+package nezzari.projects.vue;
 
 import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
-import nezzari.projects.connexion.PanneauConnexion;
-import nezzari.projects.discussion.PanneauDiscussion;
+import nezzari.projects.vue.connexion.PanneauConnexion;
+import nezzari.projects.vue.discussion.PanneauDiscussion;
 
 public class PanneauPrincipal extends JPanel {
 
@@ -28,8 +28,6 @@ public class PanneauPrincipal extends JPanel {
 		
 		this.add(panneauConnexion, PANNEAU_CONNEXION);
 		this.add(panneauDiscussion, PANNEAU_DISCUSSION);
-		
-		
 	}
 	
 }

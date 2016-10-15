@@ -1,8 +1,8 @@
-package nezzari.projects.connexion;
+package nezzari.projects.vue.connexion;
 
 import javax.swing.JPanel;
 
-import nezzari.projects.FenetrePrincipale;
+import nezzari.projects.vue.FenetrePrincipale;
 
 public class PanneauConnexion extends JPanel {
 

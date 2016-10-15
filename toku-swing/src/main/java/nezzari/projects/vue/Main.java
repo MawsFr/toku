@@ -1,8 +1,10 @@
-package nezzari.projects;
+package nezzari.projects.vue;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+
+import nezzari.projects.Application;
 
 /**
  * Main class
