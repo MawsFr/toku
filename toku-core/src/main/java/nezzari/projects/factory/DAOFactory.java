@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import nezzari.projects.groupe.GroupeDAO;
+import nezzari.projects.utilisateur.IUtilisateurDAO;
 import nezzari.projects.utilisateur.UtilisateurDAO;
 
 /**
@@ -15,7 +16,7 @@ public class DAOFactory {
 	
 	private static Connection connexion;
 	
-	public static UtilisateurDAO getUtilisateurDAO() {
+	public static IUtilisateurDAO getUtilisateurDAO() {
 		return UtilisateurDAO.getInstance(connexion);
 	}
 	

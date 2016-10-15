@@ -1,4 +1,4 @@
-package nezzari.projects.utilisateur;
+	package nezzari.projects.utilisateur;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,26 +17,23 @@ import nezzari.projects.utils.Log;
  * @author Mustapha NEZZARI
  *
  */
-public class UtilisateurDAO extends DAO<Utilisateur> {
-	public static final String RECHERCHER_UTILISATEUR = "SELECT * FROM UTILISATEUR WHERE id = ?";
-	public static final String CREER_UTILISATEUR = "INSERT INTO UTILISATEUR  (id_role, pseudo, mot_de_passe, nom, prenom) VALUES (?, ?, ?, ?, ?)";
-	public static final String MODIFIER_UTILISATEUR = "UPDATE UTILISATEUR SET id_role = ?, pseudo = ?, mot_de_passe = ?, nom = ?, prenom = ? where id = ?";
-	public static final String SUPPRIMER_UTILISATEUR = "DELETE FROM UTILISATEUR WHERE id = ?";
-
-
-	private static UtilisateurDAO instance;
+public class UtilisateurDAO extends DAO<Utilisateur> implements IUtilisateurDAO {
+	private static IUtilisateurDAO instance;
 
 	private UtilisateurDAO(Connection connexion) {
 		super(connexion);
 	}
 
-	public static UtilisateurDAO getInstance(Connection connexion) {
+	public static IUtilisateurDAO getInstance(Connection connexion) {
 		if(instance == null) {
 			instance = new UtilisateurDAO(connexion);
 		}
 		return instance;
 	}
 
+	/* (non-Javadoc)
+	 * @see nezzari.projects.utilisateur.IUtilisateurDAO#creer(nezzari.projects.utilisateur.Utilisateur)
+	 */
 	@Override
 	public int creer(Utilisateur utilisateur) {
 		PreparedStatement ps = null;
@@ -77,6 +74,9 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		return id;
 	}
 
+	/* (non-Javadoc)
+	 * @see nezzari.projects.utilisateur.IUtilisateurDAO#supprimer(int)
+	 */
 	@Override
 	public void supprimer(int idUtilisateur) {
 		PreparedStatement ps = null;
@@ -106,6 +106,9 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see nezzari.projects.utilisateur.IUtilisateurDAO#modifier(nezzari.projects.utilisateur.Utilisateur)
+	 */
 	@Override
 	public void modifier(Utilisateur utilisateur) {
 		PreparedStatement ps = null;
@@ -140,6 +143,9 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see nezzari.projects.utilisateur.IUtilisateurDAO#rechercher(int)
+	 */
 	@Override
 	public Utilisateur rechercher(int id) {
 		PreparedStatement ps = null;
