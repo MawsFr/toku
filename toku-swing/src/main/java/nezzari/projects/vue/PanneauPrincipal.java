@@ -30,4 +30,12 @@ public class PanneauPrincipal extends JPanel {
 		this.add(panneauDiscussion, PANNEAU_DISCUSSION);
 	}
 	
+	public PanneauConnexion getPanneauConnexion() {
+		return panneauConnexion;
+	}
+	
+	public PanneauDiscussion getPanneauDiscussion() {
+		return panneauDiscussion;
+	}
+	
 }

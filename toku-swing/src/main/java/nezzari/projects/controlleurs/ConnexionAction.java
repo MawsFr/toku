@@ -15,7 +15,17 @@ public class ConnexionAction extends AbstractAction {
 	
 	private PanneauConnexion connexion;
 	
-	public ConnexionAction(PanneauConnexion connexion) {
+	public static ConnexionAction instance;
+
+	public static ConnexionAction getInstance(PanneauConnexion connexion) {
+		if(instance == null) {
+			instance = new ConnexionAction(connexion);
+		}
+		
+		return instance;
+	}
+	
+	private ConnexionAction(PanneauConnexion connexion) {
 		super(PanneauConnexion.BTN_CONNECTER);
 		this.connexion = connexion;
 	}
@@ -23,7 +33,7 @@ public class ConnexionAction extends AbstractAction {
 	@Override
 	public void actionPerformed(final ActionEvent arg0) {
 		final String pseudo = connexion.getTxtPseudo().getText();
-		final String mdp = connexion.getTxtMdp().getText();
+		final String mdp = new String(connexion.getTxtMdp().getPassword());
 		
 		Utilisateur utilisateur = Service.getUtilisateurService().connecter(pseudo, mdp);
 		

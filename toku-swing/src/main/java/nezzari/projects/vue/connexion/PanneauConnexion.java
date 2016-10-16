@@ -1,13 +1,14 @@
 package nezzari.projects.vue.connexion;
 
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.net.URL;
 
-import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 
 import nezzari.projects.Application;
 import nezzari.projects.Constantes;
@@ -18,18 +19,18 @@ import nezzari.projects.vue.composants.JTextFieldHint;
 
 public class PanneauConnexion extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	public static final String LABEL_CONNECTER = "Connectez-vous";
 	public static final String LABEL_PSEUDO = "Pseudonyme :";
 	public static final String LABEL_MDP = "Mot de passe :";
 	public static final String LABEL_EX_PSEUDO = "ex : Maws";
-	public static final String LABEL_EX_MDP = "ex : koala";
 	public static final String BTN_CONNECTER = "Connecter";
 
 	private FenetrePrincipale fenetre;
 	private GridBagLayout layout;
 	private JButton btnConnexion;
 	private JTextFieldHint txtPseudo;
-	private JTextFieldHint txtMdp;
+	private JPasswordField txtMdp;
 
 	public PanneauConnexion(FenetrePrincipale fenetre) {
 		this.fenetre = fenetre;
@@ -49,9 +50,10 @@ public class PanneauConnexion extends JPanel {
 		JLabel lblPseudo = new JLabel(LABEL_PSEUDO);
 		JLabel lblMdp= new JLabel(LABEL_MDP);
 		txtPseudo = new JTextFieldHint();
-		txtMdp = new JTextFieldHint();
+		txtMdp = new JPasswordField();
+		txtMdp.setPreferredSize(new Dimension(150, 20));
+		txtMdp.setMinimumSize(new Dimension(150, 20));
 		txtPseudo.setHint(LABEL_EX_PSEUDO);
-		txtMdp.setHint(LABEL_EX_MDP);
 
 		gbc.reset().descendre().setWidth(GBC.REMAINDER).setAnchor(GBC.LINE_START).ajouter(lblPseudo);
 		gbc.reset().descendre().setWidth(GBC.REMAINDER).setAnchor(GBC.LINE_START).ajouter(txtPseudo);
@@ -59,7 +61,7 @@ public class PanneauConnexion extends JPanel {
 		gbc.reset().descendre().setWidth(GBC.REMAINDER).setAnchor(GBC.LINE_START).ajouter(txtMdp);
 		
 		// Bouton connexion
-		btnConnexion = new JButton(new ConnexionAction(this));
+		btnConnexion = new JButton(ConnexionAction.getInstance(this));
 		gbc.reset().descendre().setWidth(GBC.REMAINDER).ajouter(btnConnexion);
 		
 	}
@@ -68,7 +70,7 @@ public class PanneauConnexion extends JPanel {
 		return txtPseudo;
 	}
 	
-	public JTextFieldHint getTxtMdp() {
+	public JPasswordField getTxtMdp() {
 		return txtMdp;
 	}
 	

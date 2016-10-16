@@ -14,6 +14,16 @@ import nezzari.projects.Application;
 import nezzari.projects.OutilsSwing;
 
 public class FenetrePrincipale {
+	private static FenetrePrincipale instance;
+	
+	public static FenetrePrincipale getInstance() {
+		if(instance == null) {
+			instance = new FenetrePrincipale();
+		}
+		
+		return instance;
+	}
+	
 	public static final int POURCENTAGE_LONGUEUR = 25;
 	public static final int ESPACE_LARGEUR = 100;
 	
@@ -26,8 +36,7 @@ public class FenetrePrincipale {
 	private PanneauPrincipal panneauPrincipal;
 	private BarreMenuPrincipale menu;
 	
-	public FenetrePrincipale(Application application) {
-		this.application = application;
+	private FenetrePrincipale() {
 		fenetre = new JFrame();
 		menu = new BarreMenuPrincipale();
 		panneauPrincipal = new PanneauPrincipal(this);
@@ -61,6 +70,10 @@ public class FenetrePrincipale {
 
 	public void setApplication(Application application) {
 		this.application = application;
+	}
+	
+	public PanneauPrincipal getPanneauPrincipal() {
+		return panneauPrincipal;
 	}
 	
 	

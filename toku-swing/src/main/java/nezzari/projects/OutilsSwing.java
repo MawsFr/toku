@@ -1,6 +1,7 @@
 package nezzari.projects;
 
 import javax.swing.AbstractAction;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -21,6 +22,12 @@ public class OutilsSwing {
 	
 	public static JMenuItem creerSousMenu(JMenu parent, AbstractAction action) {
 		return parent.add(new JMenuItem(action));
+	}
+	
+	public static JCheckBoxMenuItem creerSousMenuCochable(JMenu parent, AbstractAction action) {
+		JCheckBoxMenuItem cbmenu = new JCheckBoxMenuItem(action);
+		parent.add(cbmenu);
+		return cbmenu;
 	}
 	
 	public static void ajouterBarreMenu(JFrame fenetre, JMenuBar barreMenu) {

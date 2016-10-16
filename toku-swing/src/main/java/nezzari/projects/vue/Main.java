@@ -49,7 +49,7 @@ public class Main {
 //					}
 //				} catch (Exception e) {}
 
-				new FenetrePrincipale(application);
+				FenetrePrincipale.getInstance().setApplication(application);
 			}
 		});
 	}
