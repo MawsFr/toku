@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import nezzari.projects.connexions.mysql.MYSQLConnexion;
 import nezzari.projects.factory.DAO;
 import nezzari.projects.factory.DAOFactory;
-import nezzari.projects.factory.connexions.mysql.MYSQLConnexion;
 import nezzari.projects.utils.Log;
 
 /**

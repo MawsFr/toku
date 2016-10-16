@@ -1,7 +1,9 @@
 package nezzari.projects.utilisateur;
 
+import nezzari.projects.validateur.ValidationException;
+
 public interface IUtilisateurService {
-	public Utilisateur connecter(String pseudo, String motDePasse);
+	public Utilisateur connecter(String pseudo, String motDePasse) throws ServiceException, ValidationException;
 	public void deconnecter();
 	
 	public void modifierMotDePasse(int idUtilisateur, String nouveauMdp);

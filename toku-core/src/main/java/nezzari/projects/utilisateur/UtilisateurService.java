@@ -3,6 +3,8 @@ package nezzari.projects.utilisateur;
 import nezzari.projects.Application;
 import nezzari.projects.factory.DAOFactory;
 import nezzari.projects.service.Service;
+import nezzari.projects.validateur.ValidationException;
+import nezzari.projects.validateur.Valideur;
 
 public class UtilisateurService extends Service<Utilisateur> implements IUtilisateurService {
 	private static IUtilisateurService instance;
@@ -18,11 +20,16 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 	}
 
 	@Override
-	public Utilisateur connecter(String pseudo, String motDePasse) {
+	public Utilisateur connecter(String pseudo, String motDePasse) throws ServiceException, ValidationException {
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setPseudo(pseudo);
 		utilisateur.setMotDePasse(motDePasse);
-		utilisateur = DAOFactory.getUtilisateurDAO().rechercher(utilisateur);
+		try {
+			Valideur.getUtilisateurValideur().valider(utilisateur);
+			utilisateur = DAOFactory.getUtilisateurDAO().rechercher(utilisateur);
+		} catch (ValidationException | DAOException e) {
+			throw new ServiceException(e);
+		}
 		return utilisateur;
 	}
 	
@@ -38,8 +45,7 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 
 	@Override
 	public void modifierNom(int idUtilisateur, String nouveauNom) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override

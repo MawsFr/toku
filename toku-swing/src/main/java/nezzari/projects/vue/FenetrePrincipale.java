@@ -35,11 +35,13 @@ public class FenetrePrincipale {
 	private Application application;
 	private PanneauPrincipal panneauPrincipal;
 	private BarreMenuPrincipale menu;
+	private BarreEtat barreEtat;
 	
 	private FenetrePrincipale() {
 		fenetre = new JFrame();
 		menu = new BarreMenuPrincipale();
 		panneauPrincipal = new PanneauPrincipal(this);
+		barreEtat = new BarreEtat(this);
 		
 		fenetre.setTitle(TITRE);
 		Container c = fenetre.getContentPane();
@@ -47,6 +49,9 @@ public class FenetrePrincipale {
 		
 		OutilsSwing.ajouterBarreMenu(fenetre, menu);
 		c.add(panneauPrincipal, BorderLayout.CENTER);
+		c.add(barreEtat, BorderLayout.SOUTH);
+		
+		
 		
 		final Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
 		fenetre.setSize(tailleEcran.width * POURCENTAGE_LONGUEUR / 100, tailleEcran.height - ESPACE_LARGEUR);
@@ -76,6 +81,9 @@ public class FenetrePrincipale {
 		return panneauPrincipal;
 	}
 	
+	public BarreEtat getBarreEtat() {
+		return barreEtat;
+	}
 	
 
 }

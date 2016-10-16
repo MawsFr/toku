@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import nezzari.projects.connexions.mysql.MYSQLConnexion;
 import nezzari.projects.factory.DAO;
 import nezzari.projects.factory.DAOFactory;
-import nezzari.projects.factory.connexions.mysql.MYSQLConnexion;
 import nezzari.projects.utils.Log;
 
 /**
@@ -184,7 +184,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements IUtilisateurDAO 
 	}
 
 	@Override
-	public Utilisateur rechercher(Utilisateur utilisateur) {
+	public Utilisateur rechercher(Utilisateur utilisateur) throws DAOException {
 		PreparedStatement ps = null;
 		ResultSet resultat = null;
 		boolean trouve = false;
@@ -199,10 +199,11 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements IUtilisateurDAO 
 				utilisateur.setRole(resultat.getInt(2));
 				utilisateur.setNom(resultat.getString(5));
 				utilisateur.setPrenom(resultat.getString(6));
+			} else {
+				throw new DAOException("Aucun utilisateur trouvé avec ces informations");
 			}
-			Log.info(trouve ? "Utilisateur d'id  [" + utilisateur.getId() + "] trouvé" : "Aucun utilisateur trouvé avec ces informations");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException(e);
 		} finally {
 			try {
 				if(resultat != null) {
@@ -215,7 +216,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements IUtilisateurDAO 
 				e.printStackTrace();
 			}
 		}
-		return trouve ? utilisateur : null;
+		return utilisateur;
 	}
 	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {

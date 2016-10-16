@@ -1,6 +1,6 @@
-package nezzari.projects.factory.connexions.sqlite;
+package nezzari.projects.connexions.sqlite;
 
-import nezzari.projects.factory.connexions.Configuration;
+import nezzari.projects.connexions.Configuration;
 
 public class SQLiteConfiguration extends Configuration {
 	public static final String SQLITE_NOM_DRIVER= "org.sqlite.JDBC";

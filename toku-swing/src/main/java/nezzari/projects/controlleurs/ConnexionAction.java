@@ -1,12 +1,17 @@
 package nezzari.projects.controlleurs;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import nezzari.projects.service.Service;
+import nezzari.projects.utilisateur.ServiceException;
 import nezzari.projects.utilisateur.Utilisateur;
+import nezzari.projects.validateur.ValidationException;
+import nezzari.projects.vue.FenetrePrincipale;
 import nezzari.projects.vue.connexion.PanneauConnexion;
 
 public class ConnexionAction extends AbstractAction {
@@ -14,6 +19,7 @@ public class ConnexionAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;
 	
 	private PanneauConnexion connexion;
+	private FenetrePrincipale fenetre;
 	
 	public static ConnexionAction instance;
 
@@ -27,19 +33,31 @@ public class ConnexionAction extends AbstractAction {
 	
 	private ConnexionAction(PanneauConnexion connexion) {
 		super(PanneauConnexion.BTN_CONNECTER);
+		putValue(MNEMONIC_KEY, KeyEvent.VK_C);
 		this.connexion = connexion;
+		this.fenetre = connexion.getFenetre();
 	}
 
 	@Override
 	public void actionPerformed(final ActionEvent arg0) {
+		fenetre.getBarreEtat().setEnCours();
 		final String pseudo = connexion.getTxtPseudo().getText();
 		final String mdp = new String(connexion.getTxtMdp().getPassword());
 		
-		Utilisateur utilisateur = Service.getUtilisateurService().connecter(pseudo, mdp);
+		Utilisateur utilisateur = null;
 		
-		if(utilisateur == null) {
-			JOptionPane.showMessageDialog(connexion.getFenetre().getFenetre(), "Ces informations ne correspondent à aucun compte", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+		try {
+			utilisateur = Service.getUtilisateurService().connecter(pseudo, mdp);
+		} catch (ValidationException | ServiceException e) {
+			JOptionPane.showMessageDialog(connexion.getFenetre().getFenetre(), e.getCause().getMessage(), "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+		} finally {
+			fenetre.getBarreEtat().setFini();
 		}
+		
+		if(utilisateur != null) {
+			fenetre.getBarreEtat().setTexte("Bienvenue " + utilisateur.getPseudo() + " !");
+		}
+		
 		
 	}
 
