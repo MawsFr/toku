@@ -15,6 +15,7 @@ import nezzari.projects.Constantes;
 import nezzari.projects.controlleurs.ConnexionAction;
 import nezzari.projects.vue.FenetrePrincipale;
 import nezzari.projects.vue.composants.GBC;
+import nezzari.projects.vue.composants.JShowablePaswordTextFIeld;
 import nezzari.projects.vue.composants.JTextFieldHint;
 
 public class PanneauConnexion extends JPanel {
@@ -30,7 +31,7 @@ public class PanneauConnexion extends JPanel {
 	private GridBagLayout layout;
 	private JButton btnConnexion;
 	private JTextFieldHint txtPseudo;
-	private JPasswordField txtMdp;
+	private JShowablePaswordTextFIeld txtMdp;
 
 	public PanneauConnexion(FenetrePrincipale fenetre) {
 		this.fenetre = fenetre;
@@ -50,7 +51,7 @@ public class PanneauConnexion extends JPanel {
 		JLabel lblPseudo = new JLabel(LABEL_PSEUDO);
 		JLabel lblMdp= new JLabel(LABEL_MDP);
 		txtPseudo = new JTextFieldHint();
-		txtMdp = new JPasswordField();
+		txtMdp = new JShowablePaswordTextFIeld();
 		txtMdp.setPreferredSize(new Dimension(150, 20));
 		txtMdp.setMinimumSize(new Dimension(150, 20));
 		txtPseudo.setHint(LABEL_EX_PSEUDO);
@@ -59,6 +60,7 @@ public class PanneauConnexion extends JPanel {
 		gbc.reset().descendre().setWidth(GBC.REMAINDER).setAnchor(GBC.LINE_START).ajouter(txtPseudo);
 		gbc.reset().descendre().setWidth(GBC.REMAINDER).setAnchor(GBC.LINE_START).ajouter(lblMdp);
 		gbc.reset().descendre().setWidth(GBC.REMAINDER).setAnchor(GBC.LINE_START).ajouter(txtMdp);
+		
 		
 		// Bouton connexion
 		btnConnexion = new JButton(ConnexionAction.getInstance(this));
@@ -71,7 +73,7 @@ public class PanneauConnexion extends JPanel {
 	}
 	
 	public JPasswordField getTxtMdp() {
-		return txtMdp;
+		return txtMdp.getPassword();
 	}
 	
 	public FenetrePrincipale getFenetre() {

@@ -36,8 +36,11 @@ public class BarreMenuPrincipale extends JMenuBar {
 	public BarreMenuPrincipale() {
 		menuFichier = OutilsSwing.creerMenu(MENU_FICHIER_NOM, this);
 		menuQuitter = OutilsSwing.creerSousMenu(menuFichier, QuitterAction.getInstance());
+		
 		menuContacts = OutilsSwing.creerMenu(MENU_CONTACTS_NOM, this);
+		
 		menuActions = OutilsSwing.creerMenu(MENU_ACTIONS_NOM, this);
+		
 		menuOutils = OutilsSwing.creerMenu(MENU_OUTILS_NOM, this);
 		menuToujourVisible = OutilsSwing.creerSousMenuCochable(menuOutils, ToujoursVisibleAction.getInstance());
 	}
