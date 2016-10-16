@@ -1,4 +1,4 @@
-package nezzari.projects.factory.connexions;
+package nezzari.projects.connexions;
 
 import java.sql.Connection;
 import java.sql.SQLException;

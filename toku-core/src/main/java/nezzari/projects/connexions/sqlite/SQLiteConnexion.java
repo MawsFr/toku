@@ -1,9 +1,9 @@
-package nezzari.projects.factory.connexions.sqlite;
+package nezzari.projects.connexions.sqlite;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import nezzari.projects.factory.connexions.Connexion;
+import nezzari.projects.connexions.Connexion;
 
 public class SQLiteConnexion extends Connexion {
 	

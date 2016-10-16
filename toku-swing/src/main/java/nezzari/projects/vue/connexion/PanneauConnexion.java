@@ -2,6 +2,7 @@ package nezzari.projects.vue.connexion;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
@@ -55,12 +56,18 @@ public class PanneauConnexion extends JPanel {
 		txtMdp.setPreferredSize(new Dimension(150, 20));
 		txtMdp.setMinimumSize(new Dimension(150, 20));
 		txtPseudo.setHint(LABEL_EX_PSEUDO);
-
+		
+		lblPseudo.setLabelFor(txtPseudo);
+		lblPseudo.setDisplayedMnemonic(KeyEvent.VK_P);
+		lblMdp.setLabelFor(txtMdp);
+		lblMdp.setDisplayedMnemonic(KeyEvent.VK_M);
+		txtPseudo.setAction(ConnexionAction.getInstance(this));
+		txtMdp.getPassword().setAction(ConnexionAction.getInstance(this));
+		
 		gbc.reset().descendre().setWidth(GBC.REMAINDER).setAnchor(GBC.LINE_START).ajouter(lblPseudo);
 		gbc.reset().descendre().setWidth(GBC.REMAINDER).setAnchor(GBC.LINE_START).ajouter(txtPseudo);
 		gbc.reset().descendre().setWidth(GBC.REMAINDER).setAnchor(GBC.LINE_START).ajouter(lblMdp);
 		gbc.reset().descendre().setWidth(GBC.REMAINDER).setAnchor(GBC.LINE_START).ajouter(txtMdp);
-		
 		
 		// Bouton connexion
 		btnConnexion = new JButton(ConnexionAction.getInstance(this));

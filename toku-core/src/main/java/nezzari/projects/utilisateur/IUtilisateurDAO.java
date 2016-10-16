@@ -15,6 +15,6 @@ public interface IUtilisateurDAO {
 	public void modifier(Utilisateur utilisateur);
 
 	public Utilisateur rechercher(int id);
-	public Utilisateur rechercher(Utilisateur utilisateur);
+	public Utilisateur rechercher(Utilisateur utilisateur) throws DAOException;
 
 }

@@ -1,4 +1,4 @@
-package nezzari.projects.factory.connexions;
+package nezzari.projects.connexions;
 
 public class Configuration {
 	protected String nomDriver;
@@ -6,18 +6,20 @@ public class Configuration {
 	protected String pseudo;
 	protected String mdp;
 	protected String bdd;
+	protected String parametres;
 	
 	public Configuration(String nomDriver, String hote) {
 		this.nomDriver = nomDriver;
 		this.hote = hote;
 	}
 	
-	public Configuration(String nomDriver, String hote, String pseudo, String mdp, String bdd) {
+	public Configuration(String nomDriver, String hote, String pseudo, String mdp, String bdd, String parametres) {
 		this.nomDriver = nomDriver;
 		this.hote = hote;
 		this.pseudo = pseudo;
 		this.mdp = mdp;
 		this.bdd = bdd;
+		this.parametres = parametres;
 	}
 	
 	public String getNomDriver() {
@@ -58,6 +60,14 @@ public class Configuration {
 	
 	public void setBdd(String bdd) {
 		this.bdd = bdd;
+	}
+	
+	public String getParametres() {
+		return parametres;
+	}
+	
+	public void setParametres(String parametres) {
+		this.parametres = parametres;
 	}
 
 	

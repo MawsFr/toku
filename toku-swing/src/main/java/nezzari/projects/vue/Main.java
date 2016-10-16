@@ -7,8 +7,8 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import nezzari.projects.Application;
+import nezzari.projects.connexions.mysql.MYSQLConnexion;
 import nezzari.projects.factory.DAOFactory;
-import nezzari.projects.factory.connexions.mysql.MYSQLConnexion;
 
 /**
  * Main class
