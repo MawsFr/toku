@@ -1,7 +1,10 @@
 package nezzari.projects;
 
+import java.awt.Dimension;
+
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -39,6 +42,14 @@ public class OutilsSwing {
 	
 	public static void ajouterBarreMenu(JFrame fenetre, JMenuBar barreMenu) {
 		fenetre.setJMenuBar(barreMenu);
+	}
+	
+	// Tailles
+	public static void setTaille(int width, int height, JComponent... components) {
+		for(JComponent component : components) {
+			component.setPreferredSize(new Dimension(width, height));
+			component.setMinimumSize(component.getPreferredSize());
+		}
 	}
 
 }

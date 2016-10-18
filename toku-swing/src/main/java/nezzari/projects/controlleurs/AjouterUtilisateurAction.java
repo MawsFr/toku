@@ -3,8 +3,10 @@ package nezzari.projects.controlleurs;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.SwingUtilities;
 
 import nezzari.projects.vue.BarreMenuPrincipale;
+import nezzari.projects.vue.gestion.utilisateurs.FenetreProfil;
 import nezzari.projects.vue.gestion.utilisateurs.GestionUtilisateurs;
 
 public class AjouterUtilisateurAction extends AbstractAction {
@@ -28,7 +30,12 @@ public class AjouterUtilisateurAction extends AbstractAction {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		System.out.println(SwingUtilities.isEventDispatchThread());
+		new FenetreProfil(gestionUtilisateurs.getFenetre(), FenetreProfil.ModeEdition.AJOUT);
 		
+	}
+	
+	public void confirmerAjout() {
 	}
 
 }

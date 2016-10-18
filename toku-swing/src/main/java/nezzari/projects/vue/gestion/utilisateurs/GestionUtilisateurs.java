@@ -1,22 +1,18 @@
 package nezzari.projects.vue.gestion.utilisateurs;
 
-import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import nezzari.projects.controlleurs.AjouterUtilisateurAction;
 import nezzari.projects.controlleurs.ModifierUtilisateurAction;
 import nezzari.projects.controlleurs.SupprimerUtilisateurAction;
+import nezzari.projects.utilisateur.Utilisateur;
 import nezzari.projects.vue.BarreMenuPrincipale;
 import nezzari.projects.vue.FenetrePrincipale;
 import nezzari.projects.vue.composants.GBC;
@@ -35,6 +31,8 @@ public class GestionUtilisateurs {
 	private JButton btnModifier;
 	private JButton btnSupprimer;
 	private JTextFieldHint filtre;
+	
+	private Utilisateur utilisateurSelectionne;
 	
 	public GestionUtilisateurs() {
 		fenetre = new JDialog(FenetrePrincipale.getInstance().getFenetre(), BarreMenuPrincipale.MENU_GERER_UTILISATEURS, true);
@@ -83,6 +81,10 @@ public class GestionUtilisateurs {
 	
 	public JTable getUtilisateurs() {
 		return utilisateurs;
+	}
+	
+	public Utilisateur getUtilisateurSelectionne() {
+		return utilisateurSelectionne;
 	}
 
 }
