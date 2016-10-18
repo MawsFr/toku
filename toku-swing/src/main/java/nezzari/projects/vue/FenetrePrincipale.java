@@ -81,6 +81,10 @@ public class FenetrePrincipale {
 		return panneauPrincipal;
 	}
 	
+	public BarreMenuPrincipale getMenu() {
+		return menu;
+	}
+	
 	public BarreEtat getBarreEtat() {
 		return barreEtat;
 	}

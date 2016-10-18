@@ -219,6 +219,40 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements IUtilisateurDAO 
 		return utilisateur;
 	}
 	
+	@Override
+	public int getRole(Utilisateur utilisateur) throws DAOException {
+		PreparedStatement ps = null;
+		ResultSet resultat = null;
+		boolean trouve = false;
+		int role = -1;
+		try {
+			ps = connexion.prepareStatement(ROLE_UTILISATEUR);
+			ps.setInt(1, utilisateur.getId());
+			resultat = ps.executeQuery();
+			trouve = resultat.next();
+			if(trouve) {
+				role = resultat.getInt(1);
+				utilisateur.setRole(role); //Peut etre a enlever
+			} else {
+				throw new DAOException("Aucun utilisateur trouvé avec ces informations");
+			}
+		} catch (SQLException e) {
+			throw new DAOException(e);
+		} finally {
+			try {
+				if(resultat != null) {
+					resultat.close();
+				}
+				if(ps != null) {
+					ps.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return role;
+	}
+	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		MYSQLConnexion c = MYSQLConnexion.getInstance();
 		c.initier();

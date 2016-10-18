@@ -9,9 +9,7 @@ public class PermissionDAO {
 	public static final int SUPPRIMER_MESSAGE = 6;
 	public static final int EXCLURE_UTILISATEURS_GROUPE = 7;
 	
-	public static final int ROLE_UTILISATEUR = 1;
-	public static final int ROLE_MODERATEUR = 2;
-	public static final int ROLE_ADMINISTRATEUR = 3;
+	
 	
 	
 

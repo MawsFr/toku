@@ -38,4 +38,8 @@ public class PanneauPrincipal extends JPanel {
 		return panneauDiscussion;
 	}
 	
+	public void afficherEcran(String ecran) {
+		this.panneaux.show(this, ecran);
+	}
+	
 }

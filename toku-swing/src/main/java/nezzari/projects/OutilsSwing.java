@@ -16,6 +16,13 @@ public class OutilsSwing {
 		return barreMenu.add(new JMenu(nom));
 	}
 	
+	public static JMenu creerMenuCache(String nom, JMenuBar barreMenu) {
+		JMenu menu = new JMenu(nom);
+		barreMenu.add(menu);
+		menu.setVisible(false);
+		return menu;
+	}
+	
 	public static JMenu creerMenu(AbstractAction action, JMenuBar barreMenu) {
 		return barreMenu.add(new JMenu(action));
 	}

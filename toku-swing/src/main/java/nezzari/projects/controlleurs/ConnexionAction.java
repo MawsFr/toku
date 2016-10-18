@@ -11,7 +11,9 @@ import nezzari.projects.service.Service;
 import nezzari.projects.utilisateur.ServiceException;
 import nezzari.projects.utilisateur.Utilisateur;
 import nezzari.projects.validateur.ValidationException;
+import nezzari.projects.vue.BarreMenuPrincipale;
 import nezzari.projects.vue.FenetrePrincipale;
+import nezzari.projects.vue.PanneauPrincipal;
 import nezzari.projects.vue.connexion.PanneauConnexion;
 
 public class ConnexionAction extends AbstractAction {
@@ -56,6 +58,14 @@ public class ConnexionAction extends AbstractAction {
 		
 		if(utilisateur != null) {
 			fenetre.getBarreEtat().setTexte("Bienvenue " + utilisateur.getPseudo() + " !");
+			try {
+				if(Service.getUtilisateurService().estAdministrateur(utilisateur)) {
+					fenetre.getMenu().afficherMenuAdmin();
+				}
+			} catch (ServiceException e) {
+				JOptionPane.showMessageDialog(connexion.getFenetre().getFenetre(), e.getCause().getMessage(), "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+			}
+			fenetre.getPanneauPrincipal().afficherEcran(PanneauPrincipal.PANNEAU_DISCUSSION);
 		}
 		
 		

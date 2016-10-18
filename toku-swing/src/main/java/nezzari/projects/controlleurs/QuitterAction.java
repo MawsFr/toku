@@ -21,7 +21,7 @@ public class QuitterAction extends AbstractAction {
 	}
 	
 	private QuitterAction() {
-		super(BarreMenuPrincipale.MENU_QUITTER_NOM);
+		super(BarreMenuPrincipale.MENU_QUITTER);
 	}
 	
 	@Override

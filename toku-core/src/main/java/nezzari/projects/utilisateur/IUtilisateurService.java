@@ -29,5 +29,6 @@ public interface IUtilisateurService {
 	
 	public void ajouterCentreInteret(int id);
 	public void creerCentreInteret(String nom);
+	public boolean estAdministrateur(Utilisateur utilisateur) throws ServiceException;
 	
 }

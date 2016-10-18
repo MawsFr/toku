@@ -23,7 +23,7 @@ public class ToujoursVisibleAction extends AbstractAction {
 	}
 	
 	private ToujoursVisibleAction() {
-		super(BarreMenuPrincipale.MENU_TOUJOURS_VISIBLE_NOM);
+		super(BarreMenuPrincipale.MENU_TOUJOURS_VISIBLE);
 	}
 
 	@Override

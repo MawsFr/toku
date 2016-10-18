@@ -1,15 +1,20 @@
 package nezzari.projects.utilisateur;
 
 import nezzari.projects.Application;
+import nezzari.projects.Session;
 import nezzari.projects.factory.DAOFactory;
+import nezzari.projects.role.Role;
 import nezzari.projects.service.Service;
 import nezzari.projects.validateur.ValidationException;
 import nezzari.projects.validateur.Valideur;
 
 public class UtilisateurService extends Service<Utilisateur> implements IUtilisateurService {
 	private static IUtilisateurService instance;
+	private IUtilisateurDAO dao;
 	
-	protected UtilisateurService() {}
+	protected UtilisateurService() {
+		this.dao = DAOFactory.getUtilisateurDAO();
+	}
 	
 	public static IUtilisateurService getInstance() {
 		if(instance == null) {
@@ -26,7 +31,10 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 		utilisateur.setMotDePasse(motDePasse);
 		try {
 			Valideur.getUtilisateurValideur().valider(utilisateur);
-			utilisateur = DAOFactory.getUtilisateurDAO().rechercher(utilisateur);
+			utilisateur = dao.rechercher(utilisateur);
+			Session session = new Session();
+			session.setUtilisateur(utilisateur);
+			Application.getInstance().setSession(session);
 		} catch (ValidationException | DAOException e) {
 			throw new ServiceException(e);
 		}
@@ -36,6 +44,17 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 	@Override
 	public void deconnecter() {
 		Application.getInstance().getSession().setUtilisateur(null);
+	}
+	
+	@Override
+	public boolean estAdministrateur(Utilisateur utilisateur) throws ServiceException {
+		Role role;
+		try {
+			role = Role.values()[dao.getRole(utilisateur) - 1];
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+		return role == Role.ADMINISTRATEUR;
 	}
 
 	@Override
