@@ -11,7 +11,7 @@ import javax.swing.JToggleButton;
 
 import nezzari.projects.Application;
 import nezzari.projects.Constantes;
-import nezzari.projects.controlleurs.MontrerMDPAction;
+import nezzari.projects.controlleurs.composants.MontrerMDPAction;
 
 public class JShowablePaswordTextFIeld extends JPanel {
 	private static final long serialVersionUID = 1L;

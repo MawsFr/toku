@@ -1,10 +1,11 @@
-package nezzari.projects.controlleurs;
+package nezzari.projects.controlleurs.gestion.utilisateur;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import nezzari.projects.vue.BarreMenuPrincipale;
+import nezzari.projects.utilisateur.Utilisateur;
+import nezzari.projects.vue.gestion.utilisateurs.FenetreProfil;
 import nezzari.projects.vue.gestion.utilisateurs.GestionUtilisateurs;
 
 public class ModifierUtilisateurAction extends AbstractAction {
@@ -27,7 +28,7 @@ public class ModifierUtilisateurAction extends AbstractAction {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		
+		new FenetreProfil(gestionUtilisateurs.getFenetre(), FenetreProfil.ModeEdition.MODIF, gestionUtilisateurs.getUtilisateurSelectionne());
 	}
 
 }

@@ -13,7 +13,7 @@ import javax.swing.JPasswordField;
 
 import nezzari.projects.Application;
 import nezzari.projects.Constantes;
-import nezzari.projects.controlleurs.ConnexionAction;
+import nezzari.projects.controlleurs.connexion.ConnexionAction;
 import nezzari.projects.vue.FenetrePrincipale;
 import nezzari.projects.vue.composants.GBC;
 import nezzari.projects.vue.composants.JShowablePaswordTextFIeld;

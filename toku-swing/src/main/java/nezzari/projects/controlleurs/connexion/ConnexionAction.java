@@ -1,17 +1,15 @@
-package nezzari.projects.controlleurs;
+package nezzari.projects.controlleurs.connexion;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 import nezzari.projects.service.Service;
 import nezzari.projects.utilisateur.ServiceException;
 import nezzari.projects.utilisateur.Utilisateur;
 import nezzari.projects.validateur.ValidationException;
-import nezzari.projects.vue.BarreMenuPrincipale;
 import nezzari.projects.vue.FenetrePrincipale;
 import nezzari.projects.vue.PanneauPrincipal;
 import nezzari.projects.vue.connexion.PanneauConnexion;

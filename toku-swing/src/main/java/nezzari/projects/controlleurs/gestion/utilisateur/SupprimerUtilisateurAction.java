@@ -1,11 +1,12 @@
-package nezzari.projects.controlleurs;
+package nezzari.projects.controlleurs.gestion.utilisateur;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
-import nezzari.projects.vue.BarreMenuPrincipale;
+import nezzari.projects.service.Service;
+import nezzari.projects.utilisateur.Utilisateur;
 import nezzari.projects.vue.gestion.utilisateurs.GestionUtilisateurs;
 
 public class SupprimerUtilisateurAction extends AbstractAction {
@@ -28,7 +29,14 @@ public class SupprimerUtilisateurAction extends AbstractAction {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		
+		Utilisateur utilisateur = gestionUtilisateurs.getUtilisateurSelectionne();
+		if(JOptionPane.showConfirmDialog(gestionUtilisateurs.getFenetre(),
+			    "Êtes-vous sûr de vouloir supprimer l'utilisateur " + gestionUtilisateurs.getUtilisateurSelectionne().getPseudo() + " ?",
+			    "Suppression utilisateur",
+			    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			Service.getAdministrateurService().supprimerUtilisateur(utilisateur.getId());
+			
+		}
 	}
 
 }

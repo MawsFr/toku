@@ -257,7 +257,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements IUtilisateurDAO 
 		MYSQLConnexion c = MYSQLConnexion.getInstance();
 		c.initier();
 		DAOFactory.setConnexion(c.getBddConnexion());
-		Utilisateur utilisateur = new Utilisateur(1, "admin", "admin", "Administrateur","Root");
+		Utilisateur utilisateur = new Utilisateur(3, "admin", "admin", "Administrateur","Root");
 		DAOFactory.getUtilisateurDAO().creer(utilisateur);
 		utilisateur.setPseudo("Maouss");
 		DAOFactory.getUtilisateurDAO().modifier(utilisateur);

@@ -1,12 +1,17 @@
 package nezzari.projects.utilisateur.administrateur;
 
+import nezzari.projects.factory.DAOFactory;
+import nezzari.projects.utilisateur.IUtilisateurDAO;
 import nezzari.projects.utilisateur.Utilisateur;
 
 public class AdministrateurService implements IAdministrateurService {
 
 	private static IAdministrateurService instance;
+	private IUtilisateurDAO dao;
 
-	private AdministrateurService() {}
+	private AdministrateurService() {
+		this.dao = DAOFactory.getUtilisateurDAO();
+	}
 
 	public static IAdministrateurService getInstance() {
 		if(instance == null) {
@@ -18,7 +23,7 @@ public class AdministrateurService implements IAdministrateurService {
 
 	@Override
 	public void creerUtilisateur(Utilisateur utilisateur) {
-
+		dao.creer(utilisateur);
 	}
 
 	@Override

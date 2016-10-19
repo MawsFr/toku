@@ -1,6 +1,7 @@
 package nezzari.projects.vue.gestion.utilisateurs;
 
 import java.awt.Container;
+import java.awt.Dialog.ModalityType;
 import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
@@ -9,14 +10,18 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import nezzari.projects.controlleurs.AjouterUtilisateurAction;
-import nezzari.projects.controlleurs.ModifierUtilisateurAction;
-import nezzari.projects.controlleurs.SupprimerUtilisateurAction;
+import nezzari.projects.controlleurs.gestion.utilisateur.AjouterUtilisateurAction;
+import nezzari.projects.controlleurs.gestion.utilisateur.ModifierUtilisateurAction;
+import nezzari.projects.controlleurs.gestion.utilisateur.SupprimerUtilisateurAction;
+import nezzari.projects.service.Service;
 import nezzari.projects.utilisateur.Utilisateur;
 import nezzari.projects.vue.BarreMenuPrincipale;
 import nezzari.projects.vue.FenetrePrincipale;
 import nezzari.projects.vue.composants.GBC;
 import nezzari.projects.vue.composants.JTextFieldHint;
+import nezzari.projects.vue.composants.fenetre.Fermable;
+import nezzari.projects.vue.composants.fenetre.Annulable;
+import nezzari.projects.vue.composants.fenetre.Validable;
 
 public class GestionUtilisateurs {
 	public static final String AJOUTER_UTILISATEUR = "Ajouter";
@@ -35,7 +40,7 @@ public class GestionUtilisateurs {
 	private Utilisateur utilisateurSelectionne;
 	
 	public GestionUtilisateurs() {
-		fenetre = new JDialog(FenetrePrincipale.getInstance().getFenetre(), BarreMenuPrincipale.MENU_GERER_UTILISATEURS, true);
+		fenetre = new JDialog(FenetrePrincipale.getInstance().getFenetre(), BarreMenuPrincipale.MENU_GERER_UTILISATEURS, ModalityType.APPLICATION_MODAL);
 		utilisateurs = new JTable();
 		btnAjouter = new JButton(AjouterUtilisateurAction.getInstance(this));
 		btnModifier = new JButton(ModifierUtilisateurAction.getInstance(this));
@@ -55,6 +60,7 @@ public class GestionUtilisateurs {
 		gbc.descendre().ajouter(btnSupprimer);
 		
 		
+		fenetre.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		fenetre.pack();
 		fenetre.setResizable(false);
 		fenetre.setLocationRelativeTo(null);

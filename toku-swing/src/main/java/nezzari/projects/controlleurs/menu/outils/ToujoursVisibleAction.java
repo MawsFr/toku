@@ -1,4 +1,4 @@
-package nezzari.projects.controlleurs;
+package nezzari.projects.controlleurs.menu.outils;
 
 import java.awt.event.ActionEvent;
 

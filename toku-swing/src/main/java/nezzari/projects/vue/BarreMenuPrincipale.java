@@ -6,10 +6,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import nezzari.projects.OutilsSwing;
-import nezzari.projects.controlleurs.GestionUtilisateursAction;
-import nezzari.projects.controlleurs.OptionAction;
-import nezzari.projects.controlleurs.QuitterAction;
-import nezzari.projects.controlleurs.ToujoursVisibleAction;
+import nezzari.projects.controlleurs.menu.admin.GestionUtilisateursAction;
+import nezzari.projects.controlleurs.menu.fichier.QuitterAction;
+import nezzari.projects.controlleurs.menu.outils.OptionAction;
+import nezzari.projects.controlleurs.menu.outils.ToujoursVisibleAction;
 
 public class BarreMenuPrincipale extends JMenuBar {
 
