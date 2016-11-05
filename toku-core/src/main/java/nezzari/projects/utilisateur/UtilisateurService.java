@@ -2,9 +2,11 @@ package nezzari.projects.utilisateur;
 
 import nezzari.projects.Application;
 import nezzari.projects.Session;
+import nezzari.projects.factory.DAOException;
 import nezzari.projects.factory.DAOFactory;
 import nezzari.projects.role.Role;
 import nezzari.projects.service.Service;
+import nezzari.projects.service.ServiceException;
 import nezzari.projects.validateur.ValidationException;
 import nezzari.projects.validateur.Valideur;
 
@@ -43,7 +45,7 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 	
 	@Override
 	public void deconnecter() {
-		Application.getInstance().getSession().setUtilisateur(null);
+		Application.getInstance().setSession(null);
 	}
 	
 	@Override

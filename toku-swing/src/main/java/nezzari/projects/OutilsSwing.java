@@ -10,6 +10,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import org.junit.runners.ParentRunner;
+
+import nezzari.projects.controlleurs.connexion.DeconnexionAction;
+
 public class OutilsSwing {
 	/*
 	 * Menu
@@ -34,6 +38,13 @@ public class OutilsSwing {
 		return parent.add(new JMenuItem(action));
 	}
 	
+	public static JMenuItem creerSousMenuDesactive(JMenu parent, AbstractAction action) {
+		JMenuItem menu = new JMenuItem(action);
+		parent.add(menu);
+		menu.setEnabled(false);
+		return menu;
+	}
+	
 	public static JCheckBoxMenuItem creerSousMenuCochable(JMenu parent, AbstractAction action) {
 		JCheckBoxMenuItem cbmenu = new JCheckBoxMenuItem(action);
 		parent.add(cbmenu);
@@ -51,5 +62,6 @@ public class OutilsSwing {
 			component.setMinimumSize(component.getPreferredSize());
 		}
 	}
+
 
 }

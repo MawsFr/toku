@@ -17,6 +17,10 @@ public class Application {
 		
 	}
 	
+	public void deconnecter() {
+		setSession(null);
+	}
+	
 	public Session getSession() {
 		return session;
 	}

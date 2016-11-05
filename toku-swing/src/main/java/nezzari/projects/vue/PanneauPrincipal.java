@@ -5,7 +5,7 @@ import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 import nezzari.projects.vue.connexion.PanneauConnexion;
-import nezzari.projects.vue.discussion.PanneauDiscussion;
+import nezzari.projects.vue.discussion.PanneauAccueil;
 
 public class PanneauPrincipal extends JPanel {
 
@@ -16,7 +16,7 @@ public class PanneauPrincipal extends JPanel {
 	private CardLayout panneaux;
 	
 	private PanneauConnexion panneauConnexion;
-	private PanneauDiscussion panneauDiscussion;
+	private PanneauAccueil panneauDiscussion;
 	
 	public PanneauPrincipal(FenetrePrincipale fenetre) {
 		this.fenetre = fenetre;
@@ -24,7 +24,7 @@ public class PanneauPrincipal extends JPanel {
 		this.setLayout(panneaux);
 		
 		panneauConnexion = new PanneauConnexion(fenetre);
-		panneauDiscussion = new PanneauDiscussion(fenetre);
+		panneauDiscussion = new PanneauAccueil(fenetre);
 		
 		this.add(panneauConnexion, PANNEAU_CONNEXION);
 		this.add(panneauDiscussion, PANNEAU_DISCUSSION);
@@ -34,7 +34,7 @@ public class PanneauPrincipal extends JPanel {
 		return panneauConnexion;
 	}
 	
-	public PanneauDiscussion getPanneauDiscussion() {
+	public PanneauAccueil getPanneauDiscussion() {
 		return panneauDiscussion;
 	}
 	

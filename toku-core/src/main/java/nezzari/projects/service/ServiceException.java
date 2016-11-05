@@ -1,4 +1,4 @@
-package nezzari.projects.utilisateur;
+package nezzari.projects.service;
 
 public class ServiceException extends Exception {
 

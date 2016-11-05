@@ -6,6 +6,7 @@ import javax.swing.SwingUtilities;
 
 import nezzari.projects.Application;
 import nezzari.projects.connexions.mysql.MYSQLConnexion;
+import nezzari.projects.factory.DAOException;
 import nezzari.projects.factory.DAOFactory;
 
 /**
@@ -15,6 +16,8 @@ import nezzari.projects.factory.DAOFactory;
  *
  */
 public class Main {
+	
+	private static final String MDP = "root";
 
 	private Main() {}
 
@@ -27,9 +30,10 @@ public class Main {
 		MYSQLConnexion c;
 		try {
 			c = MYSQLConnexion.getInstance();
+			c.getConfig().setMdp(MDP);
 			c.initier();
 			DAOFactory.setConnexion(c.getBddConnexion());
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 			System.exit(0);
 		}

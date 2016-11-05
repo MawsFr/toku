@@ -1,5 +1,6 @@
 package nezzari.projects.utilisateur;
 
+import nezzari.projects.service.ServiceException;
 import nezzari.projects.validateur.ValidationException;
 
 public interface IUtilisateurService {

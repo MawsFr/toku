@@ -18,7 +18,7 @@ import nezzari.projects.controlleurs.composants.AnnulerAction;
 import nezzari.projects.controlleurs.composants.ValiderAction;
 import nezzari.projects.role.Role;
 import nezzari.projects.service.Service;
-import nezzari.projects.utilisateur.ServiceException;
+import nezzari.projects.service.ServiceException;
 import nezzari.projects.utilisateur.Utilisateur;
 import nezzari.projects.vue.composants.GBC;
 import nezzari.projects.vue.composants.JShowablePaswordTextFIeld;

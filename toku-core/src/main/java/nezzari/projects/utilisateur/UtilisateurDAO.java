@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import nezzari.projects.connexions.mysql.MYSQLConnexion;
 import nezzari.projects.factory.DAO;
+import nezzari.projects.factory.DAOException;
 import nezzari.projects.factory.DAOFactory;
 import nezzari.projects.utils.Log;
 
@@ -253,7 +254,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements IUtilisateurDAO 
 		return role;
 	}
 	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException, DAOException {
 		MYSQLConnexion c = MYSQLConnexion.getInstance();
 		c.initier();
 		DAOFactory.setConnexion(c.getBddConnexion());

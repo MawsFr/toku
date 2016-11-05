@@ -28,6 +28,7 @@ public class JShowablePaswordTextFIeld extends JPanel {
 		ImageIcon icon = new ImageIcon(img);
 		
 		JToggleButton montrer = new JToggleButton(icon);
+		montrer.setFocusable(false);
 		montrer.addActionListener(new MontrerMDPAction(password, password.getEchoChar()));
 		montrer.setPreferredSize(new Dimension(30, 15));
 		montrer.setMinimumSize(new Dimension(30, 15));

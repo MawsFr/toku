@@ -1,5 +1,7 @@
 package nezzari.projects.utilisateur;
 
+import nezzari.projects.factory.DAOException;
+
 public interface IUtilisateurDAO {
 
 	public static final String RECHERCHER_UTILISATEUR = "SELECT * FROM UTILISATEUR WHERE id = ?";

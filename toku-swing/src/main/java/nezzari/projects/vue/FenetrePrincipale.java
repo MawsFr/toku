@@ -1,16 +1,14 @@
 package nezzari.projects.vue;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import nezzari.projects.Application;
+import nezzari.projects.Constantes;
 import nezzari.projects.OutilsSwing;
 
 public class FenetrePrincipale {
@@ -51,7 +49,7 @@ public class FenetrePrincipale {
 		c.add(panneauPrincipal, BorderLayout.CENTER);
 		c.add(barreEtat, BorderLayout.SOUTH);
 		
-		
+		fenetre.setIconImage(Toolkit.getDefaultToolkit().getImage(Application.class.getResource(Constantes.CHEMIN_APP_ICONE)));
 		
 		final Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
 		fenetre.setSize(tailleEcran.width * POURCENTAGE_LONGUEUR / 100, tailleEcran.height - ESPACE_LARGEUR);

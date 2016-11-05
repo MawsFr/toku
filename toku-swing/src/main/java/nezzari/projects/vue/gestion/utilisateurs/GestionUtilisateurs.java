@@ -13,15 +13,11 @@ import javax.swing.JTable;
 import nezzari.projects.controlleurs.gestion.utilisateur.AjouterUtilisateurAction;
 import nezzari.projects.controlleurs.gestion.utilisateur.ModifierUtilisateurAction;
 import nezzari.projects.controlleurs.gestion.utilisateur.SupprimerUtilisateurAction;
-import nezzari.projects.service.Service;
 import nezzari.projects.utilisateur.Utilisateur;
 import nezzari.projects.vue.BarreMenuPrincipale;
 import nezzari.projects.vue.FenetrePrincipale;
 import nezzari.projects.vue.composants.GBC;
 import nezzari.projects.vue.composants.JTextFieldHint;
-import nezzari.projects.vue.composants.fenetre.Fermable;
-import nezzari.projects.vue.composants.fenetre.Annulable;
-import nezzari.projects.vue.composants.fenetre.Validable;
 
 public class GestionUtilisateurs {
 	public static final String AJOUTER_UTILISATEUR = "Ajouter";

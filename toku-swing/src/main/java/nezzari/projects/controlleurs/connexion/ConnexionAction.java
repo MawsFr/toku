@@ -7,7 +7,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
 import nezzari.projects.service.Service;
-import nezzari.projects.utilisateur.ServiceException;
+import nezzari.projects.service.ServiceException;
 import nezzari.projects.utilisateur.Utilisateur;
 import nezzari.projects.validateur.ValidationException;
 import nezzari.projects.vue.FenetrePrincipale;
@@ -64,6 +64,7 @@ public class ConnexionAction extends AbstractAction {
 				JOptionPane.showMessageDialog(connexion.getFenetre().getFenetre(), e.getCause().getMessage(), "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
 			}
 			fenetre.getPanneauPrincipal().afficherEcran(PanneauPrincipal.PANNEAU_DISCUSSION);
+			fenetre.getMenu().getMenuDeconnecter().setEnabled(true);
 		}
 		
 		

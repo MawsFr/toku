@@ -6,6 +6,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import nezzari.projects.OutilsSwing;
+import nezzari.projects.controlleurs.connexion.DeconnexionAction;
 import nezzari.projects.controlleurs.menu.admin.GestionUtilisateursAction;
 import nezzari.projects.controlleurs.menu.fichier.QuitterAction;
 import nezzari.projects.controlleurs.menu.outils.OptionAction;
@@ -15,6 +16,7 @@ public class BarreMenuPrincipale extends JMenuBar {
 
 	private static final long serialVersionUID = 1L;
 	public static final String MENU_FICHIER = "Fichier";
+	public static final String MENU_DECONNECTER = "Se déconnecter";
 	public static final String MENU_QUITTER = "Quitter";
 	
 	public static final String MENU_CONTACTS = "Contacts";
@@ -36,6 +38,7 @@ public class BarreMenuPrincipale extends JMenuBar {
 	
 	// Menu Fichier
 	private JMenu menuFichier;
+	private JMenuItem menuDeconnecter;
 	private JMenuItem menuQuitter;
 
 	// Menu Contacts
@@ -60,6 +63,7 @@ public class BarreMenuPrincipale extends JMenuBar {
 
 	public BarreMenuPrincipale() {
 		menuFichier = OutilsSwing.creerMenu(MENU_FICHIER, this);
+		menuDeconnecter = OutilsSwing.creerSousMenuDesactive(menuFichier, DeconnexionAction.getInstance());
 		menuQuitter = OutilsSwing.creerSousMenu(menuFichier, QuitterAction.getInstance());
 
 		menuContacts = OutilsSwing.creerMenu(MENU_CONTACTS, this);
@@ -91,4 +95,96 @@ public class BarreMenuPrincipale extends JMenuBar {
 	public void cacherMenuModerateur() {
 		menuModerateur.setVisible(false);
 	}
+
+	public JMenu getMenuFichier() {
+		return menuFichier;
+	}
+
+	public JMenuItem getMenuDeconnecter() {
+		return menuDeconnecter;
+	}
+
+	public JMenuItem getMenuQuitter() {
+		return menuQuitter;
+	}
+
+	public JMenu getMenuContacts() {
+		return menuContacts;
+	}
+
+	public JMenu getMenuActions() {
+		return menuActions;
+	}
+
+	public JMenu getMenuOutils() {
+		return menuOutils;
+	}
+
+	public JMenuItem getMenuOptions() {
+		return menuOptions;
+	}
+
+	public JCheckBoxMenuItem getMenuToujourVisible() {
+		return menuToujourVisible;
+	}
+
+	public JMenu getMenuModerateur() {
+		return menuModerateur;
+	}
+
+	public JMenu getMenuAdmin() {
+		return menuAdmin;
+	}
+
+	public JMenuItem getMenuGererUtilisateurs() {
+		return menuGererUtilisateurs;
+	}
+
+	public void setMenuFichier(JMenu menuFichier) {
+		this.menuFichier = menuFichier;
+	}
+
+	public void setMenuDeconnecter(JMenuItem menuDeconnecter) {
+		this.menuDeconnecter = menuDeconnecter;
+	}
+
+	public void setMenuQuitter(JMenuItem menuQuitter) {
+		this.menuQuitter = menuQuitter;
+	}
+
+	public void setMenuContacts(JMenu menuContacts) {
+		this.menuContacts = menuContacts;
+	}
+
+	public void setMenuActions(JMenu menuActions) {
+		this.menuActions = menuActions;
+	}
+
+	public void setMenuOutils(JMenu menuOutils) {
+		this.menuOutils = menuOutils;
+	}
+
+	public void setMenuOptions(JMenuItem menuOptions) {
+		this.menuOptions = menuOptions;
+	}
+
+	public void setMenuToujourVisible(JCheckBoxMenuItem menuToujourVisible) {
+		this.menuToujourVisible = menuToujourVisible;
+	}
+
+	public void setMenuModerateur(JMenu menuModerateur) {
+		this.menuModerateur = menuModerateur;
+	}
+
+	public void setMenuAdmin(JMenu menuAdmin) {
+		this.menuAdmin = menuAdmin;
+	}
+
+	public void setMenuGererUtilisateurs(JMenuItem menuGererUtilisateurs) {
+		this.menuGererUtilisateurs = menuGererUtilisateurs;
+	}
+	
+	
+	
+	
 }
