@@ -4,19 +4,19 @@ import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
+import nezzari.projects.vue.accueil.PanneauAccueil;
 import nezzari.projects.vue.connexion.PanneauConnexion;
-import nezzari.projects.vue.discussion.PanneauAccueil;
 
 public class PanneauPrincipal extends JPanel {
 
 	public static final String PANNEAU_CONNEXION = "Panneau de connexion";
-	public static final String PANNEAU_DISCUSSION = "Panneau de discussion";
+	public static final String PANNEAU_ACCUEIL = "Panneau d'accueil";
 	
 	private FenetrePrincipale fenetre;
 	private CardLayout panneaux;
 	
 	private PanneauConnexion panneauConnexion;
-	private PanneauAccueil panneauDiscussion;
+	private PanneauAccueil panneauAccueil;
 	
 	public PanneauPrincipal(FenetrePrincipale fenetre) {
 		this.fenetre = fenetre;
@@ -24,18 +24,18 @@ public class PanneauPrincipal extends JPanel {
 		this.setLayout(panneaux);
 		
 		panneauConnexion = new PanneauConnexion(fenetre);
-		panneauDiscussion = new PanneauAccueil(fenetre);
+		panneauAccueil = new PanneauAccueil(fenetre);
 		
 		this.add(panneauConnexion, PANNEAU_CONNEXION);
-		this.add(panneauDiscussion, PANNEAU_DISCUSSION);
+		this.add(panneauAccueil, PANNEAU_ACCUEIL);
 	}
 	
 	public PanneauConnexion getPanneauConnexion() {
 		return panneauConnexion;
 	}
 	
-	public PanneauAccueil getPanneauDiscussion() {
-		return panneauDiscussion;
+	public PanneauAccueil getPanneauAccueil() {
+		return panneauAccueil;
 	}
 	
 	public void afficherEcran(String ecran) {

@@ -1,8 +1,9 @@
 package nezzari.projects.vue;
 
-import java.sql.SQLException;
-
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import nezzari.projects.Application;
 import nezzari.projects.connexions.mysql.MYSQLConnexion;
@@ -50,6 +51,14 @@ public class Main {
 //						}
 //					}
 //				} catch (Exception e) {}
+				
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+						| UnsupportedLookAndFeelException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 				FenetrePrincipale.getInstance().setApplication(application);
 			}

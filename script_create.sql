@@ -41,9 +41,10 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `id_role` INT NOT NULL DEFAULT 0,
   `pseudo` VARCHAR(45) NOT NULL,
-  `mot_de_passe` VARCHAR(45) NOT NULL,
+  `mot_de_passe` CHAR(32) NOT NULL,
   `nom` VARCHAR(45) NOT NULL,
   `prenom` VARCHAR(45) NOT NULL,
+  `avatar` VARCHAR(2083),
   PRIMARY KEY (`id`, `id_role`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   UNIQUE INDEX `id_compte_UNIQUE` (`pseudo` ASC),
@@ -105,8 +106,6 @@ CREATE TABLE IF NOT EXISTS `utilisateur_amis` (
   PRIMARY KEY (`id_utilisateur`, `id_ami`),
   INDEX `fk_utilisateur_has_utilisateur_utilisateur2_idx` (`id_ami` ASC),
   INDEX `fk_utilisateur_has_utilisateur_utilisateur1_idx` (`id_utilisateur` ASC),
-  UNIQUE INDEX `id_ami_UNIQUE` (`id_ami` ASC),
-  UNIQUE INDEX `id_utilisateur_UNIQUE` (`id_utilisateur` ASC),
   CONSTRAINT `fk_utilisateur_amis_id_utilisateur`
     FOREIGN KEY (`id_utilisateur`)
     REFERENCES `utilisateur` (`id`)

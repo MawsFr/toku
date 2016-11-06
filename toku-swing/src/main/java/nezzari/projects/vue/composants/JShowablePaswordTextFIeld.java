@@ -10,8 +10,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JToggleButton;
 
 import nezzari.projects.Application;
-import nezzari.projects.Constantes;
 import nezzari.projects.controlleurs.composants.MontrerMDPAction;
+import nezzari.projects.utils.Constantes;
 
 public class JShowablePaswordTextFIeld extends JPanel {
 	private static final long serialVersionUID = 1L;
