@@ -4,26 +4,26 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import nezzari.projects.vue.composants.fenetre.Validable;
+import nezzari.projects.vue.composants.fenetre.Annulable;
 
 public class AnnulerAction extends AbstractAction {
 	
-	public static final String NOM_PAR_DEFAUT = "Ok";
+	public static final String NOM_PAR_DEFAUT = "Annuler";
 	
-	private Validable fenetre;
+	private Annulable fenetre;
 	
-	public AnnulerAction(Validable fenetre) {
+	public AnnulerAction(Annulable fenetre) {
 		this(fenetre, NOM_PAR_DEFAUT);
 	}
 	
-	public AnnulerAction(Validable fenetre, String nomBouton) {
+	public AnnulerAction(Annulable fenetre, String nomBouton) {
 		super(nomBouton);
 		this.fenetre = fenetre;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		fenetre.valider();
+		fenetre.annuler();
 	}
 
 }
