@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import nezzari.projects.connexions.mysql.MYSQLConnexion;
 import nezzari.projects.factory.DAO;
+import nezzari.projects.factory.DAOException;
 import nezzari.projects.factory.DAOFactory;
 import nezzari.projects.utils.Log;
 
@@ -171,7 +172,7 @@ public class GroupeDAO extends DAO<Groupe> {
 		return trouve ? groupe : null;
 	}
 
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException, DAOException {
 		MYSQLConnexion c = MYSQLConnexion.getInstance();
 		c.initier();
 		DAOFactory.setConnexion(c.getBddConnexion());

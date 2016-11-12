@@ -1,22 +1,39 @@
 package nezzari.projects.utilisateur;
 
+import java.util.List;
+
+import nezzari.projects.factory.DAOException;
+import nezzari.projects.factory.IObjetDomaine;
+import nezzari.projects.visiteur.Visiteur;
+
 /**
  * Cette classe represente un utilisateur
  * @author Mustapha NEZZARI
  *
  */
-public class Utilisateur {
+/**
+ * @author maws
+ *
+ */
+public class Utilisateur extends IObjetDomaine {
 	private int id;
 	private int role;
 	private String pseudo;
 	private String nom;
 	private String prenom;
 	private String motDePasse;
+	private String avatar;
 	
-	public Utilisateur() {}
+	private ListeAmis amis;
 	
-	public Utilisateur(int role, String pseudo, String motDePasse, String nom, String prenom) {
+	public Utilisateur() {
+		this.amis = new ListeAmis(this);
+	}
+	
+	public Utilisateur(int role, String pseudo, String motDePasse, String nom, String prenom, String avatar) {
+		this();
 		this.role = role;
+		this.avatar = avatar;
 		this.pseudo = pseudo;
 		this.nom = nom;
 		this.prenom = prenom;
@@ -31,6 +48,14 @@ public class Utilisateur {
 		this.id = id;
 	}
 	
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
 	public int getRole() {
 		return role;
 	}
@@ -70,5 +95,19 @@ public class Utilisateur {
 	public void setMotDePasse(String motDePasse) {
 		this.motDePasse = motDePasse;
 	}
+
+	public ListeAmis getAmis() {
+		return amis;
+	}
+
+	public void setAmis(ListeAmis amis) {
+		this.amis = amis;
+	}
+
+	@Override
+	public void accept(Visiteur visitor) throws DAOException {
+		visitor.visit(this);
+	}
+	
 	
 }

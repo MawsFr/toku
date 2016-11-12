@@ -18,7 +18,7 @@ import nezzari.projects.controlleurs.composants.AnnulerAction;
 import nezzari.projects.controlleurs.composants.ValiderAction;
 import nezzari.projects.role.Role;
 import nezzari.projects.service.Service;
-import nezzari.projects.utilisateur.ServiceException;
+import nezzari.projects.service.ServiceException;
 import nezzari.projects.utilisateur.Utilisateur;
 import nezzari.projects.vue.composants.GBC;
 import nezzari.projects.vue.composants.JShowablePaswordTextFIeld;
@@ -119,7 +119,11 @@ public class FenetreProfil implements Validable, Annulable, Fermable {
 		utilisateur.setNom(txtNom.getText());
 		utilisateur.setPrenom(txtPrenom.getText());
 		utilisateur.setRole(comboRole.getSelectedIndex() + 1);
-		Service.getAdministrateurService().creerUtilisateur(utilisateur);
+		try {
+			Service.getAdministrateurService().creerUtilisateur(utilisateur);
+		} catch (ServiceException e) {
+			e.printStackTrace(); // ERREUR
+		}
 		if(okEtNouveau.isSelected()) {
 			txtPseudo.setText("");
 			txtMDP.getPassword().setText("");;

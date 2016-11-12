@@ -1,4 +1,4 @@
-package nezzari.projects.utilisateur;
+package nezzari.projects.factory;
 
 public class DAOException extends Exception {
 

@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import nezzari.projects.connexions.mysql.MYSQLConnexion;
 import nezzari.projects.factory.DAO;
+import nezzari.projects.factory.DAOException;
 import nezzari.projects.factory.DAOFactory;
 import nezzari.projects.utils.Log;
 
@@ -47,6 +48,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements IUtilisateurDAO 
 			ps.setString(3, utilisateur.getMotDePasse());
 			ps.setString(4, utilisateur.getNom());
 			ps.setString(5, utilisateur.getPrenom());
+			ps.setString(6, utilisateur.getAvatar());
 			ps.executeUpdate();
 			connexion.commit();
 			resultat = ps.getGeneratedKeys();
@@ -120,7 +122,8 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements IUtilisateurDAO 
 			ps.setString(3, utilisateur.getMotDePasse());
 			ps.setString(4, utilisateur.getNom());
 			ps.setString(5, utilisateur.getPrenom());
-			ps.setInt(6, utilisateur.getId());
+			ps.setString(6, utilisateur.getAvatar());
+			ps.setInt(7, utilisateur.getId());
 			ps.executeUpdate();
 			connexion.commit();
 			Log.info("Utilisateur d'id  [" + utilisateur.getId() + "] modifié");
@@ -164,6 +167,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements IUtilisateurDAO 
 				utilisateur.setMotDePasse(resultat.getString(4));
 				utilisateur.setNom(resultat.getString(5));
 				utilisateur.setPrenom(resultat.getString(6));
+				utilisateur.setAvatar(resultat.getString(7));
 			}
 			Log.info(trouve ? "Utilisateur d'id  [" + utilisateur.getId() + "] trouvé" : "Aucun utilisateur trouvé");
 		} catch (SQLException e) {
@@ -199,6 +203,8 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements IUtilisateurDAO 
 				utilisateur.setRole(resultat.getInt(2));
 				utilisateur.setNom(resultat.getString(5));
 				utilisateur.setPrenom(resultat.getString(6));
+				utilisateur.setAvatar(resultat.getString(7));
+				
 			} else {
 				throw new DAOException("Aucun utilisateur trouvé avec ces informations");
 			}
@@ -253,11 +259,11 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements IUtilisateurDAO 
 		return role;
 	}
 	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException, DAOException {
 		MYSQLConnexion c = MYSQLConnexion.getInstance();
 		c.initier();
 		DAOFactory.setConnexion(c.getBddConnexion());
-		Utilisateur utilisateur = new Utilisateur(3, "admin", "admin", "Administrateur","Root");
+		Utilisateur utilisateur = new Utilisateur(3, null, "admin", "admin", "Administrateur","Root");
 		DAOFactory.getUtilisateurDAO().creer(utilisateur);
 		utilisateur.setPseudo("Maouss");
 		DAOFactory.getUtilisateurDAO().modifier(utilisateur);
@@ -268,6 +274,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements IUtilisateurDAO 
 		Log.info("Mdp : " + trouve.getMotDePasse());
 		Log.info("Nom : " + trouve.getNom());
 		Log.info("Prenom : " + trouve.getPrenom());
+		Log.info("Avatar : " + trouve.getAvatar());
 		DAOFactory.getUtilisateurDAO().supprimer(utilisateur.getId());
 		trouve = DAOFactory.getUtilisateurDAO().rechercher(utilisateur.getId());
 		DAOFactory.fermerConnexion();

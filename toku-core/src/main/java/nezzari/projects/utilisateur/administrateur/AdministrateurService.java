@@ -1,6 +1,9 @@
 package nezzari.projects.utilisateur.administrateur;
 
+import nezzari.projects.cryptage.CryptageException;
+import nezzari.projects.cryptage.CrypteurMD5;
 import nezzari.projects.factory.DAOFactory;
+import nezzari.projects.service.ServiceException;
 import nezzari.projects.utilisateur.IUtilisateurDAO;
 import nezzari.projects.utilisateur.Utilisateur;
 
@@ -22,7 +25,12 @@ public class AdministrateurService implements IAdministrateurService {
 	}
 
 	@Override
-	public void creerUtilisateur(Utilisateur utilisateur) {
+	public void creerUtilisateur(Utilisateur utilisateur) throws ServiceException {
+		try {
+			utilisateur.setMotDePasse(new CrypteurMD5().crypter(utilisateur.getMotDePasse()));
+		} catch (CryptageException e) {
+			throw new ServiceException(e);
+		}
 		dao.creer(utilisateur);
 	}
 

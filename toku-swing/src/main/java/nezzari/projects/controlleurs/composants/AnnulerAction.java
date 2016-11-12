@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import nezzari.projects.vue.composants.fenetre.Annulable;
+import nezzari.projects.vue.composants.fenetre.Validable;
 
 public class AnnulerAction extends AbstractAction {
 	

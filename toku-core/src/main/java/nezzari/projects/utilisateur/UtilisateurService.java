@@ -2,9 +2,13 @@ package nezzari.projects.utilisateur;
 
 import nezzari.projects.Application;
 import nezzari.projects.Session;
+import nezzari.projects.cryptage.CryptageException;
+import nezzari.projects.cryptage.CrypteurMD5;
+import nezzari.projects.factory.DAOException;
 import nezzari.projects.factory.DAOFactory;
 import nezzari.projects.role.Role;
 import nezzari.projects.service.Service;
+import nezzari.projects.service.ServiceException;
 import nezzari.projects.validateur.ValidationException;
 import nezzari.projects.validateur.Valideur;
 
@@ -28,14 +32,14 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 	public Utilisateur connecter(String pseudo, String motDePasse) throws ServiceException, ValidationException {
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setPseudo(pseudo);
-		utilisateur.setMotDePasse(motDePasse);
 		try {
+			utilisateur.setMotDePasse(new CrypteurMD5().crypter(motDePasse));
 			Valideur.getUtilisateurValideur().valider(utilisateur);
 			utilisateur = dao.rechercher(utilisateur);
 			Session session = new Session();
 			session.setUtilisateur(utilisateur);
 			Application.getInstance().setSession(session);
-		} catch (ValidationException | DAOException e) {
+		} catch (ValidationException | DAOException | CryptageException e) {
 			throw new ServiceException(e);
 		}
 		return utilisateur;
@@ -43,7 +47,7 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 	
 	@Override
 	public void deconnecter() {
-		Application.getInstance().getSession().setUtilisateur(null);
+		Application.getInstance().setSession(null);
 	}
 	
 	@Override

@@ -10,8 +10,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JToggleButton;
 
 import nezzari.projects.Application;
-import nezzari.projects.Constantes;
 import nezzari.projects.controlleurs.composants.MontrerMDPAction;
+import nezzari.projects.utils.Constantes;
 
 public class JShowablePaswordTextFIeld extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -28,6 +28,7 @@ public class JShowablePaswordTextFIeld extends JPanel {
 		ImageIcon icon = new ImageIcon(img);
 		
 		JToggleButton montrer = new JToggleButton(icon);
+		montrer.setFocusable(false);
 		montrer.addActionListener(new MontrerMDPAction(password, password.getEchoChar()));
 		montrer.setPreferredSize(new Dimension(30, 15));
 		montrer.setMinimumSize(new Dimension(30, 15));

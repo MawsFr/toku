@@ -1,11 +1,13 @@
 package nezzari.projects.vue;
 
-import java.sql.SQLException;
-
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import nezzari.projects.Application;
 import nezzari.projects.connexions.mysql.MYSQLConnexion;
+import nezzari.projects.factory.DAOException;
 import nezzari.projects.factory.DAOFactory;
 
 /**
@@ -15,6 +17,8 @@ import nezzari.projects.factory.DAOFactory;
  *
  */
 public class Main {
+	
+	private static final String MDP = "root";
 
 	private Main() {}
 
@@ -27,9 +31,10 @@ public class Main {
 		MYSQLConnexion c;
 		try {
 			c = MYSQLConnexion.getInstance();
+			c.getConfig().setMdp(MDP);
 			c.initier();
 			DAOFactory.setConnexion(c.getBddConnexion());
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 			System.exit(0);
 		}
@@ -46,6 +51,14 @@ public class Main {
 //						}
 //					}
 //				} catch (Exception e) {}
+				
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+						| UnsupportedLookAndFeelException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 				FenetrePrincipale.getInstance().setApplication(application);
 			}

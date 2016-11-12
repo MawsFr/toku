@@ -1,11 +1,15 @@
 package nezzari.projects.groupe;
 
+import nezzari.projects.factory.DAOException;
+import nezzari.projects.factory.IObjetDomaine;
+import nezzari.projects.visiteur.Visiteur;
+
 /**
  * Cette classe represente un groupe
  * @author Mustapha NEZZARI
  *
  */
-public class Groupe {
+public class Groupe extends IObjetDomaine {
 	private int id;
 	private int createur;
 	private String nom;
@@ -50,9 +54,9 @@ public class Groupe {
 	public void setModerateur(int moderateur) {
 		this.moderateur = moderateur;
 	}
-	
-	
 
-	
-	
+	@Override
+	public void accept(Visiteur visitor) throws DAOException {
+		visitor.visit(this);
+	}
 }
