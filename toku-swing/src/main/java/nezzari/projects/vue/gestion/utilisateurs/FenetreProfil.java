@@ -10,6 +10,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import nezzari.projects.Application;
@@ -25,6 +26,7 @@ import nezzari.projects.vue.composants.JShowablePaswordTextFIeld;
 import nezzari.projects.vue.composants.fenetre.Annulable;
 import nezzari.projects.vue.composants.fenetre.Fermable;
 import nezzari.projects.vue.composants.fenetre.Validable;
+import nezzari.projects.vue.composants.focusable.FocusableTextField;
 
 public class FenetreProfil implements Validable, Annulable, Fermable {
 	public static enum ModeEdition {
@@ -42,10 +44,10 @@ public class FenetreProfil implements Validable, Annulable, Fermable {
 	private Container c;
 	private Utilisateur utilisateur;
 	
-	private JTextField txtPseudo;
+	private FocusableTextField txtPseudo;
 	private JShowablePaswordTextFIeld txtMDP;
-	private JTextField txtNom;
-	private JTextField txtPrenom;
+	private FocusableTextField txtNom;
+	private FocusableTextField txtPrenom;
 	private JComboBox<Role> comboRole;
 	
 	private JButton btnOk;
@@ -57,10 +59,10 @@ public class FenetreProfil implements Validable, Annulable, Fermable {
 		c = fenetre.getContentPane();
 		this.utilisateur = utilisateur;
 		
-		txtPseudo = new JTextField();
+		txtPseudo = new FocusableTextField();
 		txtMDP = new JShowablePaswordTextFIeld();
-		txtNom = new JTextField();
-		txtPrenom = new JTextField();
+		txtNom = new FocusableTextField();
+		txtPrenom = new FocusableTextField();
 		comboRole = new JComboBox<>(Role.values());
 		
 		OutilsSwing.setTaille(150, 20, txtPseudo, txtMDP, txtNom, txtPrenom, comboRole);
@@ -185,7 +187,7 @@ public class FenetreProfil implements Validable, Annulable, Fermable {
 		return txtPseudo;
 	}
 
-	public void setTxtPseudo(JTextField txtPseudo) {
+	public void setTxtPseudo(FocusableTextField txtPseudo) {
 		this.txtPseudo = txtPseudo;
 	}
 
@@ -201,7 +203,7 @@ public class FenetreProfil implements Validable, Annulable, Fermable {
 		return txtNom;
 	}
 
-	public void setTxtNom(JTextField txtNom) {
+	public void setTxtNom(FocusableTextField txtNom) {
 		this.txtNom = txtNom;
 	}
 
@@ -209,7 +211,7 @@ public class FenetreProfil implements Validable, Annulable, Fermable {
 		return txtPrenom;
 	}
 
-	public void setTxtPrenom(JTextField txtPrenom) {
+	public void setTxtPrenom(FocusableTextField txtPrenom) {
 		this.txtPrenom = txtPrenom;
 	}
 

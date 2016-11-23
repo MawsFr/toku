@@ -79,8 +79,8 @@ public class PanneauConnexion extends JPanel {
 		return txtPseudo;
 	}
 	
-	public JPasswordField getTxtMdp() {
-		return txtMdp.getPassword();
+	public JShowablePaswordTextFIeld getTxtMdp() {
+		return txtMdp;
 	}
 	
 	public FenetrePrincipale getFenetre() {

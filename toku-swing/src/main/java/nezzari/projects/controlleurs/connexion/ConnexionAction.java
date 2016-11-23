@@ -42,7 +42,7 @@ public class ConnexionAction extends AbstractAction {
 	public void actionPerformed(final ActionEvent arg0) {
 		fenetre.getBarreEtat().setEnCours();
 		final String pseudo = connexion.getTxtPseudo().getText();
-		final String mdp = new String(connexion.getTxtMdp().getPassword());
+		final String mdp = new String(connexion.getTxtMdp().getPassword().getPassword());
 		
 		Utilisateur utilisateur = null;
 		

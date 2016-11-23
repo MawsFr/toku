@@ -37,7 +37,8 @@ public class DeconnexionAction extends AbstractAction {
 		fenetre.getPanneauPrincipal().afficherEcran(PanneauPrincipal.PANNEAU_CONNEXION);
 		fenetre.getPanneauPrincipal().getPanneauConnexion().getTxtPseudo().setText("");
 		fenetre.getPanneauPrincipal().getPanneauConnexion().getTxtPseudo().requestFocus();
-		fenetre.getPanneauPrincipal().getPanneauConnexion().getTxtMdp().setText("");
+		fenetre.getPanneauPrincipal().getPanneauConnexion().getTxtMdp().getPassword().setText("");
+		fenetre.getPanneauPrincipal().getPanneauConnexion().getTxtMdp().cacher();
 		fenetre.getMenu().getMenuDeconnecter().setEnabled(false);
 		fenetre.getMenu().cacherMenuAdmin();
 		fenetre.getBarreEtat().setTexte("");
