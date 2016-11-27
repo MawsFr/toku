@@ -328,8 +328,12 @@ GRANT ALL ON * TO 'toku';
 GRANT SELECT ON TABLE * TO 'toku';
 GRANT SELECT, INSERT, TRIGGER ON TABLE * TO 'toku';
 GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE * TO 'toku';
-GRANT EXECUTE ON ROUTINE * TO 'toku';
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+INSERT INTO `toku`.`role` (`id`, `id_parent`, `nom`) VALUES ('0', NULL, 'Rien');
+INSERT INTO `toku`.`role` (`id`, `id_parent`, `nom`) VALUES ('3', '0', 'Admin');
+
+INSERT INTO `toku`.`utilisateur` (`id`, `id_role`, `pseudo`, `mot_de_passe`, `nom`, `prenom`, `avatar`) VALUES (NULL, '3', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Root', 'Administrateur', NULL);
