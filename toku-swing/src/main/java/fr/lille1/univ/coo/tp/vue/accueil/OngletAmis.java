@@ -9,7 +9,7 @@ import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 public class OngletAmis extends JPanel {
 	
 	private JList<Utilisateur> listeAmis;
-	private AmisListModel model;
+	private UtilisateurListModel model;
 	private Utilisateur utilisateur;
 	
 	public OngletAmis() {
@@ -18,7 +18,7 @@ public class OngletAmis extends JPanel {
 	
 	public void initialiser() {
 		utilisateur = Application.getInstance().getSession().getUtilisateur();
-		model = new AmisListModel(utilisateur);
+		model = new UtilisateurListModel(utilisateur.getAmis());
 		listeAmis.setModel(model);
 	}
 

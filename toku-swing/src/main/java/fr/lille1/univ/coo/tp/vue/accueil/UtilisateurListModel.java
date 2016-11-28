@@ -5,14 +5,14 @@ import javax.swing.DefaultListModel;
 import fr.lille1.univ.coo.tp.utilisateur.IListeUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
-public class AmisListModel extends DefaultListModel<Utilisateur> {
+public class UtilisateurListModel extends DefaultListModel<Utilisateur> {
 	
 	private static final long serialVersionUID = 1L;
-	private IListeUtilisateur amis;
+	private IListeUtilisateur utilisateurs;
 
-	public AmisListModel(Utilisateur utilisateur) {
-		this.amis = utilisateur.getAmis();
-		for(Utilisateur ami : amis.getUtilisateurs()) {
+	public UtilisateurListModel(IListeUtilisateur ListeUtilisateur) {
+		this.utilisateurs = ListeUtilisateur;
+		for(Utilisateur ami : ListeUtilisateur.getUtilisateurs()) {
 			addElement(ami);
 		}
 	}

@@ -5,11 +5,11 @@ import java.util.List;
 
 import fr.lille1.univ.coo.tp.observateur.Observable;
 
-public class ListeUtilisateur extends Observable implements IListeUtilisateur {
+public class ListeUtilisateurs extends Observable implements IListeUtilisateur {
 	
 	private List<Utilisateur> utilisateurs;
 	
-	public ListeUtilisateur() {
+	public ListeUtilisateurs() {
 		this.utilisateurs = new ArrayList<>();
 	}
 	

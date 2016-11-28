@@ -5,7 +5,7 @@ import java.util.List;
 
 import fr.lille1.univ.coo.tp.persistance.proxy.VirtualProxyBuilder;
 import fr.lille1.univ.coo.tp.utilisateur.IListeUtilisateur;
-import fr.lille1.univ.coo.tp.utilisateur.ListeUtilisateur;
+import fr.lille1.univ.coo.tp.utilisateur.ListeUtilisateurs;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
 /**
@@ -30,7 +30,7 @@ public class ListeAmisFactory implements Factory<IListeUtilisateur> {
 	 */
 	@Override
 	public IListeUtilisateur creer() {
-		IListeUtilisateur fils = new ListeUtilisateur();
+		IListeUtilisateur fils = new ListeUtilisateurs();
 		List<Utilisateur> utilisateurs = new ArrayList<>();
 //		try {
 //			utilisateurs = new DAOGenerique<Personne>(Personne.class).rechercherParPropriete("pere", pere);
