@@ -38,17 +38,17 @@ public class RequeteBuilder {
 		sb = new StringBuilder();
 		sb.append("INSERT INTO ");
 		sb.append(table);
-		sb.append("( ");
+		sb.append(" ( ");
 		for (int i = 0; i < values.size(); ++i) {
 			sb.append(values.get(i));
-			if (i < values.size() - 2) {
+			if (i < values.size() - 1) {
 				sb.append(", ");
 			}
 		}
 		sb.append(" ) VALUES ( ");
 		for (int i = 0; i < values.size(); ++i) {
 			sb.append("?");
-			if (i < values.size() - 2) {
+			if (i < values.size() - 1) {
 				sb.append(", ");
 			}
 		}
@@ -74,7 +74,7 @@ public class RequeteBuilder {
 		sb.append(" SET ");
 		for (int i = 0; i < proprietes.size(); ++i) {
 			sb.append(proprietes.get(i)).append(" = ?");
-			if (i < proprietes.size() - 2) {
+			if (i < proprietes.size() - 1) {
 				sb.append(", ");
 			}
 		}

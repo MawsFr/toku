@@ -2,6 +2,8 @@ package fr.lille1.univ.coo.tp.utilisateur;
 
 import fr.lille1.univ.coo.tp.annotations.Colonne;
 import fr.lille1.univ.coo.tp.annotations.Id;
+import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
+import fr.lille1.univ.coo.tp.annotations.Proxy;
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
@@ -39,7 +41,9 @@ public class Utilisateur extends ObjetDomaine {
 	@Colonne
 	private String avatar;
 	
-	private ListeUtilisateur amis;
+	@Proxy
+	@PlusieursAUn("id")
+	private IListeUtilisateur amis;
 	
 	public Utilisateur() {
 	}
@@ -110,11 +114,11 @@ public class Utilisateur extends ObjetDomaine {
 		this.motDePasse = motDePasse;
 	}
 
-	public ListeUtilisateur getAmis() {
+	public IListeUtilisateur getAmis() {
 		return amis;
 	}
 
-	public void setAmis(ListeUtilisateur amis) {
+	public void setAmis(IListeUtilisateur amis) {
 		this.amis = amis;
 	}
 

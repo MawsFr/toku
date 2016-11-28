@@ -4,7 +4,9 @@ import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 
+import fr.lille1.univ.coo.tp.annotations.Colonne;
 import fr.lille1.univ.coo.tp.annotations.Id;
+import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
 
 /**
@@ -58,5 +60,57 @@ public class ReflectionUtils {
 		
 		return champs;
 	}
+	
+	public static Field getChampParColonne(Class<?> classe, String nomColonne) {
+		for(Field field : classe.getDeclaredFields()) {
+			if(getNomColonne(field).equals(nomColonne)) {
+				return field;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Renvoie les nom des colonnes de la table
+	 * @param classe La classe mappee a la table
+	 * @return La liste des colonnes
+	 */
+	public static Set<String> getNomsColonnes(Class<?> classe) {
+		Set<String> champs = new HashSet<>();
+		for(Field champ : classe.getDeclaredFields()) {
+			if(champ.isAnnotationPresent(PlusieursAUn.class)) {
+				continue;
+			}
+			champs.add(getNomColonne(champ));
+		}
+		return champs;
+	}
+	
+	/**
+	 * Renvoir le nom de la colonne correspondant a l'attribut
+	 * @param champ L'attribut
+	 * @return Le nom de la colonne
+	 */
+	public static String getNomColonne(Field champ) {
+		if(champ.isAnnotationPresent(PlusieursAUn.class)) {
+			return "";
+		}
+		if(champ.isAnnotationPresent(Id.class)) {
+			if(champ.getAnnotation(Id.class).value().isEmpty()) {
+				return champ.getName();
+			} else {
+				return champ.getAnnotation(Id.class).value();
+			}
+		} else if(champ.isAnnotationPresent(Colonne.class)) {
+			if(champ.getAnnotation(Colonne.class).value().isEmpty()) {
+				return champ.getName();
+			} else {
+				return champ.getAnnotation(Colonne.class).value();
+			}
+		} else {
+			return champ.getName();
+		}
+	}
+
 
 }

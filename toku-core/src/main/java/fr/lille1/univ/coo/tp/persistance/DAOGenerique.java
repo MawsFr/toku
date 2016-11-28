@@ -69,25 +69,27 @@ public class DAOGenerique<T extends IObjetDomaine> {
 		try {
 			boolean accessible = false;
 
-			Set<String> champs = ReflectionUtils.getChampsNoms(classe);
+			Set<String> champs = ReflectionUtils.getNomsColonnes(classe);
 			String idChamp = ReflectionUtils.trouverId(classe);
-			Field idField = classe.getField(idChamp);
+			Field idField = classe.getDeclaredField(idChamp);
 			champs.remove(idChamp);
 			List<String> champsListe = new ArrayList<>(champs);
+			champs = ReflectionUtils.getChampsNoms(classe);
 			Map<String, Object> valeurs = new HashMap<>();
 			for(String champ : champsListe) {
-				Field field = classe.getField(champ);
+				Field field = ReflectionUtils.getChampParColonne(classe, champ);
 				accessible = field.isAccessible();
 				field.setAccessible(true);
 				valeurs.put(champ, field.get(objet));
 				field.setAccessible(accessible);
 			}
 			ps = creerRequetePreparee(connexion, rb.insertion(champsListe), true, champsListe, valeurs, null, null);
+			System.out.println(ps);
 			connexion.setAutoCommit(false);
 			ps.executeUpdate();
 			resultat = ps.getGeneratedKeys();
 			resultat.next();
-			Integer id = resultat.getInt(idChamp);
+			Integer id = resultat.getInt(1);
 			accessible = idField.isAccessible();
 			idField.setAccessible(true);
 			idField.set(objet, id);
@@ -100,7 +102,6 @@ public class DAOGenerique<T extends IObjetDomaine> {
 			}
 			throw new DAOException(e);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-			e.printStackTrace();
 			throw new DAOException(e);
 		} finally {
 			try {
