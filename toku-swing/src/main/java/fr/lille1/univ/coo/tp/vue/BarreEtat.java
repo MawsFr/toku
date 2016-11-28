@@ -12,6 +12,8 @@ import javax.swing.JProgressBar;
 
 public class BarreEtat extends JPanel {
 	
+	private static final long serialVersionUID = 1L;
+	
 	private FenetrePrincipale fenetre;
 	private JLabel texte;
 	private JProgressBar progression;

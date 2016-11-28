@@ -5,11 +5,11 @@ import java.util.List;
 
 import fr.lille1.univ.coo.tp.observateur.Observable;
 
-public class ListeUtilisateurs extends Observable implements IListeUtilisateur {
+public class ObservableList<T> extends Observable implements IObservableList<T> {
 	
-	private List<Utilisateur> utilisateurs;
+	private List<T> utilisateurs;
 	
-	public ListeUtilisateurs() {
+	public ObservableList() {
 		this.utilisateurs = new ArrayList<>();
 	}
 	
@@ -17,7 +17,7 @@ public class ListeUtilisateurs extends Observable implements IListeUtilisateur {
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IListeUtilisateur#ajouter(fr.lille1.univ.coo.tp.utilisateur.Utilisateur)
 	 */
 	@Override
-	public void ajouter(Utilisateur utilisateur) {
+	public void ajouter(T utilisateur) {
 		this.utilisateurs.add(utilisateur);
 		notifierCreation(utilisateur);
 	}
@@ -26,7 +26,7 @@ public class ListeUtilisateurs extends Observable implements IListeUtilisateur {
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IListeUtilisateur#supprimer(fr.lille1.univ.coo.tp.utilisateur.Utilisateur)
 	 */
 	@Override
-	public void supprimer(Utilisateur utilisateur) {
+	public void supprimer(T utilisateur) {
 		this.utilisateurs.remove(utilisateur);
 		notifierSuppression(utilisateur);
 	}
@@ -35,7 +35,7 @@ public class ListeUtilisateurs extends Observable implements IListeUtilisateur {
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IListeUtilisateur#getUtilisateurs()
 	 */
 	@Override
-	public List<Utilisateur> getUtilisateurs() {
+	public List<T> getUtilisateurs() {
 		return utilisateurs;
 	}
 
@@ -43,7 +43,7 @@ public class ListeUtilisateurs extends Observable implements IListeUtilisateur {
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IListeUtilisateur#setUtilisateurs(java.util.List)
 	 */
 	@Override
-	public void setUtilisateurs(List<Utilisateur> utilisateurs) {
+	public void setUtilisateurs(List<T> utilisateurs) {
 		this.utilisateurs = utilisateurs;
 	}
 	

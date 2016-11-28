@@ -43,7 +43,7 @@ public class Utilisateur extends ObjetDomaine {
 	
 	@Proxy
 	@PlusieursAUn("id")
-	private IListeUtilisateur amis;
+	private IObservableList<Utilisateur> amis;
 	
 	public Utilisateur() {
 	}
@@ -114,11 +114,11 @@ public class Utilisateur extends ObjetDomaine {
 		this.motDePasse = motDePasse;
 	}
 
-	public IListeUtilisateur getAmis() {
+	public IObservableList getAmis() {
 		return amis;
 	}
 
-	public void setAmis(IListeUtilisateur amis) {
+	public void setAmis(IObservableList amis) {
 		this.amis = amis;
 	}
 

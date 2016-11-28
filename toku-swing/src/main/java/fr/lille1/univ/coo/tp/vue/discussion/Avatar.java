@@ -13,6 +13,8 @@ import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.utils.Constantes;
 
 public class Avatar extends ImageIcon {
+	private static final long serialVersionUID = 1L;
+	
 	public static final int TAILLE = 48;
 	public static final int LONGUEUR_CADRE = 68;
 	public static final int LARGEUR_CADRE = 63;
