@@ -114,11 +114,11 @@ public class Utilisateur extends ObjetDomaine {
 		this.motDePasse = motDePasse;
 	}
 
-	public IObservableList getAmis() {
+	public IObservableList<Utilisateur> getAmis() {
 		return amis;
 	}
 
-	public void setAmis(IObservableList amis) {
+	public void setAmis(IObservableList<Utilisateur> amis) {
 		this.amis = amis;
 	}
 

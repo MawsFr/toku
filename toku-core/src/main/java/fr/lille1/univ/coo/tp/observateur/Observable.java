@@ -23,7 +23,7 @@ public class Observable {
 	 * Ajoute un observateur.
 	 * @param observateur Le nouvel observateur
 	 */
-	public void ajouter(Observateur observateur) {
+	public void ajouterObservateur(Observateur observateur) {
 		this.observateurs.add(observateur);
 	}
 	
@@ -31,7 +31,7 @@ public class Observable {
 	 * Supprime un observateur
 	 * @param observateur L'observateur e supprimer.
 	 */
-	public void supprimer(Observateur observateur) {
+	public void supprimerObservateur(Observateur observateur) {
 		this.observateurs.remove(observateur);
 	}
 	

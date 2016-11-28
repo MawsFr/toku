@@ -1,36 +1,39 @@
 package fr.lille1.univ.coo.tp.vue.gestion.utilisateurs;
 
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+
 import javax.swing.JList;
 
 import fr.lille1.univ.coo.tp.filtre.Filtre;
 import fr.lille1.univ.coo.tp.filtre.Filtreur;
-import fr.lille1.univ.coo.tp.utilisateur.ObservableList;
+import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
-import fr.lille1.univ.coo.tp.vue.accueil.UtilisateurListModel;
 
 public class JListUtilisateur extends JList<Utilisateur> implements Filtreur {
 	private static final long serialVersionUID = 1L;
 	// TODO : RENDRE GENERIQUE LA CLASSE
-	private ObservableList<Utilisateur> utilisateurs;
+	private IObservableList<Utilisateur> utilisateurs;
 	private UtilisateurListModel model;
 	
-	public JListUtilisateur(ObservableList<Utilisateur> utilisateurs) {
+	public JListUtilisateur(IObservableList<Utilisateur> utilisateurs) {
 		this.utilisateurs = utilisateurs;
 		model = new UtilisateurListModel(utilisateurs);
 		this.setModel(model);
+		this.setCellRenderer(new UtilisateurListCellRenderer());
 	}
 
 	/**
 	 * @return Le utilisateurs
 	 */
-	public ObservableList<Utilisateur> getUtilisateurs() {
+	public IObservableList<Utilisateur> getUtilisateurs() {
 		return utilisateurs;
 	}
 
 	/**
 	 * @param utilisateurs Le nouveau utilisateurs
 	 */
-	public void setUtilisateurs(ObservableList<Utilisateur> utilisateurs) {
+	public void setUtilisateurs(IObservableList<Utilisateur> utilisateurs) {
 		this.utilisateurs = utilisateurs;
 	}
 
@@ -51,8 +54,14 @@ public class JListUtilisateur extends JList<Utilisateur> implements Filtreur {
 	@Override
 	public void filtrer(Filtre filtre) {
 		// TODO : Implémenter
-		
 	}
 	
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		FontMetrics fm = g.getFontMetrics();
+		String message = "Vous n'avez aucun amis, cliquez sur +Amis pour en ajouter !";
+		g.drawString(message, (getWidth() - fm.stringWidth(message)) / 2, (getHeight()  - fm.getHeight()) / 2);
+	}
 	
 }

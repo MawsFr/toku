@@ -1,25 +1,27 @@
 package fr.lille1.univ.coo.tp.vue.accueil;
 
-import javax.swing.JList;
+import java.awt.BorderLayout;
+
 import javax.swing.JPanel;
 
 import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
+import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.JListUtilisateur;
 
 public class OngletAmis extends JPanel {
 	
-	private JList<Utilisateur> listeAmis;
-	private UtilisateurListModel model;
+	private JListUtilisateur listeAmis;
 	private Utilisateur utilisateur;
 	
 	public OngletAmis() {
-		listeAmis = new JList<>();
+		this.setLayout(new BorderLayout());
 	}
 	
 	public void initialiser() {
+		removeAll();
 		utilisateur = Application.getInstance().getSession().getUtilisateur();
-		model = new UtilisateurListModel(utilisateur.getAmis());
-		listeAmis.setModel(model);
+		listeAmis = new JListUtilisateur(utilisateur.getAmis());
+		this.add(listeAmis, BorderLayout.CENTER);
 	}
 
 }

@@ -1,7 +1,6 @@
 package fr.lille1.univ.coo.tp.vue.gestion.utilisateurs;
 
 import java.awt.Container;
-import java.awt.Dialog.ModalityType;
 import java.awt.GridBagLayout;
 import java.awt.Window;
 
@@ -26,7 +25,7 @@ import fr.lille1.univ.coo.tp.vue.composants.fenetre.Annulable;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Fermable;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Validable;
 
-public class FenetreProfil implements Validable, Annulable, Fermable {
+public class FenetreProfil extends JDialog implements Validable, Annulable, Fermable {
 	public static enum ModeEdition {
 		AJOUT, MODIF;
 	}
@@ -38,7 +37,6 @@ public class FenetreProfil implements Validable, Annulable, Fermable {
 	public static final String TITRE_AJOUT = "Ajouter un utilisateur";
 	public static final String TITRE_MODIF = "Modifier un profil";
 	
-	private JDialog fenetre;
 	private Container c;
 	private Utilisateur utilisateur;
 	
@@ -53,8 +51,8 @@ public class FenetreProfil implements Validable, Annulable, Fermable {
 	private JButton btnAnnuler;
 	
 	public FenetreProfil(Window parent, ModeEdition mode, Utilisateur utilisateur) {
-		fenetre = new JDialog(parent, mode == ModeEdition.AJOUT ? TITRE_AJOUT : TITRE_MODIF, ModalityType.APPLICATION_MODAL);
-		c = fenetre.getContentPane();
+		super(parent, mode == ModeEdition.AJOUT ? TITRE_AJOUT : TITRE_MODIF, ModalityType.APPLICATION_MODAL);
+		c = this.getContentPane();
 		this.utilisateur = utilisateur;
 		
 		txtPseudo = new JTextField();
@@ -104,11 +102,11 @@ public class FenetreProfil implements Validable, Annulable, Fermable {
 			// TODO : Erreur
 		}
 		
-		fenetre.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		fenetre.pack();
-		fenetre.setResizable(false);
-		fenetre.setLocationRelativeTo(null);
-		fenetre.setVisible(true);
+		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		this.pack();
+		this.setResizable(false);
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
 
 	}
 	
@@ -142,7 +140,7 @@ public class FenetreProfil implements Validable, Annulable, Fermable {
 	
 	@Override
 	public void fermer() {
-		fenetre.dispose();
+		this.dispose();
 	}
 	
 	public JCheckBox getOkEtNouveau() {
@@ -155,14 +153,6 @@ public class FenetreProfil implements Validable, Annulable, Fermable {
 	
 	public JButton getBtnOk() {
 		return btnOk;
-	}
-
-	public JDialog getFenetre() {
-		return fenetre;
-	}
-
-	public void setFenetre(JDialog fenetre) {
-		this.fenetre = fenetre;
 	}
 
 	public Container getC() {

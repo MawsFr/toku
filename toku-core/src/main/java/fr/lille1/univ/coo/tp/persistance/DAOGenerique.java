@@ -473,7 +473,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 			}
 
 			references.enregistrer(classe, id, reference);
-			reference.get().ajouter(UnitOfWork.getInstance(classe));
+			reference.get().ajouterObservateur(UnitOfWork.getInstance(classe));
 
 			return reference;
 		} catch (IllegalArgumentException | IllegalAccessException | InstantiationException | InvocationTargetException

@@ -12,7 +12,7 @@ import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
  * Cette classe couplé avec un {@link VirtualProxyBuilder} permet de récupérer
  * la liste des fils d'une {@link Personne} de façon paresseuse.
  */
-public class ListeAmisFactory implements Factory<IObservableList> {
+public class ListeAmisFactory implements Factory<IObservableList<Utilisateur>> {
 
 	private Integer pere;
 
@@ -29,8 +29,8 @@ public class ListeAmisFactory implements Factory<IObservableList> {
 	 * @return La liste des fils d'un pere
 	 */
 	@Override
-	public IObservableList creer() {
-		IObservableList fils = new ObservableList();
+	public IObservableList<Utilisateur> creer() {
+		IObservableList<Utilisateur> fils = new ObservableList<Utilisateur>();
 		List<Utilisateur> utilisateurs = new ArrayList<>();
 //		try {
 //			utilisateurs = new DAOGenerique<Personne>(Personne.class).rechercherParPropriete("pere", pere);

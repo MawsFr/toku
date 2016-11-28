@@ -10,5 +10,5 @@ import fr.lille1.univ.coo.tp.visiteur.Visitable;
  *
  */
 public interface IObjetDomaine extends Visitable {
-	public void ajouter(Observateur<?> obs);
+	public void ajouterObservateur(Observateur<?> obs);
 }

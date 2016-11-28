@@ -21,8 +21,13 @@ import javax.swing.ListSelectionModel;
 
 import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
+import fr.lille1.univ.coo.tp.vue.composants.fenetre.Fermable;
 
-public class FenetreDiscussion extends JFrame {
+import javax.swing.border.TitledBorder;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+
+public class FenetreDiscussion extends JFrame implements Fermable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -38,6 +43,8 @@ public class FenetreDiscussion extends JFrame {
 	private JToggleButton btnExpire;
 	private JList<Utilisateur> listeMembres;
 	private JMenuBar barreMenu;
+	private JMenu menuFichier;
+	private JMenuItem menuFermer;
 	
 	public FenetreDiscussion() {
 		c = getContentPane();
@@ -65,6 +72,7 @@ public class FenetreDiscussion extends JFrame {
 		panneauHaut.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panneauTitre = new JPanel();
+		panneauTitre.setBorder(new TitledBorder(null, "Nom de la discussion", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panneauHaut.add(panneauTitre, BorderLayout.NORTH);
 		panneauTitre.setLayout(new BoxLayout(panneauTitre, BoxLayout.X_AXIS));
 		
@@ -75,6 +83,7 @@ public class FenetreDiscussion extends JFrame {
 		panneauTitre.add(lblNomDiscussion);
 		
 		JPanel panneauMessages = new JPanel();
+		panneauMessages.setBorder(new TitledBorder(null, "Messages", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panneauHaut.add(panneauMessages, BorderLayout.CENTER);
 		panneauMessages.setLayout(new BorderLayout(0, 0));
 		
@@ -90,6 +99,7 @@ public class FenetreDiscussion extends JFrame {
 		panneauBas.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panneauBas2 = new JPanel();
+		panneauBas2.setBorder(new TitledBorder(null, "Envoyer un message", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panneauBas.add(panneauBas2, BorderLayout.CENTER);
 		panneauBas2.setLayout(new BorderLayout(0, 0));
 		
@@ -134,24 +144,20 @@ public class FenetreDiscussion extends JFrame {
 		
 		JScrollPane scrollMembres = new JScrollPane();
 		
-		JLabel lblListeMembres = new JLabel("Liste des membres");
-		lblListeMembres.setMaximumSize(new Dimension(50, 16));
-		lblListeMembres.setPreferredSize(new Dimension(50, 16));
-		lblListeMembres.setMinimumSize(new Dimension(50, 16));
-		panneauDroite2.add(lblListeMembres, BorderLayout.NORTH);
-		
 		listeMembres = new JList<>();
 		listeMembres.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollMembres.setViewportView(listeMembres);
 		
 		JPanel panneauMembres = new JPanel();
+		panneauMembres.setBorder(new TitledBorder(null, "Liste des membres", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panneauMembres.setLayout(new BorderLayout(0, 0));
 		panneauMembres.add(scrollMembres, BorderLayout.CENTER);
 		
 		panneauDroite2.add(panneauMembres, BorderLayout.CENTER);
 		
 		JPanel panneauBoutonMembres = new JPanel();
-		panneauMembres.add(panneauBoutonMembres, BorderLayout.SOUTH);
+		panneauBoutonMembres.setBorder(new TitledBorder(null, "Modération", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panneauDroite2.add(panneauBoutonMembres, BorderLayout.SOUTH);
 		panneauBoutonMembres.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 5));
 		
 		JButton btnAjouterMembre = new JButton("+");
@@ -165,6 +171,12 @@ public class FenetreDiscussion extends JFrame {
 		barreMenu = new JMenuBar();
 		setJMenuBar(barreMenu);
 		
+		menuFichier = new JMenu("Fichier");
+		barreMenu.add(menuFichier);
+		
+		menuFermer = new JMenuItem("Fermer");
+		menuFichier.add(menuFermer);
+		
 		setSize(800, 600);
 		setPreferredSize(getSize());
 		setMinimumSize(new Dimension(500, 400));
@@ -172,5 +184,10 @@ public class FenetreDiscussion extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 		
+	}
+
+	@Override
+	public void fermer() {
+		this.dispose();
 	}
 }
