@@ -55,136 +55,124 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		c = getContentPane();
 		c.setLayout(new BorderLayout(0, 0));
 		
+		lblTypeDiscussion = new JLabel("Groupe: ");
+		lblNomDiscussion = new JLabel("New label");
+		txtMessage = new JTextArea();
+		listeMessages = new JList<>();
+		btnEnvoyer = new JButton("Envoyer");
+		btnPrioritaire = new JToggleButton("Prioritaire");
+		btnAccuseReception = new JToggleButton("Accusé");
+		btnChiffre = new JToggleButton("Chiffré");
+		btnExpire = new JToggleButton("Expire");
+		listeMembres = new JListUtilisateur(membres);
+		barreMenu = new JMenuBar();
+		menuFichier = new JMenu("Fichier");
+		menuFermer = new JMenuItem("Fermer");
+		
 		JSplitPane panneauPrincipal = new JSplitPane();
+		JPanel panneauGauche = new JPanel();
+		JSplitPane splitGauche = new JSplitPane();
+		JPanel panneauHaut = new JPanel();
+		JPanel panneauTitre = new JPanel();
+		JPanel panneauMessages = new JPanel();
+		JScrollPane scrollMessages = new JScrollPane();
+		JPanel panneauBas = new JPanel();
+		JPanel panneauBas2 = new JPanel();
+		JPanel panneauEnvoi = new JPanel();
+		JCheckBox chckbxValiderAvecEntre = new JCheckBox("Valider avec entrée");
+		JToolBar barreOutils = new JToolBar();
+		JScrollPane scrollMessage = new JScrollPane();
+		JPanel panneauDroite = new JPanel();
+		JPanel panneauDroite2 = new JPanel();
+		JScrollPane scrollMembres = new JScrollPane();
+		JPanel panneauMembres = new JPanel();
+		JPanel panneauBoutonMembres = new JPanel();
+		JButton btnAjouterMembre = new JButton("+");
+		JButton btnSupprimerMembre = new JButton("-");
+
 		panneauPrincipal.setResizeWeight(1.0);
 		panneauPrincipal.setOneTouchExpandable(true);
 		c.add(panneauPrincipal);
 		
-		JPanel panneauGauche = new JPanel();
 		panneauGauche.setMinimumSize(new Dimension(400, 10));
 		panneauPrincipal.setLeftComponent(panneauGauche);
 		panneauGauche.setLayout(new BorderLayout(0, 0));
 		
-		JSplitPane splitGauche = new JSplitPane();
 		splitGauche.setResizeWeight(0.6);
 		splitGauche.setOneTouchExpandable(true);
 		splitGauche.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		panneauGauche.add(splitGauche);
 		
-		JPanel panneauHaut = new JPanel();
 		panneauHaut.setMinimumSize(new Dimension(200, 100));
 		splitGauche.setLeftComponent(panneauHaut);
 		panneauHaut.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panneauTitre = new JPanel();
 		panneauTitre.setBorder(new TitledBorder(null, "Nom de la discussion", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panneauHaut.add(panneauTitre, BorderLayout.NORTH);
 		panneauTitre.setLayout(new BoxLayout(panneauTitre, BoxLayout.X_AXIS));
 		
-		lblTypeDiscussion = new JLabel("Groupe: ");
 		panneauTitre.add(lblTypeDiscussion);
-		
-		lblNomDiscussion = new JLabel("New label");
 		panneauTitre.add(lblNomDiscussion);
 		
-		JPanel panneauMessages = new JPanel();
 		panneauMessages.setBorder(new TitledBorder(null, "Messages", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panneauHaut.add(panneauMessages, BorderLayout.CENTER);
 		panneauMessages.setLayout(new BorderLayout(0, 0));
-		
-		JScrollPane scrollMessages = new JScrollPane();
 		panneauMessages.add(scrollMessages);
 		
-		listeMessages = new JList<>();
 		listeMessages.setMinimumSize(new Dimension(0, 100));
 		scrollMessages.setViewportView(listeMessages);
 		
-		JPanel panneauBas = new JPanel();
 		splitGauche.setRightComponent(panneauBas);
 		panneauBas.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panneauBas2 = new JPanel();
 		panneauBas2.setBorder(new TitledBorder(null, "Envoyer un message", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panneauBas.add(panneauBas2, BorderLayout.CENTER);
 		panneauBas2.setLayout(new BorderLayout(0, 0));
 		
-		txtMessage = new JTextArea();
-		
-		JPanel panneauEnvoi = new JPanel();
 		FlowLayout fl_panneauEnvoi = (FlowLayout) panneauEnvoi.getLayout();
 		fl_panneauEnvoi.setAlignment(FlowLayout.TRAILING);
 		panneauBas2.add(panneauEnvoi, BorderLayout.SOUTH);
 		
-		JCheckBox chckbxValiderAvecEntre = new JCheckBox("Valider avec entrée");
 		panneauEnvoi.add(chckbxValiderAvecEntre);
-		
-		btnEnvoyer = new JButton("Envoyer");
 		panneauEnvoi.add(btnEnvoyer);
 		
-		JToolBar barreOutils = new JToolBar();
 		barreOutils.setRollover(true);
 		barreOutils.setFloatable(false);
 		panneauBas2.add(barreOutils, BorderLayout.NORTH);
 		
-		btnPrioritaire = new JToggleButton("Prioritaire");
 		barreOutils.add(btnPrioritaire);
-		
-		btnAccuseReception = new JToggleButton("Accusé");
 		barreOutils.add(btnAccuseReception);
-		
-		btnChiffre = new JToggleButton("Chiffré");
 		barreOutils.add(btnChiffre);
-		
-		btnExpire = new JToggleButton("Expire");
 		barreOutils.add(btnExpire);
 		
-		JScrollPane scrollMessage = new JScrollPane();
 		scrollMessage.setViewportView(txtMessage);
 		panneauBas2.add(scrollMessage, BorderLayout.CENTER);
 		
-		JPanel panneauDroite = new JPanel();
 		panneauPrincipal.setRightComponent(panneauDroite);
 		panneauDroite.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panneauDroite2 = new JPanel();
 		panneauDroite.add(panneauDroite2, BorderLayout.CENTER);
 		panneauDroite2.setLayout(new BorderLayout(0, 0));
 		
-		JScrollPane scrollMembres = new JScrollPane();
-		
-		
-		
-		listeMembres = new JListUtilisateur(membres);
 		listeMembres.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollMembres.setViewportView(listeMembres);
 		
-		JPanel panneauMembres = new JPanel();
 		panneauMembres.setBorder(new TitledBorder(null, "Liste des membres", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panneauMembres.setLayout(new BorderLayout(0, 0));
 		panneauMembres.add(scrollMembres, BorderLayout.CENTER);
 		
 		panneauDroite2.add(panneauMembres, BorderLayout.CENTER);
-		
-		JPanel panneauBoutonMembres = new JPanel();
 		panneauBoutonMembres.setBorder(new TitledBorder(null, "Modération", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panneauDroite2.add(panneauBoutonMembres, BorderLayout.SOUTH);
 		panneauBoutonMembres.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 5));
 		
-		JButton btnAjouterMembre = new JButton("+");
 		btnAjouterMembre.setPreferredSize(new Dimension(29, 29));
 		panneauBoutonMembres.add(btnAjouterMembre);
-		
-		JButton btnSupprimerMembre = new JButton("-");
 		btnSupprimerMembre.setPreferredSize(new Dimension(29, 29));
 		panneauBoutonMembres.add(btnSupprimerMembre);
 		
-		barreMenu = new JMenuBar();
 		setJMenuBar(barreMenu);
-		
-		menuFichier = new JMenu("Fichier");
 		barreMenu.add(menuFichier);
-		
-		menuFermer = new JMenuItem("Fermer");
 		menuFichier.add(menuFermer);
 		
 		setSize(800, 600);

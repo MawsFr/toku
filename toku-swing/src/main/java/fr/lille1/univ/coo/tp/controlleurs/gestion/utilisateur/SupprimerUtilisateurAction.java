@@ -6,7 +6,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
 import fr.lille1.univ.coo.tp.service.Service;
-import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
+import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.GestionUtilisateurs;
 
 public class SupprimerUtilisateurAction extends AbstractAction {
@@ -29,7 +29,7 @@ public class SupprimerUtilisateurAction extends AbstractAction {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		Utilisateur utilisateur = gestionUtilisateurs.getUtilisateurSelectionne();
+		IUtilisateur utilisateur = gestionUtilisateurs.getUtilisateurSelectionne();
 		if(JOptionPane.showConfirmDialog(gestionUtilisateurs.getFenetre(),
 			    "Êtes-vous sûr de vouloir supprimer l'utilisateur " + gestionUtilisateurs.getUtilisateurSelectionne().getPseudo() + " ?",
 			    "Suppression utilisateur",

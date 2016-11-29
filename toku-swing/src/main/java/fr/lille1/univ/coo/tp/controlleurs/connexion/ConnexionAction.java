@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
+import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.validateur.ValidationException;
 import fr.lille1.univ.coo.tp.vue.FenetrePrincipale;
@@ -44,10 +45,11 @@ public class ConnexionAction extends AbstractAction {
 		final String pseudo = connexion.getTxtPseudo().getText();
 		final String mdp = new String(connexion.getTxtMdp().getPassword());
 		
-		Utilisateur utilisateur = null;
+		IUtilisateur utilisateur = null;
 		
 		try {
 			utilisateur = Service.getUtilisateurService().connecter(pseudo, mdp);
+System.out.println("Humeur : " + utilisateur.getHumeur());
 		} catch (ValidationException | ServiceException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(connexion.getFenetre().getFenetre(), e.getMessage(), "Erreur de connexion", JOptionPane.ERROR_MESSAGE);

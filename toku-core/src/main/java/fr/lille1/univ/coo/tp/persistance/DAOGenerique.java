@@ -14,15 +14,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.print.attribute.standard.OrientationRequested;
+
+import com.mysql.cj.core.CharsetMapping;
+
 import fr.lille1.univ.coo.tp.annotations.Colonne;
 import fr.lille1.univ.coo.tp.annotations.Id;
+import fr.lille1.univ.coo.tp.annotations.PlusieursAPlusieurs;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Proxy;
+import fr.lille1.univ.coo.tp.annotations.Transient;
+import fr.lille1.univ.coo.tp.annotations.UnAPlusieurs;
+import fr.lille1.univ.coo.tp.annotations.UnAUn;
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.persistance.proxy.VirtualProxyBuilder;
 import fr.lille1.univ.coo.tp.persistance.proxy.factory.Factories;
 import fr.lille1.univ.coo.tp.persistance.proxy.factory.Factory;
+import fr.lille1.univ.coo.tp.persistance.proxy.factory.UnAUnFactory;
 import fr.lille1.univ.coo.tp.service.unitofwork.UnitOfWork;
+import fr.lille1.univ.coo.tp.utilisateur.Humeur;
 import fr.lille1.univ.coo.tp.utils.ReflectionUtils;
 
 /**
@@ -440,6 +450,72 @@ public class DAOGenerique<T extends IObjetDomaine> {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
+	public WeakReference<T> construir2(final Integer id, final ResultSet resultat) throws DAOException, SQLException {
+		// Colonnes : id | nom | prenom | pere | evaluation
+		try {
+			@SuppressWarnings("unchecked")
+			T objet = (T) classe.newInstance();
+			WeakReference<T> reference = new WeakReference<T>(objet);
+
+			/*
+			 * Pour chaque champ:
+			 * 	Si c'est une colonne ou un id
+			 * 		Soit on récupère sa valeur directement dans le resultset
+			 * 		Soit on créé un proxy qui le récupèrera plus tard
+			 * 	Si c'est un membre d'une relation 1 - n
+			 * 		Soit on récupère sa valeur immédiatement grâce à la factory qui va effectuer une nouvelle requête pour récupérer la liste
+			 * 		Soit on créé un proxy qui récupèrera sa valeur plus tard 
+			 */
+			for (Field champ : classe.getDeclaredFields()) {
+				if(champ.getAnnotations().length > 0) {
+					boolean accessible = champ.isAccessible();
+					champ.setAccessible(true);
+					if(!champ.isAnnotationPresent(Transient.class)) {
+						if (champ.isAnnotationPresent(Colonne.class) || champ.isAnnotationPresent(Id.class)) {
+							String colonne = champ.isAnnotationPresent(Colonne.class) ? champ.getAnnotation(Colonne.class).value()
+									: champ.getAnnotation(Id.class).value();
+							colonne = colonne.isEmpty() ? champ.getName() : colonne;
+							Object valeur = resultat.getObject(colonne);
+
+							if (valeur != null) {
+								// Si c'est un proxy
+								if (champ.isAnnotationPresent(Proxy.class)) {
+									creerProxy(objet, champ, colonne, valeur);
+								} else {
+									if (champ.getType().equals(resultat.getObject(colonne).getClass())) {
+										champ.set(objet, resultat.getObject(colonne));
+									} else {
+										creerSansProxy(id, objet, champ, colonne);
+									}
+								}
+							}
+						} else if (champ.isAnnotationPresent(PlusieursAUn.class)) {
+							traiterPlusieursAUn(id, objet, champ);
+						} else if (champ.isAnnotationPresent(UnAPlusieurs.class)) {
+
+
+						} else if (champ.isAnnotationPresent(PlusieursAPlusieurs.class)) {
+
+						} else {
+							// ERREUR CAS NON GERE
+							throw new DAOException("Cas non géré !!");
+						}
+					}
+					champ.setAccessible(accessible);
+				}
+			}
+
+			references.enregistrer(classe, id, reference);
+			reference.get().ajouterObservateur(UnitOfWork.getInstance(classe));
+
+			return reference;
+		} catch (IllegalArgumentException | IllegalAccessException | InstantiationException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+			throw new DAOException("Erreur lors de la creation de l'objet de type " + classe.getName() + " d'id " + id);
+		}
+	}
+
 	public WeakReference<T> construire(final Integer id, final ResultSet resultat) throws DAOException, SQLException {
 		// Colonnes : id | nom | prenom | pere | evaluation
 		try {
@@ -460,13 +536,35 @@ public class DAOGenerique<T extends IObjetDomaine> {
 				if(champ.getAnnotations().length > 0) {
 					boolean accessible = champ.isAccessible();
 					champ.setAccessible(true);
-					if (champ.isAnnotationPresent(Colonne.class) || champ.isAnnotationPresent(Id.class)) {
-						traiterColonne(id, resultat, objet, champ);
-					} else if (champ.isAnnotationPresent(PlusieursAUn.class)) {
-						traiterPlusieursAUn(id, objet, champ);
-					} else {
-						// ERREUR CAS NON GERE
-						throw new DAOException("Cas non géré !!");
+					if(!champ.isAnnotationPresent(Transient.class)) {
+						String colonne = ReflectionUtils.getNomColonne(champ);
+						if (champ.isAnnotationPresent(Colonne.class) || champ.isAnnotationPresent(Id.class)) {
+							Object valeur = resultat.getObject(colonne);
+							if (valeur != null) {
+								// Si c'est un proxy
+								if (champ.isAnnotationPresent(Proxy.class)) {
+									creerProxy(objet, champ, colonne, valeur);
+								} else {
+									if (champ.getType().equals(resultat.getObject(colonne).getClass())) {
+										champ.set(objet, resultat.getObject(colonne));
+									} else {
+										creerSansProxy(id, objet, champ, colonne);
+									}
+								}
+							}
+						} else {
+							if (champ.isAnnotationPresent(UnAUn.class)) {
+								Object valeur = resultat.getObject(colonne);
+								UnAUn unAUn = champ.getAnnotation(UnAUn.class);
+								Class<?> type = unAUn.type();
+								colonne = ReflectionUtils.trouverId(type);
+								UnAUnFactory<T> unAUnFactory = new UnAUnFactory<T>(colonne, valeur, type);
+								VirtualProxyBuilder<T> vp = new VirtualProxyBuilder<T>(unAUnFactory, champ.getType());
+								champ.set(objet, vp.creerProxy());
+							}
+							
+
+						}
 					}
 					champ.setAccessible(accessible);
 				}
@@ -499,57 +597,18 @@ public class DAOGenerique<T extends IObjetDomaine> {
 	 * @throws InvocationTargetException
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
+	 * @throws DAOException 
 	 */
 	public void traiterPlusieursAUn(final Integer id, T objet, Field champ)
 			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-			NoSuchMethodException, SecurityException {
+			NoSuchMethodException, SecurityException, DAOException {
 
-		String colonne = champ.getAnnotation(Proxy.class).value();
+		String colonne = champ.getAnnotation(Proxy.class).cle();
 		colonne = colonne.isEmpty() ? champ.getName() : colonne;
 		if (champ.isAnnotationPresent(Proxy.class)) {
 			creerProxy(objet, champ, colonne, id);
 		} else {
 			creerSansProxy(id, objet, champ, colonne);
-		}
-	}
-
-	/**
-	 * @param id
-	 *            Traite le cas d'une colonne.
-	 * @param resultat
-	 *            Le résultat de la requete
-	 * @param objet
-	 *            L'objet à remplir
-	 * @param champ
-	 *            Le champs à remplir
-	 * @throws SQLException
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws IllegalArgumentException
-	 * @throws InvocationTargetException
-	 * @throws NoSuchMethodException
-	 * @throws SecurityException
-	 */
-	public void traiterColonne(final Integer id, final ResultSet resultat, T objet, Field champ)
-			throws SQLException, InstantiationException, IllegalAccessException, IllegalArgumentException,
-			InvocationTargetException, NoSuchMethodException, SecurityException {
-
-		String colonne = champ.isAnnotationPresent(Colonne.class) ? champ.getAnnotation(Colonne.class).value()
-				: champ.getAnnotation(Id.class).value();
-		colonne = colonne.isEmpty() ? champ.getName() : colonne;
-		Object valeur = resultat.getObject(colonne);
-
-		if (valeur != null) {
-			// Si c'est un proxy
-			if (champ.isAnnotationPresent(Proxy.class)) {
-				creerProxy(objet, champ, colonne, valeur);
-			} else {
-				if (champ.getType().equals(resultat.getObject(colonne).getClass())) {
-					champ.set(objet, resultat.getObject(colonne));
-				} else {
-					creerSansProxy(id, objet, champ, colonne);
-				}
-			}
 		}
 	}
 
@@ -570,10 +629,11 @@ public class DAOGenerique<T extends IObjetDomaine> {
 	 * @throws InvocationTargetException
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
+	 * @throws DAOException 
 	 */
 	public void creerSansProxy(final Integer id, T objet, Field champ, String colonne)
 			throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException,
-			NoSuchMethodException, SecurityException {
+			NoSuchMethodException, SecurityException, DAOException {
 		System.out.println("Chargement non proxifié de " + champ.getName());
 		champ.set(objet, Factories.getFactory(classe, colonne).getConstructor(Integer.class).newInstance(id).creer());
 	}

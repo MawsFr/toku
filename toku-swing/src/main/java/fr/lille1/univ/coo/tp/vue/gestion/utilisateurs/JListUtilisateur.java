@@ -16,11 +16,13 @@ public class JListUtilisateur extends JList<Utilisateur> implements Filtreur {
 	private IObservableList<Utilisateur> utilisateurs;
 	private UtilisateurListModel model;
 
-	public JListUtilisateur(IObservableList<Utilisateur> utilisateurs) {
-		this.utilisateurs = utilisateurs;
-		model = new UtilisateurListModel(utilisateurs);
-		this.setModel(model);
+	public JListUtilisateur() {
 		this.setCellRenderer(new UtilisateurListCellRenderer());
+	}
+	
+	public JListUtilisateur(IObservableList<Utilisateur> utilisateurs) {
+		this();
+		setUtilisateurs(utilisateurs);
 	}
 
 	/**
@@ -35,6 +37,9 @@ public class JListUtilisateur extends JList<Utilisateur> implements Filtreur {
 	 */
 	public void setUtilisateurs(IObservableList<Utilisateur> utilisateurs) {
 		this.utilisateurs = utilisateurs;
+		model = new UtilisateurListModel(utilisateurs);
+		this.setModel(model);
+
 	}
 
 	/**

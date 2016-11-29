@@ -3,6 +3,7 @@ package fr.lille1.univ.coo.tp.persistance.proxy.factory;
 import java.util.HashMap;
 import java.util.Map;
 
+import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
 /**
@@ -16,6 +17,10 @@ public class Factories {
 		factories.put(Utilisateur.class, new HashMap<>());
 		factories.get(Utilisateur.class).put("amis", ListeAmisFactory.class);
 //		factories.get(Utilisateur.class).put("fils", ListeFilsFactory.class);
+		
+		factories = new HashMap<>();
+		factories.put(Discussion.class, new HashMap<>());
+		factories.get(Discussion.class).put("membres", ListMembresFactory.class);
 	}
 
 	/**

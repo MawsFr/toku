@@ -11,17 +11,17 @@ import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 
 import fr.lille1.univ.coo.tp.Application;
-import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
+import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.vue.FenetrePrincipale;
 import fr.lille1.univ.coo.tp.vue.composants.GBC;
 import fr.lille1.univ.coo.tp.vue.discussion.Avatar;
 
 public class PanneauAccueil extends JPanel {
+	private static final long serialVersionUID = 1L;
 	
 	public static final String ONGLET_GROUPES = "Groupes";
 	public static final String ONGLET_AMIS = "Amis";
 
-	private static final long serialVersionUID = 1L;
 	private FenetrePrincipale fenetre;
 	private GridBagLayout layout;
 	
@@ -78,7 +78,7 @@ public class PanneauAccueil extends JPanel {
 	}
 	
 	public void initialiser() {
-		Utilisateur utilisateur = Application.getInstance().getSession().getUtilisateur();
+		IUtilisateur utilisateur = Application.getInstance().getSession().getUtilisateur();
 		avatar.setImage(utilisateur);
 		lblAvatar.setIcon(avatar);
 		lblPseudo.setText(utilisateur.getPrenom().substring(0, 1).toUpperCase() + utilisateur.getPrenom().substring(1) + " " + utilisateur.getNom().toUpperCase() + " (" + utilisateur.getPseudo() + ")");

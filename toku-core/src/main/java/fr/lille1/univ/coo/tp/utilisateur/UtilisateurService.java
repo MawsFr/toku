@@ -29,7 +29,7 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 	}
 
 	@Override
-	public Utilisateur connecter(String pseudo, String motDePasse) throws ServiceException, ValidationException {
+	public IUtilisateur connecter(String pseudo, String motDePasse) throws ServiceException, ValidationException {
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setPseudo(pseudo);
 		utilisateur.setMotDePasse(motDePasse);
@@ -59,7 +59,7 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 	}
 	
 	@Override
-	public boolean estAdministrateur(Utilisateur utilisateur) throws ServiceException {
+	public boolean estAdministrateur(IUtilisateur utilisateur) throws ServiceException {
 //		Role role;
 //		try {
 //			role = Role.values()[dao.getRole(utilisateur) - 1];

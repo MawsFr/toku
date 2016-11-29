@@ -120,11 +120,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `groupe`
+-- Table `discussion`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `groupe` ;
+DROP TABLE IF EXISTS `discussion` ;
 
-CREATE TABLE IF NOT EXISTS `groupe` (
+CREATE TABLE IF NOT EXISTS `discussion` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `id_createur` INT NOT NULL,
   `nom` VARCHAR(45) NOT NULL,
@@ -132,19 +132,21 @@ CREATE TABLE IF NOT EXISTS `groupe` (
   PRIMARY KEY (`id`, `id_createur`, `id_moderateur`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   UNIQUE INDEX `nom_UNIQUE` (`nom` ASC),
-  INDEX `fk_groupe_utilisateur_id_createur_idx` (`id_createur` ASC),
-  INDEX `fk_groupe_utilisateur_id_moderateur_idx` (`id_moderateur` ASC),
-  CONSTRAINT `fk_groupe_utilisateur_id_createur`
+  INDEX `fk_discussion_utilisateur_id_createur_idx` (`id_createur` ASC),
+  INDEX `fk_discussion_utilisateur_id_moderateur_idx` (`id_moderateur` ASC),
+  CONSTRAINT `fk_discussion_utilisateur_id_createur`
     FOREIGN KEY (`id_createur`)
     REFERENCES `utilisateur` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_groupe_utilisateur_id_moderateur`
+  CONSTRAINT `fk_discussion_utilisateur_id_moderateur`
     FOREIGN KEY (`id_moderateur`)
     REFERENCES `utilisateur` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+ALTER TABLE `discussion` ADD `type` INT(1) NOT NULL DEFAULT '1' AFTER `id_moderateur`;
 
 
 -- -----------------------------------------------------

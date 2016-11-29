@@ -8,6 +8,7 @@ import fr.lille1.univ.coo.tp.annotations.Colonne;
 import fr.lille1.univ.coo.tp.annotations.Id;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
+import fr.lille1.univ.coo.tp.annotations.UnAUn;
 
 /**
  * Cette classe rassemble des fonction utile à la manipulation des classe par la reflexion
@@ -39,12 +40,12 @@ public class ReflectionUtils {
 	}
 	
 	public static String nomTable(Class<?> classe) {
-		String nom = classe.getAnnotation(Table.class).value().toLowerCase();
+		String nom = classe.getAnnotation(Table.class).value();
 		if(nom.isEmpty()) {
-			nom = classe.getSimpleName().toLowerCase();
+			nom = classe.getSimpleName();
 		}
 
-		return nom;
+		return nom.toLowerCase();
 	}
 	
 	/**
@@ -92,24 +93,24 @@ public class ReflectionUtils {
 	 * @return Le nom de la colonne
 	 */
 	public static String getNomColonne(Field champ) {
-		if(champ.isAnnotationPresent(PlusieursAUn.class)) {
-			return "";
-		}
 		if(champ.isAnnotationPresent(Id.class)) {
-			if(champ.getAnnotation(Id.class).value().isEmpty()) {
-				return champ.getName();
-			} else {
+			if(!champ.getAnnotation(Id.class).value().isEmpty()) {
 				return champ.getAnnotation(Id.class).value();
 			}
 		} else if(champ.isAnnotationPresent(Colonne.class)) {
-			if(champ.getAnnotation(Colonne.class).value().isEmpty()) {
-				return champ.getName();
-			} else {
+			if(!champ.getAnnotation(Colonne.class).value().isEmpty()) {
 				return champ.getAnnotation(Colonne.class).value();
 			}
-		} else {
-			return champ.getName();
-		}
+		} else if(champ.isAnnotationPresent(UnAUn.class)) {
+			if(!champ.getAnnotation(UnAUn.class).cle().isEmpty()) {
+				return champ.getAnnotation(UnAUn.class).cle();
+			}
+		} else if(champ.isAnnotationPresent(PlusieursAUn.class)) {
+			if(!champ.getAnnotation(PlusieursAUn.class).value().isEmpty()) {
+				return champ.getAnnotation(PlusieursAUn.class).value();
+			}
+		} 
+		return champ.getName();
 	}
 
 

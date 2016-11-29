@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import fr.lille1.univ.coo.tp.Application;
-import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
+import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utils.Constantes;
 
 public class Avatar extends ImageIcon {
@@ -19,7 +19,7 @@ public class Avatar extends ImageIcon {
 	public static final int LONGUEUR_CADRE = 68;
 	public static final int LARGEUR_CADRE = 63;
 	
-	private Utilisateur utilisateur;
+	private IUtilisateur utilisateur;
 	private BufferedImage image = null;
 	
 	public Avatar() {}
@@ -40,15 +40,15 @@ public class Avatar extends ImageIcon {
 		this.setImage(combined);
 	}
 	
-	public void setImage(Utilisateur utilisateur) {
+	public void setImage(IUtilisateur utilisateur) {
 		setImage(utilisateur.getAvatar());
 	}
 
-	public Utilisateur getUtilisateur() {
+	public IUtilisateur getUtilisateur() {
 		return utilisateur;
 	}
 
-	public void setUtilisateur(Utilisateur utilisateur) {
+	public void setUtilisateur(IUtilisateur utilisateur) {
 		this.utilisateur = utilisateur;
 	}
 }

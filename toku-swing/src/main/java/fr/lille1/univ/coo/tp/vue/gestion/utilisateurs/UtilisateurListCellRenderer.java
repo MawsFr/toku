@@ -31,7 +31,6 @@ public class UtilisateurListCellRenderer extends JLabel implements ListCellRende
 			setForeground(Color.BLACK);
 		}
 
-		//Set the icon and text.  If icon was null, say so.
 		Avatar avatar = new Avatar(); // TODO : Faire en sorte qu'on puisse redimensionner l'avatar
 //		setSize(20, 20);
 		avatar.setImage(value.getAvatar());

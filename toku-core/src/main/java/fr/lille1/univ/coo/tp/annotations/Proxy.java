@@ -26,5 +26,5 @@ public @interface Proxy {
 	 * @return La clé de l'attribut à proxifier qui sera utilisé pour récupérer
 	 *         la {@link Factory} dans {@link Factories}
 	 */
-	String value() default "";
+	String cle() default "";
 }

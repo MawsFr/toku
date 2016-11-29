@@ -4,7 +4,7 @@ import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.validateur.ValidationException;
 
 public interface IUtilisateurService {
-	public Utilisateur connecter(String pseudo, String motDePasse) throws ServiceException, ValidationException;
+	public IUtilisateur connecter(String pseudo, String motDePasse) throws ServiceException, ValidationException;
 	public void deconnecter();
 	
 	public void modifierMotDePasse(int idUtilisateur, String nouveauMdp);
@@ -30,6 +30,6 @@ public interface IUtilisateurService {
 	
 	public void ajouterCentreInteret(int id);
 	public void creerCentreInteret(String nom);
-	public boolean estAdministrateur(Utilisateur utilisateur) throws ServiceException;
+	public boolean estAdministrateur(IUtilisateur utilisateur) throws ServiceException;
 	
 }

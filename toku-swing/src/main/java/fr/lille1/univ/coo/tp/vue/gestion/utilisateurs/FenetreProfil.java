@@ -18,6 +18,7 @@ import fr.lille1.univ.coo.tp.controlleurs.composants.ValiderAction;
 import fr.lille1.univ.coo.tp.role.Role;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
+import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.composants.GBC;
 import fr.lille1.univ.coo.tp.vue.composants.JShowablePaswordTextFIeld;
@@ -61,7 +62,7 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 		txtMDP = new JShowablePaswordTextFIeld();
 		txtNom = new JTextField();
 		txtPrenom = new JTextField();
-		comboRole = new JComboBox<>(Role.values());
+//		comboRole = new JComboBox<>(Role.values());
 		
 		OutilsSwing.setTaille(150, 20, txtPseudo, txtMDP, txtNom, txtPrenom, comboRole);
 		
@@ -93,7 +94,7 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 			txtMDP.getPassword().setText(utilisateur.getMotDePasse());
 			txtNom.setText(utilisateur.getNom());
 			txtPrenom.setText(utilisateur.getPrenom());
-			comboRole.setSelectedItem(utilisateur.getRole() - 1);
+//			comboRole.setSelectedItem(utilisateur.getRole() - 1);
 		}
 		
 		try {
@@ -118,7 +119,7 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 		utilisateur.setMotDePasse(new String(txtMDP.getPassword().getPassword()));
 		utilisateur.setNom(txtNom.getText());
 		utilisateur.setPrenom(txtPrenom.getText());
-		utilisateur.setRole(comboRole.getSelectedIndex() + 1);
+//		utilisateur.setRole(comboRole.getSelectedIndex() + 1);
 		try {
 			Service.getAdministrateurService().creerUtilisateur(utilisateur);
 		} catch (ServiceException e) {
@@ -165,7 +166,7 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 		this.c = c;
 	}
 
-	public Utilisateur getUtilisateur() {
+	public IUtilisateur getUtilisateur() {
 		return utilisateur;
 	}
 

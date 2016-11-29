@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.proxy.factory.Factory;
 
 /**
@@ -36,7 +37,8 @@ public class VirtualProxyBuilder<T> implements InvocationHandler {
 
 	@SuppressWarnings("unchecked")
 	public T creerProxy() {
-		return (T) Proxy.newProxyInstance(iface.getClassLoader(), new Class<?>[]{iface}, this);
+		T o = (T) Proxy.newProxyInstance(iface.getClassLoader(), new Class<?>[]{iface}, this); 
+		return o;
 	}
 	
 	@Override
@@ -45,7 +47,7 @@ public class VirtualProxyBuilder<T> implements InvocationHandler {
 		return method.invoke(objet, args);
 	}
 	
-	public void assurerInit() {
+	public void assurerInit() throws DAOException {
 		if(objet == null) {
 			this.objet = factory.creer();
 		}

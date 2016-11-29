@@ -1,7 +1,13 @@
 package fr.lille1.univ.coo.tp.discussion;
 
+import fr.lille1.univ.coo.tp.annotations.Colonne;
+import fr.lille1.univ.coo.tp.annotations.Id;
+import fr.lille1.univ.coo.tp.annotations.PlusieursAPlusieurs;
+import fr.lille1.univ.coo.tp.annotations.UnAPlusieurs;
+import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
+import fr.lille1.univ.coo.tp.role.Role;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.visiteur.Visiteur;
@@ -12,11 +18,29 @@ import fr.lille1.univ.coo.tp.visiteur.Visiteur;
  *
  */
 public class Discussion extends ObjetDomaine {
-	private Integer id;
-	private Integer createur;
-	private String nom;
-	private Integer moderateur;
-	private IObservableList<Utilisateur> membres;
+	@Id
+	protected Integer id;
+	
+	@Colonne
+	protected Integer createur;
+	
+	@Colonne
+	protected String nom;
+	
+	@Colonne
+	protected Integer moderateur;
+	
+	@Colonne
+	protected Role role;
+	
+	@Colonne
+	protected Integer type;
+	
+	@PlusieursAPlusieurs(table_assoc="utilisateur_groupe", cle="id_groupe", type=Utilisateur.class)
+	protected IObservableList<Utilisateur> membres;
+	
+	@UnAPlusieurs
+	protected IObservableList<Message> messages;
 	
 	public Discussion() {}
 	
@@ -38,6 +62,7 @@ public class Discussion extends ObjetDomaine {
 	 */
 	public void setId(Integer id) {
 		this.id = id;
+		notifierModification("id");
 	}
 
 	/**
@@ -100,4 +125,20 @@ public class Discussion extends ObjetDomaine {
 	public void accept(Visiteur visitor) throws DomainException {
 		visitor.visit(this);
 	}
+
+	/**
+	 * @return Le role de l'utilisateur dans la discussion
+	 */
+	public Role getRole() {
+		return role;
+	}
+
+	/**
+	 * @param role Le nouveau role Le role de l'utilisateur dans la discussion
+	 */
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	
+	
 }

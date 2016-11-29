@@ -4,6 +4,7 @@ import javax.swing.DefaultListModel;
 
 import fr.lille1.univ.coo.tp.observateur.Observateur;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
+import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
 public class UtilisateurListModel extends DefaultListModel<Utilisateur> implements Observateur<Utilisateur> {
