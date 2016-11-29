@@ -3,12 +3,16 @@ package fr.lille1.univ.coo.tp.vue.accueil;
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import fr.lille1.univ.coo.tp.Application;
+import fr.lille1.univ.coo.tp.controlleurs.OuvrirFenetreDiscussion;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.JListUtilisateur;
 
 public class OngletAmis extends JPanel {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private JListUtilisateur listeAmis;
 	private Utilisateur utilisateur;
@@ -21,7 +25,8 @@ public class OngletAmis extends JPanel {
 		removeAll();
 		utilisateur = Application.getInstance().getSession().getUtilisateur();
 		listeAmis = new JListUtilisateur(utilisateur.getAmis());
-		this.add(listeAmis, BorderLayout.CENTER);
+		listeAmis.addMouseListener(new OuvrirFenetreDiscussion(listeAmis));
+		this.add(new JScrollPane(listeAmis), BorderLayout.CENTER);
 	}
 
 }

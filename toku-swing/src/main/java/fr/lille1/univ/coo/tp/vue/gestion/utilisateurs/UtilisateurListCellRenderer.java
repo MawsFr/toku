@@ -3,7 +3,6 @@ package fr.lille1.univ.coo.tp.vue.gestion.utilisateurs;
 import java.awt.Color;
 import java.awt.Component;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -19,22 +18,24 @@ public class UtilisateurListCellRenderer extends JLabel implements ListCellRende
 	@Override
 	public Component getListCellRendererComponent(JList<? extends Utilisateur> list, Utilisateur value, int index,
 			boolean isSelected, boolean cellHasFocus) {
+		setOpaque(true);
 		if (isSelected) {
-			setBackground(list.getSelectionBackground());
-			setForeground(list.getSelectionForeground());
+			setBackground(Color.decode("#64B5F6"));
+			setForeground(Color.WHITE);
 		} else {
 			if(index % 2 == 0) {
-				setBackground(list.getBackground());
+				setBackground(Color.WHITE);
 			} else {
 				setBackground(Color.LIGHT_GRAY);
 			}
-			setForeground(list.getForeground());
+			setForeground(Color.BLACK);
 		}
 
 		//Set the icon and text.  If icon was null, say so.
-		Avatar avatar = new Avatar();
+		Avatar avatar = new Avatar(); // TODO : Faire en sorte qu'on puisse redimensionner l'avatar
+//		setSize(20, 20);
 		avatar.setImage(value.getAvatar());
-		String utilisateur = value.getPseudo() + (value == Application.getInstance().getSession().getUtilisateur() ? " <b>(Vous)</b>" : "");
+		String utilisateur = value.getPseudo() + (value == Application.getInstance().getSession().getUtilisateur() ? " (Vous)" : "");
 		setIcon(avatar);
 		setText(utilisateur);
 		setFont(list.getFont());

@@ -26,6 +26,8 @@ import fr.lille1.univ.coo.tp.vue.composants.fenetre.Fermable;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Validable;
 
 public class FenetreProfil extends JDialog implements Validable, Annulable, Fermable {
+	private static final long serialVersionUID = 1L;
+
 	public static enum ModeEdition {
 		AJOUT, MODIF;
 	}

@@ -20,12 +20,17 @@ import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 
 import fr.lille1.univ.coo.tp.discussion.message.Message;
+import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Fermable;
+import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.JListUtilisateur;
+import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.UtilisateurListModel;
 
 import javax.swing.border.TitledBorder;
+import javax.swing.plaf.ListUI;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JCheckBox;
 
 public class FenetreDiscussion extends JFrame implements Fermable {
 
@@ -41,12 +46,12 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	private JToggleButton btnAccuseReception;
 	private JToggleButton btnChiffre;
 	private JToggleButton btnExpire;
-	private JList<Utilisateur> listeMembres;
+	private JListUtilisateur listeMembres;
 	private JMenuBar barreMenu;
 	private JMenu menuFichier;
 	private JMenuItem menuFermer;
 	
-	public FenetreDiscussion() {
+	public FenetreDiscussion(IObservableList<Utilisateur> membres) {
 		c = getContentPane();
 		c.setLayout(new BorderLayout(0, 0));
 		
@@ -110,6 +115,9 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		fl_panneauEnvoi.setAlignment(FlowLayout.TRAILING);
 		panneauBas2.add(panneauEnvoi, BorderLayout.SOUTH);
 		
+		JCheckBox chckbxValiderAvecEntre = new JCheckBox("Valider avec entrée");
+		panneauEnvoi.add(chckbxValiderAvecEntre);
+		
 		btnEnvoyer = new JButton("Envoyer");
 		panneauEnvoi.add(btnEnvoyer);
 		
@@ -144,7 +152,9 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		
 		JScrollPane scrollMembres = new JScrollPane();
 		
-		listeMembres = new JList<>();
+		
+		
+		listeMembres = new JListUtilisateur(membres);
 		listeMembres.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollMembres.setViewportView(listeMembres);
 		
@@ -185,9 +195,207 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		setVisible(true);
 		
 	}
-
+	
 	@Override
 	public void fermer() {
 		this.dispose();
 	}
+
+	/**
+	 * @return Le c
+	 */
+	public Container getC() {
+		return c;
+	}
+
+	/**
+	 * @param c Le nouveau c
+	 */
+	public void setC(Container c) {
+		this.c = c;
+	}
+
+	/**
+	 * @return Le lblTypeDiscussion
+	 */
+	public JLabel getLblTypeDiscussion() {
+		return lblTypeDiscussion;
+	}
+
+	/**
+	 * @param lblTypeDiscussion Le nouveau lblTypeDiscussion
+	 */
+	public void setLblTypeDiscussion(JLabel lblTypeDiscussion) {
+		this.lblTypeDiscussion = lblTypeDiscussion;
+	}
+
+	/**
+	 * @return Le lblNomDiscussion
+	 */
+	public JLabel getLblNomDiscussion() {
+		return lblNomDiscussion;
+	}
+
+	/**
+	 * @param lblNomDiscussion Le nouveau lblNomDiscussion
+	 */
+	public void setLblNomDiscussion(JLabel lblNomDiscussion) {
+		this.lblNomDiscussion = lblNomDiscussion;
+	}
+
+	/**
+	 * @return Le listeMessages
+	 */
+	public JList<Message> getListeMessages() {
+		return listeMessages;
+	}
+
+	/**
+	 * @param listeMessages Le nouveau listeMessages
+	 */
+	public void setListeMessages(JList<Message> listeMessages) {
+		this.listeMessages = listeMessages;
+	}
+
+	/**
+	 * @return Le btnEnvoyer
+	 */
+	public JButton getBtnEnvoyer() {
+		return btnEnvoyer;
+	}
+
+	/**
+	 * @param btnEnvoyer Le nouveau btnEnvoyer
+	 */
+	public void setBtnEnvoyer(JButton btnEnvoyer) {
+		this.btnEnvoyer = btnEnvoyer;
+	}
+
+	/**
+	 * @return Le btnPrioritaire
+	 */
+	public JToggleButton getBtnPrioritaire() {
+		return btnPrioritaire;
+	}
+
+	/**
+	 * @param btnPrioritaire Le nouveau btnPrioritaire
+	 */
+	public void setBtnPrioritaire(JToggleButton btnPrioritaire) {
+		this.btnPrioritaire = btnPrioritaire;
+	}
+
+	/**
+	 * @return Le txtMessage
+	 */
+	public JTextArea getTxtMessage() {
+		return txtMessage;
+	}
+
+	/**
+	 * @param txtMessage Le nouveau txtMessage
+	 */
+	public void setTxtMessage(JTextArea txtMessage) {
+		this.txtMessage = txtMessage;
+	}
+
+	/**
+	 * @return Le btnAccuseReception
+	 */
+	public JToggleButton getBtnAccuseReception() {
+		return btnAccuseReception;
+	}
+
+	/**
+	 * @param btnAccuseReception Le nouveau btnAccuseReception
+	 */
+	public void setBtnAccuseReception(JToggleButton btnAccuseReception) {
+		this.btnAccuseReception = btnAccuseReception;
+	}
+
+	/**
+	 * @return Le btnChiffre
+	 */
+	public JToggleButton getBtnChiffre() {
+		return btnChiffre;
+	}
+
+	/**
+	 * @param btnChiffre Le nouveau btnChiffre
+	 */
+	public void setBtnChiffre(JToggleButton btnChiffre) {
+		this.btnChiffre = btnChiffre;
+	}
+
+	/**
+	 * @return Le btnExpire
+	 */
+	public JToggleButton getBtnExpire() {
+		return btnExpire;
+	}
+
+	/**
+	 * @param btnExpire Le nouveau btnExpire
+	 */
+	public void setBtnExpire(JToggleButton btnExpire) {
+		this.btnExpire = btnExpire;
+	}
+
+	/**
+	 * @return Le listeMembres
+	 */
+	public JListUtilisateur getListeMembres() {
+		return listeMembres;
+	}
+
+	/**
+	 * @param listeMembres Le nouveau listeMembres
+	 */
+	public void setListeMembres(JListUtilisateur listeMembres) {
+		this.listeMembres = listeMembres;
+	}
+
+	/**
+	 * @return Le barreMenu
+	 */
+	public JMenuBar getBarreMenu() {
+		return barreMenu;
+	}
+
+	/**
+	 * @param barreMenu Le nouveau barreMenu
+	 */
+	public void setBarreMenu(JMenuBar barreMenu) {
+		this.barreMenu = barreMenu;
+	}
+
+	/**
+	 * @return Le menuFichier
+	 */
+	public JMenu getMenuFichier() {
+		return menuFichier;
+	}
+
+	/**
+	 * @param menuFichier Le nouveau menuFichier
+	 */
+	public void setMenuFichier(JMenu menuFichier) {
+		this.menuFichier = menuFichier;
+	}
+
+	/**
+	 * @return Le menuFermer
+	 */
+	public JMenuItem getMenuFermer() {
+		return menuFermer;
+	}
+
+	/**
+	 * @param menuFermer Le nouveau menuFermer
+	 */
+	public void setMenuFermer(JMenuItem menuFermer) {
+		this.menuFermer = menuFermer;
+	}
+	
+	
 }

@@ -15,7 +15,7 @@ public class JListUtilisateur extends JList<Utilisateur> implements Filtreur {
 	// TODO : RENDRE GENERIQUE LA CLASSE
 	private IObservableList<Utilisateur> utilisateurs;
 	private UtilisateurListModel model;
-	
+
 	public JListUtilisateur(IObservableList<Utilisateur> utilisateurs) {
 		this.utilisateurs = utilisateurs;
 		model = new UtilisateurListModel(utilisateurs);
@@ -55,13 +55,15 @@ public class JListUtilisateur extends JList<Utilisateur> implements Filtreur {
 	public void filtrer(Filtre filtre) {
 		// TODO : Implémenter
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		FontMetrics fm = g.getFontMetrics();
-		String message = "Vous n'avez aucun amis, cliquez sur +Amis pour en ajouter !";
-		g.drawString(message, (getWidth() - fm.stringWidth(message)) / 2, (getHeight()  - fm.getHeight()) / 2);
+		if(utilisateurs.getUtilisateurs().isEmpty()) {
+			FontMetrics fm = g.getFontMetrics();
+			String message = "Vous n'avez aucun amis, cliquez sur +Amis pour en ajouter !";
+			g.drawString(message, (getWidth() - fm.stringWidth(message)) / 2, (getHeight()  - fm.getHeight()) / 2);
+		}
 	}
-	
+
 }

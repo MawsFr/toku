@@ -9,6 +9,8 @@ import fr.lille1.univ.coo.tp.vue.connexion.PanneauConnexion;
 
 public class PanneauPrincipal extends JPanel {
 
+	private static final long serialVersionUID = 1L;
+	
 	public static final String PANNEAU_CONNEXION = "Panneau de connexion";
 	public static final String PANNEAU_ACCUEIL = "Panneau d'accueil";
 	
