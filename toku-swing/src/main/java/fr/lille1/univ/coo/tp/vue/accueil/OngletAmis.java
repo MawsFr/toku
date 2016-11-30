@@ -6,15 +6,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import fr.lille1.univ.coo.tp.Application;
-import fr.lille1.univ.coo.tp.controlleurs.OuvrirFenetreDiscussion;
+import fr.lille1.univ.coo.tp.controlleurs.AmisListMouseAdapter;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
-import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.JListUtilisateur;
+import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.JUtilisateurList;
 
 public class OngletAmis extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private JListUtilisateur listeAmis;
+	private JUtilisateurList listeAmis;
 	private IUtilisateur utilisateur;
 	
 	public OngletAmis() {
@@ -24,8 +24,8 @@ public class OngletAmis extends JPanel {
 	public void initialiser() {
 		removeAll();
 		utilisateur = Application.getInstance().getSession().getUtilisateur();
-		listeAmis = new JListUtilisateur(utilisateur.getAmis());
-		listeAmis.addMouseListener(new OuvrirFenetreDiscussion(listeAmis));
+		listeAmis = new JUtilisateurList(utilisateur.getAmis());
+		listeAmis.addMouseListener(new AmisListMouseAdapter(listeAmis));
 		this.add(new JScrollPane(listeAmis), BorderLayout.CENTER);
 	}
 

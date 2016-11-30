@@ -13,7 +13,7 @@ public class Humeur extends ObjetDomaine implements IHumeur {
 	@Id
 	private Integer id;
 
-	@UnAUn(type=Utilisateur.class)
+	@UnAUn(sonType=Utilisateur.class)
 	private IUtilisateur utilisateur;
 	
 	/* (non-Javadoc)

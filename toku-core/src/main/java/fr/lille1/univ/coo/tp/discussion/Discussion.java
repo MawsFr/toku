@@ -2,14 +2,16 @@ package fr.lille1.univ.coo.tp.discussion;
 
 import fr.lille1.univ.coo.tp.annotations.Colonne;
 import fr.lille1.univ.coo.tp.annotations.Id;
-import fr.lille1.univ.coo.tp.annotations.Proxy;
+import fr.lille1.univ.coo.tp.annotations.PlusieursAPlusieurs;
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.annotations.UnAPlusieurs;
+import fr.lille1.univ.coo.tp.annotations.UnAUn;
 import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
 import fr.lille1.univ.coo.tp.role.Role;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
+import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.visiteur.Visiteur;
 
@@ -19,12 +21,12 @@ import fr.lille1.univ.coo.tp.visiteur.Visiteur;
  *
  */
 @Table
-public class Discussion extends ObjetDomaine {
+public class Discussion extends ObjetDomaine implements IDiscussion {
 	@Id
 	protected Integer id;
 	
-	@Colonne("id_createur")
-	protected Integer createur;
+	@UnAUn(saCle="id_createur", sonType=Utilisateur.class)
+	protected IUtilisateur createur;
 	
 	@Colonne
 	protected String nom;
@@ -37,11 +39,11 @@ public class Discussion extends ObjetDomaine {
 	@Colonne
 	protected Integer type;
 	
-//	@UnAPlusieurs
+	@PlusieursAPlusieurs(table_assoc="utilisateur_groupe", leurCle="id_utilisateur", notreCle="id_groupe", type=Utilisateur.class)
 	protected IObservableList<Utilisateur> membres;
 	
-//	@Proxy
-//	@UnAPlusieurs
+	// select * from message where 
+	@UnAPlusieurs(leurType=Message.class, maCle="id_groupe")
 	protected IObservableList<Message> messages;
 	
 	public Discussion() {}
@@ -52,92 +54,107 @@ public class Discussion extends ObjetDomaine {
 //		this.moderateur = moderateur;
 //	}
 
-	/**
-	 * @return Le id
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#getId()
 	 */
+	@Override
 	public Integer getId() {
 		return id;
 	}
 
-	/**
-	 * @param id Le nouveau id
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#setId(java.lang.Integer)
 	 */
+	@Override
 	public void setId(Integer id) {
 		this.id = id;
 		notifierModification("id");
 	}
 
-	/**
-	 * @return Le createur
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#getCreateur()
 	 */
-	public Integer getCreateur() {
+	@Override
+	public IUtilisateur getCreateur() {
 		return createur;
 	}
 
-	/**
-	 * @param createur Le nouveau createur
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#setCreateur(java.lang.Integer)
 	 */
-	public void setCreateur(Integer createur) {
+	@Override
+	public void setCreateur(IUtilisateur createur) {
 		this.createur = createur;
 	}
 
-	/**
-	 * @return Le nom
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#getNom()
 	 */
+	@Override
 	public String getNom() {
 		return nom;
 	}
 
-	/**
-	 * @param nom Le nouveau nom
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#setNom(java.lang.String)
 	 */
+	@Override
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
-	/**
-	 * @return Le moderateur
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#getModerateur()
 	 */
+	@Override
 	public Integer getModerateur() {
 		return moderateur;
 	}
 
-	/**
-	 * @param moderateur Le nouveau moderateur
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#setModerateur(java.lang.Integer)
 	 */
+	@Override
 	public void setModerateur(Integer moderateur) {
 		this.moderateur = moderateur;
 	}
 
-	/**
-	 * @return Le membres
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#getMembres()
 	 */
+	@Override
 	public IObservableList<Utilisateur> getMembres() {
 		return membres;
 	}
 
-	/**
-	 * @param membres Le nouveau membres
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#setMembres(fr.lille1.univ.coo.tp.utilisateur.IObservableList)
 	 */
+	@Override
 	public void setMembres(IObservableList<Utilisateur> membres) {
 		this.membres = membres;
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#accept(fr.lille1.univ.coo.tp.visiteur.Visiteur)
+	 */
 	@Override
 	public void accept(Visiteur visitor) throws DomainException {
 		visitor.visit(this);
 	}
 
-	/**
-	 * @return Le role de l'utilisateur dans la discussion
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#getRole()
 	 */
+	@Override
 	public Role getRole() {
 		return role;
 	}
 
-	/**
-	 * @param role Le nouveau role Le role de l'utilisateur dans la discussion
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#setRole(fr.lille1.univ.coo.tp.role.Role)
 	 */
+	@Override
 	public void setRole(Role role) {
 		this.role = role;
 	}

@@ -7,10 +7,13 @@ import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -18,19 +21,14 @@ import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.TitledBorder;
 
 import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Fermable;
-import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.JListUtilisateur;
-import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.UtilisateurListModel;
-
-import javax.swing.border.TitledBorder;
-import javax.swing.plaf.ListUI;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JCheckBox;
+import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.JObservableList;
+import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.JUtilisateurList;
 
 public class FenetreDiscussion extends JFrame implements Fermable {
 
@@ -46,7 +44,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	private JToggleButton btnAccuseReception;
 	private JToggleButton btnChiffre;
 	private JToggleButton btnExpire;
-	private JListUtilisateur listeMembres;
+	private JUtilisateurList listeMembres;
 	private JMenuBar barreMenu;
 	private JMenu menuFichier;
 	private JMenuItem menuFermer;
@@ -64,7 +62,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		btnAccuseReception = new JToggleButton("Accusé");
 		btnChiffre = new JToggleButton("Chiffré");
 		btnExpire = new JToggleButton("Expire");
-		listeMembres = new JListUtilisateur(membres);
+		listeMembres = new JUtilisateurList(membres);
 		barreMenu = new JMenuBar();
 		menuFichier = new JMenu("Fichier");
 		menuFermer = new JMenuItem("Fermer");
@@ -332,14 +330,14 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	/**
 	 * @return Le listeMembres
 	 */
-	public JListUtilisateur getListeMembres() {
+	public JUtilisateurList getListeMembres() {
 		return listeMembres;
 	}
 
 	/**
 	 * @param listeMembres Le nouveau listeMembres
 	 */
-	public void setListeMembres(JListUtilisateur listeMembres) {
+	public void setListeMembres(JUtilisateurList listeMembres) {
 		this.listeMembres = listeMembres;
 	}
 

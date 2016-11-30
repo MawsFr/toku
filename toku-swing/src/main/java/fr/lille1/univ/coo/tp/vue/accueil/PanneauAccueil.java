@@ -84,6 +84,7 @@ public class PanneauAccueil extends JPanel {
 		lblPseudo.setText(utilisateur.getPrenom().substring(0, 1).toUpperCase() + utilisateur.getPrenom().substring(1) + " " + utilisateur.getNom().toUpperCase() + " (" + utilisateur.getPseudo() + ")");
 		lblPseudo.setFont(new Font("Serif", Font.PLAIN, 22));
 		ongletAmis.initialiser();
+		ongletGroupes.initialiser();
 	}
 	
 	

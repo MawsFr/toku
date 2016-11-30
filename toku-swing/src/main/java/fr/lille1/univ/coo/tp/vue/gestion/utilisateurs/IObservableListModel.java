@@ -4,17 +4,15 @@ import javax.swing.DefaultListModel;
 
 import fr.lille1.univ.coo.tp.observateur.Observateur;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
-import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
-import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
-public class UtilisateurListModel extends DefaultListModel<Utilisateur> implements Observateur<Utilisateur> {
+public class IObservableListModel<T> extends DefaultListModel<T> implements Observateur<T> {
 	
 	private static final long serialVersionUID = 1L;
 //	private IObservableList<Utilisateur> utilisateurs;
 
-	public UtilisateurListModel(IObservableList<Utilisateur> listeUtilisateur) {
+	public IObservableListModel(IObservableList<T> listeUtilisateur) {
 //		this.utilisateurs = ListeUtilisateur;
-		for(Utilisateur ami : listeUtilisateur.getListe()) {
+		for(T ami : listeUtilisateur.getListe()) {
 			addElement(ami);
 		}
 		listeUtilisateur.ajouterObservateur(this);
@@ -24,7 +22,7 @@ public class UtilisateurListModel extends DefaultListModel<Utilisateur> implemen
 	 * @see fr.lille1.univ.coo.tp.observateur.Observateur#modification(java.lang.Object, java.lang.String)
 	 */
 	@Override
-	public void modification(Utilisateur objet, String propriete) {
+	public void modification(T objet, String propriete) {
 		this.fireContentsChanged(this, 0, getSize());
 	}
 
@@ -32,7 +30,7 @@ public class UtilisateurListModel extends DefaultListModel<Utilisateur> implemen
 	 * @see fr.lille1.univ.coo.tp.observateur.Observateur#creation(java.lang.Object)
 	 */
 	@Override
-	public void creation(Utilisateur objet) {
+	public void creation(T objet) {
 		addElement(objet);
 	}
 
@@ -40,7 +38,7 @@ public class UtilisateurListModel extends DefaultListModel<Utilisateur> implemen
 	 * @see fr.lille1.univ.coo.tp.observateur.Observateur#suppression(java.lang.Object)
 	 */
 	@Override
-	public void suppression(Utilisateur objet) {
+	public void suppression(T objet) {
 		removeElement(objet);
 	}
 }

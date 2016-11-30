@@ -8,19 +8,18 @@ import javax.swing.JList;
 import fr.lille1.univ.coo.tp.filtre.Filtre;
 import fr.lille1.univ.coo.tp.filtre.Filtreur;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
-import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
-public class JListUtilisateur extends JList<Utilisateur> implements Filtreur {
+public abstract class JObservableList<T> extends JList<T> implements Filtreur {
 	private static final long serialVersionUID = 1L;
 	// TODO : RENDRE GENERIQUE LA CLASSE
-	private IObservableList<Utilisateur> utilisateurs;
-	private UtilisateurListModel model;
+	private IObservableList<T> utilisateurs;
+	private IObservableListModel<T> leModel;
 
-	public JListUtilisateur() {
-		this.setCellRenderer(new UtilisateurListCellRenderer());
+	public JObservableList() {
+		this.setCellRenderer(getCellRenderer());
 	}
 	
-	public JListUtilisateur(IObservableList<Utilisateur> utilisateurs) {
+	public JObservableList(IObservableList<T> utilisateurs) {
 		this();
 		setUtilisateurs(utilisateurs);
 	}
@@ -28,32 +27,32 @@ public class JListUtilisateur extends JList<Utilisateur> implements Filtreur {
 	/**
 	 * @return Le utilisateurs
 	 */
-	public IObservableList<Utilisateur> getUtilisateurs() {
+	public IObservableList<T> getUtilisateurs() {
 		return utilisateurs;
 	}
 
 	/**
 	 * @param utilisateurs Le nouveau utilisateurs
 	 */
-	public void setUtilisateurs(IObservableList<Utilisateur> utilisateurs) {
+	public void setUtilisateurs(IObservableList<T> utilisateurs) {
 		this.utilisateurs = utilisateurs;
-		model = new UtilisateurListModel(utilisateurs);
-		this.setModel(model);
+		leModel = new IObservableListModel<T>(utilisateurs);
+		this.setModel(leModel);
 
+	}
+	
+	/**
+	 * @return Le leModel
+	 */
+	public IObservableListModel<T> getLeModel() {
+		return leModel;
 	}
 
 	/**
-	 * @return Le model
+	 * @param leModel Le nouveau leModel
 	 */
-	public UtilisateurListModel getModel() {
-		return model;
-	}
-
-	/**
-	 * @param model Le nouveau model
-	 */
-	public void setModel(UtilisateurListModel model) {
-		this.model = model;
+	public void setLeModel(IObservableListModel<T> leModel) {
+		this.leModel = leModel;
 	}
 
 	@Override
@@ -66,9 +65,13 @@ public class JListUtilisateur extends JList<Utilisateur> implements Filtreur {
 		super.paintComponent(g);
 		if(utilisateurs.getListe().isEmpty()) {
 			FontMetrics fm = g.getFontMetrics();
-			String message = "Vous n'avez aucun amis, cliquez sur +Amis pour en ajouter !";
+			String message = getMessageVide(); 
 			g.drawString(message, (getWidth() - fm.stringWidth(message)) / 2, (getHeight()  - fm.getHeight()) / 2);
 		}
 	}
-
+	
+	public String getMessageVide() {
+		return "Vous n'avez aucun amis, cliquez sur +Amis pour en ajouter !";
+	}
+	
 }

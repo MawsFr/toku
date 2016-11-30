@@ -19,6 +19,10 @@ public @interface PlusieursAUn {
 	 * @return Le nom de la colonne qui represente l'id de la partie 1 dans la
 	 *         relation 1 - n
 	 */
-	String value();
+	Class<?> sonType();
+
+	String saCle();
+	
+	String mappeePar() default "";
 
 }

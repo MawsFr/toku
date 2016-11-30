@@ -22,12 +22,12 @@ public @interface UnAUn {
 	 * Nom de la colonne contenant la clé pour aller chercher l'objet
 	 * @return
 	 */
-	String cle() default "";
+	String saCle() default "";
 	
 	/**
 	 * La classe (et non pas l'interface) de l'objet à retourner
 	 * @return
 	 */
-	Class<?> type();
+	Class<?> sonType();
 	
 }

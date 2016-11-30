@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import fr.lille1.univ.coo.tp.controlleurs.gestion.utilisateur.AjouterUtilisateurAction;
 import fr.lille1.univ.coo.tp.controlleurs.gestion.utilisateur.ModifierUtilisateurAction;
 import fr.lille1.univ.coo.tp.controlleurs.gestion.utilisateur.SupprimerUtilisateurAction;
+import fr.lille1.univ.coo.tp.role.IRole;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.BarreMenuPrincipale;
@@ -27,7 +28,7 @@ public class GestionUtilisateurs {
 	
 	private JDialog fenetre;
 	private Container c;
-	private JListUtilisateur utilisateurs;
+	private JObservableList<Utilisateur> utilisateurs;
 	private JButton btnAjouter;
 	private JButton btnModifier;
 	private JButton btnSupprimer;
@@ -40,7 +41,7 @@ public class GestionUtilisateurs {
 		c.setLayout(new GridBagLayout());
 		
 		fenetre = new JDialog(FenetrePrincipale.getInstance().getFenetre(), BarreMenuPrincipale.MENU_GERER_UTILISATEURS, ModalityType.APPLICATION_MODAL);
-		utilisateurs = new JListUtilisateur();
+		utilisateurs = new JUtilisateurList();
 		btnAjouter = new JButton(AjouterUtilisateurAction.getInstance(this));
 		btnModifier = new JButton(ModifierUtilisateurAction.getInstance(this));
 		btnSupprimer = new JButton(SupprimerUtilisateurAction.getInstance(this));
@@ -73,7 +74,7 @@ public class GestionUtilisateurs {
 	/**
 	 * @return Le utilisateurs
 	 */
-	public JListUtilisateur getUtilisateurs() {
+	public JObservableList<Utilisateur> getUtilisateurs() {
 		return utilisateurs;
 	}
 
@@ -143,7 +144,7 @@ public class GestionUtilisateurs {
 	/**
 	 * @param utilisateurs Le nouveau utilisateurs
 	 */
-	public void setUtilisateurs(JListUtilisateur utilisateurs) {
+	public void setUtilisateurs(JObservableList<Utilisateur> utilisateurs) {
 		this.utilisateurs = utilisateurs;
 	}
 

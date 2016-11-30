@@ -8,6 +8,7 @@ import fr.lille1.univ.coo.tp.annotations.Colonne;
 import fr.lille1.univ.coo.tp.annotations.Id;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
+import fr.lille1.univ.coo.tp.annotations.UnAPlusieurs;
 import fr.lille1.univ.coo.tp.annotations.UnAUn;
 
 /**
@@ -102,12 +103,16 @@ public class ReflectionUtils {
 				return champ.getAnnotation(Colonne.class).value();
 			}
 		} else if(champ.isAnnotationPresent(UnAUn.class)) {
-			if(!champ.getAnnotation(UnAUn.class).cle().isEmpty()) {
-				return champ.getAnnotation(UnAUn.class).cle();
+			if(!champ.getAnnotation(UnAUn.class).saCle().isEmpty()) {
+				return champ.getAnnotation(UnAUn.class).saCle();
 			}
 		} else if(champ.isAnnotationPresent(PlusieursAUn.class)) {
-			if(!champ.getAnnotation(PlusieursAUn.class).value().isEmpty()) {
-				return champ.getAnnotation(PlusieursAUn.class).value();
+			if(!champ.getAnnotation(PlusieursAUn.class).saCle().isEmpty()) {
+				return champ.getAnnotation(PlusieursAUn.class).saCle();
+			}
+		} else if(champ.isAnnotationPresent(UnAPlusieurs.class)) {
+			if(!champ.getAnnotation(UnAPlusieurs.class).maCle().isEmpty()) {
+				return champ.getAnnotation(UnAPlusieurs.class).maCle();
 			}
 		} 
 		return champ.getName();

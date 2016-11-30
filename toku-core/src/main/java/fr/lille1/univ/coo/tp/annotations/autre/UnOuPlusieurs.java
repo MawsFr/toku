@@ -1,7 +1,4 @@
-/**
- * 
- */
-package fr.lille1.univ.coo.tp.annotations;
+package fr.lille1.univ.coo.tp.annotations.autre;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
@@ -13,19 +10,6 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RUNTIME)
 @Target(FIELD)
-/**
- * @author Maws
- *
- */
-public @interface UnAPlusieurs {
-	//select from Utilisateur 
-	
-	Class<?> leurType();
+public @interface UnOuPlusieurs {
 
-	/**
-	 * La clé de l'objet contenant
-	 * @return
-	 */
-	String maCle();
-	
 }

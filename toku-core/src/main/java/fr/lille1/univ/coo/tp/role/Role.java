@@ -1,32 +1,37 @@
 package fr.lille1.univ.coo.tp.role;
 
+import java.util.List;
+
 import fr.lille1.univ.coo.tp.annotations.Colonne;
 import fr.lille1.univ.coo.tp.annotations.Id;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
+import fr.lille1.univ.coo.tp.annotations.UnAPlusieurs;
 
 @Table
 public class Role {
 	@Id
-	private int id;
+	private Integer id;
 	
 	@Colonne
 	private String nom;
 	
-//	@Proxy
-	@PlusieursAUn("id_parent")
+	@PlusieursAUn(saCle = "id_parent", sonType = Role.class, mappeePar="roles")
 	private Role parent;
+	
+	@UnAPlusieurs(leurType=Role.class, maCle="id_parent")
+	private List<Role> roles;
 	
 	public Role() {
 	}
 	
-	public Role(int id, String nom, Role parent) {
+	public Role(Integer id, String nom, Role parent) {
 		this.id = id;
 		this.nom = nom;
 		this.parent = parent;
 	}
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	
@@ -61,8 +66,22 @@ public class Role {
 	/**
 	 * @param id Le nouveau id
 	 */
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	/**
+	 * @return Le roles
+	 */
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	/**
+	 * @param roles Le nouveau roles
+	 */
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 	@Override

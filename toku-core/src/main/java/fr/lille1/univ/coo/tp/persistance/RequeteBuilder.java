@@ -2,7 +2,6 @@ package fr.lille1.univ.coo.tp.persistance;
 
 import java.sql.PreparedStatement;
 import java.util.List;
-import java.util.Map;
 
 import fr.lille1.univ.coo.tp.utils.ReflectionUtils;
 

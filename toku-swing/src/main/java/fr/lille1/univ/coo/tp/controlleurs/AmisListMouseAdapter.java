@@ -5,15 +5,16 @@ import java.awt.event.MouseEvent;
 
 import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
+import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.ObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.discussion.FenetreDiscussion;
-import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.JListUtilisateur;
+import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.JUtilisateurList;
 
-public class OuvrirFenetreDiscussion extends MouseAdapter {
-	private JListUtilisateur list;
+public class AmisListMouseAdapter extends MouseAdapter {
+	private JUtilisateurList list;
 	
-	public OuvrirFenetreDiscussion(JListUtilisateur listeUtilisateur) {
+	public AmisListMouseAdapter(JUtilisateurList listeUtilisateur) {
 		this.list = listeUtilisateur;
 	}
 
