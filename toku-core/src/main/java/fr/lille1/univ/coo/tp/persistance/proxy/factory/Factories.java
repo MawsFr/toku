@@ -15,7 +15,7 @@ public class Factories {
 	static {
 		factories = new HashMap<>();
 		factories.put(Utilisateur.class, new HashMap<>());
-		factories.get(Utilisateur.class).put("amis", ListeAmisFactory.class);
+//		factories.get(Utilisateur.class).put("amis", ListeAmisFactory.class);
 //		factories.get(Utilisateur.class).put("fils", ListeFilsFactory.class);
 		
 		factories = new HashMap<>();

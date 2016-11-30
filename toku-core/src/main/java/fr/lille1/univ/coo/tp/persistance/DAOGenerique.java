@@ -30,9 +30,11 @@ import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.persistance.proxy.VirtualProxyBuilder;
 import fr.lille1.univ.coo.tp.persistance.proxy.factory.Factories;
 import fr.lille1.univ.coo.tp.persistance.proxy.factory.Factory;
+import fr.lille1.univ.coo.tp.persistance.proxy.factory.PlusieursAPlusieursFactory;
 import fr.lille1.univ.coo.tp.persistance.proxy.factory.UnAUnFactory;
 import fr.lille1.univ.coo.tp.service.unitofwork.UnitOfWork;
 import fr.lille1.univ.coo.tp.utilisateur.Humeur;
+import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utils.ReflectionUtils;
 
 /**
@@ -392,6 +394,47 @@ public class DAOGenerique<T extends IObjetDomaine> {
 		}
 		return element;
 	}
+	
+	public List<T> rechercherParJointure(List<Jointure> jointure, final Map<String, Object> clauseWhere) throws DAOException {
+		PreparedStatement ps = null;
+		ResultSet resultat = null;
+		final List<T> elements = new ArrayList<>();
+		final List<String> proprietes = new ArrayList<>(clauseWhere.keySet());
+		try {
+			ps = creerRequetePreparee(connexion, rb.rechercherParJointure(jointure, proprietes), false, null, null, proprietes,
+					clauseWhere);
+			System.out.println(ps);
+			resultat = ps.executeQuery();
+			while (resultat.next()) {
+				int id = resultat.getInt(1);
+				T recherche = (T) references.rechercher(classe, id);
+				if (recherche == null) {
+					elements.add(construire(id, resultat).get());
+				} else {
+					elements.add(recherche);
+				}
+			}
+			;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				if (resultat != null) {
+					resultat.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (SQLException e) {
+				throw new DAOException(e);
+			}
+		}
+		return elements;
+	}
 
 	/**
 	 * Initialise la requete preparee basee sur la connexion passee en argument,
@@ -537,31 +580,46 @@ public class DAOGenerique<T extends IObjetDomaine> {
 					boolean accessible = champ.isAccessible();
 					champ.setAccessible(true);
 					if(!champ.isAnnotationPresent(Transient.class)) {
-						String colonne = ReflectionUtils.getNomColonne(champ);
+						String colonneId = ReflectionUtils.getNomColonne(champ);
 						if (champ.isAnnotationPresent(Colonne.class) || champ.isAnnotationPresent(Id.class)) {
-							Object valeur = resultat.getObject(colonne);
+							Object valeur = resultat.getObject(colonneId);
 							if (valeur != null) {
 								// Si c'est un proxy
 								if (champ.isAnnotationPresent(Proxy.class)) {
-									creerProxy(objet, champ, colonne, valeur);
+									creerProxy(objet, champ, colonneId, valeur);
 								} else {
-									if (champ.getType().equals(resultat.getObject(colonne).getClass())) {
-										champ.set(objet, resultat.getObject(colonne));
+									if (champ.getType().equals(resultat.getObject(colonneId).getClass())) {
+										champ.set(objet, resultat.getObject(colonneId));
 									} else {
-										creerSansProxy(id, objet, champ, colonne);
+										creerSansProxy(id, objet, champ, colonneId);
 									}
 								}
 							}
 						} else {
 							if (champ.isAnnotationPresent(UnAUn.class)) {
-								Object valeur = resultat.getObject(colonne);
 								UnAUn unAUn = champ.getAnnotation(UnAUn.class);
+								Object valeur = resultat.getObject(colonneId);
 								Class<?> type = unAUn.type();
-								colonne = ReflectionUtils.trouverId(type);
-								UnAUnFactory<T> unAUnFactory = new UnAUnFactory<T>(colonne, valeur, type);
+								colonneId = ReflectionUtils.trouverId(type);
+								
+								UnAUnFactory<T> unAUnFactory = new UnAUnFactory<T>(colonneId, valeur, type);
 								VirtualProxyBuilder<T> vp = new VirtualProxyBuilder<T>(unAUnFactory, champ.getType());
 								champ.set(objet, vp.creerProxy());
+							} else if (champ.isAnnotationPresent(PlusieursAPlusieurs.class)) {
+								PlusieursAPlusieurs plusieursAPlusieurs = champ.getAnnotation(PlusieursAPlusieurs.class);
+								
+								String tableAssociation = plusieursAPlusieurs.table_assoc();
+								String leurColonne = plusieursAPlusieurs.leurCle();
+								Class<?> leurType = plusieursAPlusieurs.type();
+								String leurId = ReflectionUtils.trouverId(leurType);
+								
+								String notreColonne = plusieursAPlusieurs.notreCle();
+								
+								PlusieursAPlusieursFactory<T> plusieursAPlusieursFactory = new PlusieursAPlusieursFactory<T>(tableAssociation, leurColonne, notreColonne, leurType, leurId, id);
+								VirtualProxyBuilder<IObservableList<T>> vp = new VirtualProxyBuilder<IObservableList<T>>(plusieursAPlusieursFactory, IObservableList.class);
+								champ.set(objet, vp.creerProxy());
 							}
+							
 							
 
 						}

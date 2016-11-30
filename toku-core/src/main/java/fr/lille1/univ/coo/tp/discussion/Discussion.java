@@ -2,7 +2,8 @@ package fr.lille1.univ.coo.tp.discussion;
 
 import fr.lille1.univ.coo.tp.annotations.Colonne;
 import fr.lille1.univ.coo.tp.annotations.Id;
-import fr.lille1.univ.coo.tp.annotations.PlusieursAPlusieurs;
+import fr.lille1.univ.coo.tp.annotations.Proxy;
+import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.annotations.UnAPlusieurs;
 import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.domain.DomainException;
@@ -17,29 +18,30 @@ import fr.lille1.univ.coo.tp.visiteur.Visiteur;
  * @author Mustapha NEZZARI
  *
  */
+@Table
 public class Discussion extends ObjetDomaine {
 	@Id
 	protected Integer id;
 	
-	@Colonne
+	@Colonne("id_createur")
 	protected Integer createur;
 	
 	@Colonne
 	protected String nom;
 	
-	@Colonne
+	@Colonne("id_moderateur")
 	protected Integer moderateur;
 	
-	@Colonne
-	protected Role role;
+	protected Role role; // association porteuse d'info
 	
 	@Colonne
 	protected Integer type;
 	
-	@PlusieursAPlusieurs(table_assoc="utilisateur_groupe", cle="id_groupe", type=Utilisateur.class)
+//	@UnAPlusieurs
 	protected IObservableList<Utilisateur> membres;
 	
-	@UnAPlusieurs
+//	@Proxy
+//	@UnAPlusieurs
 	protected IObservableList<Message> messages;
 	
 	public Discussion() {}

@@ -1,5 +1,6 @@
 package fr.lille1.univ.coo.tp.utilisateur;
 
+import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.role.Role;
 import fr.lille1.univ.coo.tp.visiteur.Visiteur;
@@ -39,5 +40,9 @@ public interface IUtilisateur {
 	void accept(Visiteur visitor) throws DomainException;
 
 	IObservableList<Utilisateur> getAmis();
+	
+	public IObservableList<Discussion> getDiscussions();
+	
+	public void setDiscussions(IObservableList<Discussion> discussions);
 
 }

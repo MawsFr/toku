@@ -13,12 +13,12 @@ public interface IObservableList<T> {
 	/**
 	 * @return Le utilisateurs
 	 */
-	List<T> getUtilisateurs();
+	List<T> getListe();
 
 	/**
 	 * @param utilisateurs Le nouveau utilisateurs
 	 */
-	void setUtilisateurs(List<T> utilisateurs);
+	void setListe(List<T> utilisateurs);
 
 	void ajouterObservateur(Observateur<T> utilisateurListModel);
 

@@ -20,7 +20,7 @@ public class ListMembresFactory implements Factory<IObservableList<Utilisateur>>
 		membres.add(new Utilisateur(new Role(1, "Utilisateur", null), "knew", "mdp", "Nezzari", "Khalil", null));
 		membres.add(new Utilisateur(new Role(1, "Utilisateur", null), "aypub", "mdp", "Nez", "Ayoub", null));
 
-		listeMembres.setUtilisateurs(membres);
+		listeMembres.setListe(membres);
 		return listeMembres;
 	}
 

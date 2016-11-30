@@ -7,10 +7,14 @@ import fr.lille1.univ.coo.tp.observateur.Observable;
 
 public class ObservableList<T> extends Observable implements IObservableList<T> {
 	
-	private List<T> utilisateurs;
+	private List<T> liste;
 	
 	public ObservableList() {
-		this.utilisateurs = new ArrayList<>();
+		this.liste = new ArrayList<>();
+	}
+	
+	public ObservableList(List<T> liste) {
+		this.liste = liste;
 	}
 	
 	/* (non-Javadoc)
@@ -18,7 +22,7 @@ public class ObservableList<T> extends Observable implements IObservableList<T> 
 	 */
 	@Override
 	public void ajouter(T utilisateur) {
-		this.utilisateurs.add(utilisateur);
+		this.liste.add(utilisateur);
 		notifierCreation(utilisateur);
 	}
 	
@@ -27,7 +31,7 @@ public class ObservableList<T> extends Observable implements IObservableList<T> 
 	 */
 	@Override
 	public void supprimer(T utilisateur) {
-		this.utilisateurs.remove(utilisateur);
+		this.liste.remove(utilisateur);
 		notifierSuppression(utilisateur);
 	}
 
@@ -35,16 +39,16 @@ public class ObservableList<T> extends Observable implements IObservableList<T> 
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IListeUtilisateur#getUtilisateurs()
 	 */
 	@Override
-	public List<T> getUtilisateurs() {
-		return utilisateurs;
+	public List<T> getListe() {
+		return liste;
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IListeUtilisateur#setUtilisateurs(java.util.List)
 	 */
 	@Override
-	public void setUtilisateurs(List<T> utilisateurs) {
-		this.utilisateurs = utilisateurs;
+	public void setListe(List<T> utilisateurs) {
+		this.liste = utilisateurs;
 	}
 	
 	

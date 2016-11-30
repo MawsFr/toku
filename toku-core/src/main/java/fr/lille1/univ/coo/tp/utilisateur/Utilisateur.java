@@ -4,12 +4,16 @@ import fr.lille1.univ.coo.tp.annotations.Colonne;
 import fr.lille1.univ.coo.tp.annotations.Id;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAPlusieurs;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
-import fr.lille1.univ.coo.tp.annotations.Proxy;
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.annotations.Transient;
 import fr.lille1.univ.coo.tp.annotations.UnAUn;
+import fr.lille1.univ.coo.tp.connexions.LocalMysqlConfiguration;
+import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
+import fr.lille1.univ.coo.tp.persistance.DAOException;
+import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
+import fr.lille1.univ.coo.tp.persistance.GestionnaireConnexion;
 import fr.lille1.univ.coo.tp.role.Role;
 import fr.lille1.univ.coo.tp.visiteur.Visiteur;
 
@@ -46,9 +50,14 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	@Colonne
 	private String avatar;
 	
-	//SELECT * FROM utilisateur join utilisateur_amis on utilisateur.id = utilisateur_amis.id_ami where utilisateur.id = ?
+	//SELECT * FROM utilisateur join utilisateur_amis on utilisateur.id = utilisateur_amis.id_ami where utilisateur_amis.id_utilisateur = ?
 //	@PlusieursAPlusieurs(table_assoc=)
+	@PlusieursAPlusieurs(table_assoc="utilisateur_amis", notreCle="id_utilisateur", leurCle="id_ami", type=Utilisateur.class)
 	private IObservableList<Utilisateur> amis;
+	
+	//select * from discussion join utilisateur_groupe on discussion.id = utilisateur_groupe.id_groupe where utilisateur_groupe.id_utilisateur = ?
+	@PlusieursAPlusieurs(table_assoc="utilisateur_groupe", notreCle="id_utilisateur", leurCle="id_groupe", type=Discussion.class)
+	private IObservableList<Discussion> discussions;
 	
 	@UnAUn(type=Humeur.class)
 	private IHumeur humeur;
@@ -200,6 +209,29 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 		this.amis = amis;
 		notifierModification("amis");
 	}
+	
+	
+
+	/**
+	 * @return Le discussions
+	 */
+	public IObservableList<Discussion> getDiscussions() {
+		return discussions;
+	}
+
+	/**
+	 * @param discussions Le nouveau discussions
+	 */
+	public void setDiscussions(IObservableList<Discussion> discussions) {
+		this.discussions = discussions;
+	}
+
+	/**
+	 * @param id Le nouveau id
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#accept(fr.lille1.univ.coo.tp.visiteur.Visiteur)
@@ -209,5 +241,13 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 		visitor.visit(this);
 	}
 	
+	public static void main(String[] args) throws DAOException {
+		LocalMysqlConfiguration c = new LocalMysqlConfiguration();
+		c.setMdp("root");
+		GestionnaireConnexion.ouvrirConnexion(c);
+		Utilisateur u = new DAOGenerique<Utilisateur>(Utilisateur.class).rechercher(4);
+		System.out.println(u);
+		System.out.println(u.getDiscussions());
+	}
 	
 }

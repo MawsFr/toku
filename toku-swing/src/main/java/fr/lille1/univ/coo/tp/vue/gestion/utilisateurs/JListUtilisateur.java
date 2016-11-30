@@ -64,7 +64,7 @@ public class JListUtilisateur extends JList<Utilisateur> implements Filtreur {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if(utilisateurs.getUtilisateurs().isEmpty()) {
+		if(utilisateurs.getListe().isEmpty()) {
 			FontMetrics fm = g.getFontMetrics();
 			String message = "Vous n'avez aucun amis, cliquez sur +Amis pour en ajouter !";
 			g.drawString(message, (getWidth() - fm.stringWidth(message)) / 2, (getHeight()  - fm.getHeight()) / 2);

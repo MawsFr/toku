@@ -28,12 +28,18 @@ public @interface PlusieursAPlusieurs {
 	String table_assoc();
 
 	/**
-	 * Nom de la colonne représentant l'id des objets à récupérer dans la table
+	 * Nom de la colonne représentant l'id des objets contenus
 	 * d'association
 	 * 
 	 * @return
 	 */
-	String cle();
+	String leurCle();
+	
+	/**
+	 * Nom de la colonne contenant l'id de l'objets contenant
+	 * @return
+	 */
+	String notreCle() default "";
 	
 	/**
 	 * Type des objets retournés

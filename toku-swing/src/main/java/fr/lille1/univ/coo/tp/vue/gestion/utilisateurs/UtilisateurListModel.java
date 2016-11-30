@@ -14,7 +14,7 @@ public class UtilisateurListModel extends DefaultListModel<Utilisateur> implemen
 
 	public UtilisateurListModel(IObservableList<Utilisateur> listeUtilisateur) {
 //		this.utilisateurs = ListeUtilisateur;
-		for(Utilisateur ami : listeUtilisateur.getUtilisateurs()) {
+		for(Utilisateur ami : listeUtilisateur.getListe()) {
 			addElement(ami);
 		}
 		listeUtilisateur.ajouterObservateur(this);

@@ -69,11 +69,12 @@ public class Main {
 		}
 		System.out.println("Saisissez le mot de passe" + (choix == 2 ? " fourni " : " (ex : toor) ") + ":");
 
-		if (console == null) {
-			config.setMdp(new String(sc.nextLine()));
-		} else {
-			config.setMdp(new String(console.readPassword("")));
-		}
+//		if (console == null) {
+//			config.setMdp(new String(sc.nextLine()));
+//		} else {
+//			config.setMdp(new String(console.readPassword("")));
+//		}
+		config.setMdp(MDP);
 		sc.close();
 
 		try {

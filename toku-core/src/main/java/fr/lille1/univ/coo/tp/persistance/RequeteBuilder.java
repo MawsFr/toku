@@ -2,6 +2,7 @@ package fr.lille1.univ.coo.tp.persistance;
 
 import java.sql.PreparedStatement;
 import java.util.List;
+import java.util.Map;
 
 import fr.lille1.univ.coo.tp.utils.ReflectionUtils;
 
@@ -109,6 +110,12 @@ public class RequeteBuilder {
 		sb.append("SELECT * FROM ").append(table).append(clauseWhere(where));
 		return sb.toString();
 	}
+	
+	public String rechercherParJointure(List<Jointure> jointures, List<String> where) {
+		sb = new StringBuilder();
+		sb.append("SELECT * FROM ").append(table).append(clauseJointure(jointures)).append(clauseWhere(where));
+		return sb.toString();
+	}
 
 	/**
 	 * Retourne la requete select correspondant au paramètre de la clause where.
@@ -147,6 +154,20 @@ public class RequeteBuilder {
 			sb.append(where.get(i)).append(" = ?");
 			if (i < where.size() - 1) {
 				sb.append(" AND ");
+			}
+		}
+		return sb.toString();
+	}
+	
+	public String clauseJointure(List<Jointure> jointures) {
+		if(jointures == null || (jointures != null && jointures.isEmpty())) {
+			return "";
+		}
+		StringBuilder sb = new StringBuilder(" ");
+		for (int i = 0; i < jointures.size(); ++i) {
+			sb.append(jointures.get(i));
+			if (i < jointures.size() - 1) {
+				sb.append(", ");
 			}
 		}
 		return sb.toString();
