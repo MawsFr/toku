@@ -8,6 +8,8 @@ import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.discussion.IDiscussion;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
+import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
+import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.visiteur.Visiteur;
 
 @Table
@@ -15,8 +17,11 @@ public class Message extends ObjetDomaine {
 	@Id
 	private Integer id;
 	
-	@PlusieursAUn(sonType=Discussion.class, saCle="id_groupe", mappeePar="messages")
+	@PlusieursAUn(sonType=Discussion.class, saCle="id_discussion", mappeePar="messages")
 	private IDiscussion discussion;
+	
+	@PlusieursAUn(sonType=Utilisateur.class, saCle="id_utilisateur")
+	private IUtilisateur utilisateur;
 	
 	@Colonne
 	private String texte;

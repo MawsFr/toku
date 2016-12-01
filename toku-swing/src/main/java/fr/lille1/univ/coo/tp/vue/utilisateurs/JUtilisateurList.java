@@ -24,7 +24,7 @@ public class JUtilisateurList extends JObservableList<Utilisateur> {
 
 	@Override
 	public String getMessageVide() {
-		return "Vous n'avez aucun amis, cliquez sur +Amis pour en ajouter !";
+		return "Aucun utilisateurs !";
 	}
 
 }

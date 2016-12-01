@@ -618,14 +618,14 @@ public class DAOGenerique<T extends IObjetDomaine> {
 							} else if (champ.isAnnotationPresent(PlusieursAPlusieurs.class)) {
 								PlusieursAPlusieurs plusieursAPlusieurs = champ.getAnnotation(PlusieursAPlusieurs.class);
 
-								String tableAssociation = plusieursAPlusieurs.table_assoc();
+								Class<?> tableAssociation = plusieursAPlusieurs.table_assoc();
 								String leurColonne = plusieursAPlusieurs.leurCle();
 								Class<?> leurType = plusieursAPlusieurs.type();
 								String leurId = ReflectionUtils.trouverId(leurType);
 
 								String notreColonne = plusieursAPlusieurs.notreCle();
 
-								Factory<IObservableList<T>> plusieursAPlusieursFactory = new PlusieursAPlusieursFactory<T>(tableAssociation, leurColonne, notreColonne, leurType, leurId, id);
+								Factory<IObservableList<T>> plusieursAPlusieursFactory = new PlusieursAPlusieursFactory<T>(ReflectionUtils.nomTable(tableAssociation), leurColonne, notreColonne, leurType, leurId, id);
 								creerProxyList(objet, champ, plusieursAPlusieursFactory);
 							} else if (champ.isAnnotationPresent(PlusieursAUn.class)) {
 								PlusieursAUn plusieursAUn = champ.getAnnotation(PlusieursAUn.class);

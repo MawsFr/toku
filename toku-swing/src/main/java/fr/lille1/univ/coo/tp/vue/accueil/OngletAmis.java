@@ -8,13 +8,13 @@ import javax.swing.JScrollPane;
 import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.controlleurs.AmisListMouseAdapter;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
-import fr.lille1.univ.coo.tp.vue.utilisateurs.JUtilisateurList;
+import fr.lille1.univ.coo.tp.vue.utilisateurs.JAmisList;
 
 public class OngletAmis extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private JUtilisateurList listeAmis;
+	private JAmisList listeAmis;
 	private IUtilisateur utilisateur;
 	
 	public OngletAmis() {
@@ -24,7 +24,7 @@ public class OngletAmis extends JPanel {
 	public void initialiser() {
 		removeAll();
 		utilisateur = Application.getInstance().getSession().getUtilisateur();
-		listeAmis = new JUtilisateurList(utilisateur.getAmis());
+		listeAmis = new JAmisList(utilisateur.getAmis());
 		listeAmis.addMouseListener(new AmisListMouseAdapter(listeAmis));
 		this.add(new JScrollPane(listeAmis), BorderLayout.CENTER);
 	}

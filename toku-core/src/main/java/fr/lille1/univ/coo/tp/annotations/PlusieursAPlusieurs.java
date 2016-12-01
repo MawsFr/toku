@@ -10,6 +10,8 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
+
 @Documented
 @Retention(RUNTIME)
 @Target(FIELD)
@@ -25,7 +27,7 @@ public @interface PlusieursAPlusieurs {
 	 * 
 	 * @return
 	 */
-	String table_assoc();
+	Class<?> table_assoc();
 
 	/**
 	 * Nom de la colonne représentant l'id des objets contenus

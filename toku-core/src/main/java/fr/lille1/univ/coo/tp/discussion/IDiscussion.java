@@ -22,16 +22,6 @@ public interface IDiscussion {
 	void setId(Integer id);
 
 	/**
-	 * @return Le createur
-	 */
-	IUtilisateur getCreateur();
-
-	/**
-	 * @param createur Le nouveau createur
-	 */
-	void setCreateur(IUtilisateur createur);
-
-	/**
 	 * @return Le nom
 	 */
 	String getNom();
@@ -62,15 +52,4 @@ public interface IDiscussion {
 	void setMembres(IObservableList<Utilisateur> membres);
 
 	void accept(Visiteur visitor) throws DomainException;
-
-	/**
-	 * @return Le role de l'utilisateur dans la discussion
-	 */
-	IRole getRole();
-
-	/**
-	 * @param role Le nouveau role Le role de l'utilisateur dans la discussion
-	 */
-	void setRole(IRole role);
-
 }

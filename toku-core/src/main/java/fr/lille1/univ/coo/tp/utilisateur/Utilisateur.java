@@ -6,8 +6,8 @@ import fr.lille1.univ.coo.tp.annotations.PlusieursAPlusieurs;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.annotations.Transient;
-import fr.lille1.univ.coo.tp.annotations.UnAUn;
 import fr.lille1.univ.coo.tp.connexions.LocalMysqlConfiguration;
+import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
@@ -52,15 +52,12 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	private String avatar;
 	
 	//SELECT * FROM utilisateur join utilisateur_amis on utilisateur.id = utilisateur_amis.id_ami where utilisateur_amis.id_utilisateur = ?
-	@PlusieursAPlusieurs(table_assoc="utilisateur_amis", notreCle="id_utilisateur", leurCle="id_ami", type=Utilisateur.class)
-	private IObservableList<Utilisateur> amis;
+	@PlusieursAPlusieurs(table_assoc=Amitie.class, notreCle="id_utilisateur", leurCle="id_ami", type=Utilisateur.class)
+	private IObservableList<Amitie> amis;
 	
 	//select * from discussion join utilisateur_groupe on discussion.id = utilisateur_groupe.id_groupe where utilisateur_groupe.id_utilisateur = ?
-	@PlusieursAPlusieurs(table_assoc="utilisateur_groupe", notreCle="id_utilisateur", leurCle="id_groupe", type=Discussion.class)
-	private IObservableList<Discussion> discussions;
-	
-	@UnAUn(sonType=Humeur.class)
-	private IHumeur humeur;
+	@PlusieursAPlusieurs(table_assoc=AffectationDiscussion.class, notreCle="id_utilisateur", leurCle="id_discussion", type=Discussion.class)
+	private IObservableList<AffectationDiscussion> discussions;
 	
 	public Utilisateur() {
 	}
@@ -272,41 +269,13 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	}
 
 	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getHumeur()
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getHumeur()
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getHumeur()
-	 */
-	@Override
-	public IHumeur getHumeur() {
-		return humeur;
-	}
-	
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setHumeur(fr.lille1.univ.coo.tp.utilisateur.IHumeur)
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setHumeur(fr.lille1.univ.coo.tp.utilisateur.IHumeur)
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setHumeur(fr.lille1.univ.coo.tp.utilisateur.IHumeur)
-	 */
-	@Override
-	public void setHumeur(IHumeur humeur) {
-		this.humeur = humeur;
-	}
-	
-	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getAmis()
 	 */
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getAmis()
 	 */
 	@Override
-	public IObservableList<Utilisateur> getAmis() {
+	public IObservableList<Amitie> getAmis() {
 		return amis;
 	}
 
@@ -317,7 +286,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setAmis(fr.lille1.univ.coo.tp.utilisateur.IObservableList)
 	 */
 	@Override
-	public void setAmis(IObservableList<Utilisateur> amis) {
+	public void setAmis(IObservableList<Amitie> amis) {
 		this.amis = amis;
 		notifierModification("amis");
 	}
@@ -331,7 +300,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getDiscussions()
 	 */
 	@Override
-	public IObservableList<Discussion> getDiscussions() {
+	public IObservableList<AffectationDiscussion> getDiscussions() {
 		return discussions;
 	}
 
@@ -342,7 +311,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setDiscussions(fr.lille1.univ.coo.tp.utilisateur.IObservableList)
 	 */
 	@Override
-	public void setDiscussions(IObservableList<Discussion> discussions) {
+	public void setDiscussions(IObservableList<AffectationDiscussion> discussions) {
 		this.discussions = discussions;
 	}
 

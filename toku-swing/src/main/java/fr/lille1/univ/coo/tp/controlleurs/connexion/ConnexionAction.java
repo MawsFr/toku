@@ -49,7 +49,6 @@ public class ConnexionAction extends AbstractAction {
 		
 		try {
 			utilisateur = Service.getUtilisateurService().connecter(pseudo, mdp);
-System.out.println("Humeur : " + utilisateur.getHumeur());
 		} catch (ValidationException | ServiceException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(connexion.getFenetre().getFenetre(), e.getMessage(), "Erreur de connexion", JOptionPane.ERROR_MESSAGE);

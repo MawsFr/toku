@@ -1,8 +1,6 @@
 package fr.lille1.univ.coo.tp.controlleurs;
 
-import java.awt.event.MouseEvent;
-
-import fr.lille1.univ.coo.tp.Application;
+import fr.lille1.univ.coo.tp.utilisateur.Amitie;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.ObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
@@ -10,28 +8,28 @@ import fr.lille1.univ.coo.tp.vue.discussion.FenetreDiscussion;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.JObservableList;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.JObservableListMouseAdapter;
 
-public class AmisListMouseAdapter extends JObservableListMouseAdapter<Utilisateur> {
-	public AmisListMouseAdapter(JObservableList<Utilisateur> liste) {
+public class AmisListMouseAdapter extends JObservableListMouseAdapter<Amitie> {
+	public AmisListMouseAdapter(JObservableList<Amitie> liste) {
 		super(liste);
 	}
 
 	@Override
-	public void doubleClic(Utilisateur element) {
+	public void doubleClic(Amitie element) {
 		IObservableList<Utilisateur> membres = new ObservableList<>();
-        membres.ajouter(Application.getInstance().getSession().getUtilisateur());
-        membres.ajouter(element);
+        membres.ajouter(element.getUtilisateur());
+        membres.ajouter(element.getAmi());
         FenetreDiscussion fenetre = new FenetreDiscussion(membres);
         fenetre.getLblTypeDiscussion().setText("Discussion privée : ");
-        fenetre.getLblNomDiscussion().setText(element.getPseudo());
+        fenetre.getLblNomDiscussion().setText(element.getAmi().getPseudo());
 	}
 
 	@Override
-	public void clic(Utilisateur element) {
+	public void clic(Amitie element) {
 		
 	}
 
 	@Override
-	public void clicDroit(Utilisateur element) {
+	public void clicDroit(Amitie element) {
 		
 	}
 	

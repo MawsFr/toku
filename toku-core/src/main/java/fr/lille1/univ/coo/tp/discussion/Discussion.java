@@ -29,25 +29,17 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	@Id
 	protected Integer id;
 	
-	@UnAUn(saCle="id_createur", sonType=Utilisateur.class)
-	protected IUtilisateur createur;
-	
 	@Colonne
 	protected String nom;
 	
 	@Colonne("id_moderateur")
 	protected Integer moderateur;
 	
-	protected IRole role; // association porteuse d'info
-	
-	@Colonne
-	protected Integer type;
-	
-	@PlusieursAPlusieurs(table_assoc="utilisateur_groupe", leurCle="id_utilisateur", notreCle="id_groupe", type=Utilisateur.class)
+	@PlusieursAPlusieurs(table_assoc=AffectationDiscussion.class, leurCle="id_utilisateur", notreCle="id_discussion", type=Utilisateur.class)
 	protected IObservableList<Utilisateur> membres;
 	
 	// select * from message where 
-	@UnAPlusieurs(leurType=Message.class, maCle="id_groupe")
+	@UnAPlusieurs(leurType=Message.class, maCle="id_discussion")
 	protected IObservableList<Message> messages;
 	
 	public Discussion() {}
@@ -73,22 +65,6 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	public void setId(Integer id) {
 		this.id = id;
 		notifierModification("id");
-	}
-
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#getCreateur()
-	 */
-	@Override
-	public IUtilisateur getCreateur() {
-		return createur;
-	}
-
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#setCreateur(java.lang.Integer)
-	 */
-	@Override
-	public void setCreateur(IUtilisateur createur) {
-		this.createur = createur;
 	}
 
 	/* (non-Javadoc)
@@ -145,22 +121,6 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	@Override
 	public void accept(Visiteur visitor) throws DomainException {
 		visitor.visit(this);
-	}
-
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#getRole()
-	 */
-	@Override
-	public IRole getRole() {
-		return role;
-	}
-
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#setRole(fr.lille1.univ.coo.tp.role.Role)
-	 */
-	@Override
-	public void setRole(IRole role) {
-		this.role = role;
 	}
 	
 	

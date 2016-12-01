@@ -1,12 +1,13 @@
 package fr.lille1.univ.coo.tp.utilisateur;
 
+import fr.lille1.univ.coo.tp.annotations.Colonne;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
-import fr.lille1.univ.coo.tp.annotations.TableAssociation;
+import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
 import fr.lille1.univ.coo.tp.visiteur.Visiteur;
 
-@TableAssociation("utilisateur_amis")
+@Table("amitie")
 public class Amitie extends ObjetDomaine {
 	public static final int ETAT_EN_ATTENTE = 0;
 	public static final int ETAT_VALIDEE = 1;
@@ -20,6 +21,33 @@ public class Amitie extends ObjetDomaine {
 	@PlusieursAUn(sonType=Utilisateur.class, saCle = "id_ami")
 	private Utilisateur ami;
 	
+	@Colonne
+	private Integer etat;
+	
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+
+	public Utilisateur getAmi() {
+		return ami;
+	}
+
+	public void setAmi(Utilisateur ami) {
+		this.ami = ami;
+	}
+
+	public Integer getEtat() {
+		return etat;
+	}
+
+	public void setEtat(Integer etat) {
+		this.etat = etat;
+	}
+
 	@Override
 	public void accept(Visiteur visitor) throws DomainException {
 		visitor.visit(this);

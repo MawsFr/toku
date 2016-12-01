@@ -1,7 +1,7 @@
 package fr.lille1.univ.coo.tp.utilisateur;
 
 import fr.lille1.univ.coo.tp.annotations.Table;
-import fr.lille1.univ.coo.tp.discussion.Discussion;
+import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.role.IRole;
 import fr.lille1.univ.coo.tp.visiteur.Visiteur;
@@ -81,40 +81,24 @@ public interface IUtilisateur {
 	void setMotDePasse(String motDePasse);
 
 	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getHumeur()
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getHumeur()
-	 */
-	IHumeur getHumeur();
-
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setHumeur(fr.lille1.univ.coo.tp.utilisateur.IHumeur)
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setHumeur(fr.lille1.univ.coo.tp.utilisateur.IHumeur)
-	 */
-	void setHumeur(IHumeur humeur);
-
-	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getAmis()
 	 */
-	IObservableList<Utilisateur> getAmis();
+	IObservableList<Amitie> getAmis();
 
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setAmis(fr.lille1.univ.coo.tp.utilisateur.IObservableList)
 	 */
-	void setAmis(IObservableList<Utilisateur> amis);
+	void setAmis(IObservableList<Amitie> amis);
 
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getDiscussions()
 	 */
-	IObservableList<Discussion> getDiscussions();
+	IObservableList<AffectationDiscussion> getDiscussions();
 
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setDiscussions(fr.lille1.univ.coo.tp.utilisateur.IObservableList)
 	 */
-	void setDiscussions(IObservableList<Discussion> discussions);
+	void setDiscussions(IObservableList<AffectationDiscussion> discussions);
 
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setId(java.lang.Integer)
