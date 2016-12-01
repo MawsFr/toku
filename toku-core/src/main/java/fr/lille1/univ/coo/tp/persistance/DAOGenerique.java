@@ -40,6 +40,8 @@ import fr.lille1.univ.coo.tp.utils.ReflectionUtils;
  *            Le type d'objet à rendre persistant
  */
 public class DAOGenerique<T extends IObjetDomaine> {
+	public static final String TABLE_PREFIXE = "projet_";
+	
 	private Connection connexion;
 
 	private Class<?> classe;

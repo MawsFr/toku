@@ -10,6 +10,7 @@ import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.annotations.UnAPlusieurs;
 import fr.lille1.univ.coo.tp.annotations.UnAUn;
+import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
 
 /**
  * Cette classe rassemble des fonction utile à la manipulation des classe par la reflexion
@@ -46,7 +47,7 @@ public class ReflectionUtils {
 			nom = classe.getSimpleName();
 		}
 
-		return nom.toLowerCase();
+		return DAOGenerique.TABLE_PREFIXE + nom.toLowerCase();
 	}
 	
 	/**
