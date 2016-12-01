@@ -8,6 +8,11 @@ import fr.lille1.univ.coo.tp.visiteur.Visiteur;
 
 @TableAssociation("utilisateur_amis")
 public class Amitie extends ObjetDomaine {
+	public static final int ETAT_EN_ATTENTE = 0;
+	public static final int ETAT_VALIDEE = 1;
+	public static final int ETAT_REFUSEE = 2;
+	public static final int ETAT_VOUS = 3;
+	
 	
 	@PlusieursAUn(sonType=Utilisateur.class, saCle = "id_utilisateur")
 	private Utilisateur utilisateur;

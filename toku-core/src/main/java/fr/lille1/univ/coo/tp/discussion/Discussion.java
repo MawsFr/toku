@@ -10,7 +10,6 @@ import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
 import fr.lille1.univ.coo.tp.role.IRole;
-import fr.lille1.univ.coo.tp.role.Role;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
@@ -23,6 +22,10 @@ import fr.lille1.univ.coo.tp.visiteur.Visiteur;
  */
 @Table
 public class Discussion extends ObjetDomaine implements IDiscussion {
+	public static final int ETAT_EN_ATTENTE = 0; // L'utilisateur n'a pas encore vu la discussion
+	public static final int ETAT_VU = 1; // L'utilisateur a vu la discussion (et donc lu) la premiere fois : cet etat sers pour la notification
+	public static final int ETAT_LU = 2; // 
+	
 	@Id
 	protected Integer id;
 	
