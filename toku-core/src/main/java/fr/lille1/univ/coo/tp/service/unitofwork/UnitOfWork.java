@@ -24,7 +24,7 @@ public class UnitOfWork implements ObjetDomaineObservateur {
 	private Map<IObjetDomaine, Set<String>> modifies;
 	private Set<IObjetDomaine> crees;
 	private Set<IObjetDomaine> supprimes;
-	
+
 	/**
 	 * Constructeur par defaut.
 	 */
@@ -60,17 +60,23 @@ public class UnitOfWork implements ObjetDomaineObservateur {
 			mc.supprimerParametres();
 		}
 		modifies.clear();
-		
+
 		CreationCommiter cc = new CreationCommiter();
 		for (IObjetDomaine o : crees) {
 			cc.visit(o);
 		}
 		crees.clear();
-		
+
 		SuppressionCommiter sc = new SuppressionCommiter();
 		for (IObjetDomaine o : supprimes) {
 			sc.visit(o);
 		}
+		supprimes.clear();
+	}
+
+	public void annuler() {
+		modifies.clear();
+		crees.clear();
 		supprimes.clear();
 	}
 

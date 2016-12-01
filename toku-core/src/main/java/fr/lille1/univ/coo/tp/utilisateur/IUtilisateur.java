@@ -1,39 +1,28 @@
 package fr.lille1.univ.coo.tp.utilisateur;
 
+import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.role.IRole;
 import fr.lille1.univ.coo.tp.visiteur.Visiteur;
 
+@Table("utilisateur")
 public interface IUtilisateur {
 
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getId()
-	 */
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getId()
 	 */
 	int getId();
 
 	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setId(int)
-	 */
-	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setId(int)
 	 */
 	void setId(int id);
-
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getAvatar()
-	 */
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getAvatar()
 	 */
 	String getAvatar();
 
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setAvatar(java.lang.String)
-	 */
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setAvatar(java.lang.String)
 	 */
@@ -50,56 +39,34 @@ public interface IUtilisateur {
 	void setRole(IRole role);
 
 	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getPseudo()
-	 */
-	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getPseudo()
 	 */
 	String getPseudo();
 
 	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setPseudo(java.lang.String)
-	 */
-	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setPseudo(java.lang.String)
 	 */
 	void setPseudo(String pseudo);
-
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getNom()
-	 */
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getNom()
 	 */
 	String getNom();
 
 	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setNom(java.lang.String)
-	 */
-	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setNom(java.lang.String)
 	 */
 	void setNom(String nom);
 
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getPrenom()
-	 */
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getPrenom()
 	 */
 	String getPrenom();
 
 	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setPrenom(java.lang.String)
-	 */
-	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setPrenom(java.lang.String)
 	 */
 	void setPrenom(String prenom);
 
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getMotDePasse()
-	 */
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getMotDePasse()
 	 */

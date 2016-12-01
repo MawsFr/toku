@@ -1,10 +1,8 @@
 package fr.lille1.univ.coo.tp.utilisateur.administrateur;
 
-import fr.lille1.univ.coo.tp.cryptage.CryptageException;
-import fr.lille1.univ.coo.tp.cryptage.CrypteurMD5;
-import fr.lille1.univ.coo.tp.persistance.DAOException;
-import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
+import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.service.ServiceException;
+import fr.lille1.univ.coo.tp.service.unitofwork.UnitOfWork;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
 public class AdministrateurService implements IAdministrateurService {
@@ -23,18 +21,23 @@ public class AdministrateurService implements IAdministrateurService {
 	}
 
 	@Override
-	public void creerUtilisateur(Utilisateur utilisateur) throws ServiceException {
+	public void validerCreationUtilisateur() throws ServiceException {
 		try {
-			utilisateur.setMotDePasse(new CrypteurMD5().crypter(utilisateur.getMotDePasse()));
-			new DAOGenerique<Utilisateur>(Utilisateur.class).creer(utilisateur);
-		} catch (CryptageException | DAOException e) {
+			UnitOfWork.getInstance(Utilisateur.class).commit();
+		} catch (DomainException e) {
+			e.printStackTrace();
 			throw new ServiceException(e);
 		}
 	}
-
+	
 	@Override
-	public void supprimerUtilisateur(int idUtilisateur) {
-
+	public void validerSuppressionUtilisateur() throws ServiceException {
+		try {
+			UnitOfWork.getInstance(Utilisateur.class).commit();
+		} catch (DomainException e) {
+			e.printStackTrace();
+			throw new ServiceException(e);
+		}
 	}
 
 	@Override

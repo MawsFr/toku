@@ -1,15 +1,17 @@
 package fr.lille1.univ.coo.tp.role;
 
-import java.util.List;
-
 import fr.lille1.univ.coo.tp.annotations.Colonne;
 import fr.lille1.univ.coo.tp.annotations.Id;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.annotations.UnAPlusieurs;
+import fr.lille1.univ.coo.tp.domain.DomainException;
+import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
+import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
+import fr.lille1.univ.coo.tp.visiteur.Visiteur;
 
 @Table
-public class Role {
+public class Role extends ObjetDomaine implements IRole {
 	@Id
 	private Integer id;
 	
@@ -17,10 +19,10 @@ public class Role {
 	private String nom;
 	
 	@PlusieursAUn(saCle = "id_parent", sonType = Role.class, mappeePar="roles")
-	private Role parent;
+	private IRole parent;
 	
 	@UnAPlusieurs(leurType=Role.class, maCle="id_parent")
-	private List<Role> roles;
+	private IObservableList<Role> roles;
 	
 	public Role() {
 	}
@@ -31,62 +33,84 @@ public class Role {
 		this.parent = parent;
 	}
 	
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.role.IRole#getId()
+	 */
+	@Override
 	public Integer getId() {
 		return id;
 	}
 	
-	/**
-	 * @return Le nom
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.role.IRole#getNom()
 	 */
+	@Override
 	public String getNom() {
 		return nom;
 	}
 
-	/**
-	 * @param nom Le nouveau nom
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.role.IRole#setNom(java.lang.String)
 	 */
+	@Override
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
-	/**
-	 * @return Le parent
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.role.IRole#getParent()
 	 */
-	public Role getParent() {
+	@Override
+	public IRole getParent() {
 		return parent;
 	}
 
-	/**
-	 * @param parent Le nouveau parent
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.role.IRole#setParent(fr.lille1.univ.coo.tp.role.Role)
 	 */
-	public void setParent(Role parent) {
+	@Override
+	public void setParent(IRole parent) {
 		this.parent = parent;
 	}
 
-	/**
-	 * @param id Le nouveau id
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.role.IRole#setId(java.lang.Integer)
 	 */
+	@Override
 	public void setId(Integer id) {
 		this.id = id;
 	}
 	
-	/**
-	 * @return Le roles
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.role.IRole#getRoles()
 	 */
-	public List<Role> getRoles() {
+	@Override
+	public IObservableList<Role> getRoles() {
 		return roles;
 	}
 
-	/**
-	 * @param roles Le nouveau roles
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.role.IRole#setRoles(java.util.List)
 	 */
-	public void setRoles(List<Role> roles) {
+	@Override
+	public void setRoles(IObservableList<Role> roles) {
 		this.roles = roles;
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.role.IRole#toString()
+	 */
 	@Override
 	public String toString() {
 		return nom;
+	}
+
+	/* (non-Javadoc)
+	 * @see fr.lille1.univ.coo.tp.role.IRole#accept(fr.lille1.univ.coo.tp.visiteur.Visiteur)
+	 */
+	@Override
+	public void accept(Visiteur visitor) throws DomainException {
+		visitor.visit(this);
 	}
 	
 }

@@ -9,8 +9,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import fr.lille1.univ.coo.tp.Application;
-import fr.lille1.univ.coo.tp.OutilsSwing;
 import fr.lille1.univ.coo.tp.utils.Constantes;
+import fr.lille1.univ.coo.tp.utils.OutilsSwing;
 
 public class FenetrePrincipale {
 	private static FenetrePrincipale instance;

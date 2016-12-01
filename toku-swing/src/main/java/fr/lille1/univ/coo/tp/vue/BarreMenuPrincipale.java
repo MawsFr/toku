@@ -5,12 +5,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import fr.lille1.univ.coo.tp.OutilsSwing;
 import fr.lille1.univ.coo.tp.controlleurs.connexion.DeconnexionAction;
 import fr.lille1.univ.coo.tp.controlleurs.menu.admin.GestionUtilisateursAction;
 import fr.lille1.univ.coo.tp.controlleurs.menu.fichier.QuitterAction;
 import fr.lille1.univ.coo.tp.controlleurs.menu.outils.OptionAction;
 import fr.lille1.univ.coo.tp.controlleurs.menu.outils.ToujoursVisibleAction;
+import fr.lille1.univ.coo.tp.utils.OutilsSwing;
 
 public class BarreMenuPrincipale extends JMenuBar {
 

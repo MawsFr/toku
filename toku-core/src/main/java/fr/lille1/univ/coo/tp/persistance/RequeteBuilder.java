@@ -144,7 +144,7 @@ public class RequeteBuilder {
 	 * @return La clause WHARE d'une requete SQL
 	 */
 	public String clauseWhere(List<String> where) {
-		if(where == null) {
+		if(where == null || where.isEmpty()) {
 			return "";
 		}
 		StringBuilder sb = new StringBuilder();
@@ -159,7 +159,7 @@ public class RequeteBuilder {
 	}
 	
 	public String clauseJointure(List<Jointure> jointures) {
-		if(jointures == null || (jointures != null && jointures.isEmpty())) {
+		if(jointures == null || jointures.isEmpty()) {
 			return "";
 		}
 		StringBuilder sb = new StringBuilder(" ");

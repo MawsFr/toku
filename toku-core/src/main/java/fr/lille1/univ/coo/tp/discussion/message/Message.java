@@ -6,9 +6,12 @@ import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.discussion.IDiscussion;
+import fr.lille1.univ.coo.tp.domain.DomainException;
+import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
+import fr.lille1.univ.coo.tp.visiteur.Visiteur;
 
 @Table
-public class Message {
+public class Message extends ObjetDomaine {
 	@Id
 	private Integer id;
 	
@@ -60,6 +63,9 @@ public class Message {
 		this.texte = texte;
 	}
 	
-	
+	@Override
+	public void accept(Visiteur visitor) throws DomainException {
+		visitor.visit(this);
+	}
 	
 }

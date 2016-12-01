@@ -1,7 +1,6 @@
-package fr.lille1.univ.coo.tp.vue.gestion.utilisateurs;
+package fr.lille1.univ.coo.tp.vue.utilisateurs;
 
 import java.awt.Container;
-import java.awt.Dialog.ModalityType;
 import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
@@ -12,36 +11,35 @@ import javax.swing.JScrollPane;
 import fr.lille1.univ.coo.tp.controlleurs.gestion.utilisateur.AjouterUtilisateurAction;
 import fr.lille1.univ.coo.tp.controlleurs.gestion.utilisateur.ModifierUtilisateurAction;
 import fr.lille1.univ.coo.tp.controlleurs.gestion.utilisateur.SupprimerUtilisateurAction;
-import fr.lille1.univ.coo.tp.role.IRole;
-import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
+import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.BarreMenuPrincipale;
 import fr.lille1.univ.coo.tp.vue.FenetrePrincipale;
 import fr.lille1.univ.coo.tp.vue.composants.GBC;
 import fr.lille1.univ.coo.tp.vue.composants.JTextFieldHint;
 
-public class GestionUtilisateurs {
+public class GestionUtilisateurs extends JDialog {
+	private static final long serialVersionUID = 1L;
 	public static final String AJOUTER_UTILISATEUR = "Ajouter";
 	public static final String MODIFIER_UTILISATEUR = "Modifier";
 	public static final String SUPPRIMER_UTILISATEUR = "Supprimer";
 	public static final String AIDE_FILTRE = "pseudo ou nom ou prenom";
 	
-	private JDialog fenetre;
 	private Container c;
-	private JObservableList<Utilisateur> utilisateurs;
+	private JUtilisateurList utilisateurs;
 	private JButton btnAjouter;
 	private JButton btnModifier;
 	private JButton btnSupprimer;
 	private JTextFieldHint filtre;
 	
-	private Utilisateur utilisateurSelectionne;
-	
-	public GestionUtilisateurs() {
-		c = fenetre.getContentPane();
+	public GestionUtilisateurs(IObservableList<Utilisateur> membres) {
+		super(FenetrePrincipale.getInstance().getFenetre(), BarreMenuPrincipale.MENU_GERER_UTILISATEURS, ModalityType.APPLICATION_MODAL);
+		
+		c = getContentPane();
 		c.setLayout(new GridBagLayout());
 		
-		fenetre = new JDialog(FenetrePrincipale.getInstance().getFenetre(), BarreMenuPrincipale.MENU_GERER_UTILISATEURS, ModalityType.APPLICATION_MODAL);
-		utilisateurs = new JUtilisateurList();
+		utilisateurs = new JUtilisateurList(membres);
+		utilisateurs.addMouseListener(new GestionUtilisateurMouseAdapter(utilisateurs));
 		btnAjouter = new JButton(AjouterUtilisateurAction.getInstance(this));
 		btnModifier = new JButton(ModifierUtilisateurAction.getInstance(this));
 		btnSupprimer = new JButton(SupprimerUtilisateurAction.getInstance(this));
@@ -56,25 +54,18 @@ public class GestionUtilisateurs {
 		gbc.descendre().ajouter(btnModifier);
 		gbc.descendre().ajouter(btnSupprimer);
 		
-		fenetre.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		fenetre.pack();
-		fenetre.setResizable(false);
-		fenetre.setLocationRelativeTo(null);
-		fenetre.setVisible(true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		pack();
+		setResizable(false);
+		setLocationRelativeTo(null);
+		setVisible(true);
 		
 	}
 	
 	/**
-	 * @return Le fenetre
-	 */
-	public JDialog getFenetre() {
-		return fenetre;
-	}
-
-	/**
 	 * @return Le utilisateurs
 	 */
-	public JObservableList<Utilisateur> getUtilisateurs() {
+	public JUtilisateurList getUtilisateurs() {
 		return utilisateurs;
 	}
 
@@ -97,13 +88,6 @@ public class GestionUtilisateurs {
 	 */
 	public JButton getBtnSupprimer() {
 		return btnSupprimer;
-	}
-
-	/**
-	 * @return Le utilisateurSelectionne
-	 */
-	public Utilisateur getUtilisateurSelectionne() {
-		return utilisateurSelectionne;
 	}
 
 	/**
@@ -135,16 +119,9 @@ public class GestionUtilisateurs {
 	}
 
 	/**
-	 * @param fenetre Le nouveau fenetre
-	 */
-	public void setFenetre(JDialog fenetre) {
-		this.fenetre = fenetre;
-	}
-
-	/**
 	 * @param utilisateurs Le nouveau utilisateurs
 	 */
-	public void setUtilisateurs(JObservableList<Utilisateur> utilisateurs) {
+	public void setUtilisateurs(JUtilisateurList utilisateurs) {
 		this.utilisateurs = utilisateurs;
 	}
 
@@ -168,14 +145,5 @@ public class GestionUtilisateurs {
 	public void setBtnSupprimer(JButton btnSupprimer) {
 		this.btnSupprimer = btnSupprimer;
 	}
-
-	/**
-	 * @param utilisateurSelectionne Le nouveau utilisateurSelectionne
-	 */
-	public void setUtilisateurSelectionne(Utilisateur utilisateurSelectionne) {
-		this.utilisateurSelectionne = utilisateurSelectionne;
-	}
-	
-	
 
 }

@@ -1,25 +1,31 @@
-package fr.lille1.univ.coo.tp.vue.gestion.utilisateurs;
+package fr.lille1.univ.coo.tp.vue.utilisateurs;
 
 import java.awt.Container;
 import java.awt.GridBagLayout;
-import java.awt.Window;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import fr.lille1.univ.coo.tp.Application;
-import fr.lille1.univ.coo.tp.OutilsSwing;
 import fr.lille1.univ.coo.tp.controlleurs.composants.AnnulerAction;
 import fr.lille1.univ.coo.tp.controlleurs.composants.ValiderAction;
+import fr.lille1.univ.coo.tp.cryptage.CryptageException;
+import fr.lille1.univ.coo.tp.cryptage.CrypteurMD5;
+import fr.lille1.univ.coo.tp.persistance.DAOException;
+import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
+import fr.lille1.univ.coo.tp.role.IRole;
 import fr.lille1.univ.coo.tp.role.Role;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
+import fr.lille1.univ.coo.tp.utils.OutilsSwing;
 import fr.lille1.univ.coo.tp.vue.composants.GBC;
 import fr.lille1.univ.coo.tp.vue.composants.JShowablePaswordTextFIeld;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Annulable;
@@ -40,6 +46,8 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 	public static final String TITRE_AJOUT = "Ajouter un utilisateur";
 	public static final String TITRE_MODIF = "Modifier un profil";
 	
+	private GestionUtilisateurs parent;
+	
 	private Container c;
 	private Utilisateur utilisateur;
 	
@@ -53,8 +61,9 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 	private JCheckBox okEtNouveau;
 	private JButton btnAnnuler;
 	
-	public FenetreProfil(Window parent, ModeEdition mode, Utilisateur utilisateur) {
+	public FenetreProfil(GestionUtilisateurs parent, ModeEdition mode, Utilisateur utilisateur) {
 		super(parent, mode == ModeEdition.AJOUT ? TITRE_AJOUT : TITRE_MODIF, ModalityType.APPLICATION_MODAL);
+		this.parent = parent;
 		c = this.getContentPane();
 		this.utilisateur = utilisateur;
 		
@@ -62,7 +71,15 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 		txtMDP = new JShowablePaswordTextFIeld();
 		txtNom = new JTextField();
 		txtPrenom = new JTextField();
-//		comboRole = new JComboBox<>(Role.values());
+//		Service.roleservice
+		List<Role> roles = null;
+		try {
+			roles = new DAOGenerique<Role>(Role.class).rechercherTout();
+		} catch (DAOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		comboRole = new JComboBox<Role>(roles.toArray(new Role[roles.size()]));
 		
 		OutilsSwing.setTaille(150, 20, txtPseudo, txtMDP, txtNom, txtPrenom, comboRole);
 		
@@ -116,14 +133,16 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 	@Override
 	public void valider() {
 		utilisateur.setPseudo(txtPseudo.getText());
-		utilisateur.setMotDePasse(new String(txtMDP.getPassword().getPassword()));
 		utilisateur.setNom(txtNom.getText());
 		utilisateur.setPrenom(txtPrenom.getText());
-//		utilisateur.setRole(comboRole.getSelectedIndex() + 1);
+		utilisateur.setRole((Role) comboRole.getSelectedItem());
 		try {
-			Service.getAdministrateurService().creerUtilisateur(utilisateur);
-		} catch (ServiceException e) {
-			e.printStackTrace(); // ERREUR
+			utilisateur.setMotDePasse(new CrypteurMD5().crypter(new String(txtMDP.getPassword().getPassword())));
+			parent.getUtilisateurs().ajouter(utilisateur);
+			Service.getAdministrateurService().validerCreationUtilisateur();
+		} catch (CryptageException | ServiceException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Erreur lors du cryptage du mot de passe !", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
 		if(okEtNouveau.isSelected()) {
 			txtPseudo.setText("");

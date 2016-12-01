@@ -1,4 +1,4 @@
-package fr.lille1.univ.coo.tp.vue.gestion.utilisateurs;
+package fr.lille1.univ.coo.tp.vue.utilisateurs;
 
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -11,9 +11,11 @@ import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 
 public abstract class JObservableList<T> extends JList<T> implements Filtreur {
 	private static final long serialVersionUID = 1L;
-	// TODO : RENDRE GENERIQUE LA CLASSE
-	private IObservableList<T> utilisateurs;
+	private IObservableList<T> liste;
 	private IObservableListModel<T> leModel;
+	private JObservableListMouseAdapter<T> listener;
+	
+	private T elementSelectionne;
 
 	public JObservableList() {
 		this.setCellRenderer(getCellRenderer());
@@ -21,22 +23,22 @@ public abstract class JObservableList<T> extends JList<T> implements Filtreur {
 	
 	public JObservableList(IObservableList<T> utilisateurs) {
 		this();
-		setUtilisateurs(utilisateurs);
+		setListe(utilisateurs);
 	}
 
 	/**
 	 * @return Le utilisateurs
 	 */
-	public IObservableList<T> getUtilisateurs() {
-		return utilisateurs;
+	public IObservableList<T> getListe() {
+		return liste;
 	}
 
 	/**
-	 * @param utilisateurs Le nouveau utilisateurs
+	 * @param liste Le nouveau utilisateurs
 	 */
-	public void setUtilisateurs(IObservableList<T> utilisateurs) {
-		this.utilisateurs = utilisateurs;
-		leModel = new IObservableListModel<T>(utilisateurs);
+	public void setListe(IObservableList<T> liste) {
+		this.liste = liste;
+		leModel = new IObservableListModel<T>(liste);
 		this.setModel(leModel);
 
 	}
@@ -59,19 +61,54 @@ public abstract class JObservableList<T> extends JList<T> implements Filtreur {
 	public void filtrer(Filtre filtre) {
 		// TODO : Implémenter
 	}
+	
+	public void ajouter(T t) {
+		this.liste.ajouter(t);
+	}
+	
+	public void suppression(T t) {
+		this.liste.supprimer(t);
+	}
+	
+	/**
+	 * @return Le listener
+	 */
+	public JObservableListMouseAdapter<T> getListener() {
+		return listener;
+	}
+
+	/**
+	 * @param listener Le nouveau listener
+	 */
+	public void setListener(JObservableListMouseAdapter<T> listener) {
+		this.listener = listener;
+	}
+
+	/**
+	 * @return Le elementSelectionne
+	 */
+	public T getElementSelectionne() {
+		return elementSelectionne;
+	}
+
+	/**
+	 * @param elementSelectionne Le nouveau elementSelectionne
+	 */
+	public void setElementSelectionne(T elementSelectionne) {
+		this.elementSelectionne = elementSelectionne;
+	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if(utilisateurs.getListe().isEmpty()) {
+		if(liste.getListe().isEmpty()) {
 			FontMetrics fm = g.getFontMetrics();
 			String message = getMessageVide(); 
 			g.drawString(message, (getWidth() - fm.stringWidth(message)) / 2, (getHeight()  - fm.getHeight()) / 2);
 		}
 	}
 	
-	public String getMessageVide() {
-		return "Vous n'avez aucun amis, cliquez sur +Amis pour en ajouter !";
-	}
+	public abstract String getMessageVide();
+	
 	
 }

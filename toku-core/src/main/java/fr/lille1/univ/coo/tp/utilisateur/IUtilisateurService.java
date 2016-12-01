@@ -31,5 +31,6 @@ public interface IUtilisateurService {
 	public void ajouterCentreInteret(int id);
 	public void creerCentreInteret(String nom);
 	public boolean estAdministrateur(IUtilisateur utilisateur) throws ServiceException;
+	public IObservableList<Utilisateur> rechercherTout() throws ServiceException;
 	
 }

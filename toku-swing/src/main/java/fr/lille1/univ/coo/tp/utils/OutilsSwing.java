@@ -1,4 +1,4 @@
-package fr.lille1.univ.coo.tp;
+package fr.lille1.univ.coo.tp.utils;
 
 import java.awt.Dimension;
 

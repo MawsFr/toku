@@ -12,8 +12,10 @@ import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
 import fr.lille1.univ.coo.tp.persistance.Jointure;
+import fr.lille1.univ.coo.tp.service.unitofwork.UnitOfWork;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.ObservableList;
+import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.utils.ReflectionUtils;
 
 /**
@@ -59,7 +61,9 @@ public class PlusieursAPlusieursFactory<T extends IObjetDomaine> implements Fact
 		
 		try {
 			List<T> liste = dao.rechercherParJointure(jointures, where);
-			return new ObservableList<>(liste);
+			ObservableList<T> o = new ObservableList<>(liste);
+			o.ajouterObservateur(UnitOfWork.getInstance(leurType));
+			return o;
 		} catch (DAOException e) {
 			e.printStackTrace();
 			throw e;

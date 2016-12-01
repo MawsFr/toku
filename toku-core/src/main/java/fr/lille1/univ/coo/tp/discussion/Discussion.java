@@ -9,6 +9,7 @@ import fr.lille1.univ.coo.tp.annotations.UnAUn;
 import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
+import fr.lille1.univ.coo.tp.role.IRole;
 import fr.lille1.univ.coo.tp.role.Role;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
@@ -34,7 +35,7 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	@Colonne("id_moderateur")
 	protected Integer moderateur;
 	
-	protected Role role; // association porteuse d'info
+	protected IRole role; // association porteuse d'info
 	
 	@Colonne
 	protected Integer type;
@@ -147,7 +148,7 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#getRole()
 	 */
 	@Override
-	public Role getRole() {
+	public IRole getRole() {
 		return role;
 	}
 
@@ -155,7 +156,7 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#setRole(fr.lille1.univ.coo.tp.role.Role)
 	 */
 	@Override
-	public void setRole(Role role) {
+	public void setRole(IRole role) {
 		this.role = role;
 	}
 	

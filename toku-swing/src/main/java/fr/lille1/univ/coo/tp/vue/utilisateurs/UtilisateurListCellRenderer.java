@@ -1,4 +1,4 @@
-package fr.lille1.univ.coo.tp.vue.gestion.utilisateurs;
+package fr.lille1.univ.coo.tp.vue.utilisateurs;
 
 import java.awt.Color;
 import java.awt.Component;

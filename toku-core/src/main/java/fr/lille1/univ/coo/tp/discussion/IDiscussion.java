@@ -1,12 +1,14 @@
 package fr.lille1.univ.coo.tp.discussion;
 
+import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.domain.DomainException;
-import fr.lille1.univ.coo.tp.role.Role;
+import fr.lille1.univ.coo.tp.role.IRole;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.visiteur.Visiteur;
 
+@Table("discussion")
 public interface IDiscussion {
 
 	/**
@@ -64,11 +66,11 @@ public interface IDiscussion {
 	/**
 	 * @return Le role de l'utilisateur dans la discussion
 	 */
-	Role getRole();
+	IRole getRole();
 
 	/**
 	 * @param role Le nouveau role Le role de l'utilisateur dans la discussion
 	 */
-	void setRole(Role role);
+	void setRole(IRole role);
 
 }

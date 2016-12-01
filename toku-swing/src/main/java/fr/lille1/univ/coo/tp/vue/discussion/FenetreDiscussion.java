@@ -27,8 +27,8 @@ import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Fermable;
-import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.JObservableList;
-import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.JUtilisateurList;
+import fr.lille1.univ.coo.tp.vue.utilisateurs.JObservableList;
+import fr.lille1.univ.coo.tp.vue.utilisateurs.JUtilisateurList;
 
 public class FenetreDiscussion extends JFrame implements Fermable {
 

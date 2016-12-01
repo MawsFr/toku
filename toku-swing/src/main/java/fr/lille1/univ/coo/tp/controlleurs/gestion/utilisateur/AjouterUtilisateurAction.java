@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
-import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.FenetreProfil;
-import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.GestionUtilisateurs;
+import fr.lille1.univ.coo.tp.vue.utilisateurs.FenetreProfil;
+import fr.lille1.univ.coo.tp.vue.utilisateurs.GestionUtilisateurs;
 
 public class AjouterUtilisateurAction extends AbstractAction {
 
@@ -29,11 +29,8 @@ public class AjouterUtilisateurAction extends AbstractAction {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		new FenetreProfil(gestionUtilisateurs.getFenetre(), FenetreProfil.ModeEdition.AJOUT, new Utilisateur());
+		new FenetreProfil(gestionUtilisateurs, FenetreProfil.ModeEdition.AJOUT, new Utilisateur());
 		
-	}
-	
-	public void confirmerAjout() {
 	}
 
 }

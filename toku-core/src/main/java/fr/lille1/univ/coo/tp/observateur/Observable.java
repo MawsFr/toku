@@ -1,6 +1,7 @@
 package fr.lille1.univ.coo.tp.observateur;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -10,13 +11,13 @@ import java.util.Set;
  */
 @SuppressWarnings(value = {"rawtypes", "unchecked"})
 public class Observable {
-	private Set<Observateur> observateurs;
+	private List<Observateur> observateurs;
 	
 	/**
 	 * Constructeur par defaut.
 	 */
 	public Observable() {
-		this.observateurs = new HashSet<>();
+		this.observateurs = new ArrayList<>();
 	}
 	
 	/**
@@ -66,7 +67,7 @@ public class Observable {
 	 * Retourne la liste des observateurs.
 	 * @return La liste des observateurs.
 	 */
-	public Set<Observateur> getObservateurs() {
+	public List<Observateur> getObservateurs() {
 		return observateurs;
 	}
 	

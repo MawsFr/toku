@@ -8,7 +8,7 @@ import javax.swing.JScrollPane;
 import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.controlleurs.AmisListMouseAdapter;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
-import fr.lille1.univ.coo.tp.vue.gestion.utilisateurs.JUtilisateurList;
+import fr.lille1.univ.coo.tp.vue.utilisateurs.JUtilisateurList;
 
 public class OngletAmis extends JPanel {
 	

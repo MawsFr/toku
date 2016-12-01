@@ -88,7 +88,23 @@ public class DAOGenerique<T extends IObjetDomaine> {
 				Field field = ReflectionUtils.getChampParColonne(classe, champ);
 				accessible = field.isAccessible();
 				field.setAccessible(true);
-				valeurs.put(champ, field.get(objet));
+				if(field.isAnnotationPresent(Colonne.class) || field.isAnnotationPresent(Id.class)) {
+					valeurs.put(champ, field.get(objet));
+				} else {
+					if(field.isAnnotationPresent(UnAUn.class)) {
+						Object o = ReflectionUtils.trouverChampsId(field.get(objet).getClass()).get(field.get(objet));
+						if(o!=null) {
+							valeurs.put(champ, o);
+						}
+					} else if(field.isAnnotationPresent(PlusieursAPlusieurs.class)) {
+						
+					} else if(field.isAnnotationPresent(UnAPlusieurs.class)) {
+						UnAPlusieurs unAPlusieurs = field.getAnnotation(UnAPlusieurs.class);
+						
+					} else if(field.isAnnotationPresent(PlusieursAUn.class)) {
+						
+					}
+				}
 				field.setAccessible(accessible);
 			}
 			ps = creerRequetePreparee(connexion, rb.insertion(champsListe), true, champsListe, valeurs, null, null);
