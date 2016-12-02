@@ -1,5 +1,7 @@
 package fr.lille1.univ.coo.tp.controlleurs;
 
+import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
+import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.utilisateur.Amitie;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.ObservableList;
@@ -15,7 +17,9 @@ public class AmisListMouseAdapter extends JObservableListMouseAdapter<Amitie> {
 
 	@Override
 	public void doubleClic(Amitie element) {
-		IObservableList<Utilisateur> membres = new ObservableList<>();
+		Discussion discussion = new Discussion();
+		
+		IObservableList<AffectationDiscussion> membres = new ObservableList<>();
         membres.ajouter(element.getUtilisateur());
         membres.ajouter(element.getAmi());
         FenetreDiscussion fenetre = new FenetreDiscussion(membres);

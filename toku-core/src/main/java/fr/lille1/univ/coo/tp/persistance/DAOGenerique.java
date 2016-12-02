@@ -95,11 +95,15 @@ public class DAOGenerique<T extends IObjetDomaine> {
 				} else {
 					if(field.isAnnotationPresent(UnAUn.class)) {
 						Object o = ReflectionUtils.trouverChampsId(field.get(objet).getClass()).get(field.get(objet));
-						if(o!=null) {
+						if(o != null) {
 							valeurs.put(champ, o);
 						}
 					} else if(field.isAnnotationPresent(PlusieursAPlusieurs.class)) {
 						
+						Object o = ReflectionUtils.trouverChampsId(field.get(objet).getClass()).get(field.get(objet));
+						if(o != null) {
+							valeurs.put(champ, o);
+						}
 					} else if(field.isAnnotationPresent(UnAPlusieurs.class)) {
 						UnAPlusieurs unAPlusieurs = field.getAnnotation(UnAPlusieurs.class);
 						

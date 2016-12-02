@@ -1,13 +1,15 @@
 package fr.lille1.univ.coo.tp.controlleurs;
 
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
+import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.vue.discussion.FenetreDiscussion;
+import fr.lille1.univ.coo.tp.vue.utilisateurs.JAffectationDiscussionList;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.JObservableList;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.JObservableListMouseAdapter;
 
 public class DiscussionListMouseAdapter extends JObservableListMouseAdapter<AffectationDiscussion> {
-	public DiscussionListMouseAdapter(JObservableList<AffectationDiscussion> liste) {
-		super(liste);
+	public DiscussionListMouseAdapter(JAffectationDiscussionList listeDiscussions) {
+		super(listeDiscussions);
 	}
 
 	@Override

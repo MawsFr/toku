@@ -44,12 +44,12 @@ public interface IDiscussion {
 	/**
 	 * @return Le membres
 	 */
-	IObservableList<Utilisateur> getMembres();
+	IObservableList<AffectationDiscussion> getMembres();
 
 	/**
 	 * @param membres Le nouveau membres
 	 */
-	void setMembres(IObservableList<Utilisateur> membres);
+	void setMembres(IObservableList<AffectationDiscussion> membres);
 
 	void accept(Visiteur visitor) throws DomainException;
 }

@@ -23,10 +23,12 @@ import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
+import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Fermable;
+import fr.lille1.univ.coo.tp.vue.utilisateurs.JAffectationDiscussionList;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.JObservableList;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.JUtilisateurList;
 
@@ -44,12 +46,12 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	private JToggleButton btnAccuseReception;
 	private JToggleButton btnChiffre;
 	private JToggleButton btnExpire;
-	private JUtilisateurList listeMembres;
+	private JAffectationDiscussionList listeMembres;
 	private JMenuBar barreMenu;
 	private JMenu menuFichier;
 	private JMenuItem menuFermer;
 	
-	public FenetreDiscussion(IObservableList<Utilisateur> membres) {
+	public FenetreDiscussion(IObservableList<AffectationDiscussion> membres) {
 		c = getContentPane();
 		c.setLayout(new BorderLayout(0, 0));
 		
@@ -62,7 +64,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		btnAccuseReception = new JToggleButton("Accusé");
 		btnChiffre = new JToggleButton("Chiffré");
 		btnExpire = new JToggleButton("Expire");
-		listeMembres = new JUtilisateurList(membres);
+		listeMembres = new JAffectationDiscussionList(membres);
 		barreMenu = new JMenuBar();
 		menuFichier = new JMenu("Fichier");
 		menuFermer = new JMenuItem("Fermer");
@@ -330,14 +332,14 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	/**
 	 * @return Le listeMembres
 	 */
-	public JUtilisateurList getListeMembres() {
+	public JAffectationDiscussionList getListeMembres() {
 		return listeMembres;
 	}
 
 	/**
 	 * @param listeMembres Le nouveau listeMembres
 	 */
-	public void setListeMembres(JUtilisateurList listeMembres) {
+	public void setListeMembres(JAffectationDiscussionList listeMembres) {
 		this.listeMembres = listeMembres;
 	}
 

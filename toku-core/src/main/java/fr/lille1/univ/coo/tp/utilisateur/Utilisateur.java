@@ -52,11 +52,11 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	private String avatar;
 	
 	//SELECT * FROM utilisateur join utilisateur_amis on utilisateur.id = utilisateur_amis.id_ami where utilisateur_amis.id_utilisateur = ?
-	@PlusieursAPlusieurs(table_assoc=Amitie.class, notreCle="id_utilisateur", leurCle="id_ami", type=Utilisateur.class)
+	@PlusieursAPlusieurs(table_assoc=Amitie.class, notreCle="id_utilisateur", leurCle="id_ami", type=Amitie.class)
 	private IObservableList<Amitie> amis;
 	
 	//select * from discussion join utilisateur_groupe on discussion.id = utilisateur_groupe.id_groupe where utilisateur_groupe.id_utilisateur = ?
-	@PlusieursAPlusieurs(table_assoc=AffectationDiscussion.class, notreCle="id_utilisateur", leurCle="id_discussion", type=Discussion.class)
+	@PlusieursAPlusieurs(table_assoc=AffectationDiscussion.class, notreCle="id_utilisateur", leurCle="id_discussion", type=AffectationDiscussion.class)
 	private IObservableList<AffectationDiscussion> discussions;
 	
 	public Utilisateur() {

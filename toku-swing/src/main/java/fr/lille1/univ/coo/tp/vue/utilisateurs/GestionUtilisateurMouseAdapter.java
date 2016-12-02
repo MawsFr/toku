@@ -18,7 +18,7 @@ public class GestionUtilisateurMouseAdapter extends JObservableListMouseAdapter<
 		IObservableList<Utilisateur> membres = new ObservableList<>();
         membres.ajouter(Application.getInstance().getSession().getUtilisateur());
         membres.ajouter(element);
-        FenetreDiscussion fenetre = new FenetreDiscussion(membres);
+        FenetreDiscussion fenetre = new FenetreProfil(membres);
         fenetre.getLblTypeDiscussion().setText("Discussion privée : ");
         fenetre.getLblNomDiscussion().setText(element.getPseudo());
 	}

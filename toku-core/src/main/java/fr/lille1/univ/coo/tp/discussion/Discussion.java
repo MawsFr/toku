@@ -35,8 +35,8 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	@Colonne("id_moderateur")
 	protected Integer moderateur;
 	
-	@PlusieursAPlusieurs(table_assoc=AffectationDiscussion.class, leurCle="id_utilisateur", notreCle="id_discussion", type=Utilisateur.class)
-	protected IObservableList<Utilisateur> membres;
+	@PlusieursAPlusieurs(table_assoc=AffectationDiscussion.class, leurCle="id_utilisateur", notreCle="id_discussion", type=AffectationDiscussion.class)
+	protected IObservableList<AffectationDiscussion> membres;
 	
 	// select * from message where 
 	@UnAPlusieurs(leurType=Message.class, maCle="id_discussion")
@@ -103,7 +103,7 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#getMembres()
 	 */
 	@Override
-	public IObservableList<Utilisateur> getMembres() {
+	public IObservableList<AffectationDiscussion> getMembres() {
 		return membres;
 	}
 
@@ -111,7 +111,7 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#setMembres(fr.lille1.univ.coo.tp.utilisateur.IObservableList)
 	 */
 	@Override
-	public void setMembres(IObservableList<Utilisateur> membres) {
+	public void setMembres(IObservableList<AffectationDiscussion> membres) {
 		this.membres = membres;
 	}
 
