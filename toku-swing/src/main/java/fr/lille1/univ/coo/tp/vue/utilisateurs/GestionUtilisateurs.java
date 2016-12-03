@@ -39,7 +39,7 @@ public class GestionUtilisateurs extends JDialog {
 		c.setLayout(new GridBagLayout());
 		
 		utilisateurs = new JUtilisateurList(membres);
-		utilisateurs.addMouseListener(new GestionUtilisateurMouseAdapter(utilisateurs));
+		utilisateurs.addMouseListener(new GestionUtilisateurMouseAdapter(this, utilisateurs));
 		btnAjouter = new JButton(AjouterUtilisateurAction.getInstance(this));
 		btnModifier = new JButton(ModifierUtilisateurAction.getInstance(this));
 		btnSupprimer = new JButton(SupprimerUtilisateurAction.getInstance(this));

@@ -4,13 +4,16 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
+import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
+import fr.lille1.univ.coo.tp.service.unitofwork.UnitOfWork;
+
 /**
  * Cette classe permet d'implémenté l'identity map qui permet d'avoir qu'une
  * seul instance des objet venant de la base.
  */
 public class References {
 	private static References instance;
-	private Map<Class<?>, Map<Integer, WeakReference<?>>> references;
+	private Map<Class<?>, Map<Integer, WeakReference<? extends IObjetDomaine>>> references;
 
 	/**
 	 * Constructeur par défaut
@@ -36,7 +39,7 @@ public class References {
 	 *            La classe.
 	 * @return L'identity map correspondant à la classe.
 	 */
-	public Map<Integer, WeakReference<?>> get(Class<?> classe) {
+	public Map<Integer, WeakReference<? extends IObjetDomaine>> get(Class<?> classe) {
 		init(classe);
 		return this.references.get(classe);
 	}
@@ -66,7 +69,7 @@ public class References {
 		if (get(classe).containsKey(id) && get(classe).get(id).get() != null) {
 			return get(classe).get(id).get();
 		}
-		get(classe).remove(id);
+		supprimer(classe, id);
 		return null;
 	}
 
@@ -77,11 +80,19 @@ public class References {
 	 *            La classe.
 	 * @param id
 	 *            L'id de l'objet.
-	 * @param reference
+	 * @param objet
 	 *            L'objet à stocker.
+	 * @return 
 	 */
-	public void enregistrer(Class<?> classe, Integer id, WeakReference<?> reference) {
+	public WeakReference<? extends IObjetDomaine> enregistrer(Class<?> classe, Integer id, IObjetDomaine objet) {
+		WeakReference<? extends IObjetDomaine> reference = new WeakReference<IObjetDomaine>(objet);
 		get(classe).put(id, reference);
+		objet.ajouterObservateur(UnitOfWork.getInstance(classe));
+		return reference;
+	}
+	
+	public void supprimer(Class<?> classe, Integer id) {
+		get(classe).remove(id);
 	}
 
 }

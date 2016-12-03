@@ -1,6 +1,9 @@
 package fr.lille1.univ.coo.tp.utilisateur.administrateur;
 
+import fr.lille1.univ.coo.tp.cryptage.CryptageException;
+import fr.lille1.univ.coo.tp.cryptage.CrypteurMD5;
 import fr.lille1.univ.coo.tp.domain.DomainException;
+import fr.lille1.univ.coo.tp.role.Role;
 import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.service.unitofwork.UnitOfWork;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
@@ -19,25 +22,17 @@ public class AdministrateurService implements IAdministrateurService {
 
 		return instance;
 	}
-
-	@Override
-	public void validerCreationUtilisateur() throws ServiceException {
-		try {
-			UnitOfWork.getInstance(Utilisateur.class).commit();
-		} catch (DomainException e) {
-			e.printStackTrace();
-			throw new ServiceException(e);
-		}
-	}
 	
 	@Override
-	public void validerSuppressionUtilisateur() throws ServiceException {
+	public Utilisateur creerUtilisateur(String pseudo, String nom, String prenom, Role role, String motDePasse) throws ServiceException {
+		final Utilisateur utilisateur = new Utilisateur(role, pseudo, motDePasse, nom, prenom, null);
 		try {
-			UnitOfWork.getInstance(Utilisateur.class).commit();
-		} catch (DomainException e) {
+			utilisateur.setMotDePasse(new CrypteurMD5().crypter(motDePasse));
+		} catch (CryptageException e) {
 			e.printStackTrace();
 			throw new ServiceException(e);
 		}
+		return utilisateur;
 	}
 
 	@Override
@@ -59,5 +54,17 @@ public class AdministrateurService implements IAdministrateurService {
 	public void modifierPrenom(int idUtilisateur, String nouveauPrenom) {
 
 	}
+
+	@Override
+	public void validerChangements() throws ServiceException {
+		try {
+			UnitOfWork.getInstance(Utilisateur.class).commit();
+		} catch (DomainException e) {
+			e.printStackTrace();
+			throw new ServiceException(e);
+		}
+	}
+	
+	
 
 }

@@ -2,10 +2,10 @@ package fr.lille1.univ.coo.tp.vue.utilisateurs;
 
 import javax.swing.ListCellRenderer;
 
-import fr.lille1.univ.coo.tp.utilisateur.Amitie;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
+import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
-public class JAmisList extends JObservableList<Amitie> {
+public class JAmisList extends JUtilisateurList {
 
 	private static final long serialVersionUID = 1L;
 
@@ -13,12 +13,12 @@ public class JAmisList extends JObservableList<Amitie> {
 		super();
 	}
 
-	public JAmisList(IObservableList<Amitie> iObservableList) {
+	public JAmisList(IObservableList<Utilisateur> iObservableList) {
 		super(iObservableList);
 	}
 
 	@Override
-	public ListCellRenderer<? super Amitie> getCellRenderer() {
+	public ListCellRenderer<? super Utilisateur> getCellRenderer() {
 		return new AmitieListCellRenderer();
 	}
 

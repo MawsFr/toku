@@ -8,13 +8,13 @@ import javax.swing.JScrollPane;
 import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.controlleurs.DiscussionListMouseAdapter;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
-import fr.lille1.univ.coo.tp.vue.utilisateurs.JAffectationDiscussionList;
+import fr.lille1.univ.coo.tp.vue.utilisateurs.JDiscussionList;
 
 public class OngletGroupes extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 
-	private JAffectationDiscussionList listeDiscussions;
+	private JDiscussionList listeDiscussions;
 	private IUtilisateur utilisateur;
 	
 	public OngletGroupes() {
@@ -24,7 +24,7 @@ public class OngletGroupes extends JPanel {
 	public void initialiser() {
 		removeAll();
 		utilisateur = Application.getInstance().getSession().getUtilisateur();
-		listeDiscussions = new JAffectationDiscussionList(utilisateur.getDiscussions());
+		listeDiscussions = new JDiscussionList(utilisateur.getDiscussions());
 		listeDiscussions.addMouseListener(new DiscussionListMouseAdapter(listeDiscussions));
 		this.add(new JScrollPane(listeDiscussions), BorderLayout.CENTER);
 	}

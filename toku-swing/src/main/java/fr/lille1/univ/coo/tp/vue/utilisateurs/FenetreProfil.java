@@ -19,7 +19,6 @@ import fr.lille1.univ.coo.tp.cryptage.CryptageException;
 import fr.lille1.univ.coo.tp.cryptage.CrypteurMD5;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
-import fr.lille1.univ.coo.tp.role.IRole;
 import fr.lille1.univ.coo.tp.role.Role;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
@@ -139,7 +138,7 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 		try {
 			utilisateur.setMotDePasse(new CrypteurMD5().crypter(new String(txtMDP.getPassword().getPassword())));
 			parent.getUtilisateurs().ajouter(utilisateur);
-			Service.getAdministrateurService().validerCreationUtilisateur();
+			Service.getAdministrateurService().validerChangements();
 		} catch (CryptageException | ServiceException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(this, "Erreur lors du cryptage du mot de passe !", "Erreur", JOptionPane.ERROR_MESSAGE);

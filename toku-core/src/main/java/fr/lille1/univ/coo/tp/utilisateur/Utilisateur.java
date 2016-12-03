@@ -52,12 +52,12 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	private String avatar;
 	
 	//SELECT * FROM utilisateur join utilisateur_amis on utilisateur.id = utilisateur_amis.id_ami where utilisateur_amis.id_utilisateur = ?
-	@PlusieursAPlusieurs(table_assoc=Amitie.class, notreCle="id_utilisateur", leurCle="id_ami", type=Amitie.class)
-	private IObservableList<Amitie> amis;
+	@PlusieursAPlusieurs(leurCle = "id_ami", table_assoc = Amitie.class, type = Utilisateur.class, notreCle="id_utilisateur")
+	private IObservableList<Utilisateur> amis;
 	
 	//select * from discussion join utilisateur_groupe on discussion.id = utilisateur_groupe.id_groupe where utilisateur_groupe.id_utilisateur = ?
-	@PlusieursAPlusieurs(table_assoc=AffectationDiscussion.class, notreCle="id_utilisateur", leurCle="id_discussion", type=AffectationDiscussion.class)
-	private IObservableList<AffectationDiscussion> discussions;
+	@PlusieursAPlusieurs(leurCle="id_discussion", notreCle="id_utilisateur", table_assoc=AffectationDiscussion.class, type=Discussion.class)
+	private IObservableList<Discussion> discussions;
 	
 	public Utilisateur() {
 	}
@@ -85,12 +85,6 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 		return id;
 	}
 	
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setId(int)
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setId(int)
-	 */
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setId(int)
 	 */
@@ -275,7 +269,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getAmis()
 	 */
 	@Override
-	public IObservableList<Amitie> getAmis() {
+	public IObservableList<Utilisateur> getAmis() {
 		return amis;
 	}
 
@@ -286,7 +280,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setAmis(fr.lille1.univ.coo.tp.utilisateur.IObservableList)
 	 */
 	@Override
-	public void setAmis(IObservableList<Amitie> amis) {
+	public void setAmis(IObservableList<Utilisateur> amis) {
 		this.amis = amis;
 		notifierModification("amis");
 	}
@@ -300,7 +294,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getDiscussions()
 	 */
 	@Override
-	public IObservableList<AffectationDiscussion> getDiscussions() {
+	public IObservableList<Discussion> getDiscussions() {
 		return discussions;
 	}
 
@@ -311,7 +305,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setDiscussions(fr.lille1.univ.coo.tp.utilisateur.IObservableList)
 	 */
 	@Override
-	public void setDiscussions(IObservableList<AffectationDiscussion> discussions) {
+	public void setDiscussions(IObservableList<Discussion> discussions) {
 		this.discussions = discussions;
 	}
 

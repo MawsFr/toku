@@ -34,22 +34,22 @@ public interface IDiscussion {
 	/**
 	 * @return Le moderateur
 	 */
-	Integer getModerateur();
+	IUtilisateur getModerateur();
 
 	/**
 	 * @param moderateur Le nouveau moderateur
 	 */
-	void setModerateur(Integer moderateur);
+	void setModerateur(IUtilisateur moderateur);
 
 	/**
 	 * @return Le membres
 	 */
-	IObservableList<AffectationDiscussion> getMembres();
+	IObservableList<Utilisateur> getMembres();
 
 	/**
 	 * @param membres Le nouveau membres
 	 */
-	void setMembres(IObservableList<AffectationDiscussion> membres);
+	void setMembres(IObservableList<Utilisateur> membres);
 
 	void accept(Visiteur visitor) throws DomainException;
 }

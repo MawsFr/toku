@@ -3,11 +3,12 @@ package fr.lille1.univ.coo.tp.utilisateur;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.observateur.Observable;
 
-public class ObservableList<T> extends Observable implements IObservableList<T> {
+public class ObservableList<T extends IObjetDomaine> extends Observable implements IObservableList<T> {
 	
-	private List<T> liste;
+	protected List<T> liste;
 	
 	public ObservableList() {
 		this.liste = new ArrayList<>();

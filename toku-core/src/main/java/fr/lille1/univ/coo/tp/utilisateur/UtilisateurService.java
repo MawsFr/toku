@@ -9,9 +9,9 @@ import fr.lille1.univ.coo.tp.cryptage.CryptageException;
 import fr.lille1.univ.coo.tp.cryptage.CrypteurMD5;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
+import fr.lille1.univ.coo.tp.persistance.proxy.factory.RechercherToutFactory;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
-import fr.lille1.univ.coo.tp.service.unitofwork.UnitOfWork;
 import fr.lille1.univ.coo.tp.validateur.ValidationException;
 import fr.lille1.univ.coo.tp.validateur.Valideur;
 
@@ -62,9 +62,7 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 	@Override
 	public IObservableList<Utilisateur> rechercherTout() throws ServiceException {
 		try {
-			ObservableList<Utilisateur> o = new ObservableList<Utilisateur>(new DAOGenerique<Utilisateur>(Utilisateur.class).rechercherTout()); 
-			o.ajouterObservateur(UnitOfWork.getInstance(Utilisateur.class));
-			return o;
+			return new RechercherToutFactory<Utilisateur>(Utilisateur.class).creer();
 		} catch (DAOException e) {
 			e.printStackTrace();
 			throw new ServiceException(e);

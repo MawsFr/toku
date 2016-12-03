@@ -99,6 +99,7 @@ CREATE TABLE IF NOT EXISTS `toku`.`projet_discussion` (
   `id_moderateur` INT NOT NULL,
   `nom` VARCHAR(45) NOT NULL,
   `date_creation` DATETIME NULL,
+  `leType` INT NOT NULL,
   PRIMARY KEY (`id`, `id_moderateur`),
   CONSTRAINT `fk_groupe_utilisateur_id_moderateur`
     FOREIGN KEY (`id_moderateur`)
@@ -152,7 +153,6 @@ CREATE TABLE IF NOT EXISTS `toku`.`projet_message` (
   `id_utilisateur` INT NOT NULL,
   `texte` TEXT NOT NULL,
   `date_creation` DATETIME NOT NULL,
-  `type` INT NOT NULL,
   `accuse_reception` TINYINT(1) NOT NULL DEFAULT 0,
   `lu` TINYINT(1) NOT NULL DEFAULT 0,
   `expiration` INT NOT NULL DEFAULT -1,

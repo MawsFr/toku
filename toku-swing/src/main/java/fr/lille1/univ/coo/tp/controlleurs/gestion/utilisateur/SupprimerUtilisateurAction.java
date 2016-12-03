@@ -38,7 +38,7 @@ public class SupprimerUtilisateurAction extends AbstractAction {
 			    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 			gestionUtilisateurs.getUtilisateurs().suppression(utilisateur);
 			try {
-				Service.getAdministrateurService().validerSuppressionUtilisateur();
+				Service.getAdministrateurService().validerChangements();
 			} catch (ServiceException e) {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(gestionUtilisateurs, "Erreur lors de la suppression : " + e.getCause(), "Erreur", JOptionPane.ERROR_MESSAGE);

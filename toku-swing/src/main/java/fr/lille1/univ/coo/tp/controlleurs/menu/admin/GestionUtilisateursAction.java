@@ -1,6 +1,7 @@
 package fr.lille1.univ.coo.tp.controlleurs.menu.admin;
 
 import java.awt.event.ActionEvent;
+import java.lang.ref.WeakReference;
 
 import javax.swing.AbstractAction;
 
@@ -33,7 +34,7 @@ public class GestionUtilisateursAction extends AbstractAction {
 		IObservableList<Utilisateur> utilisateurs;
 		try {
 			utilisateurs = Service.getUtilisateurService().rechercherTout();
-			new GestionUtilisateurs(utilisateurs);
+			new GestionUtilisateurs((IObservableList<Utilisateur>) new WeakReference<IObservableList<Utilisateur>>(utilisateurs).get());
 		} catch (ServiceException e1) {
 			e1.printStackTrace();
 		}
