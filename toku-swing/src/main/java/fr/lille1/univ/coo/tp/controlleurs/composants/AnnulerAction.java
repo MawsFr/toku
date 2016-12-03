@@ -5,9 +5,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Annulable;
-import fr.lille1.univ.coo.tp.vue.composants.fenetre.Validable;
 
 public class AnnulerAction extends AbstractAction {
+	private static final long serialVersionUID = 1L;
 	
 	public static final String NOM_PAR_DEFAUT = "Annuler";
 	

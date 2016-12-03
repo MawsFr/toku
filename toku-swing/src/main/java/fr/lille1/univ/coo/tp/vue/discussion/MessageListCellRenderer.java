@@ -6,9 +6,7 @@ import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
-import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.discussion.message.Message;
-import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.ObservableListRenderer;
 
 public class MessageListCellRenderer extends JLabel implements ObservableListRenderer<Message> {

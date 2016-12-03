@@ -6,9 +6,7 @@ import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
-import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.discussion.Discussion;
-import fr.lille1.univ.coo.tp.vue.discussion.Avatar;
 
 public class DiscussionListCellRenderer extends JLabel implements ObservableListRenderer<Discussion> {
 

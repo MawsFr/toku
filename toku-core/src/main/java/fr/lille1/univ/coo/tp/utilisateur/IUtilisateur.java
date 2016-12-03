@@ -2,7 +2,6 @@ package fr.lille1.univ.coo.tp.utilisateur;
 
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.discussion.Discussion;
-import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.role.IRole;
 
 @Table("utilisateur")

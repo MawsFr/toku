@@ -7,6 +7,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JToggleButton;
 
 public class MontrerMDPAction extends AbstractAction {
+	private static final long serialVersionUID = 1L;
 
 	private JPasswordField motDePasse;
 	private char echoChar;

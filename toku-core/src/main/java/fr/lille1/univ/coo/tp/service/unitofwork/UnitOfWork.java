@@ -9,7 +9,6 @@ import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.observateur.ObjetDomaineObservateur;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
-import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
 
 /**
  * Cette classe represente une transaction. Elle garde en memoire la liste des

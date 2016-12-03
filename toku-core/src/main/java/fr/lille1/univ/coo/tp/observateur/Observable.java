@@ -2,7 +2,6 @@ package fr.lille1.univ.coo.tp.observateur;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Cette classe represente un element observer.

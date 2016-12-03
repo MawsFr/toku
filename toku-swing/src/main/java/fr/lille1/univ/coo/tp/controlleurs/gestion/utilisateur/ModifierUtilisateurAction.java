@@ -10,6 +10,7 @@ import fr.lille1.univ.coo.tp.vue.utilisateurs.FenetreProfil;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.GestionUtilisateurs;
 
 public class ModifierUtilisateurAction extends AbstractAction {
+	private static final long serialVersionUID = 1L;
 
 	private static ModifierUtilisateurAction instance;
 	private GestionUtilisateurs gestionUtilisateurs;

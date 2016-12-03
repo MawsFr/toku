@@ -1,8 +1,6 @@
 package fr.lille1.univ.coo.tp.discussion;
 
 import fr.lille1.univ.coo.tp.annotations.Table;
-import fr.lille1.univ.coo.tp.domain.DomainException;
-import fr.lille1.univ.coo.tp.role.IRole;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;

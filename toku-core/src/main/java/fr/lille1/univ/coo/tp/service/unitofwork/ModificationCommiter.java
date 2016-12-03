@@ -4,7 +4,6 @@ import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
-import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
 /**
  * Cette classe applique les modification d'objet du domaine sur la BDD.

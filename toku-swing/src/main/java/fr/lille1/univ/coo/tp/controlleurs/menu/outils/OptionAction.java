@@ -7,6 +7,7 @@ import javax.swing.AbstractAction;
 import fr.lille1.univ.coo.tp.vue.BarreMenuPrincipale;
 
 public class OptionAction extends AbstractAction {
+	private static final long serialVersionUID = 1L;
 	
 	public static OptionAction instance;
 	

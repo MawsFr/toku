@@ -29,8 +29,6 @@ import fr.lille1.univ.coo.tp.persistance.proxy.factory.PlusieursAPlusieursFactor
 import fr.lille1.univ.coo.tp.persistance.proxy.factory.PlusieursAUnFactory;
 import fr.lille1.univ.coo.tp.persistance.proxy.factory.UnAPlusieursFactory;
 import fr.lille1.univ.coo.tp.persistance.proxy.factory.UnAUnFactory;
-import fr.lille1.univ.coo.tp.role.Role;
-import fr.lille1.univ.coo.tp.service.unitofwork.UnitOfWork;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utils.Log;
 import fr.lille1.univ.coo.tp.utils.ReflectionUtils;

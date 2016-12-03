@@ -1,8 +1,6 @@
 package fr.lille1.univ.coo.tp.role;
 
 import fr.lille1.univ.coo.tp.annotations.Table;
-import fr.lille1.univ.coo.tp.domain.DomainException;
-import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 
 @Table("role")
 public interface IRole {
