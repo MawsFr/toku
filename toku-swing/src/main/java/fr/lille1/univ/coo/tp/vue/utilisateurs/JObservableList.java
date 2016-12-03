@@ -5,15 +5,13 @@ import java.awt.Graphics;
 
 import javax.swing.JList;
 
-import fr.lille1.univ.coo.tp.filtre.Filtre;
-import fr.lille1.univ.coo.tp.filtre.Filtreur;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 
-public abstract class JObservableList<T> extends JList<T> implements Filtreur {
-	private static final long serialVersionUID = 1L;
-	private IObservableList<T> liste;
-	private IObservableListModel<T> leModel;
-	private JObservableListMouseAdapter<T> listener;
+public abstract class JObservableList<T> extends JList<T> {
+	protected static final long serialVersionUID = 1L;
+	protected IObservableList<T> liste;
+	protected IObservableListModel<T> leModel;
+	protected JObservableListMouseAdapter<T> listener;
 	
 	private T elementSelectionne;
 
@@ -55,11 +53,6 @@ public abstract class JObservableList<T> extends JList<T> implements Filtreur {
 	 */
 	public void setLeModel(IObservableListModel<T> leModel) {
 		this.leModel = leModel;
-	}
-
-	@Override
-	public void filtrer(Filtre filtre) {
-		// TODO : Implémenter
 	}
 	
 	public void ajouter(T t) {

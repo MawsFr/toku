@@ -5,7 +5,7 @@ import javax.swing.ListCellRenderer;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
-public class JUtilisateurList extends JObservableList<Utilisateur> {
+public class JUtilisateurList extends JFiltrableList<Utilisateur> {
 
 	private static final long serialVersionUID = 1L;
 

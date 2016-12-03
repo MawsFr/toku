@@ -96,6 +96,12 @@ public class RequeteBuilder {
 
 		return sb.toString();
 	}
+	
+	public String rechercherDesProprietes(List<String> select, List<String> where) {
+		sb = new StringBuilder();
+		sb.append(clauseSelect(select)).append(table).append(clauseWhere(where));
+		return sb.toString();
+	}
 
 	/**
 	 * Retourne la requete select correspondant au paramètre de la clause where.
@@ -105,14 +111,12 @@ public class RequeteBuilder {
 	 * @return La requete DELETE
 	 */
 	public String rechercherParPropriete(List<String> where) {
-		sb = new StringBuilder();
-		sb.append("SELECT * FROM ").append(table).append(clauseWhere(where));
-		return sb.toString();
+		return rechercherDesProprietes(null, where);
 	}
 	
 	public String rechercherParJointure(List<Jointure> jointures, List<String> where) {
 		sb = new StringBuilder();
-		sb.append("SELECT * FROM ").append(table).append(clauseJointure(jointures)).append(clauseWhere(where));
+		sb.append(clauseSelect()).append(table).append(clauseJointure(jointures)).append(clauseWhere(where));
 		return sb.toString();
 	}
 
@@ -132,6 +136,25 @@ public class RequeteBuilder {
 		if (limit > 0) {
 			sb.append(clauseLimit(limit));
 		}
+		return sb.toString();
+	}
+	public String clauseSelect() {
+		return clauseSelect(null);
+	}
+	
+	public String clauseSelect(List<String> select) {
+		if(select == null || select.isEmpty()) {
+			return "SELECT * FROM ";
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT ");
+		for (int i = 0; i < select.size(); ++i) {
+			sb.append(select.get(i));
+			if (i < select.size() - 1) {
+				sb.append(", ");
+			}
+		}
+		sb.append(" FROM ");
 		return sb.toString();
 	}
 

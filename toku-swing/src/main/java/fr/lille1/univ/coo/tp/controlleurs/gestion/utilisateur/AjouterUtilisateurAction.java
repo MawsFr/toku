@@ -30,7 +30,7 @@ public class AjouterUtilisateurAction extends AbstractAction {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		new FenetreProfil(gestionUtilisateurs, FenetreProfil.ModeEdition.AJOUT, new Utilisateur());
+		new FenetreProfil(gestionUtilisateurs, FenetreProfil.ModeEdition.AJOUT, new Utilisateur(), null);
 		
 	}
 

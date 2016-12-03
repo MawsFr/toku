@@ -1,7 +1,6 @@
 package fr.lille1.univ.coo.tp.vue.utilisateurs;
 
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
-import fr.lille1.univ.coo.tp.vue.utilisateurs.FenetreProfil.ModeEdition;
 
 public class GestionUtilisateurMouseAdapter extends JObservableListMouseAdapter<Utilisateur> {
 	private GestionUtilisateurs gestionUtilisateur;
@@ -13,7 +12,7 @@ public class GestionUtilisateurMouseAdapter extends JObservableListMouseAdapter<
 
 	@Override
 	public void doubleClic(Utilisateur element) {
-		new FenetreProfil(gestionUtilisateur, ModeEdition.MODIF, element);
+		gestionUtilisateur.getBtnModifier().doClick();
 	}
 
 	@Override

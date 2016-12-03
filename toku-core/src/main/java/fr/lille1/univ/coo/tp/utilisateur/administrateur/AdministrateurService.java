@@ -1,8 +1,13 @@
 package fr.lille1.univ.coo.tp.utilisateur.administrateur;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import fr.lille1.univ.coo.tp.cryptage.CryptageException;
 import fr.lille1.univ.coo.tp.cryptage.CrypteurMD5;
 import fr.lille1.univ.coo.tp.domain.DomainException;
+import fr.lille1.univ.coo.tp.persistance.DAOException;
+import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
 import fr.lille1.univ.coo.tp.role.Role;
 import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.service.unitofwork.UnitOfWork;
@@ -36,9 +41,16 @@ public class AdministrateurService implements IAdministrateurService {
 	}
 
 	@Override
-	public String getMotDePasse(Utilisateur selectionne) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getMotDePasse(Utilisateur selectionne) throws ServiceException {
+		Map<String, Object> conditions = new HashMap<>();
+		conditions.put("id", selectionne.getId());
+		try {
+			return (String) new DAOGenerique<>(Utilisateur.class).rechercherUneProprieteUnSeul("mot_de_passe", conditions);
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new ServiceException(e);
+		}
 	}
 
 	@Override

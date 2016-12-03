@@ -1,6 +1,7 @@
 package fr.lille1.univ.coo.tp.vue.utilisateurs;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
@@ -8,6 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
+import fr.lille1.univ.coo.tp.controlleurs.FiltrerUtilisateurAction;
 import fr.lille1.univ.coo.tp.controlleurs.gestion.utilisateur.AjouterUtilisateurAction;
 import fr.lille1.univ.coo.tp.controlleurs.gestion.utilisateur.ModifierUtilisateurAction;
 import fr.lille1.univ.coo.tp.controlleurs.gestion.utilisateur.SupprimerUtilisateurAction;
@@ -16,7 +18,6 @@ import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.BarreMenuPrincipale;
 import fr.lille1.univ.coo.tp.vue.FenetrePrincipale;
 import fr.lille1.univ.coo.tp.vue.composants.GBC;
-import fr.lille1.univ.coo.tp.vue.composants.JTextFieldHint;
 
 public class GestionUtilisateurs extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -30,7 +31,7 @@ public class GestionUtilisateurs extends JDialog {
 	private JButton btnAjouter;
 	private JButton btnModifier;
 	private JButton btnSupprimer;
-	private JTextFieldHint filtre;
+	private JTexteFiltre<Utilisateur> filtre;
 	
 	public GestionUtilisateurs(IObservableList<Utilisateur> membres) {
 		super(FenetrePrincipale.getInstance().getFenetre(), BarreMenuPrincipale.MENU_GERER_UTILISATEURS, ModalityType.APPLICATION_MODAL);
@@ -39,13 +40,17 @@ public class GestionUtilisateurs extends JDialog {
 		c.setLayout(new GridBagLayout());
 		
 		utilisateurs = new JUtilisateurList(membres);
+		utilisateurs.setSelectedIndex(0);
 		utilisateurs.addMouseListener(new GestionUtilisateurMouseAdapter(this, utilisateurs));
 		btnAjouter = new JButton(AjouterUtilisateurAction.getInstance(this));
 		btnModifier = new JButton(ModifierUtilisateurAction.getInstance(this));
 		btnSupprimer = new JButton(SupprimerUtilisateurAction.getInstance(this));
-		filtre = new JTextFieldHint();
+		filtre = utilisateurs.getTexte();
+		filtre.getDocument().addDocumentListener(new FiltrerUtilisateurAction(utilisateurs));
 		filtre.setHint(AIDE_FILTRE);
 
+		utilisateurs.setPreferredSize(new Dimension(300, 300));
+		
 		GBC gbc = new GBC(c);
 		gbc.setPosition(0, 0).ajouter(new JLabel("Filtre :"));
 		gbc.reset().avancer().setFill(GBC.BOTH).setWidth(2).ajouter(filtre);
@@ -56,6 +61,8 @@ public class GestionUtilisateurs extends JDialog {
 		
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		pack();
+//		setSize(300, 300);
+//		setMinimumSize(new Dimension(300, 300));
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -107,14 +114,14 @@ public class GestionUtilisateurs extends JDialog {
 	/**
 	 * @return Le filtre
 	 */
-	public JTextFieldHint getFiltre() {
+	public JTexteFiltre<Utilisateur> getFiltre() {
 		return filtre;
 	}
 
 	/**
 	 * @param filtre Le nouveau filtre
 	 */
-	public void setFiltre(JTextFieldHint filtre) {
+	public void setFiltre(JTexteFiltre<Utilisateur> filtre) {
 		this.filtre = filtre;
 	}
 

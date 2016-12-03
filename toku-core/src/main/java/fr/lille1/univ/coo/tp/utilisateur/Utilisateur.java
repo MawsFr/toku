@@ -61,7 +61,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	}
 	
 	public Utilisateur(Role role, String pseudo, String motDePasse, String nom, String prenom, String avatar) {
-//		this.role = role;
+		this.role = role;
 		this.avatar = avatar;
 		this.pseudo = pseudo;
 		this.nom = nom;
@@ -69,12 +69,6 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 		this.motDePasse = motDePasse;
 	}
 	
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getId()
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getId()
-	 */
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getId()
 	 */
@@ -95,23 +89,11 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getAvatar()
 	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getAvatar()
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getAvatar()
-	 */
 	@Override
 	public String getAvatar() {
 		return avatar;
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setAvatar(java.lang.String)
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setAvatar(java.lang.String)
-	 */
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setAvatar(java.lang.String)
 	 */
@@ -122,9 +104,6 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	}
 
 	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getRole()
-	 */
-	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getRole()
 	 */
 	@Override
@@ -132,9 +111,6 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 		return role;
 	}
 	
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setRole(fr.lille1.univ.coo.tp.role.Role)
-	 */
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setRole(fr.lille1.univ.coo.tp.role.IRole)
 	 */
@@ -147,23 +123,11 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getPseudo()
 	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getPseudo()
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getPseudo()
-	 */
 	@Override
 	public String getPseudo() {
 		return pseudo;
 	}
 	
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setPseudo(java.lang.String)
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setPseudo(java.lang.String)
-	 */
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setPseudo(java.lang.String)
 	 */
@@ -176,23 +140,11 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getNom()
 	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getNom()
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getNom()
-	 */
 	@Override
 	public String getNom() {
 		return nom;
 	}
 	
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setNom(java.lang.String)
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setNom(java.lang.String)
-	 */
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setNom(java.lang.String)
 	 */
@@ -205,23 +157,11 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getPrenom()
 	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getPrenom()
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getPrenom()
-	 */
 	@Override
 	public String getPrenom() {
 		return prenom;
 	}
 	
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setPrenom(java.lang.String)
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setPrenom(java.lang.String)
-	 */
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setPrenom(java.lang.String)
 	 */
@@ -234,23 +174,11 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getMotDePasse()
 	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getMotDePasse()
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getMotDePasse()
-	 */
 	@Override
 	public String getMotDePasse() {
 		return motDePasse;
 	}
 	
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setMotDePasse(java.lang.String)
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setMotDePasse(java.lang.String)
-	 */
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setMotDePasse(java.lang.String)
 	 */
@@ -261,9 +189,6 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	}
 
 	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getAmis()
-	 */
-	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getAmis()
 	 */
 	@Override
@@ -271,9 +196,6 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 		return amis;
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setAmis(fr.lille1.univ.coo.tp.utilisateur.IObservableList)
-	 */
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setAmis(fr.lille1.univ.coo.tp.utilisateur.IObservableList)
 	 */
@@ -286,9 +208,6 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	
 
 	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getDiscussions()
-	 */
-	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getDiscussions()
 	 */
 	@Override
@@ -296,9 +215,6 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 		return discussions;
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setDiscussions(fr.lille1.univ.coo.tp.utilisateur.IObservableList)
-	 */
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setDiscussions(fr.lille1.univ.coo.tp.utilisateur.IObservableList)
 	 */

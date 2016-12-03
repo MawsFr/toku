@@ -94,7 +94,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 						type = field.get(objet).getClass();
 					} else if (field.isAnnotationPresent(PlusieursAUn.class)) {
 						type = field.getAnnotation(PlusieursAUn.class).sonType();
-						
+
 					}
 					Field idField = ReflectionUtils.trouverChampsId(type);
 					idField.setAccessible(true);
@@ -118,8 +118,8 @@ public class DAOGenerique<T extends IObjetDomaine> {
 			idField.setAccessible(true);
 			idField.set(objet, id);
 			idField.setAccessible(accessible);
-			references.enregistrer(classe, id, objet);
 			connexion.commit();
+			references.enregistrer(classe, id, objet);
 		} catch (SQLException e) {
 			try {
 				connexion.rollback();
@@ -160,8 +160,8 @@ public class DAOGenerique<T extends IObjetDomaine> {
 			ps = creerRequetePreparee(connexion, rb.suppression(champsListe), false, null, null, champsListe, valeurs);
 			connexion.setAutoCommit(false);
 			ps.executeUpdate();
-			references.supprimer(classe, id);
 			connexion.commit();
+			references.supprimer(classe, id);
 		} catch (SQLException e) {
 			try {
 				connexion.rollback();
@@ -198,13 +198,13 @@ public class DAOGenerique<T extends IObjetDomaine> {
 	/**
 	 * Met a jour les champs d'un objet
 	 * 
-	 * @param personne
+	 * @param objet
 	 *            L'objet
 	 * @param champs
 	 *            Les champs a mettre a jour
 	 * @throws DAOException
 	 */
-	public void modifier(final T personne, Set<String> champs) throws DAOException {
+	public void modifier(final T objet, Set<String> champs) throws DAOException {
 		try {
 			Map<String, Object> clauseSet = new HashMap<>();
 			Map<String, Object> clauseWhere = new HashMap<>();
@@ -214,7 +214,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 				boolean accessible = field.isAccessible();
 				field.setAccessible(true);
 				if (field.isAnnotationPresent(Colonne.class)) {
-					clauseSet.put(champ, field.get(personne));
+					clauseSet.put(ReflectionUtils.getNomColonne(field), field.get(objet));
 				}
 				field.setAccessible(accessible);
 			}
@@ -222,7 +222,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 			Field idChamps = ReflectionUtils.trouverChampsId(classe);
 			boolean accessible = idChamps.isAccessible();
 			idChamps.setAccessible(true);
-			clauseWhere.put(idChamps.getName(), idChamps.get(personne));
+			clauseWhere.put(idChamps.getName(), idChamps.get(objet));
 			idChamps.setAccessible(accessible);
 
 			modifier(clauseSet, clauseWhere);
@@ -368,6 +368,54 @@ public class DAOGenerique<T extends IObjetDomaine> {
 		return elements;
 	}
 
+	public Object rechercherUneProprieteUnSeul(String nomPropriete, final Map<String, Object> clauseWhere) throws DAOException {
+		List<String> props = new ArrayList<>();
+		props.add(nomPropriete);
+		return rechercherDesProprietesUnSeul(props, clauseWhere).get(nomPropriete);
+	}
+
+	/**
+	 * Va rechercher les propriete d'un seul objet dans la base
+	 * @param nomPropriete Les propriété à récupérer
+	 * @param clauseWhere La condition que l'objet doit respecter
+	 * @return Une map nom de la propriete -> la valeur
+	 * @throws DAOException
+	 */
+	public Map<String, Object> rechercherDesProprietesUnSeul(final List<String> nomProprietes, final Map<String, Object> clauseWhere) throws DAOException {
+		PreparedStatement ps = null;
+		ResultSet resultat = null;
+		final List<String> proprietes = new ArrayList<>(clauseWhere.keySet());
+		final Map<String, Object> elements = new HashMap<>();
+		try {
+			ps = creerRequetePreparee(connexion, rb.rechercherDesProprietes(nomProprietes, proprietes), false, null, null, proprietes,
+					clauseWhere);
+			resultat = ps.executeQuery();
+			if(resultat.next()) {
+				for(String nomPropriete : nomProprietes) {
+					elements.put(nomPropriete, resultat.getObject(nomPropriete));
+				}
+			} else {
+				throw new DAOException("Aucun résultat correspondant au conditions !");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e);
+		} finally {
+			try {
+				if (resultat != null) {
+					resultat.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (SQLException e) {
+				throw new DAOException(e);
+			}
+		}
+		return elements;
+	}
+
 	// TODO : A factoriser
 	@SuppressWarnings("unchecked")
 	public T rechercherUnSeulParProprietes(final Map<String, Object> clauseWhere) throws DAOException {
@@ -450,7 +498,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 		}
 		return elements;
 	}
-	
+
 	/**
 	 * Initialise la requete preparee basee sur la connexion passee en argument,
 	 * avec la requete SQL et les objets donnes.
@@ -561,7 +609,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 								colonne = ReflectionUtils.trouverId(sonType);
 								Object valeur = resultat.getObject(saCle);
 
-								Factory<T> plusieursAUnFactory = new PlusieursAUnFactory<T>(champ.getType(), colonne,
+								Factory<T> plusieursAUnFactory = new PlusieursAUnFactory<T>(sonType, colonne,
 										valeur);
 								creerProxy(objet, champ, plusieursAUnFactory);
 							} else if (champ.isAnnotationPresent(UnAPlusieurs.class)) {

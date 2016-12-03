@@ -11,6 +11,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 
 import fr.lille1.univ.coo.tp.Application;
+import fr.lille1.univ.coo.tp.controlleurs.accueil.CreerGroupeAction;
+import fr.lille1.univ.coo.tp.controlleurs.accueil.RechercherAmisAction;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.vue.FenetrePrincipale;
 import fr.lille1.univ.coo.tp.vue.composants.GBC;
@@ -18,6 +20,9 @@ import fr.lille1.univ.coo.tp.vue.discussion.Avatar;
 
 public class PanneauAccueil extends JPanel {
 	private static final long serialVersionUID = 1L;
+	
+	public static final String LBL_RECHERCHER_AMIS = "+ Amis";
+	public static final String LBL_AJOUTER_GROUPES = "+ Groupes";
 	
 	public static final String ONGLET_GROUPES = "Groupes";
 	public static final String ONGLET_AMIS = "Amis";
@@ -54,8 +59,8 @@ public class PanneauAccueil extends JPanel {
 		barreOutilsPrincipale.setFloatable(false);
 		barreOutilsPrincipale.setRollover(true);
 		
-		btnAjouterAmi = new JButton("+ Amis");
-		btnAjouterGroupe = new JButton("+ Groupes");
+		btnAjouterAmi = new JButton(new RechercherAmisAction(this));
+		btnAjouterGroupe = new JButton(new CreerGroupeAction(this));
 		barreOutilsPrincipale.add(btnAjouterAmi);
 		barreOutilsPrincipale.addSeparator();
 		barreOutilsPrincipale.add(btnAjouterGroupe);

@@ -18,6 +18,10 @@ public class ConnexionValideur extends Valideur<Utilisateur> implements IConnexi
 			throw new ValidationException("Veuillez saisir un pseudonyme");
 		}
 		
+		if(!utilisateur.getPseudo().matches("^[a-zA-Z]+[a-zA-Z0-9]*$")) {
+			throw new ValidationException("Le pseudo ne respecte pas le bon pattern (commencer par une lettre puis n'importe quelles lettres ou chiffres)");
+		}
+		
 		if(utilisateur.getMotDePasse() == null) {
 			throw new ValidationException("Le mot de passe ne peut pas être null");
 		}

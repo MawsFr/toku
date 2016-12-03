@@ -2,7 +2,6 @@ package fr.lille1.univ.coo.tp.vue.utilisateurs;
 
 import javax.swing.ListCellRenderer;
 
-import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
 public class JAmisList extends JUtilisateurList {
@@ -13,8 +12,8 @@ public class JAmisList extends JUtilisateurList {
 		super();
 	}
 
-	public JAmisList(IObservableList<Utilisateur> iObservableList) {
-		super(iObservableList);
+	public JAmisList(Utilisateur utilisateur ) {
+		super(utilisateur.getAmis());
 	}
 
 	@Override

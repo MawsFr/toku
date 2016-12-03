@@ -3,8 +3,10 @@ package fr.lille1.univ.coo.tp.controlleurs.gestion.utilisateur;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.JOptionPane;
 
 import fr.lille1.univ.coo.tp.service.Service;
+import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.FenetreProfil;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.GestionUtilisateurs;
@@ -31,9 +33,15 @@ public class ModifierUtilisateurAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		Utilisateur selectionne = gestionUtilisateurs.getUtilisateurs().getElementSelectionne();
-		final String mdp = Service.getAdministrateurService().getMotDePasse(selectionne);
-		selectionne.setMotDePasse(mdp);
-		new FenetreProfil(gestionUtilisateurs, FenetreProfil.ModeEdition.MODIF, selectionne);
+		String mdp = null;
+		try {
+			mdp = Service.getAdministrateurService().getMotDePasse(selectionne);
+			new FenetreProfil(gestionUtilisateurs, FenetreProfil.ModeEdition.MODIF, selectionne, mdp);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(gestionUtilisateurs, "Erreur lors de la récupération du mot de passe de l'utilisateur " + selectionne.getId(), "Erreur", JOptionPane.ERROR_MESSAGE);
+		}
+		
 	}
 
 }

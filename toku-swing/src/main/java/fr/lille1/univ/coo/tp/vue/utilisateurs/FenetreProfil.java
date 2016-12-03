@@ -24,7 +24,9 @@ import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
+import fr.lille1.univ.coo.tp.utilisateur.UtilisateurValideur;
 import fr.lille1.univ.coo.tp.utils.OutilsSwing;
+import fr.lille1.univ.coo.tp.validateur.ValidationException;
 import fr.lille1.univ.coo.tp.vue.composants.GBC;
 import fr.lille1.univ.coo.tp.vue.composants.JShowablePaswordTextFIeld;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Annulable;
@@ -37,41 +39,46 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 	public static enum ModeEdition {
 		AJOUT, MODIF;
 	}
-	
-	public static final String BTN_MODIFIER = "Créer";
-	
+
+	public static final String BTN_CREER = "Créer";
+	public static final String BTN_MODIFIER = "Modifier";
+
 	public static final String BTN_OK_ET_AUTRE = "Créer un autre utilisateur";
 	public static final String BTN_ANNULER = "Annuler";
-	
+
 	public static final String TITRE_AJOUT = "Ajouter un utilisateur";
 	public static final String TITRE_MODIF = "Modifier un profil";
-	
+
 	private GestionUtilisateurs parent;
-	
+
 	private Container c;
 	private Utilisateur utilisateur;
-	
+
 	private JTextField txtPseudo;
 	private JShowablePaswordTextFIeld txtMDP;
 	private JTextField txtNom;
 	private JTextField txtPrenom;
 	private JComboBox<Role> comboRole;
-	
+
 	private JButton btnOk;
 	private JCheckBox okEtNouveau;
 	private JButton btnAnnuler;
-	
-	public FenetreProfil(GestionUtilisateurs parent, ModeEdition mode, Utilisateur utilisateur) {
+
+	private ModeEdition mode;
+	private String mdp;
+
+	public FenetreProfil(GestionUtilisateurs parent, ModeEdition mode, Utilisateur utilisateur, String mdp) {
 		super(parent, mode == ModeEdition.AJOUT ? TITRE_AJOUT : TITRE_MODIF, ModalityType.APPLICATION_MODAL);
+		this.mode = mode;
 		this.parent = parent;
-		c = this.getContentPane();
 		this.utilisateur = utilisateur;
-		
+		this.mdp = mdp;
+
+		c = this.getContentPane();
 		txtPseudo = new JTextField();
 		txtMDP = new JShowablePaswordTextFIeld();
 		txtNom = new JTextField();
 		txtPrenom = new JTextField();
-//		Service.roleservice
 		List<Role> roles = null;
 		try {
 			roles = new DAOGenerique<Role>(Role.class).rechercherTout();
@@ -80,16 +87,16 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 			e1.printStackTrace();
 		}
 		comboRole = new JComboBox<Role>(roles.toArray(new Role[roles.size()]));
-		
+
 		OutilsSwing.setTaille(150, 20, txtPseudo, txtMDP, txtNom, txtPrenom, comboRole);
-		
-		btnOk = new JButton(new ValiderAction(this, BTN_MODIFIER));
+
+		btnOk = new JButton(new ValiderAction(this, mode == ModeEdition.AJOUT ? BTN_CREER : BTN_MODIFIER));
 		okEtNouveau = new JCheckBox(BTN_OK_ET_AUTRE);
 		btnAnnuler = new JButton(new AnnulerAction(this, BTN_ANNULER));
-		
+
 		c.setLayout(new GridBagLayout());
 		GBC gbc = new GBC(c);
-		
+
 		gbc.setPosition(0, 0).setAnchor(GBC.BASELINE_TRAILING).ajouter(new JLabel("Pseudonyme :"));
 		gbc.avancer().ajouter(txtPseudo);
 		gbc.descendre().reculer().ajouter(new JLabel("Mot de passe :"));
@@ -100,20 +107,21 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 		gbc.avancer().ajouter(txtPrenom);
 		gbc.descendre().reculer().ajouter(new JLabel("Rôle:"));
 		gbc.avancer().ajouter(comboRole);
-		
+
 		gbc.descendre().reculer().ajouter(okEtNouveau);
 		gbc.avancer().ajouter(btnOk);
 		gbc.avancer().ajouter(btnAnnuler);
-		
-		
+
+
 		if(mode == ModeEdition.MODIF) {
 			txtPseudo.setText(utilisateur.getPseudo());
-			txtMDP.getPassword().setText(utilisateur.getMotDePasse());
+//			txtMDP.getPassword().setText(mdp);
 			txtNom.setText(utilisateur.getNom());
 			txtPrenom.setText(utilisateur.getPrenom());
-//			comboRole.setSelectedItem(utilisateur.getRole() - 1);
+			okEtNouveau.setVisible(false);
+			comboRole.setSelectedItem(utilisateur.getRole());
 		}
-		
+
 		try {
 			if(!Service.getUtilisateurService().estAdministrateur(Application.getInstance().getSession().getUtilisateur())) {
 				txtPseudo.setEnabled(false);
@@ -121,7 +129,7 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 		} catch (ServiceException e) {
 			// TODO : Erreur
 		}
-		
+
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.pack();
 		this.setResizable(false);
@@ -129,50 +137,84 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 		this.setVisible(true);
 
 	}
-	
+
 	@Override
 	public void valider() {
-		utilisateur.setPseudo(txtPseudo.getText());
-		utilisateur.setNom(txtNom.getText());
-		utilisateur.setPrenom(txtPrenom.getText());
-		utilisateur.setRole((Role) comboRole.getSelectedItem());
+		UtilisateurValideur valideur = new UtilisateurValideur();
+		String motDePasse;
 		try {
-			utilisateur.setMotDePasse(new CrypteurMD5().crypter(new String(txtMDP.getPassword().getPassword())));
-			parent.getUtilisateurs().ajouter(utilisateur);
-			Service.getAdministrateurService().validerChangements();
-		} catch (CryptageException | ServiceException e) {
+			motDePasse = new String(txtMDP.getPassword().getPassword());
+			switch (mode) {
+			case AJOUT:
+				utilisateur.setPseudo(txtPseudo.getText());
+				utilisateur.setNom(txtNom.getText());
+				utilisateur.setPrenom(txtPrenom.getText());
+				utilisateur.setRole((Role) comboRole.getSelectedItem());
+				utilisateur.setMotDePasse(motDePasse);
+				valideur.valider(utilisateur);
+				utilisateur.setMotDePasse(new CrypteurMD5().crypter(motDePasse));
+				parent.getUtilisateurs().ajouter(utilisateur);
+				Service.getAdministrateurService().validerChangements();
+				if(okEtNouveau.isSelected()) {
+					txtPseudo.setText("");
+					txtMDP.getPassword().setText("");;
+					txtNom.setText("");
+					txtPrenom.setText("");
+					comboRole.setSelectedItem(0);
+				} else {
+					fermer();
+				}
+				break;
+			case MODIF:
+				Utilisateur tmp = new Utilisateur(comboRole.getItemAt(comboRole.getSelectedIndex()), txtPseudo.getText(), motDePasse.isEmpty() ? mdp : motDePasse, txtNom.getText(), txtPrenom.getText(), null);
+				valideur.valider(tmp);
+				if(!utilisateur.getPseudo().equals(txtPseudo.getText())) {
+					utilisateur.setPseudo(txtPseudo.getText());
+				}
+
+				if(!motDePasse.isEmpty() && !mdp.equals(motDePasse)) {
+					utilisateur.setMotDePasse(new CrypteurMD5().crypter(motDePasse));
+				}
+
+				if(!utilisateur.getNom().equals(txtNom.getText())) {
+					utilisateur.setNom(txtNom.getText());
+				}
+
+				if(!utilisateur.getRole().equals(comboRole.getSelectedItem())) {
+					utilisateur.setRole((Role) comboRole.getSelectedItem());
+				}
+				Service.getAdministrateurService().validerChangements();
+				fermer();
+				break;
+			default:
+				break;
+
+			}
+		} catch (CryptageException | ServiceException | ValidationException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(this, "Erreur lors du cryptage du mot de passe !", "Erreur", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
-		if(okEtNouveau.isSelected()) {
-			txtPseudo.setText("");
-			txtMDP.getPassword().setText("");;
-			txtNom.setText("");
-			txtPrenom.setText("");
-			comboRole.setSelectedItem(0);
-		} else {
-			fermer();
-		}
+
 	}
-	
+
 	@Override
 	public void annuler() {
 		fermer();
 	}
-	
+
 	@Override
 	public void fermer() {
 		this.dispose();
 	}
-	
+
 	public JCheckBox getOkEtNouveau() {
 		return okEtNouveau;
 	}
-	
+
 	public JButton getBtnAnnuler() {
 		return btnAnnuler;
 	}
-	
+
 	public JButton getBtnOk() {
 		return btnOk;
 	}
@@ -244,7 +286,7 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 	public void setBtnAnnuler(JButton btnAnnuler) {
 		this.btnAnnuler = btnAnnuler;
 	}
-	
-	
+
+
 
 }

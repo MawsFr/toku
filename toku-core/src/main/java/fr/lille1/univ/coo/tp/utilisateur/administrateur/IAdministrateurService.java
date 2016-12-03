@@ -7,7 +7,7 @@ import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 public interface IAdministrateurService {
 	public Utilisateur creerUtilisateur(String pseudo, String nom, String prenom, Role role, String motDePasse) throws ServiceException;
 	public void validerChangements() throws ServiceException;
-	public String getMotDePasse(Utilisateur selectionne);
+	public String getMotDePasse(Utilisateur selectionne) throws ServiceException;
 
 
 }
