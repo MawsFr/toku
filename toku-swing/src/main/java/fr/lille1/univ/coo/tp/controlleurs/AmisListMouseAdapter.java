@@ -5,7 +5,6 @@ import javax.swing.JOptionPane;
 import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
-import fr.lille1.univ.coo.tp.utilisateur.Amitie;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.FenetrePrincipale;
 import fr.lille1.univ.coo.tp.vue.discussion.FenetreDiscussion;

@@ -1,6 +1,7 @@
 package fr.lille1.univ.coo.tp.service.unitofwork;
 
 import fr.lille1.univ.coo.tp.domain.DomainException;
+import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
@@ -14,9 +15,9 @@ public class ModificationCommiter extends Commiter {
 	 * Modifie une personne dans la BDD.
 	 */
 	@Override
-	public void visit(Utilisateur personne) throws DomainException {
+	public void action(Class<?> classe, IObjetDomaine o) throws DomainException {
 		try {
-			new DAOGenerique<>(Utilisateur.class).modifier(personne, this.parametres);
+			new DAOGenerique<>(classe).modifier(o, this.parametres);
 		} catch (DAOException e) {
 			throw new DomainException(e);
 		}

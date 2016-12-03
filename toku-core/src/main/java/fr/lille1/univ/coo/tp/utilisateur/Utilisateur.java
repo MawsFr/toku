@@ -9,14 +9,12 @@ import fr.lille1.univ.coo.tp.annotations.Transient;
 import fr.lille1.univ.coo.tp.connexions.LocalMysqlConfiguration;
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.discussion.Discussion;
-import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
 import fr.lille1.univ.coo.tp.persistance.GestionnaireConnexion;
 import fr.lille1.univ.coo.tp.role.IRole;
 import fr.lille1.univ.coo.tp.role.Role;
-import fr.lille1.univ.coo.tp.visiteur.Visiteur;
 
 /**
  * Cette classe represente un utilisateur
@@ -81,7 +79,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getId()
 	 */
 	@Override
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	
@@ -89,7 +87,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setId(int)
 	 */
 	@Override
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 		notifierModification("id");
 	}
@@ -310,30 +308,8 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	}
 
 	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setId(java.lang.Integer)
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setId(java.lang.Integer)
-	 */
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#accept(fr.lille1.univ.coo.tp.visiteur.Visiteur)
 	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#accept(fr.lille1.univ.coo.tp.visiteur.Visiteur)
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#accept(fr.lille1.univ.coo.tp.visiteur.Visiteur)
-	 */
-	@Override
-	public void accept(Visiteur visitor) throws DomainException {
-		visitor.visit(this);
-	}
-	
 	public static void main(String[] args) throws DAOException {
 		LocalMysqlConfiguration c = new LocalMysqlConfiguration();
 		c.setMdp("root");

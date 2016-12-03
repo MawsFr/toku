@@ -9,6 +9,7 @@ import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.observateur.ObjetDomaineObservateur;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
+import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
 
 /**
  * Cette classe represente une transaction. Elle garde en memoire la liste des
@@ -24,14 +25,17 @@ public class UnitOfWork implements ObjetDomaineObservateur {
 	private Map<IObjetDomaine, Set<String>> modifies;
 	private Set<IObjetDomaine> crees;
 	private Set<IObjetDomaine> supprimes;
+	private Class<?> classe;
 
 	/**
 	 * Constructeur par defaut.
+	 * @param classe 
 	 */
-	private UnitOfWork() {
+	private UnitOfWork(Class<?> classe) {
 		modifies = new HashMap<>();
 		crees = new HashSet<>();
 		supprimes = new HashSet<>();
+		this.classe = classe;
 	}
 
 	public static UnitOfWork getInstance(Class<?> classe) {
@@ -39,7 +43,7 @@ public class UnitOfWork implements ObjetDomaineObservateur {
 			instances = new HashMap<>();
 		}
 		if (!instances.containsKey(classe)) {
-			instances.put(classe, new UnitOfWork());
+			instances.put(classe, new UnitOfWork(classe));
 		}
 
 		return instances.get(classe);
@@ -56,20 +60,20 @@ public class UnitOfWork implements ObjetDomaineObservateur {
 		ModificationCommiter mc = new ModificationCommiter();
 		for (Map.Entry<IObjetDomaine, Set<String>> o : modifies.entrySet()) {
 			mc.setParametres(o.getValue());
-			mc.visit(o.getKey());
+			mc.action(classe, o.getKey());
 			mc.supprimerParametres();
 		}
 		modifies.clear();
 
 		CreationCommiter cc = new CreationCommiter();
 		for (IObjetDomaine o : crees) {
-			cc.visit(o);
+			cc.action(classe, o);
 		}
 		crees.clear();
 
 		SuppressionCommiter sc = new SuppressionCommiter();
 		for (IObjetDomaine o : supprimes) {
-			sc.visit(o);
+			sc.action(classe, o);
 		}
 		supprimes.clear();
 	}

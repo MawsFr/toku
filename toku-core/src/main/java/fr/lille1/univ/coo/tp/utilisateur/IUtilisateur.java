@@ -4,7 +4,6 @@ import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.role.IRole;
-import fr.lille1.univ.coo.tp.visiteur.Visiteur;
 
 @Table("utilisateur")
 public interface IUtilisateur {
@@ -12,12 +11,12 @@ public interface IUtilisateur {
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getId()
 	 */
-	int getId();
+	Integer getId();
 
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setId(int)
 	 */
-	void setId(int id);
+	void setId(Integer id);
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#getAvatar()
 	 */
@@ -100,17 +99,5 @@ public interface IUtilisateur {
 	 */
 	void setDiscussions(IObservableList<Discussion> discussions);
 
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#setId(java.lang.Integer)
-	 */
-	void setId(Integer id);
-
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#accept(fr.lille1.univ.coo.tp.visiteur.Visiteur)
-	 */
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IRole#accept(fr.lille1.univ.coo.tp.visiteur.Visiteur)
-	 */
-	void accept(Visiteur visitor) throws DomainException;
 
 }

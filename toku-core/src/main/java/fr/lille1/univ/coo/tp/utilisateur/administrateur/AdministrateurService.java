@@ -36,23 +36,9 @@ public class AdministrateurService implements IAdministrateurService {
 	}
 
 	@Override
-	public void modifierPseudo(int idUtilisateur, String nouveauPseudo) {
-
-	}
-
-	@Override
-	public void modifierMotDePasse(int idUtilisateur, String nouveauMdp) {
-
-	}
-
-	@Override
-	public void modifierNom(int idUtilisateur, String nouveauNom) {
-
-	}
-
-	@Override
-	public void modifierPrenom(int idUtilisateur, String nouveauPrenom) {
-
+	public String getMotDePasse(Utilisateur selectionne) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -64,6 +50,8 @@ public class AdministrateurService implements IAdministrateurService {
 			throw new ServiceException(e);
 		}
 	}
+
+	
 	
 	
 

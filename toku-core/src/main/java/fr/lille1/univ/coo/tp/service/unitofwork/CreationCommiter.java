@@ -1,6 +1,7 @@
 package fr.lille1.univ.coo.tp.service.unitofwork;
 
 import fr.lille1.univ.coo.tp.domain.DomainException;
+import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
@@ -15,11 +16,12 @@ public class CreationCommiter extends Commiter {
 
 	/**
 	 * Cree un bureau dans la BDD.
+	 * @throws DomainException 
 	 */
 	@Override
-	public void visit(Utilisateur personne) throws DomainException {
+	public void action(Class<?> classe, IObjetDomaine o) throws DomainException {
 		try {
-		new DAOGenerique<>(Utilisateur.class).creer(personne);
+		new DAOGenerique<>(classe).creer(o);
 		} catch (DAOException e) {
 			throw new DomainException(e);
 		}

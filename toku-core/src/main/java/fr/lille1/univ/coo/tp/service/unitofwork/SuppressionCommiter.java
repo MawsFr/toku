@@ -1,6 +1,7 @@
 package fr.lille1.univ.coo.tp.service.unitofwork;
 
 import fr.lille1.univ.coo.tp.domain.DomainException;
+import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
@@ -18,9 +19,9 @@ public class SuppressionCommiter extends Commiter {
 	 * @throws DAOException Erreur lors de la suppression
 	 */
 	@Override
-	public void visit(Utilisateur personne) throws DomainException {
+	public void action(Class<?> classe, IObjetDomaine o) throws DomainException {
 		try {
-			new DAOGenerique<>(Utilisateur.class).supprimer(personne.getId());
+			new DAOGenerique<>(Utilisateur.class).supprimer(o.getId());
 		} catch (DAOException e) {
 			throw new DomainException(e);
 		}

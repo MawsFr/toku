@@ -68,10 +68,11 @@ CREATE INDEX `fk_role_idx` ON `toku`.`projet_utilisateur` (`id_role` ASC);
 DROP TABLE IF EXISTS `toku`.`projet_amitie` ;
 
 CREATE TABLE IF NOT EXISTS `toku`.`projet_amitie` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `id_utilisateur` INT NOT NULL,
   `id_ami` INT NOT NULL,
   `etat` INT NOT NULL,
-  PRIMARY KEY (`id_utilisateur`, `id_ami`),
+  PRIMARY KEY (`id`, `id_utilisateur`, `id_ami`),
   CONSTRAINT `fk_utilisateur_amis_id_utilisateur`
     FOREIGN KEY (`id_utilisateur`)
     REFERENCES `toku`.`projet_utilisateur` (`id`)
@@ -121,10 +122,11 @@ CREATE INDEX `fk_groupe_utilisateur_id_moderateur_idx` ON `toku`.`projet_discuss
 DROP TABLE IF EXISTS `toku`.`projet_utilisateur_discussion` ;
 
 CREATE TABLE IF NOT EXISTS `toku`.`projet_utilisateur_discussion` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `id_utilisateur` INT NOT NULL,
   `id_discussion` INT NOT NULL,
   `etat` INT NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id_utilisateur`, `id_discussion`),
+  PRIMARY KEY (`id`, `id_utilisateur`, `id_discussion`),
   CONSTRAINT `fk_discussion_utilisateur_id_discussion`
     FOREIGN KEY (`id_discussion`)
     REFERENCES `toku`.`projet_discussion` (`id`)
@@ -185,7 +187,12 @@ INSERT INTO projet_role (id, nom) VALUES (2, "Administrateur");
 -- Creation du user admin
 INSERT INTO projet_utilisateur (id_role, pseudo, mot_de_passe, nom, prenom) VALUES (2, "admin", "21232f297a57a5a743894a0e4a801fc3", "Root", "Administrateur");
 
-INSERT INTO projet_amitie (id_utilisateur, id_ami, etat) VALUES ((SELECT id FROM projet_utilisateur WHERE pseudo = "admin"), (SELECT id FROM projet_utilisateur WHERE pseudo = "admin"), 3);
+-- INSERT INTO projet_amitie (id_utilisateur, id_ami, etat) VALUES ((SELECT id FROM projet_utilisateur WHERE pseudo = "admin"), (SELECT id FROM projet_utilisateur WHERE pseudo = "admin"), 3);
+
+-- Creation de dummy users
+--INSERT INTO projet_utilisateur (id_role, pseudo, mot_de_passe, nom, prenom) VALUES (1, "maws", "21232f297a57a5a743894a0e4a801fc3", "Nez", "Mustapha");
+--INSERT INTO projet_utilisateur (id_role, pseudo, mot_de_passe, nom, prenom) VALUES (1, "knew", "21232f297a57a5a743894a0e4a801fc3", "Nez", "Khalil");
+--INSERT INTO projet_utilisateur (id_role, pseudo, mot_de_passe, nom, prenom) VALUES (1, "aypub", "21232f297a57a5a743894a0e4a801fc3", "Nez", "Ayoub");
 
 SET SQL_MODE = '';
 GRANT USAGE ON *.* TO toku;
@@ -197,7 +204,6 @@ GRANT ALL ON `toku`.* TO 'toku';
 GRANT SELECT ON TABLE `toku`.* TO 'toku';
 GRANT SELECT, INSERT, TRIGGER ON TABLE `toku`.* TO 'toku';
 GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE `toku`.* TO 'toku';
-GRANT EXECUTE ON ROUTINE `toku`.* TO 'toku';
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

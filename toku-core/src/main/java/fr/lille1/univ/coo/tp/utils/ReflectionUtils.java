@@ -6,6 +6,7 @@ import java.util.Set;
 
 import fr.lille1.univ.coo.tp.annotations.Colonne;
 import fr.lille1.univ.coo.tp.annotations.Id;
+import fr.lille1.univ.coo.tp.annotations.PlusieursAPlusieurs;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.annotations.UnAPlusieurs;
@@ -73,21 +74,21 @@ public class ReflectionUtils {
 		return null;
 	}
 	
-	/**
-	 * Renvoie les nom des colonnes de la table
-	 * @param classe La classe mappee a la table
-	 * @return La liste des colonnes
-	 */
-	public static Set<String> getNomsColonnes(Class<?> classe) {
-		Set<String> champs = new HashSet<>();
-		for(Field champ : classe.getDeclaredFields()) {
-			if(champ.isAnnotationPresent(PlusieursAUn.class)) {
-				continue;
-			}
-			champs.add(getNomColonne(champ));
-		}
-		return champs;
-	}
+//	/**
+//	 * Renvoie les nom des colonnes de la table
+//	 * @param classe La classe mappee a la table
+//	 * @return La liste des colonnes
+//	 */
+//	public static Set<String> getNomsColonnes(Class<?> classe) {
+//		Set<String> champs = new HashSet<>();
+//		for(Field champ : classe.getDeclaredFields()) {
+//			if(champ.isAnnotationPresent(PlusieursAUn.class) || champ.isAnnotationPresent(PlusieursAPlusieurs.class) || champ.isAnnotationPresent(UnAUn.class) || champ.isAnnotationPresent(UnAPlusieurs.class)) {
+//				continue;
+//			}
+//			champs.add(getNomColonne(champ));
+//		}
+//		return champs;
+//	}
 	
 	/**
 	 * Renvoir le nom de la colonne correspondant a l'attribut

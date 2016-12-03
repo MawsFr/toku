@@ -1,15 +1,17 @@
 package fr.lille1.univ.coo.tp.discussion;
 
 import fr.lille1.univ.coo.tp.annotations.Colonne;
+import fr.lille1.univ.coo.tp.annotations.Id;
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.annotations.UnAUn;
-import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
-import fr.lille1.univ.coo.tp.visiteur.Visiteur;
 
 @Table("utilisateur_discussion")
 public class AffectationDiscussion extends ObjetDomaine {
+	
+	@Id
+	private Integer id;
 	
 	@UnAUn(sonType=Utilisateur.class, saCle = "id_utilisateur")
 	private Utilisateur utilisateur;
@@ -47,8 +49,8 @@ public class AffectationDiscussion extends ObjetDomaine {
 	}
 
 	@Override
-	public void accept(Visiteur visitor) throws DomainException {
-		visitor.visit(this);
+	public Integer getId() {
+		return utilisateur.getId();
 	}
 
 }

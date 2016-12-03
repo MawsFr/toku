@@ -6,7 +6,6 @@ import fr.lille1.univ.coo.tp.role.IRole;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
-import fr.lille1.univ.coo.tp.visiteur.Visiteur;
 
 @Table("discussion")
 public interface IDiscussion {
@@ -50,6 +49,4 @@ public interface IDiscussion {
 	 * @param membres Le nouveau membres
 	 */
 	void setMembres(IObservableList<Utilisateur> membres);
-
-	void accept(Visiteur visitor) throws DomainException;
 }

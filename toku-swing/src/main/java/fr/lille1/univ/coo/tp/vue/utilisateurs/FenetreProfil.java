@@ -38,7 +38,8 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 		AJOUT, MODIF;
 	}
 	
-	public static final String BTN_OK = "Créer";
+	public static final String BTN_MODIFIER = "Créer";
+	
 	public static final String BTN_OK_ET_AUTRE = "Créer un autre utilisateur";
 	public static final String BTN_ANNULER = "Annuler";
 	
@@ -82,7 +83,7 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 		
 		OutilsSwing.setTaille(150, 20, txtPseudo, txtMDP, txtNom, txtPrenom, comboRole);
 		
-		btnOk = new JButton(new ValiderAction(this, BTN_OK));
+		btnOk = new JButton(new ValiderAction(this, BTN_MODIFIER));
 		okEtNouveau = new JCheckBox(BTN_OK_ET_AUTRE);
 		btnAnnuler = new JButton(new AnnulerAction(this, BTN_ANNULER));
 		

@@ -3,9 +3,7 @@ package fr.lille1.univ.coo.tp.utilisateur;
 import fr.lille1.univ.coo.tp.annotations.Colonne;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
-import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
-import fr.lille1.univ.coo.tp.visiteur.Visiteur;
 
 @Table("amitie")
 public class Amitie extends ObjetDomaine {
@@ -49,8 +47,9 @@ public class Amitie extends ObjetDomaine {
 	}
 
 	@Override
-	public void accept(Visiteur visitor) throws DomainException {
-		visitor.visit(this);
+	public Integer getId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

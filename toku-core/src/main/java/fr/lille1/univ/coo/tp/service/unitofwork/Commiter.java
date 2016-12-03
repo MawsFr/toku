@@ -2,14 +2,17 @@ package fr.lille1.univ.coo.tp.service.unitofwork;
 
 import java.util.Set;
 
-import fr.lille1.univ.coo.tp.visiteur.Visiteur;
+import fr.lille1.univ.coo.tp.domain.DomainException;
+import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 
 /**
  * Cette classe permet de valider les changements sur les objet du domaine et
  * donc de repercuter ces changements dans la BDD.
  */
-public abstract class Commiter extends Visiteur {
+public abstract class Commiter {
 	protected Set<String> parametres;
+	
+	public abstract void action(Class<?> classe, IObjetDomaine o) throws DomainException;
 
 	/**
 	 * Retourne les parametre du commiter. Dans notre cas nous l'utilisons pour

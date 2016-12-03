@@ -12,7 +12,6 @@ import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
-import fr.lille1.univ.coo.tp.visiteur.Visiteur;
 
 /**
  * Cette classe represente un groupe
@@ -117,14 +116,6 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	@Override
 	public void setMembres(IObservableList<Utilisateur> membres) {
 		this.membres = membres;
-	}
-
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#accept(fr.lille1.univ.coo.tp.visiteur.Visiteur)
-	 */
-	@Override
-	public void accept(Visiteur visitor) throws DomainException {
-		visitor.visit(this);
 	}
 
 	/**
