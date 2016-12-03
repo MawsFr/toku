@@ -48,14 +48,14 @@ public class GestionUtilisateurs extends JDialog {
 		filtre = utilisateurs.getTexte();
 		filtre.getDocument().addDocumentListener(new FiltrerUtilisateurAction(utilisateurs));
 		filtre.setHint(AIDE_FILTRE);
+		JScrollPane scroll = new JScrollPane(utilisateurs);
+		scroll.setPreferredSize(new Dimension(300, 400));
 
-		utilisateurs.setPreferredSize(new Dimension(300, 300));
-		
 		GBC gbc = new GBC(c);
-		gbc.setPosition(0, 0).ajouter(new JLabel("Filtre :"));
-		gbc.reset().avancer().setFill(GBC.BOTH).setWidth(2).ajouter(filtre);
-		gbc.reset().setPosition(0, 0).descendre().setWidth(3).setHeight(4).ajouter(new JScrollPane(utilisateurs));
-		gbc.reset().avancer().avancer().avancer().setFill(GBC.BOTH).ajouter(btnAjouter);
+		gbc.setPosition(0, 0).setWidth(1).ajouter(new JLabel("Filtre :"));
+		gbc.reset().avancer().setFill(GBC.BOTH).setWidth(3).ajouter(filtre);
+		gbc.reset().setPosition(0, 0).descendre().setWidth(4).setHeight(3).ajouter(scroll);
+		gbc.reset().avancer().avancer().avancer().avancer().setAnchor(GBC.PAGE_START).setFill(GBC.HORIZONTAL).ajouter(btnAjouter);
 		gbc.descendre().ajouter(btnModifier);
 		gbc.descendre().ajouter(btnSupprimer);
 		

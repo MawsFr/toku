@@ -161,6 +161,8 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 					txtNom.setText("");
 					txtPrenom.setText("");
 					comboRole.setSelectedItem(0);
+					
+					utilisateur = new Utilisateur();
 				} else {
 					fermer();
 				}

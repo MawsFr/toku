@@ -33,7 +33,7 @@ public class UtilisateurListCellRenderer extends JLabel implements ObservableLis
 		Avatar avatar = new Avatar(); // TODO : Faire en sorte qu'on puisse redimensionner l'avatar
 //		setSize(20, 20);
 		avatar.setImage(value.getAvatar());
-		String utilisateur = value.getPseudo() + (value == Application.getInstance().getSession().getUtilisateur() ? " (Vous)" : "");
+		String utilisateur = value.getPseudo() + "(" + value.getNom() + " " + value.getPrenom() + ")" +(value == Application.getInstance().getSession().getUtilisateur() ? " (Vous)" : "");
 		setIcon(avatar);
 		setText(utilisateur);
 		setFont(list.getFont());

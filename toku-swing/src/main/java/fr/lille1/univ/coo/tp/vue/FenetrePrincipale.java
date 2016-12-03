@@ -4,11 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import fr.lille1.univ.coo.tp.Application;
+import fr.lille1.univ.coo.tp.persistance.DAOException;
+import fr.lille1.univ.coo.tp.persistance.GestionnaireConnexion;
 import fr.lille1.univ.coo.tp.utils.Constantes;
 import fr.lille1.univ.coo.tp.utils.OutilsSwing;
 
@@ -59,6 +63,19 @@ public class FenetrePrincipale {
 //		fenetre.setPreferredSize(fenetre.getMinimumSize());
 		fenetre.setLocationRelativeTo(null);
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		fenetre.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				super.windowClosing(e);
+				try {
+					GestionnaireConnexion.fermerConnexion();
+					System.out.println("Connexion fermée !");
+				} catch (DAOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		fenetre.setVisible(true);
 	}
 

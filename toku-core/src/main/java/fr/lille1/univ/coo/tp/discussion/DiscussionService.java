@@ -30,6 +30,8 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 		discussion.setModerateur(moderateur);
 		discussion.setLeType(type);
 		
+		moderateur.getDiscussions().ajouter(discussion);
+		
 		ajouterUtilisateur(discussion, moderateur);
 		
 		return discussion;

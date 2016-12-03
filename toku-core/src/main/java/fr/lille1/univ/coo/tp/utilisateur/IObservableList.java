@@ -6,9 +6,9 @@ import fr.lille1.univ.coo.tp.observateur.Observateur;
 
 public interface IObservableList<T> {
 
-	void ajouter(T utilisateur);
+	void ajouter(T t);
 
-	void supprimer(T utilisateur);
+	void supprimer(T t);
 
 	/**
 	 * @return Le utilisateurs
@@ -16,10 +16,10 @@ public interface IObservableList<T> {
 	List<T> getListe();
 
 	/**
-	 * @param utilisateurs Le nouveau utilisateurs
+	 * @param liste Le nouveau utilisateurs
 	 */
-	void setListe(List<T> utilisateurs);
+	void setListe(List<T> liste);
 
-	void ajouterObservateur(Observateur<T> utilisateurListModel);
+	void ajouterObservateur(Observateur<T> observateur);
 
 }
