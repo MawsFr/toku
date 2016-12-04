@@ -22,7 +22,7 @@ public class CritereEGALE extends Critere {
 	}
 
 	@Override
-	public String accept(RequeteVisitor requeteVisitor) {
+	public String accept(RequeteParser requeteVisitor) {
 		return requeteVisitor.visit(this);
 	}
 }

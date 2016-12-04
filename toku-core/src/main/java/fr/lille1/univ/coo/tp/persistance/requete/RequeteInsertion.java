@@ -25,7 +25,7 @@ public class RequeteInsertion extends Requete {
 	}
 
 	@Override
-	public void accept(RequeteVisitor requeteVisitor) {
+	public void accept(RequeteParser requeteVisitor) {
 		requeteVisitor.visit(this);
 	}
 }

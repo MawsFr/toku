@@ -27,7 +27,7 @@ public abstract class Requete {
 	}
 	
 	public static void main(String[] args) {
-		RequeteVisitor v = new RequeteVisitor();
+		RequeteParser v = new RequeteParser();
 		CritereEGALE nom = new CritereEGALE("nom");
 		CritereEGALE prenom = new CritereEGALE("prenom");
 		CritereEGALE pseudo = new CritereEGALE("pseudo");
@@ -40,7 +40,7 @@ public abstract class Requete {
 		System.out.println(v.visit(Requete.selectionner(Utilisateur.class).where(et)));
 	}
 
-	public abstract void accept(RequeteVisitor requeteVisitor);
+	public abstract void accept(RequeteParser requeteVisitor);
 	
 
 }

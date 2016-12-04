@@ -14,7 +14,7 @@ public class RequeteSuppression extends RequeteWhere {
 	}
 	
 	@Override
-	public void accept(RequeteVisitor requeteVisitor) {
+	public void accept(RequeteParser requeteVisitor) {
 		requeteVisitor.visit(this);
 	}
 }

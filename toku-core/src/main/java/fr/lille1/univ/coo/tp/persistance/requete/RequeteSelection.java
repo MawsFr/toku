@@ -37,7 +37,7 @@ public class RequeteSelection extends RequeteJoin {
 	}
 
 	@Override
-	public void accept(RequeteVisitor requeteVisitor) {
+	public void accept(RequeteParser requeteVisitor) {
 		requeteVisitor.visit(this);
 	}
 }

@@ -39,7 +39,7 @@ public class CritereET extends Critere {
 	}
 
 	@Override
-	public String accept(RequeteVisitor requeteVisitor) {
+	public String accept(RequeteParser requeteVisitor) {
 		return requeteVisitor.visit(this);
 	}
 }

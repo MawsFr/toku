@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import fr.lille1.univ.coo.tp.utils.ReflectionUtils;
 
-public class RequeteVisitor {
+public class RequeteParser {
 
 	public void visit(Requete requete) {
 		requete.accept(this);

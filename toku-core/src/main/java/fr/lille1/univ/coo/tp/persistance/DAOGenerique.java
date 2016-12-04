@@ -45,7 +45,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 	private Connection connexion;
 
 	private Class<?> classe;
-	private RequeteBuilder rb;
+	private RequeteBuilder rp;
 	private static References references;
 
 	/**
@@ -57,7 +57,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 	public DAOGenerique(final Class<?> classe) {
 		this.classe = classe;
 		this.connexion = GestionnaireConnexion.getConnexion();
-		this.rb = new RequeteBuilder(classe);
+		this.rp = new RequeteBuilder(classe);
 		references = References.getInstance();
 	}
 
@@ -127,7 +127,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 				}
 				field.setAccessible(accessible);
 			}
-			ps = creerRequetePreparee(connexion, rb.insertion(champsListe), true, champsListe, valeurs, null, null);
+			ps = creerRequetePreparee(connexion, rp.insertion(champsListe), true, champsListe, valeurs, null, null);
 			System.out.println(ps);
 			connexion.setAutoCommit(false);
 			ps.executeUpdate();
@@ -179,7 +179,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 			champsListe.add(idChamp);
 			Map<String, Object> valeurs = new HashMap<>();
 			valeurs.put(idChamp, id);
-			ps = creerRequetePreparee(connexion, rb.suppression(champsListe), false, null, null, champsListe, valeurs);
+			ps = creerRequetePreparee(connexion, rp.suppression(champsListe), false, null, null, champsListe, valeurs);
 			connexion.setAutoCommit(false);
 			ps.executeUpdate();
 			connexion.commit();
@@ -240,7 +240,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 				}
 				field.setAccessible(accessible);
 			}
-
+			
 			Field idChamps = ReflectionUtils.trouverChampsId(classe);
 			boolean accessible = idChamps.isAccessible();
 			idChamps.setAccessible(true);
@@ -271,7 +271,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 		try {
 			final List<String> proprietes = new ArrayList<>(clauseSet.keySet());
 			final List<String> where = new ArrayList<>(clauseWhere.keySet());
-			ps = creerRequetePreparee(connexion, rb.modification(proprietes, where), false, proprietes, clauseSet,
+			ps = creerRequetePreparee(connexion, rp.modification(proprietes, where), false, proprietes, clauseSet,
 					where, clauseWhere);
 			connexion.setAutoCommit(false);
 			ps.executeUpdate();
@@ -357,7 +357,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 		final List<T> elements = new ArrayList<>();
 		final List<String> proprietes = new ArrayList<>(clauseWhere.keySet());
 		try {
-			ps = creerRequetePreparee(connexion, rb.rechercherParPropriete(proprietes), false, null, null, proprietes,
+			ps = creerRequetePreparee(connexion, rp.rechercherParPropriete(proprietes), false, null, null, proprietes,
 					clauseWhere);
 			resultat = ps.executeQuery();
 			while (resultat.next()) {
@@ -409,7 +409,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 		final List<String> proprietes = new ArrayList<>(clauseWhere.keySet());
 		final Map<String, Object> elements = new HashMap<>();
 		try {
-			ps = creerRequetePreparee(connexion, rb.rechercherDesProprietes(nomProprietes, proprietes), false, null, null, proprietes,
+			ps = creerRequetePreparee(connexion, rp.rechercherDesProprietes(nomProprietes, proprietes), false, null, null, proprietes,
 					clauseWhere);
 			resultat = ps.executeQuery();
 			if(resultat.next()) {
@@ -446,7 +446,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 		T element = null;
 		final List<String> proprietes = new ArrayList<>(clauseWhere.keySet());
 		try {
-			ps = creerRequetePreparee(connexion, rb.rechercherParPropriete(proprietes, 1), false, null, null,
+			ps = creerRequetePreparee(connexion, rp.rechercherParPropriete(proprietes, 1), false, null, null,
 					proprietes, clauseWhere);
 			resultat = ps.executeQuery();
 			if (resultat.next()) {
@@ -487,7 +487,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 		final List<T> elements = new ArrayList<>();
 		final List<String> proprietes = new ArrayList<>(clauseWhere.keySet());
 		try {
-			ps = creerRequetePreparee(connexion, rb.rechercherParJointure(jointure, proprietes), false, null, null,
+			ps = creerRequetePreparee(connexion, rp.rechercherParJointure(jointure, proprietes), false, null, null,
 					proprietes, clauseWhere);
 			resultat = ps.executeQuery();
 			while (resultat.next()) {
