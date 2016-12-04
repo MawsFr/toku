@@ -26,6 +26,7 @@ import javax.swing.border.TitledBorder;
 import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Fermable;
+import fr.lille1.univ.coo.tp.vue.utilisateurs.JAffectationList;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.JUtilisateurList;
 
 public class FenetreDiscussion extends JFrame implements Fermable {
@@ -42,7 +43,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	private JToggleButton btnAccuseReception;
 	private JToggleButton btnChiffre;
 	private JToggleButton btnExpire;
-	private JUtilisateurList listeMembres;
+	private JAffectationList listeMembres;
 	private JMenuBar barreMenu;
 	private JMenu menuFichier;
 	private JMenuItem menuFermer;
@@ -60,7 +61,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		btnAccuseReception = new JToggleButton("Accusé");
 		btnChiffre = new JToggleButton("Chiffré");
 		btnExpire = new JToggleButton("Expire");
-		listeMembres = new JUtilisateurList(discussion.getMembres());
+		listeMembres = new JAffectationList(discussion.getAffectations());
 		barreMenu = new JMenuBar();
 		menuFichier = new JMenu("Fichier");
 		menuFermer = new JMenuItem("Fermer");
@@ -328,14 +329,14 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	/**
 	 * @return Le listeMembres
 	 */
-	public JUtilisateurList getListeMembres() {
+	public JAffectationList getListeMembres() {
 		return listeMembres;
 	}
 
 	/**
 	 * @param listeMembres Le nouveau listeMembres
 	 */
-	public void setListeMembres(JUtilisateurList listeMembres) {
+	public void setListeMembres(JAffectationList listeMembres) {
 		this.listeMembres = listeMembres;
 	}
 

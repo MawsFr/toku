@@ -1,42 +1,44 @@
 package fr.lille1.univ.coo.tp.filtre;
 
-public abstract class Filtreur<T> {
-	private Filtrable<T> filtrable;
-	private Filtre<T> filtre;
+import fr.lille1.univ.coo.tp.domain.DomainException;
+
+public abstract class Filtreur {
+	private Filtrable filtrable;
+	private Filtre filtre;
 	
-	public Filtreur(Filtrable<T> filtrable) {
+	public Filtreur(Filtrable filtrable) {
 		this.filtrable = filtrable;
 	}
 	
 	/**
 	 * @return Le filtrable
 	 */
-	public Filtrable<T> getFiltrable() {
+	public Filtrable getFiltrable() {
 		return filtrable;
 	}
 
 	/**
 	 * @param filtrable Le nouveau filtrable
 	 */
-	public void setFiltrable(Filtrable<T> filtrable) {
+	public void setFiltrable(Filtrable filtrable) {
 		this.filtrable = filtrable;
 	}
 
 	/**
 	 * @return Le filtre
 	 */
-	public Filtre<T> getFiltre() {
+	public Filtre getFiltre() {
 		return filtre;
 	}
 
 	/**
 	 * @param filtre Le nouveau filtre
 	 */
-	public void setFiltre(Filtre<T> filtre) {
+	public void setFiltre(Filtre filtre) {
 		this.filtre = filtre;
 	}
 
-	public void filtrer() {
+	public void filtrer() throws DomainException {
 		filtrable.filtrer(filtre);
 	}
 

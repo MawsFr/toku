@@ -3,7 +3,9 @@ package fr.lille1.univ.coo.tp.vue.utilisateurs;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public abstract class JObservableListMouseAdapter<T> extends MouseAdapter {
+import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
+
+public abstract class JObservableListMouseAdapter<T extends IObjetDomaine> extends MouseAdapter {
 	protected JObservableList<T> liste;
 
 	public JObservableListMouseAdapter(JObservableList<T> liste) {

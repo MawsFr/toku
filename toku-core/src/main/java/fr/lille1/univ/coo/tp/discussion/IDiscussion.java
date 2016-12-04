@@ -1,5 +1,7 @@
 package fr.lille1.univ.coo.tp.discussion;
 
+import java.util.List;
+
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
@@ -41,10 +43,12 @@ public interface IDiscussion {
 	/**
 	 * @return Le membres
 	 */
-	IObservableList<Utilisateur> getMembres();
+	IObservableList<AffectationDiscussion> getAffectations();
 
 	/**
 	 * @param membres Le nouveau membres
 	 */
-	void setMembres(IObservableList<Utilisateur> membres);
+	void setAffectation(IObservableList<AffectationDiscussion> membres);
+	
+	List<IUtilisateur> getMembres();
 }

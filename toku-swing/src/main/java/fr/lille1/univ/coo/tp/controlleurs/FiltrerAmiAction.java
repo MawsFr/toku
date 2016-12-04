@@ -13,12 +13,12 @@ import fr.lille1.univ.coo.tp.filtre.ALePrenom;
 import fr.lille1.univ.coo.tp.filtre.ALePseudo;
 import fr.lille1.univ.coo.tp.filtre.Filtre;
 import fr.lille1.univ.coo.tp.filtre.OUFiltre;
-import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
+import fr.lille1.univ.coo.tp.utilisateur.Amitie;
 import fr.lille1.univ.coo.tp.vue.FenetrePrincipale;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.JFiltrableList;
 
-public class FiltrerUtilisateurAction extends FiltrerAction<Utilisateur> {
-	public FiltrerUtilisateurAction(JFiltrableList<Utilisateur> liste) {
+public class FiltrerAmiAction extends FiltrerAction<Amitie> {
+	public FiltrerAmiAction(JFiltrableList<Amitie> liste) {
 		super(liste);
 	}
 
@@ -37,7 +37,7 @@ public class FiltrerUtilisateurAction extends FiltrerAction<Utilisateur> {
 			criteres.add(aLeNom);
 			criteres.add(aLePrenom);
 			
-			OUFiltre<Utilisateur> et = new OUFiltre<>(criteres);
+			OUFiltre<Amitie> et = new OUFiltre<>(criteres);
 			setFiltre(et);
 		}
 		try {

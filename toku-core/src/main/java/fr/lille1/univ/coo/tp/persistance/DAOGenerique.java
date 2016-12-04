@@ -75,7 +75,6 @@ public class DAOGenerique<T extends IObjetDomaine> {
 	 */
 	public T creer(final T objet) throws DAOException {
 		PreparedStatement ps = null;
-		ResultSet resultat = null;
 		try {
 			boolean accessible = false;
 
@@ -103,6 +102,28 @@ public class DAOGenerique<T extends IObjetDomaine> {
 						valeurs.put(champ, o);
 					}
 					champsListe.add(champ);
+				} else if (field.isAnnotationPresent(UnAPlusieurs.class)) {
+					UnAPlusieurs unAPlusieurs = field.getAnnotation(UnAPlusieurs.class);
+					Class<?> leurType = unAPlusieurs.leurType();
+					String maCle = unAPlusieurs.maCle();
+
+					Factory<IObservableList<T>> unAPlusieursFactory = new UnAPlusieursFactory<T>(leurType,
+							maCle, objet.getId());
+					creerProxyList(objet, field, unAPlusieursFactory);
+				} else if (field.isAnnotationPresent(PlusieursAPlusieurs.class)) {
+					PlusieursAPlusieurs plusieursAPlusieurs = field
+							.getAnnotation(PlusieursAPlusieurs.class);
+
+					Class<?> tableAssociation = plusieursAPlusieurs.table_assoc();
+					String leurColonne = plusieursAPlusieurs.leurCle();
+					Class<?> leurType = plusieursAPlusieurs.type();
+					String leurId = ReflectionUtils.trouverId(leurType);
+
+					String notreColonne = plusieursAPlusieurs.notreCle();
+
+					Factory<IObservableList<T>> plusieursAPlusieursFactory = new PlusieursAPlusieursFactory<T>(tableAssociation, leurColonne, notreColonne, leurType,
+							leurId, objet.getId());
+					creerProxyList(objet, field, plusieursAPlusieursFactory);
 				}
 				field.setAccessible(accessible);
 			}
@@ -110,6 +131,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 			System.out.println(ps);
 			connexion.setAutoCommit(false);
 			ps.executeUpdate();
+			ResultSet resultat = null;
 			resultat = ps.getGeneratedKeys();
 			resultat.next();
 			Integer id = resultat.getInt(1);
@@ -598,8 +620,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 
 								String notreColonne = plusieursAPlusieurs.notreCle();
 
-								Factory<IObservableList<T>> plusieursAPlusieursFactory = new PlusieursAPlusieursFactory<T>(
-										ReflectionUtils.nomTable(tableAssociation), leurColonne, notreColonne, leurType,
+								Factory<IObservableList<T>> plusieursAPlusieursFactory = new PlusieursAPlusieursFactory<T>(tableAssociation, leurColonne, notreColonne, leurType,
 										leurId, id);
 								creerProxyList(objet, champ, plusieursAPlusieursFactory);
 							} else if (champ.isAnnotationPresent(PlusieursAUn.class)) {

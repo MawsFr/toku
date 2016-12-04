@@ -2,12 +2,14 @@ package fr.lille1.univ.coo.tp.vue.utilisateurs;
 
 import javax.swing.DefaultListModel;
 
+import fr.lille1.univ.coo.tp.domain.DomainException;
+import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.filtre.Filtrable;
 import fr.lille1.univ.coo.tp.filtre.Filtre;
 import fr.lille1.univ.coo.tp.observateur.Observateur;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 
-public class IObservableListModel<T> extends DefaultListModel<T> implements Observateur<T>, Filtrable<T> {
+public class IObservableListModel<T extends IObjetDomaine> extends DefaultListModel<T> implements Observateur<T>, Filtrable {
 
 	private static final long serialVersionUID = 1L;
 	private IObservableList<T> utilisateurs;
@@ -45,7 +47,7 @@ public class IObservableListModel<T> extends DefaultListModel<T> implements Obse
 	}
 
 	@Override
-	public void filtrer(Filtre<T> filtre) {
+	public void filtrer(Filtre filtre) throws DomainException {
 		if(filtre == null) {
 			for(T t : utilisateurs.getListe()) {
 				if(!this.contains(t)) {
@@ -54,7 +56,8 @@ public class IObservableListModel<T> extends DefaultListModel<T> implements Obse
 			}
 		} else {
 			for(T t : utilisateurs.getListe()) {
-				if(filtre.accepte(t)) {
+				filtre.visit(t);
+				if(filtre.getResultat().equals(true)) {
 					if(!this.contains(t)) {
 						this.addElement(t);
 					}

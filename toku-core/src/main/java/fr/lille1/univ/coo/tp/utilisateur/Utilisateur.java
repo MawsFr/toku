@@ -1,5 +1,8 @@
 package fr.lille1.univ.coo.tp.utilisateur;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.lille1.univ.coo.tp.annotations.Colonne;
 import fr.lille1.univ.coo.tp.annotations.Id;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAPlusieurs;
@@ -9,7 +12,10 @@ import fr.lille1.univ.coo.tp.annotations.Transient;
 import fr.lille1.univ.coo.tp.connexions.LocalMysqlConfiguration;
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.discussion.Discussion;
+import fr.lille1.univ.coo.tp.discussion.IDiscussion;
+import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
+import fr.lille1.univ.coo.tp.filtre.Visiteur;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
 import fr.lille1.univ.coo.tp.persistance.GestionnaireConnexion;
@@ -50,12 +56,12 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	private String avatar;
 	
 	//SELECT * FROM utilisateur join utilisateur_amis on utilisateur.id = utilisateur_amis.id_ami where utilisateur_amis.id_utilisateur = ?
-	@PlusieursAPlusieurs(leurCle = "id_ami", table_assoc = Amitie.class, type = Utilisateur.class, notreCle="id_utilisateur")
-	private IObservableList<Utilisateur> amis;
+	@PlusieursAPlusieurs(leurCle = "id_ami", table_assoc = Amitie.class, type = Amitie.class, notreCle="id_utilisateur")
+	private IObservableList<Amitie> amitie;
 	
 	//select * from discussion join utilisateur_groupe on discussion.id = utilisateur_groupe.id_groupe where utilisateur_groupe.id_utilisateur = ?
 	@PlusieursAPlusieurs(leurCle="id_discussion", notreCle="id_utilisateur", table_assoc=AffectationDiscussion.class, type=Discussion.class)
-	private IObservableList<Discussion> discussions;
+	private IObservableList<AffectationDiscussion> discussions;
 	
 	public Utilisateur() {
 	}
@@ -192,16 +198,16 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getAmis()
 	 */
 	@Override
-	public IObservableList<Utilisateur> getAmis() {
-		return amis;
+	public IObservableList<Amitie> getAmities() {
+		return amitie;
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setAmis(fr.lille1.univ.coo.tp.utilisateur.IObservableList)
 	 */
 	@Override
-	public void setAmis(IObservableList<Utilisateur> amis) {
-		this.amis = amis;
+	public void setAmities(IObservableList<Amitie> amis) {
+		this.amitie = amis;
 		notifierModification("amis");
 	}
 	
@@ -211,7 +217,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getDiscussions()
 	 */
 	@Override
-	public IObservableList<Discussion> getDiscussions() {
+	public IObservableList<AffectationDiscussion> getAffectations() {
 		return discussions;
 	}
 
@@ -219,7 +225,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setDiscussions(fr.lille1.univ.coo.tp.utilisateur.IObservableList)
 	 */
 	@Override
-	public void setDiscussions(IObservableList<Discussion> discussions) {
+	public void setAffectations(IObservableList<AffectationDiscussion> discussions) {
 		this.discussions = discussions;
 	}
 
@@ -232,7 +238,21 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 		GestionnaireConnexion.ouvrirConnexion(c);
 		IUtilisateur u = new DAOGenerique<Utilisateur>(Utilisateur.class).rechercher(4);
 		System.out.println(u);
-		System.out.println(u.getDiscussions());
+		System.out.println(u.getAffectations());
 	}
 
+	@Override
+	public List<IDiscussion> getDiscussion() {
+		List<IDiscussion> discussions = new ArrayList<>();
+		for(AffectationDiscussion a : this.discussions.getListe()) {
+			discussions.add(a.getDiscussion());
+		}
+		return discussions;
+	}
+
+	@Override
+	public void accept(Visiteur visitor) throws DomainException {
+		visitor.visit(this);
+	}
+	
 }

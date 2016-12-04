@@ -2,22 +2,61 @@ package fr.lille1.univ.coo.tp.filtre;
 
 import java.util.List;
 
-public class OUFiltre<T> implements Filtre<T>{
-	private List<Filtre<T> > criteres;
+import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
+import fr.lille1.univ.coo.tp.discussion.Discussion;
+import fr.lille1.univ.coo.tp.discussion.message.Message;
+import fr.lille1.univ.coo.tp.domain.DomainException;
+import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
+import fr.lille1.univ.coo.tp.role.Role;
+import fr.lille1.univ.coo.tp.utilisateur.Amitie;
+import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
+
+public class OUFiltre<T> extends Filtre {
+	private List<Filtre > criteres;
 	
-	public OUFiltre(List<Filtre<T>> criteres) {
+	public OUFiltre(List<Filtre> criteres) {
 		this.criteres = criteres;
 	}
 
-	@Override
-	public boolean accepte(T obj) {
-		for(Filtre<T> critere : criteres) {
-			if(critere.accepte(obj)) {
+	public boolean accepte(IObjetDomaine obj) throws DomainException {
+		for(Filtre critere : criteres) {
+			critere.visit(obj);
+			if(critere.getResultat().equals(true)) {
 				return true;
 			}
 		}
 		
 		return false;
+	}
+
+	@Override
+	public void visit(Utilisateur personne) throws DomainException {
+		accepte(personne);
+	}
+
+	@Override
+	public void visit(Discussion discussion) throws DomainException {
+		accepte(discussion);
+	}
+
+	@Override
+	public void visit(Message message) throws DomainException {
+		accepte(message);
+	}
+
+	@Override
+	public void visit(Role role) throws DomainException {
+		accepte(role);
+	}
+
+	@Override
+	public void visit(Amitie amitie) throws DomainException {
+		accepte(amitie);		
+	}
+
+	@Override
+	public void visit(AffectationDiscussion affectation) throws DomainException {
+		accepte(affectation);		
 	}
 
 }

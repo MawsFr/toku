@@ -3,7 +3,9 @@ package fr.lille1.univ.coo.tp.role;
 import fr.lille1.univ.coo.tp.annotations.Colonne;
 import fr.lille1.univ.coo.tp.annotations.Id;
 import fr.lille1.univ.coo.tp.annotations.Table;
+import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
+import fr.lille1.univ.coo.tp.filtre.Visiteur;
 
 @Table
 public class Role extends ObjetDomaine implements IRole {
@@ -60,4 +62,8 @@ public class Role extends ObjetDomaine implements IRole {
 		return nom;
 	}
 
+	@Override
+	public void accept(Visiteur visitor) throws DomainException {
+		visitor.visit(this);
+	}
 }

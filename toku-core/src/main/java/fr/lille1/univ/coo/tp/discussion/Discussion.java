@@ -1,5 +1,8 @@
 package fr.lille1.univ.coo.tp.discussion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.lille1.univ.coo.tp.annotations.Colonne;
 import fr.lille1.univ.coo.tp.annotations.Id;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAPlusieurs;
@@ -7,7 +10,9 @@ import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.annotations.UnAPlusieurs;
 import fr.lille1.univ.coo.tp.discussion.message.Message;
+import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
+import fr.lille1.univ.coo.tp.filtre.Visiteur;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
@@ -19,9 +24,6 @@ import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
  */
 @Table
 public class Discussion extends ObjetDomaine implements IDiscussion {
-	public static final int ETAT_EN_ATTENTE = 0; // L'utilisateur n'a pas encore vu la discussion
-	public static final int ETAT_VU = 1; // L'utilisateur a vu la discussion (et donc lu) la premiere fois : cet etat sers pour la notification
-	public static final int ETAT_LU = 2; // 
 	
 	public static final int TYPE_GROUPE = 1;
 	public static final int TYPE_PRIVE = 2;
@@ -32,13 +34,14 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	@Colonne
 	protected String nom;
 	
+	@Colonne
 	protected Integer leType;
 	
 	@PlusieursAUn(sonType = Utilisateur.class, saCle = "id_moderateur")
 	protected IUtilisateur moderateur;
 	
-	@PlusieursAPlusieurs(table_assoc=AffectationDiscussion.class, leurCle="id_utilisateur", notreCle="id_discussion", type=Utilisateur.class)
-	protected IObservableList<Utilisateur> membres;
+	@PlusieursAPlusieurs(table_assoc=AffectationDiscussion.class, leurCle="id_utilisateur", notreCle="id_discussion", type=AffectationDiscussion.class)
+	protected IObservableList<AffectationDiscussion> membres;
 	
 	// select * from message where 
 	@UnAPlusieurs(leurType=Message.class, maCle="id_discussion")
@@ -83,6 +86,7 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	@Override
 	public void setNom(String nom) {
 		this.nom = nom;
+		notifierModification("nom");
 	}
 
 	/* (non-Javadoc)
@@ -99,13 +103,14 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	@Override
 	public void setModerateur(IUtilisateur moderateur) {
 		this.moderateur = moderateur;
+		notifierModification("moderateur");
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#getMembres()
 	 */
 	@Override
-	public IObservableList<Utilisateur> getMembres() {
+	public IObservableList<AffectationDiscussion> getAffectations() {
 		return membres;
 	}
 
@@ -113,8 +118,9 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#setMembres(fr.lille1.univ.coo.tp.utilisateur.IObservableList)
 	 */
 	@Override
-	public void setMembres(IObservableList<Utilisateur> membres) {
+	public void setAffectation(IObservableList<AffectationDiscussion> membres) {
 		this.membres = membres;
+		notifierModification("membres");
 	}
 
 	/**
@@ -129,6 +135,7 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	 */
 	public void setLeType(Integer leType) {
 		this.leType = leType;
+		notifierModification("leType");
 	}
 
 	/**
@@ -143,9 +150,21 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	 */
 	public void setMessages(IObservableList<Message> messages) {
 		this.messages = messages;
+		notifierModification("messages");
+	}
+
+	@Override
+	public List<IUtilisateur> getMembres() {
+		List<IUtilisateur> membres = new ArrayList<>();
+		for(AffectationDiscussion a : this.membres.getListe()) {
+			membres.add(a.getUtilisateur());
+		}
+		return membres;
 	}
 	
-	
-	
+	@Override
+	public void accept(Visiteur visitor) throws DomainException {
+		visitor.visit(this);
+	}
 	
 }

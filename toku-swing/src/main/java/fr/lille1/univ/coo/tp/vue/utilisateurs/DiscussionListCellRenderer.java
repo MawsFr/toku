@@ -28,7 +28,7 @@ public class DiscussionListCellRenderer extends JLabel implements ObservableList
 			setForeground(Color.BLACK);
 		}
 
-		String discussion = value.getNom() + " (" + value.getMembres().getListe().size() + " membre(s))";
+		String discussion = value.getNom() + " (" + value.getAffectations().getListe().size() + " membre(s))";
 		setText(discussion);
 		setFont(list.getFont());
 		return this;

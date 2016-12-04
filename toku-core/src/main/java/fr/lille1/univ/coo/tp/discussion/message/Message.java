@@ -6,7 +6,9 @@ import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.discussion.IDiscussion;
+import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
+import fr.lille1.univ.coo.tp.filtre.Visiteur;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
@@ -36,6 +38,7 @@ public class Message extends ObjetDomaine {
 	 */
 	public void setId(Integer id) {
 		this.id = id;
+		notifierModification("id");
 	}
 
 	/**
@@ -50,6 +53,7 @@ public class Message extends ObjetDomaine {
 	 */
 	public void setDiscussion(IDiscussion discussion) {
 		this.discussion = discussion;
+		notifierModification("discussion");
 	}
 
 	/**
@@ -64,6 +68,28 @@ public class Message extends ObjetDomaine {
 	 */
 	public void setTexte(String texte) {
 		this.texte = texte;
+		notifierModification("texte");
+	}
+	
+	
+	
+	/**
+	 * @return Le utilisateur
+	 */
+	public IUtilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	/**
+	 * @param utilisateur Le nouveau utilisateur
+	 */
+	public void setUtilisateur(IUtilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+
+	@Override
+	public void accept(Visiteur visitor) throws DomainException {
+		visitor.visit(this);
 	}
 	
 }

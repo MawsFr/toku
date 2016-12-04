@@ -1,8 +1,9 @@
 package fr.lille1.univ.coo.tp.vue.utilisateurs;
 
+import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 
-public abstract class JFiltrableList<T> extends JObservableList<T> {
+public abstract class JFiltrableList<T extends IObjetDomaine> extends JObservableList<T> {
 	private static final long serialVersionUID = 1L;
 	private JTexteFiltre<T> texte;
 

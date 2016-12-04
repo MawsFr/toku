@@ -3,18 +3,20 @@ package fr.lille1.univ.coo.tp.vue.utilisateurs;
 import java.awt.Color;
 import java.awt.Component;
 
+import javax.swing.JLabel;
 import javax.swing.JList;
 
 import fr.lille1.univ.coo.tp.Application;
-import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
+import fr.lille1.univ.coo.tp.utilisateur.Amitie;
+import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.vue.discussion.Avatar;
 
-public class AmitieListCellRenderer extends UtilisateurListCellRenderer  {
+public class AmitieListCellRenderer extends JLabel implements ObservableListRenderer<Amitie>  {
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public Component getListCellRendererComponent(JList<? extends Utilisateur> list, Utilisateur value, int index,
+	public Component getListCellRendererComponent(JList<? extends Amitie> list, Amitie amitie, int index,
 			boolean isSelected, boolean cellHasFocus) {
 		setOpaque(true);
 		if (isSelected) {
@@ -31,8 +33,9 @@ public class AmitieListCellRenderer extends UtilisateurListCellRenderer  {
 
 		Avatar avatar = new Avatar(); // TODO : Faire en sorte qu'on puisse redimensionner l'avatar
 //		setSize(20, 20);
-		avatar.setImage(value.getAvatar());
-		String texte = value.getPseudo() + (value == Application.getInstance().getSession().getUtilisateur() ? " (Vous)" : "");
+		IUtilisateur utilisateur = amitie.getAmi();
+		avatar.setImage(utilisateur.getAvatar());
+		String texte = utilisateur.getPseudo() + (utilisateur == Application.getInstance().getSession().getUtilisateur() ? " (Vous)" : "");
 		setIcon(avatar);
 		setText(texte);
 		setFont(list.getFont());

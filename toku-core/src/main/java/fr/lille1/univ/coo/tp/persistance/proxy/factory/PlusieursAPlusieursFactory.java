@@ -23,16 +23,16 @@ import fr.lille1.univ.coo.tp.utils.ReflectionUtils;
  */
 public class PlusieursAPlusieursFactory<T extends IObjetDomaine> implements Factory<IObservableList<T>> {
 
-	private String tableAssociation;
+	private Class<?> tableAssociation;
 	private String leurColonne;
 	private String notreColonne;
 	private Class<?> leurType;
 	private String leurId;
 	private Object id;
 	
-	public PlusieursAPlusieursFactory(String tableAssociation, String leurColonne, String notreColonne,
+	public PlusieursAPlusieursFactory(Class<?> tableAssociation2, String leurColonne, String notreColonne,
 			Class<?> leurType, String leurId, Object id) {
-		this.tableAssociation = tableAssociation;
+		this.tableAssociation = tableAssociation2;
 		this.leurColonne = leurColonne;
 		this.notreColonne = notreColonne;
 		this.leurType = leurType;
@@ -42,24 +42,24 @@ public class PlusieursAPlusieursFactory<T extends IObjetDomaine> implements Fact
 
 	@Override
 	public IObservableList<T> creer() throws DAOException {
-		DAOGenerique<T> dao = new DAOGenerique<>(leurType);
+		DAOGenerique<T> dao = new DAOGenerique<>(tableAssociation);
 		Map<String, Object> where = new HashMap<>();
 		where.put(notreColonne, id);
 		
-		List<Jointure> jointures = new ArrayList<>();
-		Jointure jointTableAssociee = new Jointure();
-		
-		jointTableAssociee.setLeurColonne(leurColonne);
-		jointTableAssociee.setLeurId(leurId);
-		jointTableAssociee.setLeurType(ReflectionUtils.nomTable(leurType));
-		jointTableAssociee.setTableAssociation(tableAssociation);
-		
-		System.out.println(jointTableAssociee);
-		
-		jointures.add(jointTableAssociee);
+//		List<Jointure> jointures = new ArrayList<>();
+//		Jointure jointTableAssociee = new Jointure();
+//		
+//		jointTableAssociee.setLeurColonne(leurColonne);
+//		jointTableAssociee.setLeurId(leurId);
+//		jointTableAssociee.setLeurType(ReflectionUtils.nomTable(leurType));
+//		jointTableAssociee.setTableAssociation(ReflectionUtils.nomTable(tableAssociation));
+//		
+//		System.out.println(jointTableAssociee);
+//		
+//		jointures.add(jointTableAssociee);
 		
 		try {
-			List<T> liste = dao.rechercherParJointure(jointures, where);
+			List<T> liste = dao.rechercherParPropriete(notreColonne, id);
 			ObservableList<T> o = new ObservableList<T>(liste);
 			o.ajouterObservateur(UnitOfWork.getInstance(leurType));
 			return o;

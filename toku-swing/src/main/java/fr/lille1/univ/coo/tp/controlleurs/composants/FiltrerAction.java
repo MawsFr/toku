@@ -3,10 +3,11 @@ package fr.lille1.univ.coo.tp.controlleurs.composants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.filtre.Filtreur;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.JFiltrableList;
 
-public abstract class FiltrerAction<T> extends Filtreur<T> implements DocumentListener {
+public abstract class FiltrerAction<T extends IObjetDomaine> extends Filtreur implements DocumentListener {
 
 	protected JFiltrableList<T> liste;
 

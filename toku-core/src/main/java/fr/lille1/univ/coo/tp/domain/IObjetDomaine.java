@@ -1,5 +1,6 @@
 package fr.lille1.univ.coo.tp.domain;
 
+import fr.lille1.univ.coo.tp.filtre.Visitable;
 import fr.lille1.univ.coo.tp.observateur.Observateur;
 
 /**
@@ -8,7 +9,7 @@ import fr.lille1.univ.coo.tp.observateur.Observateur;
  * @author Mustapha Nezzari
  *
  */
-public interface IObjetDomaine {
+public interface IObjetDomaine extends Visitable {
 	public Integer getId();
 	public void ajouterObservateur(Observateur<?> obs);
 }

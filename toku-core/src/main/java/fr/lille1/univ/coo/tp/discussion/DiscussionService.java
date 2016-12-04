@@ -1,8 +1,11 @@
 package fr.lille1.univ.coo.tp.discussion;
 
 import fr.lille1.univ.coo.tp.Application;
+import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
+import fr.lille1.univ.coo.tp.service.unitofwork.UnitOfWork;
+import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
 public class DiscussionService extends Service<Discussion> implements IDiscussionService {
@@ -30,18 +33,27 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 		discussion.setModerateur(moderateur);
 		discussion.setLeType(type);
 		
-		moderateur.getDiscussions().ajouter(discussion);
+		UnitOfWork.getInstance(Discussion.class).creation(discussion);
+		try {
+			UnitOfWork.getInstance(Discussion.class).commit();
+		} catch (DomainException e) {
+			e.printStackTrace();
+			throw new ServiceException(e);
+		}
 		
-		ajouterUtilisateur(discussion, moderateur);
+		ajouterUtilisateur(discussion, moderateur, AffectationDiscussion.ETAT_LU);
 		
 		return discussion;
 	}
 	
 	@Override
-	public void ajouterUtilisateur(Discussion discussion, Utilisateur utilisateur) throws ServiceException {
-		utilisateur.getDiscussions().ajouter(discussion);
-		discussion.getMembres().ajouter(utilisateur);
-		
+	public void ajouterUtilisateur(Discussion discussion, IUtilisateur utilisateur, Integer etat) throws ServiceException {
+		AffectationDiscussion affectationDiscussion = new AffectationDiscussion();
+		affectationDiscussion.setDiscussion(discussion);
+		affectationDiscussion.setUtilisateur(utilisateur);
+		affectationDiscussion.setEtat(etat);
+		utilisateur.getAffectations().ajouter(affectationDiscussion);
+		discussion.getAffectations().ajouter(affectationDiscussion);
 	}
 
 }
