@@ -180,6 +180,11 @@ CREATE INDEX `fk_message_discussion1_idx` ON `toku`.`projet_message` (`id_discus
 
 CREATE INDEX `fk_message_utilisateur1_idx` ON `toku`.`projet_message` (`id_utilisateur` ASC);
 
+create VIEW `projet_amitie_view` AS 
+	(select `u`.`id`, `u`.`id_utilisateur`, `u`.`id_ami`, `u`.`etat` from `projet_amitie` `u`) 
+	union 
+    (select `u`.`id`, `u`.`id_ami`, `u`.`id_utilisateur`, `u`.`etat` from `projet_amitie` `u`);
+
 -- Création des roles
 INSERT INTO projet_role (id, nom) VALUES (1, "Utilisateur");
 INSERT INTO projet_role (id, nom) VALUES (2, "Administrateur");

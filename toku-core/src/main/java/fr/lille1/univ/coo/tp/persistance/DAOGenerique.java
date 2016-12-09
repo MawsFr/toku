@@ -29,6 +29,7 @@ import fr.lille1.univ.coo.tp.persistance.proxy.factory.PlusieursAPlusieursFactor
 import fr.lille1.univ.coo.tp.persistance.proxy.factory.PlusieursAUnFactory;
 import fr.lille1.univ.coo.tp.persistance.proxy.factory.UnAPlusieursFactory;
 import fr.lille1.univ.coo.tp.persistance.proxy.factory.UnAUnFactory;
+import fr.lille1.univ.coo.tp.persistance.requete.Requete;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utils.Log;
 import fr.lille1.univ.coo.tp.utils.ReflectionUtils;
@@ -115,14 +116,14 @@ public class DAOGenerique<T extends IObjetDomaine> {
 							.getAnnotation(PlusieursAPlusieurs.class);
 
 					Class<?> tableAssociation = plusieursAPlusieurs.table_assoc();
-					String leurColonne = plusieursAPlusieurs.leurCle();
+//					String leurColonne = plusieursAPlusieurs.leurCle();
 					Class<?> leurType = plusieursAPlusieurs.type();
-					String leurId = ReflectionUtils.trouverId(leurType);
+//					String leurId = ReflectionUtils.trouverId(leurType);
 
-					String notreColonne = plusieursAPlusieurs.notreCle();
+					String notreColonne = plusieursAPlusieurs.nosCle();
 
-					Factory<IObservableList<T>> plusieursAPlusieursFactory = new PlusieursAPlusieursFactory<T>(tableAssociation, leurColonne, notreColonne, leurType,
-							leurId, objet.getId());
+					Factory<IObservableList<T>> plusieursAPlusieursFactory = new PlusieursAPlusieursFactory<T>(tableAssociation, notreColonne,
+							leurType, objet.getId());
 					creerProxyList(objet, field, plusieursAPlusieursFactory);
 				}
 				field.setAccessible(accessible);
@@ -389,6 +390,46 @@ public class DAOGenerique<T extends IObjetDomaine> {
 		}
 		return elements;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<T> rechercherParRequete(Requete requete, final Map<String, Object> clauseWhere) throws DAOException {
+		PreparedStatement ps = null;
+		ResultSet resultat = null;
+		final List<T> elements = new ArrayList<>();
+		final List<String> proprietes = new ArrayList<>(clauseWhere.keySet());
+		try {
+			ps = creerRequetePreparee(connexion, requete.toString(), false, null, null, proprietes,
+					clauseWhere);
+			resultat = ps.executeQuery();
+			while (resultat.next()) {
+				int id = resultat.getInt(1);
+				T recherche = (T) references.rechercher(classe, id);
+				if (recherche == null) {
+					elements.add((T) construire(id, resultat).get());
+				} else {
+					elements.add(recherche);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				if (resultat != null) {
+					resultat.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (SQLException e) {
+				throw new DAOException(e);
+			}
+		}
+		return elements;
+	}
 
 	public Object rechercherUneProprieteUnSeul(String nomPropriete, final Map<String, Object> clauseWhere) throws DAOException {
 		List<String> props = new ArrayList<>();
@@ -614,14 +655,14 @@ public class DAOGenerique<T extends IObjetDomaine> {
 										.getAnnotation(PlusieursAPlusieurs.class);
 
 								Class<?> tableAssociation = plusieursAPlusieurs.table_assoc();
-								String leurColonne = plusieursAPlusieurs.leurCle();
+//								String leurColonne = plusieursAPlusieurs.leurCle();
 								Class<?> leurType = plusieursAPlusieurs.type();
-								String leurId = ReflectionUtils.trouverId(leurType);
+//								String leurId = ReflectionUtils.trouverId(leurType);
 
-								String notreColonne = plusieursAPlusieurs.notreCle();
+								String notreColonne = plusieursAPlusieurs.nosCle();
 
-								Factory<IObservableList<T>> plusieursAPlusieursFactory = new PlusieursAPlusieursFactory<T>(tableAssociation, leurColonne, notreColonne, leurType,
-										leurId, id);
+								Factory<IObservableList<T>> plusieursAPlusieursFactory = new PlusieursAPlusieursFactory<T>(tableAssociation, notreColonne,
+										leurType, id);
 								creerProxyList(objet, champ, plusieursAPlusieursFactory);
 							} else if (champ.isAnnotationPresent(PlusieursAUn.class)) {
 								PlusieursAUn plusieursAUn = champ.getAnnotation(PlusieursAUn.class);
@@ -707,7 +748,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 	public void creerAvecFactory(final Integer id, T objet, Field champ, String colonne)
 			throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, DAOException {
-		System.out.println("Chargement non proxifié de " + champ.getName());
+		System.out.println("Chargement custom de " + champ.getName());
 		champ.set(objet, Factories.getFactory(classe, colonne).getConstructor(Integer.class).newInstance(id).creer());
 	}
 

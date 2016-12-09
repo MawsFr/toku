@@ -37,7 +37,7 @@ public class FiltrerUtilisateurAction extends FiltrerAction<Utilisateur> {
 			criteres.add(aLeNom);
 			criteres.add(aLePrenom);
 			
-			OUFiltre<Utilisateur> et = new OUFiltre<>(criteres);
+			OUFiltre et = new OUFiltre(criteres);
 			setFiltre(et);
 		}
 		try {

@@ -25,7 +25,7 @@ public @interface PlusieursAPlusieurs {
 	 * 
 	 * @return
 	 */
-	Class<?> table_assoc();
+	Class<?> table_assoc() default Object.class;
 
 	/**
 	 * Nom de la colonne représentant l'id des objets contenus
@@ -33,17 +33,17 @@ public @interface PlusieursAPlusieurs {
 	 * 
 	 * @return
 	 */
-	String leurCle();
+	String leurCle() default "";
 	
 	/**
 	 * Nom de la colonne contenant l'id de l'objets contenant
 	 * @return
 	 */
-	String notreCle() default "";
+	String nosCle() default "";
 	
 	/**
 	 * Type des objets retournés
 	 * @return
 	 */
-	Class<?> type();
+	Class<?> type() default Object.class;
 }

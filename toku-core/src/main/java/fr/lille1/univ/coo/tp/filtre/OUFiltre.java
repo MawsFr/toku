@@ -11,7 +11,7 @@ import fr.lille1.univ.coo.tp.role.Role;
 import fr.lille1.univ.coo.tp.utilisateur.Amitie;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
-public class OUFiltre<T> extends Filtre {
+public class OUFiltre extends Filtre {
 	private List<Filtre > criteres;
 	
 	public OUFiltre(List<Filtre> criteres) {
@@ -19,9 +19,11 @@ public class OUFiltre<T> extends Filtre {
 	}
 
 	public boolean accepte(IObjetDomaine obj) throws DomainException {
+		setResultat(false);
 		for(Filtre critere : criteres) {
 			critere.visit(obj);
 			if(critere.getResultat().equals(true)) {
+				this.resultat = true;
 				return true;
 			}
 		}

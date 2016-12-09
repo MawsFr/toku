@@ -1,4 +1,4 @@
-package fr.lille1.univ.coo.tp.controlleurs;
+package fr.lille1.univ.coo.tp.controlleurs.discussion;
 
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.JAffectationList;

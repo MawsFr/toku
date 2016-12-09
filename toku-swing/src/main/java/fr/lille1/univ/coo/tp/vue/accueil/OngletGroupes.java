@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import fr.lille1.univ.coo.tp.Application;
-import fr.lille1.univ.coo.tp.controlleurs.DiscussionListMouseAdapter;
+import fr.lille1.univ.coo.tp.controlleurs.discussion.DiscussionListMouseAdapter;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.JAffectationList;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.JDiscussionList;

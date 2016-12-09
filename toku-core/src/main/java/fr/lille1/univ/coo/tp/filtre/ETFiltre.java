@@ -19,9 +19,11 @@ public class ETFiltre extends Filtre {
 	}
 
 	public boolean accepte(IObjetDomaine obj) throws DomainException {
+		setResultat(true);
 		for(Filtre critere : criteres) {
 			critere.visit(obj);
 			if(!critere.getResultat().equals(true)) {
+				setResultat(false);
 				return false;
 			}
 		}
@@ -61,5 +63,4 @@ public class ETFiltre extends Filtre {
 	public void visit(AffectationDiscussion affectation) throws DomainException {
 		accepte(affectation);
 	}
-
 }

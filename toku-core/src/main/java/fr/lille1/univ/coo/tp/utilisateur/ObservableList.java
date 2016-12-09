@@ -51,7 +51,5 @@ public class ObservableList<T extends IObjetDomaine> extends Observable implemen
 	public void setListe(List<T> utilisateurs) {
 		this.liste = utilisateurs;
 	}
-	
-	
-	
+
 }

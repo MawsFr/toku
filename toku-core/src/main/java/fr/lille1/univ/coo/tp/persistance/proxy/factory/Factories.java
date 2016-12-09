@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import fr.lille1.univ.coo.tp.discussion.Discussion;
+import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
 /**
@@ -11,7 +12,7 @@ import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
  * créer des objet à récupérer de façon paresseuse.
  */
 public class Factories {
-	private static Map<Class<?>, Map<String, Class<? extends Factory<?>>>> factories;
+	private static Map<Class<? extends IObjetDomaine>, Map<String, Class<? extends Factory<?>>>> factories;
 	static {
 		factories = new HashMap<>();
 		factories.put(Utilisateur.class, new HashMap<>());

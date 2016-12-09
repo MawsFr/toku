@@ -35,37 +35,49 @@ import fr.lille1.univ.coo.tp.role.Role;
 public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	@Id
 	private Integer id;
-	
+
 	@PlusieursAUn(saCle = "id_role", sonType = Role.class)
 	private IRole role;
-	
+
 	@Colonne
 	private String pseudo;
-	
+
 	@Colonne
 	private String nom;
-	
+
 	@Colonne
 	private String prenom;
-	
+
 	@Transient
 	@Colonne("mot_de_passe")
 	private String motDePasse;
-	
+
 	@Colonne
 	private String avatar;
-	
+
+	/*
+	 * SELECT *
+		FROM projet_utilisateur, projet_amitie
+		WHERE
+		
+		CASE
+		WHEN projet_amitie.id_utilisateur = '1'
+		THEN projet_amitie.id_ami = projet_utilisateur.id
+		WHEN projet_amitie.id_ami = '1'
+		THEN projet_amitie.id_utilisateur = projet_utilisateur.id
+		END
+	 */
 	//SELECT * FROM utilisateur join utilisateur_amis on utilisateur.id = utilisateur_amis.id_ami where utilisateur_amis.id_utilisateur = ?
-	@PlusieursAPlusieurs(leurCle = "id_ami", table_assoc = Amitie.class, type = Amitie.class, notreCle="id_utilisateur")
+	@PlusieursAPlusieurs(leurCle = "id_ami", table_assoc = Amitie.class, type = Amitie.class, nosCle="id_utilisateur")
 	private IObservableList<Amitie> amitie;
-	
+
 	//select * from discussion join utilisateur_groupe on discussion.id = utilisateur_groupe.id_groupe where utilisateur_groupe.id_utilisateur = ?
-	@PlusieursAPlusieurs(leurCle="id_discussion", notreCle="id_utilisateur", table_assoc=AffectationDiscussion.class, type=Discussion.class)
+	@PlusieursAPlusieurs(leurCle="id_discussion", nosCle="id_utilisateur", table_assoc=AffectationDiscussion.class, type=Discussion.class)
 	private IObservableList<AffectationDiscussion> discussions;
-	
+
 	public Utilisateur() {
 	}
-	
+
 	public Utilisateur(Role role, String pseudo, String motDePasse, String nom, String prenom, String avatar) {
 		this.role = role;
 		this.avatar = avatar;
@@ -74,7 +86,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 		this.prenom = prenom;
 		this.motDePasse = motDePasse;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getId()
 	 */
@@ -82,7 +94,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	public Integer getId() {
 		return id;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setId(int)
 	 */
@@ -91,7 +103,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 		this.id = id;
 		notifierModification("id");
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getAvatar()
 	 */
@@ -116,7 +128,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	public IRole getRole() {
 		return role;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setRole(fr.lille1.univ.coo.tp.role.IRole)
 	 */
@@ -125,7 +137,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 		this.role = role;
 		notifierModification("role");
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getPseudo()
 	 */
@@ -133,7 +145,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	public String getPseudo() {
 		return pseudo;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setPseudo(java.lang.String)
 	 */
@@ -142,7 +154,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 		this.pseudo = pseudo;
 		notifierModification("pseudo");
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getNom()
 	 */
@@ -150,7 +162,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	public String getNom() {
 		return nom;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setNom(java.lang.String)
 	 */
@@ -159,7 +171,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 		this.nom = nom;
 		notifierModification("nom");
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getPrenom()
 	 */
@@ -167,7 +179,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	public String getPrenom() {
 		return prenom;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setPrenom(java.lang.String)
 	 */
@@ -176,7 +188,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 		this.prenom = prenom;
 		notifierModification("prenom");
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getMotDePasse()
 	 */
@@ -184,7 +196,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	public String getMotDePasse() {
 		return motDePasse;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setMotDePasse(java.lang.String)
 	 */
@@ -210,8 +222,6 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 		this.amitie = amis;
 		notifierModification("amis");
 	}
-	
-	
 
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getDiscussions()
@@ -229,17 +239,17 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 		this.discussions = discussions;
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#accept(fr.lille1.univ.coo.tp.visiteur.Visiteur)
-	 */
-	public static void main(String[] args) throws DAOException {
-		LocalMysqlConfiguration c = new LocalMysqlConfiguration();
-		c.setMdp("root");
-		GestionnaireConnexion.ouvrirConnexion(c);
-		IUtilisateur u = new DAOGenerique<Utilisateur>(Utilisateur.class).rechercher(4);
-		System.out.println(u);
-		System.out.println(u.getAffectations());
-	}
+//	/* (non-Javadoc)
+//	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#accept(fr.lille1.univ.coo.tp.visiteur.Visiteur)
+//	 */
+//	public static void main(String[] args) throws DAOException {
+//		LocalMysqlConfiguration c = new LocalMysqlConfiguration();
+//		c.setMdp("root");
+//		GestionnaireConnexion.ouvrirConnexion(c);
+//		IUtilisateur u = new DAOGenerique<Utilisateur>(Utilisateur.class).rechercher(4);
+//		System.out.println(u);
+//		System.out.println(u.getAffectations());
+//	}
 
 	@Override
 	public List<IDiscussion> getDiscussion() {
@@ -254,5 +264,5 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	public void accept(Visiteur visitor) throws DomainException {
 		visitor.visit(this);
 	}
-	
+
 }

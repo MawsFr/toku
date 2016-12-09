@@ -40,7 +40,7 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	@PlusieursAUn(sonType = Utilisateur.class, saCle = "id_moderateur")
 	protected IUtilisateur moderateur;
 	
-	@PlusieursAPlusieurs(table_assoc=AffectationDiscussion.class, leurCle="id_utilisateur", notreCle="id_discussion", type=AffectationDiscussion.class)
+	@PlusieursAPlusieurs(table_assoc=AffectationDiscussion.class, leurCle="id_utilisateur", nosCle="id_discussion", type=AffectationDiscussion.class)
 	protected IObservableList<AffectationDiscussion> membres;
 	
 	// select * from message where 

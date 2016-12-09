@@ -8,7 +8,7 @@ import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
 import fr.lille1.univ.coo.tp.filtre.Visiteur;
 
-@Table("amitie")
+@Table("amitie_view")
 public class Amitie extends ObjetDomaine {
 	public static final int ETAT_EN_ATTENTE = 0;
 	public static final int ETAT_VALIDEE = 1;

@@ -3,7 +3,6 @@
  */
 package fr.lille1.univ.coo.tp.persistance.proxy.factory;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,11 +10,9 @@ import java.util.Map;
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
-import fr.lille1.univ.coo.tp.persistance.Jointure;
 import fr.lille1.univ.coo.tp.service.unitofwork.UnitOfWork;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.ObservableList;
-import fr.lille1.univ.coo.tp.utils.ReflectionUtils;
 
 /**
  * @author Maws
@@ -24,19 +21,15 @@ import fr.lille1.univ.coo.tp.utils.ReflectionUtils;
 public class PlusieursAPlusieursFactory<T extends IObjetDomaine> implements Factory<IObservableList<T>> {
 
 	private Class<?> tableAssociation;
-	private String leurColonne;
 	private String notreColonne;
 	private Class<?> leurType;
-	private String leurId;
-	private Object id;
+	private Integer id;
 	
-	public PlusieursAPlusieursFactory(Class<?> tableAssociation2, String leurColonne, String notreColonne,
-			Class<?> leurType, String leurId, Object id) {
-		this.tableAssociation = tableAssociation2;
-		this.leurColonne = leurColonne;
+	public PlusieursAPlusieursFactory(Class<?> tableAssociation, String notreColonne,
+			Class<?> leurType, Integer id) {
+		this.tableAssociation = tableAssociation;
 		this.notreColonne = notreColonne;
 		this.leurType = leurType;
-		this.leurId = leurId;
 		this.id = id;
 	}
 

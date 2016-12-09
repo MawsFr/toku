@@ -15,8 +15,8 @@ import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
  * @author Mustapha Nezzari
  *
  */
-public abstract class Visiteur {
-	protected Object resultat;
+public abstract class Visiteur<T> {
+	protected T resultat;
 	
 	/**
 	 * Visite un objet du domaine.
@@ -42,14 +42,14 @@ public abstract class Visiteur {
 	/**
 	 * @return Le resultat
 	 */
-	public Object getResultat() {
+	public T getResultat() {
 		return resultat;
 	}
 
 	/**
 	 * @param resultat Le nouveau resultat
 	 */
-	public void setResultat(Object resultat) {
+	public void setResultat(T resultat) {
 		this.resultat = resultat;
 	}
 	

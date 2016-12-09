@@ -7,5 +7,6 @@ public interface IDiscussionService {
 
 	Discussion creerDiscussion(String string, int type) throws ServiceException;
 	void ajouterUtilisateur(Discussion discussion, IUtilisateur iUtilisateur, Integer etat) throws ServiceException;
+	void envoyerMessage(Discussion discussion, String texte) throws ServiceException;
 
 }

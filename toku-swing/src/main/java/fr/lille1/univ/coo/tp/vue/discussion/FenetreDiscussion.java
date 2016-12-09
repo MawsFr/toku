@@ -27,7 +27,6 @@ import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Fermable;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.JAffectationList;
-import fr.lille1.univ.coo.tp.vue.utilisateurs.JUtilisateurList;
 
 public class FenetreDiscussion extends JFrame implements Fermable {
 
@@ -48,7 +47,11 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	private JMenu menuFichier;
 	private JMenuItem menuFermer;
 	
+	private Discussion discussion;
+	
 	public FenetreDiscussion(Discussion discussion) {
+		this.discussion = discussion;
+		
 		c = getContentPane();
 		c.setLayout(new BorderLayout(0, 0));
 		
@@ -381,6 +384,21 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	public void setMenuFermer(JMenuItem menuFermer) {
 		this.menuFermer = menuFermer;
 	}
+
+	/**
+	 * @return Le discussion
+	 */
+	public Discussion getDiscussion() {
+		return discussion;
+	}
+
+	/**
+	 * @param discussion Le nouveau discussion
+	 */
+	public void setDiscussion(Discussion discussion) {
+		this.discussion = discussion;
+	}
+	
 	
 	
 }

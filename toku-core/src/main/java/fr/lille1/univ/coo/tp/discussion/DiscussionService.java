@@ -1,6 +1,7 @@
 package fr.lille1.univ.coo.tp.discussion;
 
 import fr.lille1.univ.coo.tp.Application;
+import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
@@ -54,6 +55,23 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 		affectationDiscussion.setEtat(etat);
 		utilisateur.getAffectations().ajouter(affectationDiscussion);
 		discussion.getAffectations().ajouter(affectationDiscussion);
+	}
+	
+	@Override
+	public void envoyerMessage(Discussion discussion, String texte) throws ServiceException {
+		Message message = new Message();
+		message.setDiscussion(discussion);
+		message.setUtilisateur(Application.getInstance().getSession().getUtilisateur());
+		message.setTexte(texte);
+		
+		discussion.getMessages().ajouter(message);
+		try {
+			UnitOfWork.getInstance(Message.class).commit();
+		} catch (DomainException e) {
+			e.printStackTrace();
+			throw new ServiceException(e);
+		}
+		
 	}
 
 }
