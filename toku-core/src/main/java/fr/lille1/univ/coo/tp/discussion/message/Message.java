@@ -16,7 +16,7 @@ import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
 @Table
-public class Message extends ObjetDomaine {
+public class Message extends ObjetDomaine<Integer> {
 	@Id
 	private Integer id;
 	

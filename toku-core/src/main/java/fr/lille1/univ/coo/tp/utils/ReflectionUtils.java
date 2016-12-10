@@ -118,6 +118,21 @@ public class ReflectionUtils {
 		} 
 		return champ.getName();
 	}
+	
+	public static String getGetter(Field field) {
+		return getGetter(field.getName());
+	}
+	
+	public static String getGetter(String name) {
+		return "get" + name.substring(0, 1).toUpperCase() + name.substring(1);
+	}
 
-
+	public static String getSetter(Field field) {
+		return getSetter(field.getName());
+	}
+	
+	public static String getSetter(String name) {
+		return "set" + name.substring(0, 1).toUpperCase() + name.substring(1);
+	}
+	
 }

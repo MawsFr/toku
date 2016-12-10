@@ -5,7 +5,7 @@ import javax.swing.ListCellRenderer;
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 
-public class JAffectationList extends JFiltrableList<AffectationDiscussion> {
+public class JAffectationList extends JDiscussionList {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,7 +24,7 @@ public class JAffectationList extends JFiltrableList<AffectationDiscussion> {
 
 	@Override
 	public String getMessageVide() {
-		return "Vous n'avez aucun amis, cliquez sur +Amis pour en ajouter !";
+		return "Aucun utilisateur sur cette dicussion !";
 	}
 
 }

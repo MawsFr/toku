@@ -9,7 +9,7 @@ import fr.lille1.univ.coo.tp.observateur.Observateur;
  * @author Mustapha Nezzari
  *
  */
-public interface IObjetDomaine extends Visitable {
-	public Integer getId();
+public interface IObjetDomaine<T> extends Visitable {
+	public T getId();
 	public void ajouterObservateur(Observateur<?> obs);
 }

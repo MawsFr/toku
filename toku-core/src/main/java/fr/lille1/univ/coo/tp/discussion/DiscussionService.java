@@ -11,7 +11,7 @@ import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
 public class DiscussionService extends Service<Discussion> implements IDiscussionService {
 	private static IDiscussionService instance;
-	
+	private static int nb_disc = 0;
 	protected DiscussionService() {
 	}
 	
@@ -30,20 +30,11 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 		Utilisateur moderateur = Application.getInstance().getSession().getUtilisateur();
 		
 		Discussion discussion = new Discussion();
-		discussion.setNom(string);
+		discussion.setNom(string + nb_disc++);
 		discussion.setModerateur(moderateur);
 		discussion.setLeType(type);
 		
 		UnitOfWork.getInstance(Discussion.class).creation(discussion);
-		try {
-			UnitOfWork.getInstance(Discussion.class).commit();
-		} catch (DomainException e) {
-			e.printStackTrace();
-			throw new ServiceException(e);
-		}
-		
-		ajouterUtilisateur(discussion, moderateur, AffectationDiscussion.ETAT_LU);
-		
 		return discussion;
 	}
 	
@@ -72,6 +63,26 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 			throw new ServiceException(e);
 		}
 		
+	}
+	
+	@Override
+	public void validerDiscussions() throws ServiceException {
+		try {
+			UnitOfWork.getInstance(Discussion.class).commit();
+		} catch (DomainException e) {
+			e.printStackTrace();
+			throw new ServiceException(e);
+		}
+	}
+	
+	@Override
+	public void validerAffectations() throws ServiceException {
+		try {
+			UnitOfWork.getInstance(AffectationDiscussion.class).commit();
+		} catch (DomainException e) {
+			e.printStackTrace();
+			throw new ServiceException(e);
+		}
 	}
 
 }

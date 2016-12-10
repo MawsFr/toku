@@ -9,14 +9,14 @@ import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
 import fr.lille1.univ.coo.tp.filtre.Visiteur;
 
 @Table("amitie_view")
-public class Amitie extends ObjetDomaine {
+public class Amitie extends ObjetDomaine<String> {
 	public static final int ETAT_EN_ATTENTE = 0;
 	public static final int ETAT_VALIDEE = 1;
 	public static final int ETAT_REFUSEE = 2;
 	public static final int ETAT_VOUS = 3;
 	
 	@Id
-	private Integer id;
+	private String id;
 	
 	@PlusieursAUn(sonType=Utilisateur.class, saCle = "id_utilisateur")
 	private IUtilisateur utilisateur;
@@ -51,12 +51,20 @@ public class Amitie extends ObjetDomaine {
 		this.etat = etat;
 	}
 
-	@Override
-	public Integer getId() {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * @return Le id
+	 */
+	public String getId() {
+		return id;
 	}
-	
+
+	/**
+	 * @param id Le nouveau id
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	@Override
 	public void accept(Visiteur visitor) throws DomainException {
 		visitor.visit(this);

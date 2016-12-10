@@ -22,7 +22,10 @@ public class AmisListMouseAdapter extends JObservableListMouseAdapter<Amitie> {
 		Discussion discussion = null;
 		try {
 			discussion = Service.getDiscussionService().creerDiscussion("Discussion", Discussion.TYPE_PRIVE);
+			Service.getDiscussionService().validerDiscussions();
+			Service.getDiscussionService().ajouterUtilisateur(discussion, element.getUtilisateur(), AffectationDiscussion.ETAT_LU);
 			Service.getDiscussionService().ajouterUtilisateur(discussion, element.getAmi(), AffectationDiscussion.ETAT_EN_ATTENTE);
+			Service.getDiscussionService().validerAffectations();
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(FenetrePrincipale.getInstance().getFenetre(), "Erreur lors du cryptage du mot de passe !", "Erreur", JOptionPane.ERROR_MESSAGE);

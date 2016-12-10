@@ -1,9 +1,13 @@
 package fr.lille1.univ.coo.tp.persistance;
 
+import java.lang.reflect.Field;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
+
 
 /**
  * Converti les types d'une BDD en type JAVAL.
@@ -80,5 +84,25 @@ public class SQLTypeMap {
 		}
 
 		return result;
+	}
+	
+	public static Object getIdValue(ResultSet id, Class<?> type) throws SQLException {
+		if(Integer.class.equals(type)) {
+			return id.getInt(1);
+		} else if(String.class.equals(type)) {
+			return id.getString(1);
+		} else {
+			return id.getObject(1);
+		}
+	}
+	
+	public static Object getIdValue(ResultSet resultat, String colonne, Class<?> type) throws SQLException {
+		if(Integer.class.equals(type)) {
+			return resultat.getInt(colonne);
+		} else if(String.class.equals(type)) {
+			return resultat.getString(colonne);
+		} else {
+			return resultat.getObject(colonne);
+		}
 	}
 }

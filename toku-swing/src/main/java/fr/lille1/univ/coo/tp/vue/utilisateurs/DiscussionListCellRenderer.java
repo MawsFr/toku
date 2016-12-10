@@ -6,14 +6,14 @@ import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
-import fr.lille1.univ.coo.tp.discussion.Discussion;
+import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 
-public class DiscussionListCellRenderer extends JLabel implements ObservableListRenderer<Discussion> {
+public class DiscussionListCellRenderer extends JLabel implements ObservableListRenderer<AffectationDiscussion> {
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public Component getListCellRendererComponent(JList<? extends Discussion> list, Discussion value, int index,
+	public Component getListCellRendererComponent(JList<? extends AffectationDiscussion> list, AffectationDiscussion value, int index,
 			boolean isSelected, boolean cellHasFocus) {
 		setOpaque(true);
 		if (isSelected) {
@@ -28,7 +28,7 @@ public class DiscussionListCellRenderer extends JLabel implements ObservableList
 			setForeground(Color.BLACK);
 		}
 
-		String discussion = value.getNom() + " (" + value.getAffectations().getListe().size() + " membre(s))";
+		String discussion = value.getDiscussion().getNom() + " (" + value.getDiscussion().getAffectations().getListe().size() + " membre(s))";
 		setText(discussion);
 		setFont(list.getFont());
 		return this;

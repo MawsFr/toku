@@ -54,6 +54,10 @@ public interface IUtilisateur {
 	void setAffectations(IObservableList<AffectationDiscussion> discussions);
 	
 	List<IDiscussion> getDiscussion();
+
+	IObservableList<Amitie> getAmitie();
+
+	void setAmitie(IObservableList<Amitie> amitie);
 	
 
 }

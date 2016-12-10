@@ -9,16 +9,12 @@ import fr.lille1.univ.coo.tp.annotations.PlusieursAPlusieurs;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.annotations.Transient;
-import fr.lille1.univ.coo.tp.connexions.LocalMysqlConfiguration;
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.discussion.IDiscussion;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
 import fr.lille1.univ.coo.tp.filtre.Visiteur;
-import fr.lille1.univ.coo.tp.persistance.DAOException;
-import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
-import fr.lille1.univ.coo.tp.persistance.GestionnaireConnexion;
 import fr.lille1.univ.coo.tp.role.IRole;
 import fr.lille1.univ.coo.tp.role.Role;
 
@@ -32,7 +28,7 @@ import fr.lille1.univ.coo.tp.role.Role;
  *
  */
 @Table
-public class Utilisateur extends ObjetDomaine implements IUtilisateur {
+public class Utilisateur extends ObjetDomaine<Integer> implements IUtilisateur {
 	@Id
 	private Integer id;
 
@@ -73,7 +69,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 
 	//select * from discussion join utilisateur_groupe on discussion.id = utilisateur_groupe.id_groupe where utilisateur_groupe.id_utilisateur = ?
 	@PlusieursAPlusieurs(leurCle="id_discussion", nosCle="id_utilisateur", table_assoc=AffectationDiscussion.class, type=Discussion.class)
-	private IObservableList<AffectationDiscussion> discussions;
+	private IObservableList<AffectationDiscussion> affectations;
 
 	public Utilisateur() {
 	}
@@ -228,7 +224,7 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	 */
 	@Override
 	public IObservableList<AffectationDiscussion> getAffectations() {
-		return discussions;
+		return affectations;
 	}
 
 	/* (non-Javadoc)
@@ -236,9 +232,9 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 	 */
 	@Override
 	public void setAffectations(IObservableList<AffectationDiscussion> discussions) {
-		this.discussions = discussions;
+		this.affectations = discussions;
 	}
-
+	
 //	/* (non-Javadoc)
 //	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#accept(fr.lille1.univ.coo.tp.visiteur.Visiteur)
 //	 */
@@ -251,10 +247,26 @@ public class Utilisateur extends ObjetDomaine implements IUtilisateur {
 //		System.out.println(u.getAffectations());
 //	}
 
+	/**
+	 * @return Le amitie
+	 */
+	@Override
+	public IObservableList<Amitie> getAmitie() {
+		return amitie;
+	}
+
+	/**
+	 * @param amitie Le nouveau amitie
+	 */
+	@Override
+	public void setAmitie(IObservableList<Amitie> amitie) {
+		this.amitie = amitie;
+	}
+
 	@Override
 	public List<IDiscussion> getDiscussion() {
 		List<IDiscussion> discussions = new ArrayList<>();
-		for(AffectationDiscussion a : this.discussions.getListe()) {
+		for(AffectationDiscussion a : this.affectations.getListe()) {
 			discussions.add(a.getDiscussion());
 		}
 		return discussions;

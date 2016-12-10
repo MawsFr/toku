@@ -3,6 +3,7 @@ package fr.lille1.univ.coo.tp.persistance;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -77,56 +78,58 @@ public class DAOGenerique<T extends IObjetDomaine> {
 	public T creer(final T objet) throws DAOException {
 		PreparedStatement ps = null;
 		try {
-			boolean accessible = false;
+			// boolean accessible = false;
 
 			List<String> champsListe = new ArrayList<>();
 			Map<String, Object> valeurs = new HashMap<>();
 			for (Field field : classe.getDeclaredFields()) {
-				String champ = ReflectionUtils.getNomColonne(field);
-				Class<?> type = null;
-				accessible = field.isAccessible();
-				field.setAccessible(true);
-				if (field.isAnnotationPresent(Colonne.class) || field.isAnnotationPresent(Id.class)) {
-					valeurs.put(champ, field.get(objet));
-					champsListe.add(champ);
-				} else if (field.isAnnotationPresent(UnAUn.class) || field.isAnnotationPresent(PlusieursAUn.class)) {
-					if (field.isAnnotationPresent(UnAUn.class)) {
-						type = field.get(objet).getClass();
-					} else if (field.isAnnotationPresent(PlusieursAUn.class)) {
-						type = field.getAnnotation(PlusieursAUn.class).sonType();
+				if(field.getAnnotations().length > 0) {
+					String champ = ReflectionUtils.getNomColonne(field);
+					Class<?> type = null;
+					Method getter = classe.getMethod(ReflectionUtils.getGetter(field));
+					Method setter = classe.getMethod(ReflectionUtils.getSetter(field), field.getType());
+					if (field.isAnnotationPresent(Colonne.class) || field.isAnnotationPresent(Id.class)) {
+						valeurs.put(champ, getter.invoke(objet));
+						champsListe.add(champ);
+					} else if (field.isAnnotationPresent(UnAUn.class) || field.isAnnotationPresent(PlusieursAUn.class)) {
+						if (field.isAnnotationPresent(UnAUn.class)) {
+							type = getter.invoke(objet).getClass();
+						} else if (field.isAnnotationPresent(PlusieursAUn.class)) {
+//							type = field.getAnnotation(PlusieursAUn.class).sonType();
 
+							type = getter.invoke(objet).getClass();
+						}
+						Field idField = ReflectionUtils.trouverChampsId(field.getAnnotation(PlusieursAUn.class).sonType());
+						Method idGetter = type.getMethod(ReflectionUtils.getGetter(idField));
+						Object o = idGetter.invoke(getter.invoke(objet));
+						if (o != null) {
+							valeurs.put(champ, o);
+						}
+						champsListe.add(champ);
+					} else if (field.isAnnotationPresent(UnAPlusieurs.class)) {
+						UnAPlusieurs unAPlusieurs = field.getAnnotation(UnAPlusieurs.class);
+						Class<?> leurType = unAPlusieurs.leurType();
+						String maCle = unAPlusieurs.maCle();
+
+						Factory<IObservableList<T>> unAPlusieursFactory = new UnAPlusieursFactory<T>(leurType, maCle,
+								objet.getId());
+						creerProxyList(objet, field, setter, unAPlusieursFactory);
+					} else if (field.isAnnotationPresent(PlusieursAPlusieurs.class)) {
+						PlusieursAPlusieurs plusieursAPlusieurs = field.getAnnotation(PlusieursAPlusieurs.class);
+
+						Class<?> tableAssociation = plusieursAPlusieurs.table_assoc();
+						// String leurColonne = plusieursAPlusieurs.leurCle();
+						Class<?> leurType = plusieursAPlusieurs.type();
+						// String leurId = ReflectionUtils.trouverId(leurType);
+
+						String notreColonne = plusieursAPlusieurs.nosCle();
+
+						Factory<IObservableList<T>> plusieursAPlusieursFactory = new PlusieursAPlusieursFactory<T>(
+								tableAssociation, notreColonne, leurType, objet.getId());
+						creerProxyList(objet, field, setter, plusieursAPlusieursFactory);
 					}
-					Field idField = ReflectionUtils.trouverChampsId(type);
-					idField.setAccessible(true);
-					Object o = idField.get(field.get(objet));
-					if (o != null) {
-						valeurs.put(champ, o);
-					}
-					champsListe.add(champ);
-				} else if (field.isAnnotationPresent(UnAPlusieurs.class)) {
-					UnAPlusieurs unAPlusieurs = field.getAnnotation(UnAPlusieurs.class);
-					Class<?> leurType = unAPlusieurs.leurType();
-					String maCle = unAPlusieurs.maCle();
-
-					Factory<IObservableList<T>> unAPlusieursFactory = new UnAPlusieursFactory<T>(leurType,
-							maCle, objet.getId());
-					creerProxyList(objet, field, unAPlusieursFactory);
-				} else if (field.isAnnotationPresent(PlusieursAPlusieurs.class)) {
-					PlusieursAPlusieurs plusieursAPlusieurs = field
-							.getAnnotation(PlusieursAPlusieurs.class);
-
-					Class<?> tableAssociation = plusieursAPlusieurs.table_assoc();
-//					String leurColonne = plusieursAPlusieurs.leurCle();
-					Class<?> leurType = plusieursAPlusieurs.type();
-//					String leurId = ReflectionUtils.trouverId(leurType);
-
-					String notreColonne = plusieursAPlusieurs.nosCle();
-
-					Factory<IObservableList<T>> plusieursAPlusieursFactory = new PlusieursAPlusieursFactory<T>(tableAssociation, notreColonne,
-							leurType, objet.getId());
-					creerProxyList(objet, field, plusieursAPlusieursFactory);
+					// field.setAccessible(accessible);
 				}
-				field.setAccessible(accessible);
 			}
 			ps = creerRequetePreparee(connexion, rp.insertion(champsListe), true, champsListe, valeurs, null, null);
 			System.out.println(ps);
@@ -135,12 +138,13 @@ public class DAOGenerique<T extends IObjetDomaine> {
 			ResultSet resultat = null;
 			resultat = ps.getGeneratedKeys();
 			resultat.next();
-			Integer id = resultat.getInt(1);
 			Field idField = ReflectionUtils.trouverChampsId(classe);
-			accessible = idField.isAccessible();
-			idField.setAccessible(true);
-			idField.set(objet, id);
-			idField.setAccessible(accessible);
+			Method idSetter = classe.getMethod(ReflectionUtils.getSetter(idField), idField.getType());
+			Object id = SQLTypeMap.getIdValue(resultat, idField.getType());
+			// accessible = idField.isAccessible();
+			// idField.setAccessible(true);
+			idSetter.invoke(objet, id);
+			// idField.setAccessible(accessible);
 			connexion.commit();
 			references.enregistrer(classe, id, objet);
 		} catch (SQLException e) {
@@ -150,7 +154,8 @@ public class DAOGenerique<T extends IObjetDomaine> {
 				throw new DAOException(e1);
 			}
 			throw new DAOException(e);
-		} catch (SecurityException | IllegalArgumentException | IllegalAccessException e) {
+		} catch (SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException
+				| InvocationTargetException e) {
 			throw new DAOException(e);
 		} finally {
 			try {
@@ -172,7 +177,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 	 *            l'id de l'objet a supprimer dans la BDD
 	 * @throws DAOException
 	 */
-	public void supprimer(final Integer id) throws DAOException {
+	public void supprimer(final Object id) throws DAOException {
 		PreparedStatement ps = null;
 		try {
 			String idChamp = ReflectionUtils.trouverId(classe);
@@ -234,22 +239,27 @@ public class DAOGenerique<T extends IObjetDomaine> {
 
 			for (String champ : champs) {
 				Field field = classe.getDeclaredField(champ);
-				boolean accessible = field.isAccessible();
-				field.setAccessible(true);
-				if (field.isAnnotationPresent(Colonne.class)) {
-					clauseSet.put(ReflectionUtils.getNomColonne(field), field.get(objet));
+				if (field.getAnnotations().length > 0) {
+					Method getter = classe.getMethod(ReflectionUtils.getGetter(field));
+					// boolean accessible = field.isAccessible();
+					// field.setAccessible(true);
+					if (field.isAnnotationPresent(Colonne.class)) {
+						clauseSet.put(ReflectionUtils.getNomColonne(field), getter.invoke(objet));
+					}
 				}
-				field.setAccessible(accessible);
+				// field.setAccessible(accessible);
 			}
-			
+
 			Field idChamps = ReflectionUtils.trouverChampsId(classe);
-			boolean accessible = idChamps.isAccessible();
-			idChamps.setAccessible(true);
-			clauseWhere.put(idChamps.getName(), idChamps.get(objet));
-			idChamps.setAccessible(accessible);
+			Method idGetter = classe.getMethod(ReflectionUtils.getGetter(idChamps));
+			// boolean accessible = idChamps.isAccessible();
+			// idChamps.setAccessible(true);
+			clauseWhere.put(idChamps.getName(), idGetter.invoke(objet));
+			// idChamps.setAccessible(accessible);
 
 			modifier(clauseSet, clauseWhere);
-		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+		} catch (IllegalArgumentException | InvocationTargetException | NoSuchMethodException | IllegalAccessException
+				| NoSuchFieldException | SecurityException e) {
 			e.printStackTrace();
 			throw new DAOException(e);
 		} catch (DAOException e) {
@@ -307,7 +317,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 	 * @return
 	 * @throws DAOException
 	 */
-	public T rechercher(final Integer id) throws DAOException {
+	public T rechercher(final Object id) throws DAOException {
 		Map<String, Object> propVal = new HashMap<>();
 		propVal.put(ReflectionUtils.trouverId(classe), id);
 
@@ -362,7 +372,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 					clauseWhere);
 			resultat = ps.executeQuery();
 			while (resultat.next()) {
-				int id = resultat.getInt(1);
+				Object id = resultat.getObject(1);
 				T recherche = (T) references.rechercher(classe, id);
 				if (recherche == null) {
 					elements.add((T) construire(id, resultat).get());
@@ -390,7 +400,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 		}
 		return elements;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<T> rechercherParRequete(Requete requete, final Map<String, Object> clauseWhere) throws DAOException {
 		PreparedStatement ps = null;
@@ -398,8 +408,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 		final List<T> elements = new ArrayList<>();
 		final List<String> proprietes = new ArrayList<>(clauseWhere.keySet());
 		try {
-			ps = creerRequetePreparee(connexion, requete.toString(), false, null, null, proprietes,
-					clauseWhere);
+			ps = creerRequetePreparee(connexion, requete.toString(), false, null, null, proprietes, clauseWhere);
 			resultat = ps.executeQuery();
 			while (resultat.next()) {
 				int id = resultat.getInt(1);
@@ -431,7 +440,8 @@ public class DAOGenerique<T extends IObjetDomaine> {
 		return elements;
 	}
 
-	public Object rechercherUneProprieteUnSeul(String nomPropriete, final Map<String, Object> clauseWhere) throws DAOException {
+	public Object rechercherUneProprieteUnSeul(String nomPropriete, final Map<String, Object> clauseWhere)
+			throws DAOException {
 		List<String> props = new ArrayList<>();
 		props.add(nomPropriete);
 		return rechercherDesProprietesUnSeul(props, clauseWhere).get(nomPropriete);
@@ -439,22 +449,26 @@ public class DAOGenerique<T extends IObjetDomaine> {
 
 	/**
 	 * Va rechercher les propriete d'un seul objet dans la base
-	 * @param nomPropriete Les propriété à récupérer
-	 * @param clauseWhere La condition que l'objet doit respecter
+	 * 
+	 * @param nomPropriete
+	 *            Les propriété à récupérer
+	 * @param clauseWhere
+	 *            La condition que l'objet doit respecter
 	 * @return Une map nom de la propriete -> la valeur
 	 * @throws DAOException
 	 */
-	public Map<String, Object> rechercherDesProprietesUnSeul(final List<String> nomProprietes, final Map<String, Object> clauseWhere) throws DAOException {
+	public Map<String, Object> rechercherDesProprietesUnSeul(final List<String> nomProprietes,
+			final Map<String, Object> clauseWhere) throws DAOException {
 		PreparedStatement ps = null;
 		ResultSet resultat = null;
 		final List<String> proprietes = new ArrayList<>(clauseWhere.keySet());
 		final Map<String, Object> elements = new HashMap<>();
 		try {
-			ps = creerRequetePreparee(connexion, rp.rechercherDesProprietes(nomProprietes, proprietes), false, null, null, proprietes,
-					clauseWhere);
+			ps = creerRequetePreparee(connexion, rp.rechercherDesProprietes(nomProprietes, proprietes), false, null,
+					null, proprietes, clauseWhere);
 			resultat = ps.executeQuery();
-			if(resultat.next()) {
-				for(String nomPropriete : nomProprietes) {
+			if (resultat.next()) {
+				for (String nomPropriete : nomProprietes) {
 					elements.put(nomPropriete, resultat.getObject(nomPropriete));
 				}
 			} else {
@@ -609,7 +623,8 @@ public class DAOGenerique<T extends IObjetDomaine> {
 		return ps;
 	}
 
-	public WeakReference<? extends IObjetDomaine> construire(final Integer id, final ResultSet resultat) throws DAOException, SQLException {
+	public WeakReference<? extends IObjetDomaine> construire(final Object id, final ResultSet resultat)
+			throws DAOException, SQLException {
 		// Colonnes : id | nom | prenom | pere | evaluation
 		try {
 			@SuppressWarnings("unchecked")
@@ -624,21 +639,23 @@ public class DAOGenerique<T extends IObjetDomaine> {
 			 */
 			for (Field champ : classe.getDeclaredFields()) {
 				if (champ.getAnnotations().length > 0) {
-					boolean accessible = champ.isAccessible();
-					champ.setAccessible(true);
+					// boolean accessible = champ.isAccessible();
+					// champ.setAccessible(true);
+					Method setter = classe.getMethod(ReflectionUtils.getSetter(champ), champ.getType());
 					if (!champ.isAnnotationPresent(Transient.class)) {
 						String colonne = ReflectionUtils.getNomColonne(champ);
 						if (champ.isAnnotationPresent(Colonne.class) || champ.isAnnotationPresent(Id.class)) {
-							Object valeur = resultat.getObject(colonne);
+							Object valeur = SQLTypeMap.getIdValue(resultat, colonne, champ.getType());
+
 							if (valeur != null) {
 								if (champ.getType().equals(resultat.getObject(colonne).getClass())) {
-									champ.set(objet, resultat.getObject(colonne));
+									setter.invoke(objet, resultat.getObject(colonne));
 								} else {
 									// Si l'objet ne fait partie d'aucune
 									// relation et n'est pas un type primitif
 									// Java, on utilise une factory pour le
 									// créer
-									creerAvecFactory(id, objet, champ, colonne);
+									creerAvecFactory(id, objet, champ, setter, colonne);
 								}
 							}
 						} else {
@@ -649,21 +666,23 @@ public class DAOGenerique<T extends IObjetDomaine> {
 								colonne = ReflectionUtils.trouverId(type);
 
 								Factory<T> unAUnFactory = new UnAUnFactory<T>(colonne, valeur, type);
-								creerProxy(objet, champ, unAUnFactory);
+								creerProxy(objet, champ, setter, unAUnFactory);
 							} else if (champ.isAnnotationPresent(PlusieursAPlusieurs.class)) {
 								PlusieursAPlusieurs plusieursAPlusieurs = champ
 										.getAnnotation(PlusieursAPlusieurs.class);
 
 								Class<?> tableAssociation = plusieursAPlusieurs.table_assoc();
-//								String leurColonne = plusieursAPlusieurs.leurCle();
+								// String leurColonne =
+								// plusieursAPlusieurs.leurCle();
 								Class<?> leurType = plusieursAPlusieurs.type();
-//								String leurId = ReflectionUtils.trouverId(leurType);
+								// String leurId =
+								// ReflectionUtils.trouverId(leurType);
 
 								String notreColonne = plusieursAPlusieurs.nosCle();
 
-								Factory<IObservableList<T>> plusieursAPlusieursFactory = new PlusieursAPlusieursFactory<T>(tableAssociation, notreColonne,
-										leurType, id);
-								creerProxyList(objet, champ, plusieursAPlusieursFactory);
+								Factory<IObservableList<T>> plusieursAPlusieursFactory = new PlusieursAPlusieursFactory<T>(
+										tableAssociation, notreColonne, leurType, id);
+								creerProxyList(objet, champ, setter, plusieursAPlusieursFactory);
 							} else if (champ.isAnnotationPresent(PlusieursAUn.class)) {
 								PlusieursAUn plusieursAUn = champ.getAnnotation(PlusieursAUn.class);
 								String saCle = plusieursAUn.saCle();
@@ -671,9 +690,8 @@ public class DAOGenerique<T extends IObjetDomaine> {
 								colonne = ReflectionUtils.trouverId(sonType);
 								Object valeur = resultat.getObject(saCle);
 
-								Factory<T> plusieursAUnFactory = new PlusieursAUnFactory<T>(sonType, colonne,
-										valeur);
-								creerProxy(objet, champ, plusieursAUnFactory);
+								Factory<T> plusieursAUnFactory = new PlusieursAUnFactory<T>(sonType, colonne, valeur);
+								creerProxy(objet, champ, setter, plusieursAUnFactory);
 							} else if (champ.isAnnotationPresent(UnAPlusieurs.class)) {
 								UnAPlusieurs unAPlusieurs = champ.getAnnotation(UnAPlusieurs.class);
 								Class<?> leurType = unAPlusieurs.leurType();
@@ -682,12 +700,12 @@ public class DAOGenerique<T extends IObjetDomaine> {
 
 								Factory<IObservableList<T>> unAPlusieursFactory = new UnAPlusieursFactory<T>(leurType,
 										maCle, valeur);
-								creerProxyList(objet, champ, unAPlusieursFactory);
+								creerProxyList(objet, champ, setter, unAPlusieursFactory);
 							}
 
 						}
 					}
-					champ.setAccessible(accessible);
+					// champ.setAccessible(accessible);
 				}
 			}
 
@@ -705,12 +723,13 @@ public class DAOGenerique<T extends IObjetDomaine> {
 	 * @param factory
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
 	 */
-	public void creerProxyList(T objet, Field champ, Factory<IObservableList<T>> factory)
-			throws IllegalArgumentException, IllegalAccessException {
+	public void creerProxyList(T objet, Field champ, Method setter, Factory<IObservableList<T>> factory)
+			throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		VirtualProxyBuilder<IObservableList<T>> vp = new VirtualProxyBuilder<IObservableList<T>>(factory,
 				IObservableList.class);
-		champ.set(objet, vp.creerProxy());
+		setter.invoke(objet, vp.creerProxy());
 	}
 
 	/**
@@ -719,11 +738,12 @@ public class DAOGenerique<T extends IObjetDomaine> {
 	 * @param factory
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
 	 */
-	public void creerProxy(T objet, Field champ, Factory<T> factory)
-			throws IllegalArgumentException, IllegalAccessException {
+	public void creerProxy(T objet, Field champ, Method setter, Factory<T> factory)
+			throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		VirtualProxyBuilder<T> vp = new VirtualProxyBuilder<T>(factory, champ.getType());
-		champ.set(objet, vp.creerProxy());
+		setter.invoke(objet, vp.creerProxy());
 	}
 
 	/**
@@ -745,11 +765,12 @@ public class DAOGenerique<T extends IObjetDomaine> {
 	 * @throws SecurityException
 	 * @throws DAOException
 	 */
-	public void creerAvecFactory(final Integer id, T objet, Field champ, String colonne)
+	public void creerAvecFactory(final Object id, T objet, Field champ, Method setter, String colonne)
 			throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, DAOException {
 		System.out.println("Chargement custom de " + champ.getName());
-		champ.set(objet, Factories.getFactory(classe, colonne).getConstructor(Integer.class).newInstance(id).creer());
+		setter.invoke(objet,
+				Factories.getFactory(classe, colonne).getConstructor(Integer.class).newInstance(id).creer());
 	}
 
 	/**
@@ -771,13 +792,13 @@ public class DAOGenerique<T extends IObjetDomaine> {
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 */
-	public void creerProxy(T objet, Field champ, String colonne, Object valeur)
+	public void creerProxy(T objet, Field champ, Method setter, String colonne, Object valeur)
 			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException {
 		@SuppressWarnings("unchecked")
 		VirtualProxyBuilder<T> vp = new VirtualProxyBuilder<T>((Factory<T>) Factories.getFactory(classe, colonne)
 				.getConstructor(valeur.getClass()).newInstance(valeur), champ.getType());
-		champ.set(objet, vp.creerProxy());
+		setter.invoke(objet, vp.creerProxy());
 	}
 
 	/**

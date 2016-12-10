@@ -23,10 +23,10 @@ public class PlusieursAPlusieursFactory<T extends IObjetDomaine> implements Fact
 	private Class<?> tableAssociation;
 	private String notreColonne;
 	private Class<?> leurType;
-	private Integer id;
+	private Object id;
 	
 	public PlusieursAPlusieursFactory(Class<?> tableAssociation, String notreColonne,
-			Class<?> leurType, Integer id) {
+			Class<?> leurType, Object id) {
 		this.tableAssociation = tableAssociation;
 		this.notreColonne = notreColonne;
 		this.leurType = leurType;

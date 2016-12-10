@@ -8,7 +8,7 @@ import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
 import fr.lille1.univ.coo.tp.filtre.Visiteur;
 
 @Table
-public class Role extends ObjetDomaine implements IRole {
+public class Role extends ObjetDomaine<Integer> implements IRole {
 	@Id
 	private Integer id;
 	

@@ -23,7 +23,7 @@ import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
  *
  */
 @Table
-public class Discussion extends ObjetDomaine implements IDiscussion {
+public class Discussion extends ObjetDomaine<Integer> implements IDiscussion {
 	
 	public static final int TYPE_GROUPE = 1;
 	public static final int TYPE_PRIVE = 2;
@@ -41,7 +41,7 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	protected IUtilisateur moderateur;
 	
 	@PlusieursAPlusieurs(table_assoc=AffectationDiscussion.class, leurCle="id_utilisateur", nosCle="id_discussion", type=AffectationDiscussion.class)
-	protected IObservableList<AffectationDiscussion> membres;
+	protected IObservableList<AffectationDiscussion> affectations;
 	
 	// select * from message where 
 	@UnAPlusieurs(leurType=Message.class, maCle="id_discussion")
@@ -111,21 +111,22 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	 */
 	@Override
 	public IObservableList<AffectationDiscussion> getAffectations() {
-		return membres;
+		return affectations;
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#setMembres(fr.lille1.univ.coo.tp.utilisateur.IObservableList)
 	 */
 	@Override
-	public void setAffectation(IObservableList<AffectationDiscussion> membres) {
-		this.membres = membres;
-		notifierModification("membres");
+	public void setAffectations(IObservableList<AffectationDiscussion> membres) {
+		this.affectations = membres;
+//		notifierModification("affectations");
 	}
 
 	/**
 	 * @return Le leType
 	 */
+	@Override
 	public Integer getLeType() {
 		return leType;
 	}
@@ -133,6 +134,7 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	/**
 	 * @param leType Le nouveau leType
 	 */
+	@Override
 	public void setLeType(Integer leType) {
 		this.leType = leType;
 		notifierModification("leType");
@@ -141,6 +143,7 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	/**
 	 * @return Le messages
 	 */
+	@Override
 	public IObservableList<Message> getMessages() {
 		return messages;
 	}
@@ -148,15 +151,16 @@ public class Discussion extends ObjetDomaine implements IDiscussion {
 	/**
 	 * @param messages Le nouveau messages
 	 */
+	@Override
 	public void setMessages(IObservableList<Message> messages) {
 		this.messages = messages;
-		notifierModification("messages");
+//		notifierModification("messages");
 	}
 
 	@Override
 	public List<IUtilisateur> getMembres() {
 		List<IUtilisateur> membres = new ArrayList<>();
-		for(AffectationDiscussion a : this.membres.getListe()) {
+		for(AffectationDiscussion a : this.affectations.getListe()) {
 			membres.add(a.getUtilisateur());
 		}
 		return membres;

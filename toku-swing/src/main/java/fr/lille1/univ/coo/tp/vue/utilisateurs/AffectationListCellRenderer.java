@@ -3,13 +3,14 @@ package fr.lille1.univ.coo.tp.vue.utilisateurs;
 import java.awt.Color;
 import java.awt.Component;
 
-import javax.swing.JLabel;
 import javax.swing.JList;
 
+import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
-import fr.lille1.univ.coo.tp.discussion.IDiscussion;
+import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 
-public class AffectationListCellRenderer extends JLabel implements ObservableListRenderer<AffectationDiscussion> {
+public class AffectationListCellRenderer extends DiscussionListCellRenderer {
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public Component getListCellRendererComponent(JList<? extends AffectationDiscussion> list, AffectationDiscussion value, int index,
@@ -26,8 +27,8 @@ public class AffectationListCellRenderer extends JLabel implements ObservableLis
 			}
 			setForeground(Color.BLACK);
 		}
-		IDiscussion discussion = value.getDiscussion();
-		String nom = discussion.getNom() + " (" + discussion.getAffectations().getListe().size() + " membre(s))";
+		IUtilisateur utilisateur = value.getUtilisateur();
+		String nom = utilisateur.getPseudo() + (utilisateur == Application.getInstance().getSession().getUtilisateur() ? " (Vous)" : "");
 		setText(nom);
 		setFont(list.getFont());
 		return this;
