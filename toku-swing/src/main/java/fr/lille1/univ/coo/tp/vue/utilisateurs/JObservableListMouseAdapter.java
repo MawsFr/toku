@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 
-public abstract class JObservableListMouseAdapter<T extends IObjetDomaine> extends MouseAdapter {
+public abstract class JObservableListMouseAdapter<T extends IObjetDomaine<?>> extends MouseAdapter {
 	protected JObservableList<T> liste;
 
 	public JObservableListMouseAdapter(JObservableList<T> liste) {

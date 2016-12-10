@@ -9,7 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,8 +88,8 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 				if(field.getAnnotations().length > 0) {
 					String champ = ReflectionUtils.getNomColonne(field);
 					Class<?> type = null;
-					Method getter = classe.getMethod(ReflectionUtils.getGetter(field));
-					Method setter = classe.getMethod(ReflectionUtils.getSetter(field), field.getType());
+					Method getter = classe.getDeclaredMethod(ReflectionUtils.getGetter(field));
+					Method setter = classe.getDeclaredMethod(ReflectionUtils.getSetter(field), field.getType());
 					if (field.isAnnotationPresent(Colonne.class) || field.isAnnotationPresent(Id.class)) {
 						valeurs.put(champ, getter.invoke(objet));
 						champsListe.add(champ);
@@ -96,11 +98,10 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 							type = getter.invoke(objet).getClass();
 						} else if (field.isAnnotationPresent(PlusieursAUn.class)) {
 //							type = field.getAnnotation(PlusieursAUn.class).sonType();
-
 							type = getter.invoke(objet).getClass();
 						}
 						Field idField = ReflectionUtils.trouverChampsId(field.getAnnotation(PlusieursAUn.class).sonType());
-						Method idGetter = type.getMethod(ReflectionUtils.getGetter(idField));
+						Method idGetter = type.getDeclaredMethod(ReflectionUtils.getGetter(idField));
 						Object o = idGetter.invoke(getter.invoke(objet));
 						if (o != null) {
 							valeurs.put(champ, o);
@@ -139,7 +140,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 			resultat = ps.getGeneratedKeys();
 			resultat.next();
 			Field idField = ReflectionUtils.trouverChampsId(classe);
-			Method idSetter = classe.getMethod(ReflectionUtils.getSetter(idField), idField.getType());
+			Method idSetter = classe.getDeclaredMethod(ReflectionUtils.getSetter(idField), idField.getType());
 			Object id = SQLTypeMap.getIdValue(resultat, idField.getType());
 			// accessible = idField.isAccessible();
 			// idField.setAccessible(true);
@@ -240,7 +241,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 			for (String champ : champs) {
 				Field field = classe.getDeclaredField(champ);
 				if (field.getAnnotations().length > 0) {
-					Method getter = classe.getMethod(ReflectionUtils.getGetter(field));
+					Method getter = classe.getDeclaredMethod(ReflectionUtils.getGetter(field));
 					// boolean accessible = field.isAccessible();
 					// field.setAccessible(true);
 					if (field.isAnnotationPresent(Colonne.class)) {
@@ -251,7 +252,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 			}
 
 			Field idChamps = ReflectionUtils.trouverChampsId(classe);
-			Method idGetter = classe.getMethod(ReflectionUtils.getGetter(idChamps));
+			Method idGetter = classe.getDeclaredMethod(ReflectionUtils.getGetter(idChamps));
 			// boolean accessible = idChamps.isAccessible();
 			// idChamps.setAccessible(true);
 			clauseWhere.put(idChamps.getName(), idGetter.invoke(objet));
@@ -641,21 +642,26 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 				if (champ.getAnnotations().length > 0) {
 					// boolean accessible = champ.isAccessible();
 					// champ.setAccessible(true);
-					Method setter = classe.getMethod(ReflectionUtils.getSetter(champ), champ.getType());
+					Method setter = classe.getDeclaredMethod(ReflectionUtils.getSetter(champ), champ.getType());
 					if (!champ.isAnnotationPresent(Transient.class)) {
 						String colonne = ReflectionUtils.getNomColonne(champ);
 						if (champ.isAnnotationPresent(Colonne.class) || champ.isAnnotationPresent(Id.class)) {
 							Object valeur = SQLTypeMap.getIdValue(resultat, colonne, champ.getType());
 
 							if (valeur != null) {
-								if (champ.getType().equals(resultat.getObject(colonne).getClass())) {
+								Object result = resultat.getObject(colonne);
+								if (champ.getType().equals(result.getClass())) {
 									setter.invoke(objet, resultat.getObject(colonne));
 								} else {
 									// Si l'objet ne fait partie d'aucune
 									// relation et n'est pas un type primitif
 									// Java, on utilise une factory pour le
 									// créer
-									creerAvecFactory(id, objet, champ, setter, colonne);
+									if(champ.getType().equals(Date.class) && result.getClass().equals(Timestamp.class)) {
+										setter.invoke(objet, new Date(((Timestamp) result).getTime()));
+									} else {
+										creerAvecFactory(id, objet, champ, setter, colonne);
+									}
 								}
 							}
 						} else {
@@ -696,10 +702,9 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 								UnAPlusieurs unAPlusieurs = champ.getAnnotation(UnAPlusieurs.class);
 								Class<?> leurType = unAPlusieurs.leurType();
 								String maCle = unAPlusieurs.maCle();
-								Object valeur = resultat.getObject(maCle);
 
 								Factory<IObservableList<T>> unAPlusieursFactory = new UnAPlusieursFactory<T>(leurType,
-										maCle, valeur);
+										maCle, id);
 								creerProxyList(objet, champ, setter, unAPlusieursFactory);
 							}
 

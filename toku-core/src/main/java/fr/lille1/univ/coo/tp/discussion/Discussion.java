@@ -1,6 +1,7 @@
 package fr.lille1.univ.coo.tp.discussion;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import fr.lille1.univ.coo.tp.annotations.Colonne;
@@ -43,18 +44,11 @@ public class Discussion extends ObjetDomaine<Integer> implements IDiscussion {
 	@PlusieursAPlusieurs(table_assoc=AffectationDiscussion.class, leurCle="id_utilisateur", nosCle="id_discussion", type=AffectationDiscussion.class)
 	protected IObservableList<AffectationDiscussion> affectations;
 	
-	// select * from message where 
 	@UnAPlusieurs(leurType=Message.class, maCle="id_discussion")
 	protected IObservableList<Message> messages;
 	
 	public Discussion() {}
 	
-//	public Discussion(int createur, String nom, int moderateur) {
-//		this.createur = createur;
-//		this.nom = nom;
-//		this.moderateur = moderateur;
-//	}
-
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.discussion.IDiscussion#getId()
 	 */
@@ -170,5 +164,43 @@ public class Discussion extends ObjetDomaine<Integer> implements IDiscussion {
 	public void accept(Visiteur<?> visitor) throws DomainException {
 		visitor.visit(this);
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Discussion)) {
+			return false;
+		}
+		Discussion other = (Discussion) obj;
+		if (id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!id.equals(other.id)) {
+			return false;
+		}
+		return true;
+	}
+	
+	
 	
 }

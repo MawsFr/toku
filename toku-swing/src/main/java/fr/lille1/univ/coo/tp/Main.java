@@ -1,4 +1,4 @@
-package fr.lille1.univ.coo.tp.vue;
+package fr.lille1.univ.coo.tp;
 
 import java.io.Console;
 import java.util.Scanner;
@@ -12,6 +12,7 @@ import fr.lille1.univ.coo.tp.connexions.Configuration;
 import fr.lille1.univ.coo.tp.connexions.LocalMysqlConfiguration;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.GestionnaireConnexion;
+import fr.lille1.univ.coo.tp.vue.FenetrePrincipale;
 
 /**
  * Main class

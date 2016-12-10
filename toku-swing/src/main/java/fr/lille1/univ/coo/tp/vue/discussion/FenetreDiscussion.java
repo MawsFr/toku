@@ -4,16 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -23,22 +26,27 @@ import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
-import fr.lille1.univ.coo.tp.discussion.Discussion;
-import fr.lille1.univ.coo.tp.discussion.message.Message;
+import fr.lille1.univ.coo.tp.controlleurs.discussion.EnvoyerMessageAction;
+import fr.lille1.univ.coo.tp.discussion.IDiscussion;
+import fr.lille1.univ.coo.tp.service.Service;
+import fr.lille1.univ.coo.tp.service.ServiceException;
+import fr.lille1.univ.coo.tp.utils.Log;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Fermable;
 import fr.lille1.univ.coo.tp.vue.utilisateurs.JAffectationList;
 
 public class FenetreDiscussion extends JFrame implements Fermable {
 
 	private static final long serialVersionUID = 1L;
+
+	public static final Object BTN_ENVOYER = "Envoyer";
 	
 	private Container c;
 	private JLabel lblTypeDiscussion;
 	private JLabel lblNomDiscussion;
-	private JList<Message> listeMessages;
+	private JMessageList listeMessages;
 	private JButton btnEnvoyer;
 	private JToggleButton btnPrioritaire;
-	private JTextArea txtMessage;
+	private JEditorPane txtMessage;
 	private JToggleButton btnAccuseReception;
 	private JToggleButton btnChiffre;
 	private JToggleButton btnExpire;
@@ -47,24 +55,40 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	private JMenu menuFichier;
 	private JMenuItem menuFermer;
 	
-	private Discussion discussion;
+	private IDiscussion discussion;
+
+	private EnvoyerMessageAction envoyerAction;
+
+	private JCheckBox chckbxValiderAvecEntre;
 	
-	public FenetreDiscussion(Discussion discussion) {
-		this.discussion = discussion;
+	public FenetreDiscussion(IDiscussion iDiscussion) {
+		this.discussion = iDiscussion;
 		
 		c = getContentPane();
 		c.setLayout(new BorderLayout(0, 0));
 		
+		envoyerAction = new EnvoyerMessageAction(this);
+		
 		lblTypeDiscussion = new JLabel("Groupe: ");
 		lblNomDiscussion = new JLabel("New label");
-		txtMessage = new JTextArea();
-		listeMessages = new JList<>();
-		btnEnvoyer = new JButton("Envoyer");
+		txtMessage = new JEditorPane();
+		txtMessage.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER){
+					if(chckbxValiderAvecEntre.isSelected()) {
+						envoyer();
+					}
+			    }
+			}
+		});
+		listeMessages = new JMessageList(iDiscussion.getMessages());
+		btnEnvoyer = new JButton(envoyerAction);
 		btnPrioritaire = new JToggleButton("Prioritaire");
 		btnAccuseReception = new JToggleButton("Accusé");
 		btnChiffre = new JToggleButton("Chiffré");
 		btnExpire = new JToggleButton("Expire");
-		listeMembres = new JAffectationList(discussion.getAffectations());
+		listeMembres = new JAffectationList(iDiscussion.getAffectations());
 		barreMenu = new JMenuBar();
 		menuFichier = new JMenu("Fichier");
 		menuFermer = new JMenuItem("Fermer");
@@ -79,7 +103,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		JPanel panneauBas = new JPanel();
 		JPanel panneauBas2 = new JPanel();
 		JPanel panneauEnvoi = new JPanel();
-		JCheckBox chckbxValiderAvecEntre = new JCheckBox("Valider avec entrée");
+		chckbxValiderAvecEntre = new JCheckBox("Valider avec entrée");
 		JToolBar barreOutils = new JToolBar();
 		JScrollPane scrollMessage = new JScrollPane();
 		JPanel panneauDroite = new JPanel();
@@ -184,6 +208,26 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		
 	}
 	
+	public void envoyer() {
+		String texte = txtMessage.getText();
+		if(!texte.isEmpty() && texte.trim().length() > 0) {
+			Boolean accuse = btnAccuseReception.isSelected();
+			Boolean prioritaire = btnPrioritaire.isSelected();
+			Boolean chiffre = btnChiffre.isSelected();
+			Integer expire = 2;
+			
+			try {
+				Service.getDiscussionService().envoyerMessage(discussion, texte, accuse, prioritaire, chiffre, expire);
+				Log.info("Message envoye");
+				txtMessage.setText("");
+				txtMessage.setCaretPosition(0);
+			} catch (ServiceException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Erreur lors de l'envoi du message", "Erreur", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+	
 	@Override
 	public void fermer() {
 		this.dispose();
@@ -234,14 +278,14 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	/**
 	 * @return Le listeMessages
 	 */
-	public JList<Message> getListeMessages() {
+	public JMessageList getListeMessages() {
 		return listeMessages;
 	}
 
 	/**
 	 * @param listeMessages Le nouveau listeMessages
 	 */
-	public void setListeMessages(JList<Message> listeMessages) {
+	public void setListeMessages(JMessageList listeMessages) {
 		this.listeMessages = listeMessages;
 	}
 
@@ -276,14 +320,14 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	/**
 	 * @return Le txtMessage
 	 */
-	public JTextArea getTxtMessage() {
+	public JEditorPane getTxtMessage() {
 		return txtMessage;
 	}
 
 	/**
 	 * @param txtMessage Le nouveau txtMessage
 	 */
-	public void setTxtMessage(JTextArea txtMessage) {
+	public void setTxtMessage(JEditorPane txtMessage) {
 		this.txtMessage = txtMessage;
 	}
 
@@ -388,14 +432,14 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	/**
 	 * @return Le discussion
 	 */
-	public Discussion getDiscussion() {
+	public IDiscussion getDiscussion() {
 		return discussion;
 	}
 
 	/**
 	 * @param discussion Le nouveau discussion
 	 */
-	public void setDiscussion(Discussion discussion) {
+	public void setDiscussion(IDiscussion discussion) {
 		this.discussion = discussion;
 	}
 	

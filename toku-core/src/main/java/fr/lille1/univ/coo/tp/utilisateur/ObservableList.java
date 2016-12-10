@@ -22,18 +22,18 @@ public class ObservableList<T extends IObjetDomaine<?>> extends Observable imple
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IListeUtilisateur#ajouter(fr.lille1.univ.coo.tp.utilisateur.Utilisateur)
 	 */
 	@Override
-	public void ajouter(T utilisateur) {
-		this.liste.add(utilisateur);
-		notifierCreation(utilisateur);
+	public void ajouter(T element) {
+		this.liste.add(element);
+		notifierCreation(element);
 	}
 	
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IListeUtilisateur#supprimer(fr.lille1.univ.coo.tp.utilisateur.Utilisateur)
 	 */
 	@Override
-	public void supprimer(T utilisateur) {
-		this.liste.remove(utilisateur);
-		notifierSuppression(utilisateur);
+	public void supprimer(T element) {
+		this.liste.remove(element);
+		notifierSuppression(element);
 	}
 
 	/* (non-Javadoc)

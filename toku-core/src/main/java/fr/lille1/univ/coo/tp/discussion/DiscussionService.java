@@ -1,5 +1,7 @@
 package fr.lille1.univ.coo.tp.discussion;
 
+import java.util.Date;
+
 import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.domain.DomainException;
@@ -11,7 +13,6 @@ import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
 public class DiscussionService extends Service<Discussion> implements IDiscussionService {
 	private static IDiscussionService instance;
-	private static int nb_disc = 0;
 	protected DiscussionService() {
 	}
 	
@@ -30,7 +31,7 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 		Utilisateur moderateur = Application.getInstance().getSession().getUtilisateur();
 		
 		Discussion discussion = new Discussion();
-		discussion.setNom(string + nb_disc++);
+		discussion.setNom(string);
 		discussion.setModerateur(moderateur);
 		discussion.setLeType(type);
 		
@@ -49,20 +50,31 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 	}
 	
 	@Override
-	public void envoyerMessage(Discussion discussion, String texte) throws ServiceException {
+	public void envoyerMessage(IDiscussion discussion, String texte, Boolean accuse, Boolean prioritaire, Boolean chiffre, Integer expire) throws ServiceException {
 		Message message = new Message();
 		message.setDiscussion(discussion);
 		message.setUtilisateur(Application.getInstance().getSession().getUtilisateur());
 		message.setTexte(texte);
+		message.setDate_creation(new Date());
+		message.setAccuse_reception(accuse);
+		message.setChiffre(chiffre);
+		message.setExpiration(expire);
+		message.setPrioritaire(prioritaire);
+		message.setLu(false);
 		
 		discussion.getMessages().ajouter(message);
+		validerMessages();
+		
+	}
+	
+	@Override
+	public void validerMessages() throws ServiceException {
 		try {
 			UnitOfWork.getInstance(Message.class).commit();
 		} catch (DomainException e) {
 			e.printStackTrace();
 			throw new ServiceException(e);
 		}
-		
 	}
 	
 	@Override

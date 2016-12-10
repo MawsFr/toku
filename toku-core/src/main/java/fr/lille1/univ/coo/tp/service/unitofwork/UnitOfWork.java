@@ -99,7 +99,7 @@ public class UnitOfWork implements ObjetDomaineObservateur {
 	}
 
 	@Override
-	public void creation(IObjetDomaine<?> objet) {
+	public void creation(IObjetDomaine<?> objet) {System.out.println("création de " + objet.toString());
 		crees.add(objet);
 	}
 

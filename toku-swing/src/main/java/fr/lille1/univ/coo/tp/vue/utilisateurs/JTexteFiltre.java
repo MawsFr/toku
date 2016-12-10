@@ -3,7 +3,7 @@ package fr.lille1.univ.coo.tp.vue.utilisateurs;
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.vue.composants.JTextFieldHint;
 
-public class JTexteFiltre<T extends IObjetDomaine> extends JTextFieldHint {
+public class JTexteFiltre<T extends IObjetDomaine<?>> extends JTextFieldHint {
 	private static final long serialVersionUID = 1L;
 	private IObservableListModel<T> leModel;
 	private JFiltrableList<T> liste;

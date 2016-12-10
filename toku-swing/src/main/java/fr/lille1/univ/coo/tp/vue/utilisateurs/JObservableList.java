@@ -8,7 +8,7 @@ import javax.swing.JList;
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 
-public abstract class JObservableList<T extends IObjetDomaine> extends JList<T> {
+public abstract class JObservableList<T extends IObjetDomaine<?>> extends JList<T> {
 	protected static final long serialVersionUID = 1L;
 	protected IObservableList<T> liste;
 	protected IObservableListModel<T> leModel;

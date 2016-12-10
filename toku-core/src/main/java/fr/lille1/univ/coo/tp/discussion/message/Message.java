@@ -20,7 +20,7 @@ public class Message extends ObjetDomaine<Integer> {
 	@Id
 	private Integer id;
 	
-	@PlusieursAUn(sonType=Discussion.class, saCle="id_discussion", mappeePar="messages")
+	@PlusieursAUn(sonType=Discussion.class, saCle="id_discussion")
 	private IDiscussion discussion;
 	
 	@PlusieursAUn(sonType=Utilisateur.class, saCle="id_utilisateur")
@@ -202,5 +202,43 @@ public class Message extends ObjetDomaine<Integer> {
 		m = new ChiffreDecorator(m);
 		System.out.println(m.getExpiration());
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Message)) {
+			return false;
+		}
+		Message other = (Message) obj;
+		if (id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!id.equals(other.id)) {
+			return false;
+		}
+		return true;
+	}
+	
+	
 	
 }

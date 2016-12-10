@@ -3,7 +3,6 @@ package fr.lille1.univ.coo.tp.vue.utilisateurs;
 import javax.swing.ListCellRenderer;
 
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
-import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 
 public class JDiscussionList extends JObservableList<AffectationDiscussion> {

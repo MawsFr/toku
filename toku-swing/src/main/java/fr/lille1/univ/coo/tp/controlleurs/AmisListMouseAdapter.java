@@ -21,19 +21,19 @@ public class AmisListMouseAdapter extends JObservableListMouseAdapter<Amitie> {
 	public void doubleClic(Amitie element) {
 		Discussion discussion = null;
 		try {
-			discussion = Service.getDiscussionService().creerDiscussion("Discussion", Discussion.TYPE_PRIVE);
+			discussion = Service.getDiscussionService().creerDiscussion("Discussion privée entre : " + element.getUtilisateur().getPseudo() + " et " + element.getAmi().getPseudo(), Discussion.TYPE_PRIVE);
 			Service.getDiscussionService().validerDiscussions();
 			Service.getDiscussionService().ajouterUtilisateur(discussion, element.getUtilisateur(), AffectationDiscussion.ETAT_LU);
 			Service.getDiscussionService().ajouterUtilisateur(discussion, element.getAmi(), AffectationDiscussion.ETAT_EN_ATTENTE);
 			Service.getDiscussionService().validerAffectations();
+			FenetreDiscussion fenetre = new FenetreDiscussion(discussion);
+//        fenetre.getLblTypeDiscussion().setText("Discussion privée : ");
+			fenetre.getLblNomDiscussion().setText(element.getAmi().getPseudo());
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(FenetrePrincipale.getInstance().getFenetre(), "Erreur lors du cryptage du mot de passe !", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
 		
-        FenetreDiscussion fenetre = new FenetreDiscussion(discussion);
-        fenetre.getLblTypeDiscussion().setText("Discussion privée : ");
-        fenetre.getLblNomDiscussion().setText(element.getAmi().getPseudo());
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
 public class RechercheAmis extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private List<Utilisateur> utilisateurs;
 

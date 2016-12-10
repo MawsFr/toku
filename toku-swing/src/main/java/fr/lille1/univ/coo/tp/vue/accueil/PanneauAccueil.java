@@ -92,6 +92,9 @@ public class PanneauAccueil extends JPanel {
 		ongletGroupes.initialiser();
 	}
 	
+	public void afficherOnglet(int onglet) {
+		this.onglets.setSelectedIndex(onglet);
+	}
 	
 
 }

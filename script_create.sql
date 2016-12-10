@@ -98,7 +98,7 @@ DROP TABLE IF EXISTS `toku`.`projet_discussion` ;
 CREATE TABLE IF NOT EXISTS `toku`.`projet_discussion` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `id_moderateur` INT NOT NULL,
-  `nom` VARCHAR(45) NOT NULL,
+  `nom` VARCHAR(255) NOT NULL,
   `date_creation` DATETIME NULL,
   `leType` INT NOT NULL,
   PRIMARY KEY (`id`, `id_moderateur`),

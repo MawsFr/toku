@@ -10,7 +10,6 @@ import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.annotations.Transient;
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
-import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.discussion.IDiscussion;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
@@ -68,7 +67,7 @@ public class Utilisateur extends ObjetDomaine<Integer> implements IUtilisateur {
 	private IObservableList<Amitie> amitie;
 
 	//select * from discussion join utilisateur_groupe on discussion.id = utilisateur_groupe.id_groupe where utilisateur_groupe.id_utilisateur = ?
-	@PlusieursAPlusieurs(leurCle="id_discussion", nosCle="id_utilisateur", table_assoc=AffectationDiscussion.class, type=Discussion.class)
+	@PlusieursAPlusieurs(leurCle="id_discussion", nosCle="id_utilisateur", table_assoc=AffectationDiscussion.class, type=AffectationDiscussion.class)
 	private IObservableList<AffectationDiscussion> affectations;
 
 	public Utilisateur() {
@@ -276,5 +275,43 @@ public class Utilisateur extends ObjetDomaine<Integer> implements IUtilisateur {
 	public void accept(Visiteur<?> visitor) throws DomainException {
 		visitor.visit(this);
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Utilisateur)) {
+			return false;
+		}
+		Utilisateur other = (Utilisateur) obj;
+		if (id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!id.equals(other.id)) {
+			return false;
+		}
+		return true;
+	}
+	
+	
 
 }

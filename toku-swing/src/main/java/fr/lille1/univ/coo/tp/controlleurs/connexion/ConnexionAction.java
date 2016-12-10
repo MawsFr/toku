@@ -66,6 +66,7 @@ public class ConnexionAction extends AbstractAction {
 			}
 			fenetre.getPanneauPrincipal().afficherEcran(PanneauPrincipal.PANNEAU_ACCUEIL);
 			fenetre.getMenu().getMenuDeconnecter().setEnabled(true);
+			fenetre.getPanneauPrincipal().getPanneauAccueil().afficherOnglet(0);
 			fenetre.getPanneauPrincipal().getPanneauAccueil().initialiser();
 			fenetre.getFenetre().pack();
 		}

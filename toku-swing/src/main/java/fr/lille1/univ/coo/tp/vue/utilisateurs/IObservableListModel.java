@@ -9,17 +9,17 @@ import fr.lille1.univ.coo.tp.filtre.Filtre;
 import fr.lille1.univ.coo.tp.observateur.Observateur;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 
-public class IObservableListModel<T extends IObjetDomaine> extends DefaultListModel<T> implements Observateur<T>, Filtrable {
+public class IObservableListModel<T extends IObjetDomaine<?>> extends DefaultListModel<T> implements Observateur<T>, Filtrable {
 
 	private static final long serialVersionUID = 1L;
 	private IObservableList<T> utilisateurs;
 
-	public IObservableListModel(IObservableList<T> listeUtilisateur) {
-		this.utilisateurs = listeUtilisateur;
-		for(T ami : listeUtilisateur.getListe()) {
-			addElement(ami);
+	public IObservableListModel(IObservableList<T> liste) {
+		this.utilisateurs = liste;
+		for(T element : liste.getListe()) {
+			addElement(element);
 		}
-		listeUtilisateur.ajouterObservateur(this);
+		liste.ajouterObservateur(this);
 	}
 
 	/* (non-Javadoc)
