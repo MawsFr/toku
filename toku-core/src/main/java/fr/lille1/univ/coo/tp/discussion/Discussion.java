@@ -167,7 +167,7 @@ public class Discussion extends ObjetDomaine<Integer> implements IDiscussion {
 	}
 	
 	@Override
-	public void accept(Visiteur visitor) throws DomainException {
+	public void accept(Visiteur<?> visitor) throws DomainException {
 		visitor.visit(this);
 	}
 	

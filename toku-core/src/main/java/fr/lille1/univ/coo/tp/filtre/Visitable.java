@@ -14,6 +14,6 @@ public interface Visitable {
 	 * @param visitor Le visiteur.
 	 * @throws DAOException Erreur au niveau persistance.
 	 */
-	public void accept(Visiteur visitor) throws DomainException;
+	public void accept(Visiteur<?> visitor) throws DomainException;
 
 }

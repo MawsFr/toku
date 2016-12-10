@@ -9,6 +9,6 @@ import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
  * @author Mustapha Nezzari
  *
  */
-public interface ObjetDomaineObservateur extends Observateur<IObjetDomaine> {
+public interface ObjetDomaineObservateur extends Observateur<IObjetDomaine<?>> {
 
 }

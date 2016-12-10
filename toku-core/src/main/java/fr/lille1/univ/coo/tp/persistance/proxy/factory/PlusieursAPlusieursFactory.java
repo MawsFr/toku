@@ -18,7 +18,7 @@ import fr.lille1.univ.coo.tp.utilisateur.ObservableList;
  * @author Maws
  *
  */
-public class PlusieursAPlusieursFactory<T extends IObjetDomaine> implements Factory<IObservableList<T>> {
+public class PlusieursAPlusieursFactory<T extends IObjetDomaine<?>> implements Factory<IObservableList<T>> {
 
 	private Class<?> tableAssociation;
 	private String notreColonne;

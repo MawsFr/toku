@@ -41,7 +41,7 @@ import fr.lille1.univ.coo.tp.utils.ReflectionUtils;
  * @param <T>
  *            Le type d'objet à rendre persistant
  */
-public class DAOGenerique<T extends IObjetDomaine> {
+public class DAOGenerique<T extends IObjetDomaine<?>> {
 	public static final String TABLE_PREFIXE = "projet_";
 
 	private Connection connexion;
@@ -623,7 +623,7 @@ public class DAOGenerique<T extends IObjetDomaine> {
 		return ps;
 	}
 
-	public WeakReference<? extends IObjetDomaine> construire(final Object id, final ResultSet resultat)
+	public WeakReference<? extends IObjetDomaine<?>> construire(final Object id, final ResultSet resultat)
 			throws DAOException, SQLException {
 		// Colonnes : id | nom | prenom | pere | evaluation
 		try {

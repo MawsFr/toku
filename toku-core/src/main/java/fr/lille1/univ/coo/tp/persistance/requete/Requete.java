@@ -4,25 +4,25 @@ import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
 public abstract class Requete {
-	protected Class<? extends IObjetDomaine> classe;
+	protected Class<? extends IObjetDomaine<?>> classe;
 	
-	public Requete(Class<? extends IObjetDomaine> classe) {
+	public Requete(Class<? extends IObjetDomaine<?>> classe) {
 		this.classe = classe;
 	}
 
-	public static RequeteSelection selectionner(Class<? extends IObjetDomaine> classe, String...fields) {
+	public static RequeteSelection selectionner(Class<? extends IObjetDomaine<?>> classe, String...fields) {
 		return new RequeteSelection(classe, fields);
 	}
 	
-	public static RequeteInsertion inserer(Class<? extends IObjetDomaine> classe, String... fields) {
+	public static RequeteInsertion inserer(Class<? extends IObjetDomaine<?>> classe, String... fields) {
 		return new RequeteInsertion(classe, fields);
 	}
 	
-	public static RequeteMiseAJour mettreAJour(Class<? extends IObjetDomaine> classe, String... fields) {
+	public static RequeteMiseAJour mettreAJour(Class<? extends IObjetDomaine<?>> classe, String... fields) {
 		return new RequeteMiseAJour(classe, fields);
 	}
 	
-	public static RequeteSuppression supprimer(Class<? extends IObjetDomaine> classe) {
+	public static RequeteSuppression supprimer(Class<? extends IObjetDomaine<?>> classe) {
 		return new RequeteSuppression(classe);
 	}
 	

@@ -12,7 +12,7 @@ import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 public abstract class Commiter {
 	protected Set<String> parametres;
 	
-	public abstract void action(Class<?> classe, IObjetDomaine o) throws DomainException;
+	public abstract void action(Class<?> classe, IObjetDomaine<?> o) throws DomainException;
 
 	/**
 	 * Retourne les parametre du commiter. Dans notre cas nous l'utilisons pour

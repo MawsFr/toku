@@ -19,7 +19,7 @@ public class SuppressionCommiter extends Commiter {
 	 * @throws DAOException Erreur lors de la suppression
 	 */
 	@Override
-	public void action(Class<?> classe, IObjetDomaine o) throws DomainException {
+	public void action(Class<?> classe, IObjetDomaine<?> o) throws DomainException {
 		try {
 			new DAOGenerique<>(Utilisateur.class).supprimer(o.getId());
 		} catch (DAOException e) {

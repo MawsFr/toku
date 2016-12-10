@@ -12,7 +12,7 @@ import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
  * créer des objet à récupérer de façon paresseuse.
  */
 public class Factories {
-	private static Map<Class<? extends IObjetDomaine>, Map<String, Class<? extends Factory<?>>>> factories;
+	private static Map<Class<? extends IObjetDomaine<?>>, Map<String, Class<? extends Factory<?>>>> factories;
 	static {
 		factories = new HashMap<>();
 		factories.put(Utilisateur.class, new HashMap<>());

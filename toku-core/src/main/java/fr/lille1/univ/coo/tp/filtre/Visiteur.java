@@ -23,7 +23,7 @@ public abstract class Visiteur<T> {
 	 * @param objet L'objet a visiter.
 	 * @throws DAOException Erreur lors de la visite.
 	 */
-	public void visit(IObjetDomaine objet) throws DomainException {
+	public void visit(IObjetDomaine<?> objet) throws DomainException {
 		objet.accept(this);
 	}
 	

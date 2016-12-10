@@ -10,6 +10,7 @@ import fr.lille1.univ.coo.tp.cryptage.CrypteurMD5;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
 import fr.lille1.univ.coo.tp.persistance.proxy.factory.RechercherToutFactory;
+import fr.lille1.univ.coo.tp.role.Role;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.validateur.ValidationException;
@@ -64,23 +65,19 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 		try {
 			return new RechercherToutFactory<Utilisateur>(Utilisateur.class).creer();
 		} catch (DAOException e) {
-			e.printStackTrace();
 			throw new ServiceException(e);
 		}
 	}
 	
 	@Override
 	public boolean estAdministrateur(IUtilisateur utilisateur) throws ServiceException {
-//		Role role;
-//		try {
-//			role = Role.values()[dao.getRole(utilisateur) - 1];
-//		} catch (DAOException e) {
-//			throw new ServiceException(e);
-//		}
-//		return role == Role.ADMINISTRATEUR;
-		return true;
+		try {
+			return utilisateur.getRole() == new DAOGenerique<>(Role.class).rechercher(Role.ROLE_ADMINISTRATEUR);
+		} catch (DAOException e) {
+			throw new ServiceException("Erreur lors de la vérification des droits administrateurs", e);
+		}
 	}
-
+	
 	@Override
 	public void modifierMotDePasse(int idUtilisateur, String nouveauMdp) {
 

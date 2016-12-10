@@ -6,7 +6,7 @@ import java.util.List;
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.observateur.Observable;
 
-public class ObservableList<T extends IObjetDomaine> extends Observable implements IObservableList<T> {
+public class ObservableList<T extends IObjetDomaine<?>> extends Observable implements IObservableList<T> {
 	
 	protected List<T> liste;
 	

@@ -10,7 +10,7 @@ public class RequeteSelection extends RequeteJoin {
 	protected Set<String> clauseSelect;
 	protected Integer clauseLimit;
 
-	public RequeteSelection(Class<? extends IObjetDomaine> classe, String... fields) {
+	public RequeteSelection(Class<? extends IObjetDomaine<?>> classe, String... fields) {
 		super(classe);
 		this.clauseSelect = new HashSet<>();
 		clauseLimit = 0;
@@ -26,7 +26,7 @@ public class RequeteSelection extends RequeteJoin {
 	}
 	
 	@Override
-	public RequeteSelection joindre(Class<? extends IObjetDomaine> classe, Critere criteres) {
+	public RequeteSelection joindre(Class<? extends IObjetDomaine<?>> classe, Critere criteres) {
 		super.joindre(classe, criteres);
 		return this;
 	}

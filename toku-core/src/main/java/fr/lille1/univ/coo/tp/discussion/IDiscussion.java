@@ -6,7 +6,6 @@ import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
-import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
 @Table("discussion")
 public interface IDiscussion {

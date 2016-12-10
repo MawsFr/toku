@@ -1,6 +1,5 @@
 package fr.lille1.univ.coo.tp.persistance;
 
-import java.lang.reflect.Field;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;

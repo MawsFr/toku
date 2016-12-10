@@ -5,7 +5,7 @@ import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 public class RequeteMiseAJour extends RequeteWhere {
 	private String[] fields;
 	
-	public RequeteMiseAJour(Class<? extends IObjetDomaine> classe, String...fields) {
+	public RequeteMiseAJour(Class<? extends IObjetDomaine<?>> classe, String...fields) {
 		super(classe);
 		this.fields = fields;
 	}

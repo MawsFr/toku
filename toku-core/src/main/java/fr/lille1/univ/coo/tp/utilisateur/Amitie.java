@@ -13,7 +13,7 @@ public class Amitie extends ObjetDomaine<String> {
 	public static final int ETAT_EN_ATTENTE = 0;
 	public static final int ETAT_VALIDEE = 1;
 	public static final int ETAT_REFUSEE = 2;
-	public static final int ETAT_VOUS = 3;
+	public static final int ETAT_TRAITEE = 3;
 	
 	@Id
 	private String id;
@@ -66,7 +66,7 @@ public class Amitie extends ObjetDomaine<String> {
 	}
 
 	@Override
-	public void accept(Visiteur visitor) throws DomainException {
+	public void accept(Visiteur<?> visitor) throws DomainException {
 		visitor.visit(this);
 	}
 

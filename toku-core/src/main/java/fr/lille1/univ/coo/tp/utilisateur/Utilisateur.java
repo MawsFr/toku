@@ -273,7 +273,7 @@ public class Utilisateur extends ObjetDomaine<Integer> implements IUtilisateur {
 	}
 
 	@Override
-	public void accept(Visiteur visitor) throws DomainException {
+	public void accept(Visiteur<?> visitor) throws DomainException {
 		visitor.visit(this);
 	}
 

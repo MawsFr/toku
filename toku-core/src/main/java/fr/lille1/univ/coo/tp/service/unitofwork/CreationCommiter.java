@@ -18,7 +18,7 @@ public class CreationCommiter extends Commiter {
 	 * @throws DomainException 
 	 */
 	@Override
-	public void action(Class<?> classe, IObjetDomaine o) throws DomainException {
+	public void action(Class<?> classe, IObjetDomaine<?> o) throws DomainException {
 		try {
 		new DAOGenerique<>(classe).creer(o);
 		} catch (DAOException e) {

@@ -7,7 +7,7 @@ import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
 
-public class UnAUnFactory<T extends IObjetDomaine> implements Factory<T> {
+public class UnAUnFactory<T extends IObjetDomaine<?>> implements Factory<T> {
 
 	private String sonId;
 	private Class<?> type;

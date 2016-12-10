@@ -21,9 +21,9 @@ import fr.lille1.univ.coo.tp.persistance.DAOException;
 public class UnitOfWork implements ObjetDomaineObservateur {
 
 	private static Map<Class<?>, UnitOfWork> instances;
-	private Map<IObjetDomaine, Set<String>> modifies;
-	private Set<IObjetDomaine> crees;
-	private Set<IObjetDomaine> supprimes;
+	private Map<IObjetDomaine<?>, Set<String>> modifies;
+	private Set<IObjetDomaine<?>> crees;
+	private Set<IObjetDomaine<?>> supprimes;
 	private Class<?> classe;
 
 	/**
@@ -57,7 +57,7 @@ public class UnitOfWork implements ObjetDomaineObservateur {
 	 */
 	public void commit() throws DomainException {
 		ModificationCommiter mc = new ModificationCommiter();
-		for (Map.Entry<IObjetDomaine, Set<String>> o : modifies.entrySet()) {
+		for (Map.Entry<IObjetDomaine<?>, Set<String>> o : modifies.entrySet()) {
 			mc.setParametres(o.getValue());
 			mc.action(classe, o.getKey());
 			mc.supprimerParametres();
@@ -65,13 +65,13 @@ public class UnitOfWork implements ObjetDomaineObservateur {
 		modifies.clear();
 
 		CreationCommiter cc = new CreationCommiter();
-		for (IObjetDomaine o : crees) {
+		for (IObjetDomaine<?> o : crees) {
 			cc.action(classe, o);
 		}
 		crees.clear();
 
 		SuppressionCommiter sc = new SuppressionCommiter();
-		for (IObjetDomaine o : supprimes) {
+		for (IObjetDomaine<?> o : supprimes) {
 			sc.action(classe, o);
 		}
 		supprimes.clear();
@@ -91,7 +91,7 @@ public class UnitOfWork implements ObjetDomaineObservateur {
 	 * Object)
 	 */
 	@Override
-	public void modification(IObjetDomaine objet, String propriete) {
+	public void modification(IObjetDomaine<?> objet, String propriete) {
 		if (!modifies.containsKey(objet)) {
 			modifies.put(objet, new HashSet<>());
 		}
@@ -99,12 +99,12 @@ public class UnitOfWork implements ObjetDomaineObservateur {
 	}
 
 	@Override
-	public void creation(IObjetDomaine objet) {
+	public void creation(IObjetDomaine<?> objet) {
 		crees.add(objet);
 	}
 
 	@Override
-	public void suppression(IObjetDomaine objet) {
+	public void suppression(IObjetDomaine<?> objet) {
 		supprimes.add(objet);
 	}
 

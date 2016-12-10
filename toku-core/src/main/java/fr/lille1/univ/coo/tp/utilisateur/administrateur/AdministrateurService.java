@@ -47,7 +47,6 @@ public class AdministrateurService implements IAdministrateurService {
 		try {
 			return (String) new DAOGenerique<>(Utilisateur.class).rechercherUneProprieteUnSeul("mot_de_passe", conditions);
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new ServiceException(e);
 		}

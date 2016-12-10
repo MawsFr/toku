@@ -4,7 +4,7 @@ import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 
 public class RequeteSuppression extends RequeteWhere {
 
-	public RequeteSuppression(Class<? extends IObjetDomaine> classe) {
+	public RequeteSuppression(Class<? extends IObjetDomaine<?>> classe) {
 		super(classe);
 	}
 

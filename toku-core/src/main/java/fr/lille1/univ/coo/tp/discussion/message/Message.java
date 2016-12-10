@@ -190,7 +190,7 @@ public class Message extends ObjetDomaine<Integer> {
 	}
 
 	@Override
-	public void accept(Visiteur visitor) throws DomainException {
+	public void accept(Visiteur<?> visitor) throws DomainException {
 		visitor.visit(this);
 	}
 	

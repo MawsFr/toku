@@ -9,6 +9,10 @@ import fr.lille1.univ.coo.tp.filtre.Visiteur;
 
 @Table
 public class Role extends ObjetDomaine<Integer> implements IRole {
+	public static final int ROLE_UTILISATEUR = 1;
+	public static final int ROLE_ADMINISTRATEUR = 2;
+	
+	
 	@Id
 	private Integer id;
 	
@@ -63,7 +67,7 @@ public class Role extends ObjetDomaine<Integer> implements IRole {
 	}
 
 	@Override
-	public void accept(Visiteur visitor) throws DomainException {
+	public void accept(Visiteur<?> visitor) throws DomainException {
 		visitor.visit(this);
 	}
 }

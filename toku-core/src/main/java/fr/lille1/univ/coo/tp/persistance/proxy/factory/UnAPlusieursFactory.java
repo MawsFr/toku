@@ -9,7 +9,7 @@ import fr.lille1.univ.coo.tp.service.unitofwork.UnitOfWork;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.ObservableList;
 
-public class UnAPlusieursFactory<T extends IObjetDomaine> implements Factory<IObservableList<T>>{
+public class UnAPlusieursFactory<T extends IObjetDomaine<?>> implements Factory<IObservableList<T>>{
 	
 	private Class<?> sonType;
 	private String maCle;

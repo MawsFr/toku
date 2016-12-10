@@ -18,7 +18,7 @@ public class OUFiltre extends Filtre {
 		this.criteres = criteres;
 	}
 
-	public boolean accepte(IObjetDomaine obj) throws DomainException {
+	public boolean accepte(IObjetDomaine<?> obj) throws DomainException {
 		setResultat(false);
 		for(Filtre critere : criteres) {
 			critere.visit(obj);

@@ -14,7 +14,7 @@ public class ModificationCommiter extends Commiter {
 	 * Modifie une personne dans la BDD.
 	 */
 	@Override
-	public void action(Class<?> classe, IObjetDomaine o) throws DomainException {
+	public void action(Class<?> classe, IObjetDomaine<?> o) throws DomainException {
 		try {
 			new DAOGenerique<>(classe).modifier(o, this.parametres);
 		} catch (DAOException e) {
