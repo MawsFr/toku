@@ -11,8 +11,8 @@ public interface IUtilisateurService {
 	public void modifierNom(int idUtilisateur, String nouveauNom);
 	public void modifierPrenom(int idUtilisateur, String nouveauPrenom);
 	
-	public void demanderEnAmi(int idDestinataire);
-	public void accepterDemandeAmi(int idDemande);
+	public void demanderEnAmi(IUtilisateur destinataire) throws ServiceException;
+	public void accepterDemandeAmi(Amitie demande) throws ServiceException;
 	public void refuserDemandeAmi(int idDemande);
 	public void supprimerAmi(int idAmi);
 	
@@ -32,5 +32,6 @@ public interface IUtilisateurService {
 	public void creerCentreInteret(String nom);
 	public boolean estAdministrateur(IUtilisateur utilisateur) throws ServiceException;
 	public IObservableList<Utilisateur> rechercherTout() throws ServiceException;
+	void validerAmi() throws ServiceException;
 	
 }

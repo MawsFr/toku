@@ -35,7 +35,7 @@ public abstract class JObservableListMouseAdapter<T extends IObjetDomaine<?>> ex
 	public abstract void clicDroit(T element);
 
 	public T getElementSelectionne(MouseEvent e) {
-		if (e.getClickCount() > 0) {
+		if (e.getClickCount() > 0 && liste.getSelectedIndex() >= 0) {
 			return liste.getModel().getElementAt(liste.locationToIndex(e.getPoint()));
 		}
 		

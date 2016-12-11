@@ -7,12 +7,17 @@ import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.Session;
 import fr.lille1.univ.coo.tp.cryptage.CryptageException;
 import fr.lille1.univ.coo.tp.cryptage.CrypteurMD5;
+import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
 import fr.lille1.univ.coo.tp.persistance.proxy.factory.RechercherToutFactory;
+import fr.lille1.univ.coo.tp.persistance.requete.CritereEGALE;
+import fr.lille1.univ.coo.tp.persistance.requete.CritereET;
+import fr.lille1.univ.coo.tp.persistance.requete.Requete;
 import fr.lille1.univ.coo.tp.role.Role;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
+import fr.lille1.univ.coo.tp.service.unitofwork.UnitOfWork;
 import fr.lille1.univ.coo.tp.validateur.ValidationException;
 import fr.lille1.univ.coo.tp.validateur.Valideur;
 
@@ -79,6 +84,61 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 	}
 	
 	@Override
+	public void demanderEnAmi(IUtilisateur ami) throws ServiceException {
+		Utilisateur utilisateur = Application.getInstance().getSession().getUtilisateur();
+		if(ami.equals(utilisateur)) {
+			throw new ServiceException("Vous ne pouvez pas vous ajouter vous même en ami !");
+		}
+		CritereET et = new CritereET();
+		CritereEGALE egale1 = new CritereEGALE("id_utilisateur");
+		CritereEGALE egale2 = new CritereEGALE("id_ami");
+		et.ajouter(egale1);
+		et.ajouter(egale2);
+		Requete requete = Requete.selectionner(Amitie.class).where(et);
+		
+		Map<String, Object> clauseWhere = new HashMap<>();
+		clauseWhere.put("id_utilisateur", utilisateur.getId());
+		clauseWhere.put("id_ami", ami.getId());
+		try {
+			Amitie amitie = new DAOGenerique<Amitie>(Amitie.class).rechercherUnSeulParRequete(requete, clauseWhere);
+			if(amitie != null) {
+				if(amitie.getEtat().equals(Amitie.ETAT_EN_ATTENTE)) {
+					throw new ServiceException("Vous avez déjà invité " + ami.getPseudo());
+				} else if (amitie.getEtat().equals(Amitie.ETAT_TRAITEE)) {
+					throw new ServiceException("Vous êtes déjà amis avec cette personne");
+				}
+			}
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new ServiceException(e);
+		} catch (IndexOutOfBoundsException e) {
+			Amitie amitie = new Amitie();
+			amitie.setUtilisateur(utilisateur);
+			amitie.setAmi(ami);
+			amitie.setEtat(Amitie.ETAT_EN_ATTENTE);
+			utilisateur.getAmitie().ajouter(amitie);
+			validerAmi();
+		}
+	}
+	
+	@Override
+	public void accepterDemandeAmi(Amitie demande) throws ServiceException {
+		demande.setEtat(Amitie.ETAT_VALIDEE);
+		validerAmi();
+	}
+	
+	@Override
+	public void validerAmi() throws ServiceException {
+		try {
+			UnitOfWork.getInstance(Amitie.class).commit();
+		} catch (DomainException e) {
+			e.printStackTrace();
+			throw new ServiceException(e);
+		}
+	}
+
+	
+	@Override
 	public void modifierMotDePasse(int idUtilisateur, String nouveauMdp) {
 
 	}
@@ -94,18 +154,7 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 
 	}
 
-	@Override
-	public void demanderEnAmi(int idDestinataire) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void accepterDemandeAmi(int idDemande) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	@Override
 	public void refuserDemandeAmi(int idDemande) {
 		// TODO Auto-generated method stub

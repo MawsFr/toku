@@ -10,6 +10,7 @@ import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.annotations.UnAPlusieurs;
 import fr.lille1.univ.coo.tp.annotations.UnAUn;
+import fr.lille1.univ.coo.tp.annotations.Vue;
 import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
 
 /**
@@ -50,6 +51,14 @@ public class ReflectionUtils {
 		return DAOGenerique.TABLE_PREFIXE + nom.toLowerCase();
 	}
 	
+	public static String nomVue(Class<?> classe) {
+		if(classe.isAnnotationPresent(Vue.class)) {
+			return DAOGenerique.TABLE_PREFIXE + classe.getAnnotation(Vue.class).value().toLowerCase();
+		} else {
+			return nomTable(classe);
+		}
+	}
+
 	/**
 	 * Retourne une liste des noms des attributs d'une classe.
 	 * @param classe La classe

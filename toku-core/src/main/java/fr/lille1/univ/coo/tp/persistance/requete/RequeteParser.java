@@ -6,8 +6,8 @@ import fr.lille1.univ.coo.tp.utils.ReflectionUtils;
 
 public class RequeteParser {
 
-	public void visit(Requete requete) {
-		requete.accept(this);
+		public String visit(Requete requete) {
+			return requete.accept(this);
 	}
 
 	public String visit(RequeteSelection requete) {
@@ -23,7 +23,7 @@ public class RequeteParser {
 			}
 		}
 
-		sb.append(" FROM ").append(ReflectionUtils.nomTable(requete.classe)).append(" ");
+		sb.append(" FROM ").append(ReflectionUtils.nomVue(requete.classe)).append(" ");
 		sb.append(visit(new RequeteWhere(requete.classe, requete.clauseWhere)));
 		if(requete.clauseLimit > 0) {
 			sb.append("LIMIT ").append(requete.clauseLimit).toString();

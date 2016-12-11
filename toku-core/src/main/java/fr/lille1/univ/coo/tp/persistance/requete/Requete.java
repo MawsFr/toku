@@ -40,7 +40,7 @@ public abstract class Requete {
 		System.out.println(v.visit(Requete.selectionner(Utilisateur.class).where(et)));
 	}
 
-	public abstract void accept(RequeteParser requeteVisitor);
+	public abstract String accept(RequeteParser requeteVisitor);
 	
 
 }

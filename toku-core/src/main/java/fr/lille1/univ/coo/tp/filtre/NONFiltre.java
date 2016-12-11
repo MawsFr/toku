@@ -1,80 +1,70 @@
 package fr.lille1.univ.coo.tp.filtre;
 
-import java.util.List;
-
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.domain.DomainException;
-import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.role.Role;
 import fr.lille1.univ.coo.tp.utilisateur.Amitie;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
-public class OUFiltre extends Filtre {
-	private List<Filtre > criteres;
+public class NONFiltre extends Filtre {
+	private Filtre critere;
 	
-	public OUFiltre() {}
+	public NONFiltre() {}
 	
-	public OUFiltre(List<Filtre> criteres) {
-		this.criteres = criteres;
-	}
-
-	public boolean accepte(IObjetDomaine<?> obj) throws DomainException {
-		setResultat(false);
-		for(Filtre critere : criteres) {
-			critere.visit(obj);
-			if(critere.getResultat().equals(true)) {
-				this.resultat = true;
-				return true;
-			}
-		}
-		
-		return false;
+	public NONFiltre(Filtre critere) {
+		this.critere = critere;
 	}
 
 	@Override
 	public void visit(Utilisateur personne) throws DomainException {
-		accepte(personne);
+		critere.visit(personne);
+		setResultat(!critere.getResultat());
 	}
 
 	@Override
 	public void visit(Discussion discussion) throws DomainException {
-		accepte(discussion);
+		critere.visit(discussion);
+		setResultat(!critere.getResultat());
 	}
 
 	@Override
 	public void visit(Message message) throws DomainException {
-		accepte(message);
+		critere.visit(message);
+		setResultat(!critere.getResultat());
 	}
 
 	@Override
 	public void visit(Role role) throws DomainException {
-		accepte(role);
+		critere.visit(role);
+		setResultat(!critere.getResultat());
 	}
 
 	@Override
 	public void visit(Amitie amitie) throws DomainException {
-		accepte(amitie);		
+		critere.visit(amitie);
+		setResultat(!critere.getResultat());
 	}
 
 	@Override
 	public void visit(AffectationDiscussion affectation) throws DomainException {
-		accepte(affectation);		
+		critere.visit(affectation);
+		setResultat(!critere.getResultat());
 	}
 
 	/**
 	 * @return Le criteres
 	 */
-	public List<Filtre> getCriteres() {
-		return criteres;
+	public Filtre getCritere() {
+		return critere;
 	}
 
 	/**
 	 * @param criteres Le nouveau criteres
 	 */
-	public void setCriteres(List<Filtre> criteres) {
-		this.criteres = criteres;
+	public void setCritere(Filtre critere) {
+		this.critere = critere;
 	}
 	
 	

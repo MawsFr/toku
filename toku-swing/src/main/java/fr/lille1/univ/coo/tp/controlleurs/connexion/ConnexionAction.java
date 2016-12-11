@@ -68,10 +68,10 @@ public class ConnexionAction extends AbstractAction {
 			} catch (ServiceException e) {
 				JOptionPane.showMessageDialog(connexion.getFenetre().getFenetre(), e.getCause().getMessage(), "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
 			}
-			fenetre.getPanneauPrincipal().afficherEcran(PanneauPrincipal.PANNEAU_ACCUEIL);
 			fenetre.getMenu().getMenuDeconnecter().setEnabled(true);
-			fenetre.getPanneauPrincipal().getPanneauAccueil().afficherOnglet(0);
 			fenetre.getPanneauPrincipal().getPanneauAccueil().initialiser();
+			fenetre.getPanneauPrincipal().getPanneauAccueil().afficherOnglet(0);
+			fenetre.getPanneauPrincipal().afficherEcran(PanneauPrincipal.PANNEAU_ACCUEIL);
 			fenetre.getFenetre().pack();
 		}
 		

@@ -14,6 +14,9 @@ public class GestionUtilisateurMouseAdapter extends JObservableListMouseAdapter<
 
 	@Override
 	public void doubleClic(Utilisateur element) {
+		if(element == null) {
+			return;
+		}
 		gestionUtilisateur.getBtnModifier().doClick();
 	}
 

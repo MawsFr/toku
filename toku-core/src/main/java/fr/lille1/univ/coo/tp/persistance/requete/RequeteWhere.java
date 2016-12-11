@@ -20,8 +20,8 @@ public class RequeteWhere extends Requete {
 	}
 
 	@Override
-	public void accept(RequeteParser requeteVisitor) {
-		requeteVisitor.visit(this);
+	public String accept(RequeteParser requeteVisitor) {
+		return requeteVisitor.visit(this);
 	}
 
 }

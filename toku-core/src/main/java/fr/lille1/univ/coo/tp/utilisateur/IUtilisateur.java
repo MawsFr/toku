@@ -45,10 +45,6 @@ public interface IUtilisateur {
 
 	void setMotDePasse(String motDePasse);
 
-	IObservableList<Amitie> getAmities();
-
-	void setAmities(IObservableList<Amitie> amis);
-
 	IObservableList<AffectationDiscussion> getAffectations();
 
 	void setAffectations(IObservableList<AffectationDiscussion> discussions);

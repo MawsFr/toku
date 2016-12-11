@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -35,7 +34,7 @@ public class OngletAmis extends JPanel {
 	public void initialiser() {
 		removeAll();
 		utilisateur = Application.getInstance().getSession().getUtilisateur();
-		listeAmis = new JAmisList(utilisateur.getAmities());
+		listeAmis = new JAmisList(utilisateur.getAmitie());
 		listeAmis.setMessageVide(MESSAGE_VIDE);
 		listeAmis.setCellRenderer(new AmitieListCellRenderer());
 		listeAmis.addMouseListener(new AmisListMouseAdapter(listeAmis));

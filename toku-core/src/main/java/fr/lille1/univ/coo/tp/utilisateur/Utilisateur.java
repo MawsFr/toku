@@ -200,24 +200,7 @@ public class Utilisateur extends ObjetDomaine<Integer> implements IUtilisateur {
 		this.motDePasse = motDePasse;
 		notifierModification("motDePasse");
 	}
-
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getAmis()
-	 */
-	@Override
-	public IObservableList<Amitie> getAmities() {
-		return amitie;
-	}
-
-	/* (non-Javadoc)
-	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#setAmis(fr.lille1.univ.coo.tp.utilisateur.IObservableList)
-	 */
-	@Override
-	public void setAmities(IObservableList<Amitie> amis) {
-		this.amitie = amis;
-		notifierModification("amis");
-	}
-
+	
 	/* (non-Javadoc)
 	 * @see fr.lille1.univ.coo.tp.utilisateur.IUtilisateur#getDiscussions()
 	 */

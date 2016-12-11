@@ -85,8 +85,6 @@ public class Main {
 			System.exit(0);
 		}
 		
-		Application application = Application.getInstance();
-		
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -107,7 +105,7 @@ public class Main {
 					e.printStackTrace();
 				}
 
-				FenetrePrincipale.getInstance().setApplication(application);
+				FenetrePrincipale.getInstance();
 			}
 		});
 	}

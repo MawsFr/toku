@@ -4,11 +4,13 @@ import fr.lille1.univ.coo.tp.annotations.Colonne;
 import fr.lille1.univ.coo.tp.annotations.Id;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
+import fr.lille1.univ.coo.tp.annotations.Vue;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
 import fr.lille1.univ.coo.tp.filtre.Visiteur;
 
-@Table("amitie_view")
+@Vue("amitie_view")
+@Table("amitie")
 public class Amitie extends ObjetDomaine<String> {
 	public static final int ETAT_EN_ATTENTE = 0;
 	public static final int ETAT_VALIDEE = 1;

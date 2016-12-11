@@ -18,6 +18,9 @@ public class AmisListMouseAdapter extends JObservableListMouseAdapter<Amitie> {
 
 	@Override
 	public void doubleClic(Amitie element) {
+		if(element == null) {
+			return;
+		}
 		Discussion discussion = null;
 		try {
 			discussion = Service.getDiscussionService().creerDiscussion("Discussion privée entre : " + element.getUtilisateur().getPseudo() + " et " + element.getAmi().getPseudo(), Discussion.TYPE_PRIVE);

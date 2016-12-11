@@ -13,6 +13,7 @@ public class RequeteBuilder {
 	private Class<?> classe;
 	private StringBuilder sb;
 	private String table;
+	private String vue;
 
 	/**
 	 * Constructeur prenant en paramètre la classe associé à la table sur
@@ -25,6 +26,7 @@ public class RequeteBuilder {
 	public RequeteBuilder(Class<?> classe) {
 		this.classe = classe;
 		this.table = ReflectionUtils.nomTable(classe);
+		this.vue = ReflectionUtils.nomVue(classe);
 	}
 
 	/**
@@ -99,7 +101,7 @@ public class RequeteBuilder {
 	
 	public String rechercherDesProprietes(List<String> select, List<String> where) {
 		sb = new StringBuilder();
-		sb.append(clauseSelect(select)).append(table).append(clauseWhere(where));
+		sb.append(clauseSelect(select)).append(vue).append(clauseWhere(where));
 		return sb.toString();
 	}
 
@@ -116,7 +118,7 @@ public class RequeteBuilder {
 	
 	public String rechercherParJointure(List<Jointure> jointures, List<String> where) {
 		sb = new StringBuilder();
-		sb.append(clauseSelect()).append(table).append(clauseJointure(jointures)).append(clauseWhere(where));
+		sb.append(clauseSelect()).append(vue).append(clauseJointure(jointures)).append(clauseWhere(where));
 		return sb.toString();
 	}
 

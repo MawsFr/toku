@@ -33,6 +33,7 @@ import fr.lille1.univ.coo.tp.persistance.proxy.factory.PlusieursAUnFactory;
 import fr.lille1.univ.coo.tp.persistance.proxy.factory.UnAPlusieursFactory;
 import fr.lille1.univ.coo.tp.persistance.proxy.factory.UnAUnFactory;
 import fr.lille1.univ.coo.tp.persistance.requete.Requete;
+import fr.lille1.univ.coo.tp.persistance.requete.RequeteParser;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utils.Log;
 import fr.lille1.univ.coo.tp.utils.ReflectionUtils;
@@ -407,6 +408,10 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 		}
 		return elements;
 	}
+	
+	public T rechercherUnSeulParRequete(Requete requete, final Map<String, Object> clauseWhere) throws DAOException, IndexOutOfBoundsException {
+		return rechercherParRequete(requete, clauseWhere).get(0);
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<T> rechercherParRequete(Requete requete, final Map<String, Object> clauseWhere) throws DAOException {
@@ -415,7 +420,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 		final List<T> elements = new ArrayList<>();
 		final List<String> proprietes = new ArrayList<>(clauseWhere.keySet());
 		try {
-			ps = creerRequetePreparee(connexion, requete.toString(), false, null, null, proprietes, clauseWhere);
+			ps = creerRequetePreparee(connexion, new RequeteParser().visit(requete), false, null, null, proprietes, clauseWhere);
 			resultat = ps.executeQuery();
 			while (resultat.next()) {
 				int id = resultat.getInt(1);

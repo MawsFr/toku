@@ -11,6 +11,9 @@ public class DiscussionListMouseAdapter extends JObservableListMouseAdapter<Affe
 
 	@Override
 	public void doubleClic(AffectationDiscussion element) {
+		if(element == null) {
+			return;
+		}
         new FenetreDiscussion(element.getDiscussion());
 	}
 
