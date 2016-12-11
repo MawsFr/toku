@@ -7,9 +7,13 @@ import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.Session;
 import fr.lille1.univ.coo.tp.cryptage.CryptageException;
 import fr.lille1.univ.coo.tp.cryptage.CrypteurMD5;
+import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
+import fr.lille1.univ.coo.tp.discussion.Discussion;
+import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
+import fr.lille1.univ.coo.tp.persistance.References;
 import fr.lille1.univ.coo.tp.persistance.proxy.factory.RechercherToutFactory;
 import fr.lille1.univ.coo.tp.persistance.requete.CritereEGALE;
 import fr.lille1.univ.coo.tp.persistance.requete.CritereET;
@@ -63,6 +67,15 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 	@Override
 	public void deconnecter() {
 		Application.getInstance().setSession(null);
+		UnitOfWork.getInstance(AffectationDiscussion.class).annuler();
+		UnitOfWork.getInstance(Amitie.class).annuler();
+		UnitOfWork.getInstance(Message.class).annuler();
+		UnitOfWork.getInstance(Discussion.class).annuler();
+		UnitOfWork.getInstance(Utilisateur.class).annuler();
+		UnitOfWork.getInstance(Role.class).annuler();
+		
+		References.getInstance().toutSupprimer();
+		
 	}
 	
 	@Override
@@ -101,10 +114,29 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 		clauseWhere.put("id_ami", ami.getId());
 		try {
 			Amitie amitie = new DAOGenerique<Amitie>(Amitie.class).rechercherUnSeulParRequete(requete, clauseWhere);
-			if(amitie != null) {
+			boolean creerLAmitie = false;
+			if(amitie == null) {
+				creerLAmitie = true;
+			} else if (amitie.getEtat().equals(Amitie.ETAT_REFUSEE)) {
+				new DAOGenerique<Amitie>(Amitie.class).supprimer(amitie);
+				creerLAmitie = true;
+			}
+			if(creerLAmitie) {
+				Amitie nouvelleAmitie = new Amitie();
+				nouvelleAmitie.setUtilisateur(utilisateur);
+				nouvelleAmitie.setAmi(ami);
+				nouvelleAmitie.setEtat(Amitie.ETAT_EN_ATTENTE);
+				nouvelleAmitie.setDemandeur(utilisateur);
+				utilisateur.getAmitie().ajouter(nouvelleAmitie);
+				validerAmi();
+			} else {
 				if(amitie.getEtat().equals(Amitie.ETAT_EN_ATTENTE)) {
-					throw new ServiceException("Vous avez déjà invité " + ami.getPseudo());
-				} else if (amitie.getEtat().equals(Amitie.ETAT_TRAITEE)) {
+					if(amitie.getDemandeur().equals(utilisateur)) {
+						throw new ServiceException("Vous avez déjà invité " + ami.getPseudo());
+					} else {
+						throw new ServiceException(ami.getPseudo() + " vous a déjà invité, veuillez accepter sa demande");
+					}
+				} else if (amitie.getEtat().equals(Amitie.ETAT_TRAITEE) || amitie.getEtat().equals(Amitie.ETAT_VALIDEE)) {
 					throw new ServiceException("Vous êtes déjà amis avec cette personne");
 				}
 			}
@@ -112,12 +144,7 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 			e.printStackTrace();
 			throw new ServiceException(e);
 		} catch (IndexOutOfBoundsException e) {
-			Amitie amitie = new Amitie();
-			amitie.setUtilisateur(utilisateur);
-			amitie.setAmi(ami);
-			amitie.setEtat(Amitie.ETAT_EN_ATTENTE);
-			utilisateur.getAmitie().ajouter(amitie);
-			validerAmi();
+			
 		}
 	}
 	
@@ -126,6 +153,13 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 		demande.setEtat(Amitie.ETAT_VALIDEE);
 		validerAmi();
 	}
+	
+	@Override
+	public void refuserDemandeAmi(Amitie demande) throws ServiceException {
+		demande.setEtat(Amitie.ETAT_REFUSEE);
+		validerAmi();
+	}
+
 	
 	@Override
 	public void validerAmi() throws ServiceException {
@@ -150,13 +184,6 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 
 	@Override
 	public void modifierPrenom(int idUtilisateur, String nouveauPrenom) {
-		// TODO Auto-generated method stub
-
-	}
-
-	
-	@Override
-	public void refuserDemandeAmi(int idDemande) {
 		// TODO Auto-generated method stub
 
 	}

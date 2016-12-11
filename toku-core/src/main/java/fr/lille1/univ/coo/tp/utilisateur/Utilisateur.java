@@ -286,10 +286,10 @@ public class Utilisateur extends ObjetDomaine<Integer> implements IUtilisateur {
 		}
 		Utilisateur other = (Utilisateur) obj;
 		if (id == null) {
-			if (other.id != null) {
+			if (other.getId() != null) {
 				return false;
 			}
-		} else if (!id.equals(other.id)) {
+		} else if (!id.equals(other.getId())) {
 			return false;
 		}
 		return true;

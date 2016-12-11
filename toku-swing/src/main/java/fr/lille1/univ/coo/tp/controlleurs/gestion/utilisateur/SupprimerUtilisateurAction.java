@@ -2,9 +2,11 @@ package fr.lille1.univ.coo.tp.controlleurs.gestion.utilisateur;
 
 import java.awt.event.ActionEvent;
 
+import javax.jws.soap.SOAPBinding.Use;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
+import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
@@ -32,16 +34,21 @@ public class SupprimerUtilisateurAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		Utilisateur utilisateur = gestionUtilisateurs.getUtilisateurs().getElementSelectionne();
-		if(JOptionPane.showConfirmDialog(gestionUtilisateurs,
-			    "Êtes-vous sûr de vouloir supprimer l'utilisateur " + gestionUtilisateurs.getUtilisateurs().getElementSelectionne().getPseudo() + " ?",
-			    "Suppression utilisateur",
-			    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-			gestionUtilisateurs.getUtilisateurs().suppression(utilisateur);
-			try {
-				Service.getAdministrateurService().validerChangements();
-			} catch (ServiceException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(gestionUtilisateurs, "Erreur lors de la suppression : " + e.getCause(), "Erreur", JOptionPane.ERROR_MESSAGE);
+		if(utilisateur.equals(Application.getInstance().getSession().getUtilisateur())) {
+			JOptionPane.showMessageDialog(gestionUtilisateurs, "Vous ne pouvez pas supprimer votre propre compte, en étant loggé dessus", "Erreur", JOptionPane.ERROR_MESSAGE);
+		} else {
+			if(JOptionPane.showConfirmDialog(gestionUtilisateurs,
+					"Êtes-vous sûr de vouloir supprimer l'utilisateur " + gestionUtilisateurs.getUtilisateurs().getElementSelectionne().getPseudo() + " ?",
+					"Suppression utilisateur",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				gestionUtilisateurs.getUtilisateurs().suppression(utilisateur);
+				try {
+					Service.getAdministrateurService().validerChangements();
+				} catch (ServiceException e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(gestionUtilisateurs, "Erreur lors de la suppression : " + e.getCause(), "Erreur", JOptionPane.ERROR_MESSAGE);
+				}
+				
 			}
 			
 		}

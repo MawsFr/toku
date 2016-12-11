@@ -13,7 +13,7 @@ public interface IUtilisateurService {
 	
 	public void demanderEnAmi(IUtilisateur destinataire) throws ServiceException;
 	public void accepterDemandeAmi(Amitie demande) throws ServiceException;
-	public void refuserDemandeAmi(int idDemande);
+	public void refuserDemandeAmi(Amitie demande) throws ServiceException;
 	public void supprimerAmi(int idAmi);
 	
 	public void creerDiscussion(String nom);

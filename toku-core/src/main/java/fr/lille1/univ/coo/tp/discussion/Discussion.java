@@ -1,7 +1,6 @@
 package fr.lille1.univ.coo.tp.discussion;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import fr.lille1.univ.coo.tp.annotations.Colonne;
@@ -192,10 +191,10 @@ public class Discussion extends ObjetDomaine<Integer> implements IDiscussion {
 		}
 		Discussion other = (Discussion) obj;
 		if (id == null) {
-			if (other.id != null) {
+			if (other.getId() != null) {
 				return false;
 			}
-		} else if (!id.equals(other.id)) {
+		} else if (!id.equals(other.getId())) {
 			return false;
 		}
 		return true;

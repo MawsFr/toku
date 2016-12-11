@@ -1,9 +1,5 @@
 package fr.lille1.univ.coo.tp.vue.recherche;
 
-import javax.swing.JOptionPane;
-
-import fr.lille1.univ.coo.tp.service.Service;
-import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.listes.JObservableList;
 import fr.lille1.univ.coo.tp.vue.listes.mouseadapter.JObservableListMouseAdapter;

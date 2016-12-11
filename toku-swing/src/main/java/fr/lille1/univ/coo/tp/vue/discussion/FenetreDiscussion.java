@@ -65,6 +65,8 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	private EnvoyerMessageAction envoyerAction;
 
 	private JCheckBox chckbxValiderAvecEntre;
+	private JPanel panneauDroite;
+	private JSplitPane panneauPrincipal;
 	
 	public FenetreDiscussion(IDiscussion iDiscussion) {
 		this.discussion = iDiscussion;
@@ -102,7 +104,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		menuFichier = new JMenu("Fichier");
 		menuFermer = new JMenuItem("Fermer");
 		
-		JSplitPane panneauPrincipal = new JSplitPane();
+		panneauPrincipal = new JSplitPane();
 		JPanel panneauGauche = new JPanel();
 		JSplitPane splitGauche = new JSplitPane();
 		JPanel panneauHaut = new JPanel();
@@ -115,7 +117,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		chckbxValiderAvecEntre = new JCheckBox("Valider avec entrée");
 		JToolBar barreOutils = new JToolBar();
 		JScrollPane scrollMessage = new JScrollPane();
-		JPanel panneauDroite = new JPanel();
+		panneauDroite = new JPanel();
 		JPanel panneauDroite2 = new JPanel();
 		JScrollPane scrollMembres = new JScrollPane();
 		JPanel panneauMembres = new JPanel();
@@ -451,6 +453,63 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	public void setDiscussion(IDiscussion discussion) {
 		this.discussion = discussion;
 	}
+
+	/**
+	 * @return Le envoyerAction
+	 */
+	public EnvoyerMessageAction getEnvoyerAction() {
+		return envoyerAction;
+	}
+
+	/**
+	 * @param envoyerAction Le nouveau envoyerAction
+	 */
+	public void setEnvoyerAction(EnvoyerMessageAction envoyerAction) {
+		this.envoyerAction = envoyerAction;
+	}
+
+	/**
+	 * @return Le chckbxValiderAvecEntre
+	 */
+	public JCheckBox getChckbxValiderAvecEntre() {
+		return chckbxValiderAvecEntre;
+	}
+
+	/**
+	 * @param chckbxValiderAvecEntre Le nouveau chckbxValiderAvecEntre
+	 */
+	public void setChckbxValiderAvecEntre(JCheckBox chckbxValiderAvecEntre) {
+		this.chckbxValiderAvecEntre = chckbxValiderAvecEntre;
+	}
+
+	/**
+	 * @return Le panneauDroite
+	 */
+	public JPanel getPanneauDroite() {
+		return panneauDroite;
+	}
+
+	/**
+	 * @param panneauDroite Le nouveau panneauDroite
+	 */
+	public void setPanneauDroite(JPanel panneauDroite) {
+		this.panneauDroite = panneauDroite;
+	}
+
+	/**
+	 * @return Le panneauPrincipal
+	 */
+	public JSplitPane getPanneauPrincipal() {
+		return panneauPrincipal;
+	}
+
+	/**
+	 * @param panneauPrincipal Le nouveau panneauPrincipal
+	 */
+	public void setPanneauPrincipal(JSplitPane panneauPrincipal) {
+		this.panneauPrincipal = panneauPrincipal;
+	}
+	
 	
 	
 	

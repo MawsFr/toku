@@ -1,9 +1,11 @@
 package fr.lille1.univ.coo.tp.utilisateur;
 
 import fr.lille1.univ.coo.tp.annotations.Colonne;
+import fr.lille1.univ.coo.tp.annotations.ColonneVue;
 import fr.lille1.univ.coo.tp.annotations.Id;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
+import fr.lille1.univ.coo.tp.annotations.UnAUn;
 import fr.lille1.univ.coo.tp.annotations.Vue;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
@@ -26,6 +28,10 @@ public class Amitie extends ObjetDomaine<String> {
 	@PlusieursAUn(sonType=Utilisateur.class, saCle = "id_ami")
 	private IUtilisateur ami;
 	
+	@ColonneVue
+	@PlusieursAUn(saCle="demandeur", sonType=Utilisateur.class)
+	private IUtilisateur demandeur;
+	
 	@Colonne
 	private Integer etat;
 	
@@ -35,6 +41,7 @@ public class Amitie extends ObjetDomaine<String> {
 
 	public void setUtilisateur(IUtilisateur utilisateur) {
 		this.utilisateur = utilisateur;
+		notifierModification("utilisateur");
 	}
 
 	public IUtilisateur getAmi() {
@@ -43,6 +50,7 @@ public class Amitie extends ObjetDomaine<String> {
 
 	public void setAmi(IUtilisateur ami) {
 		this.ami = ami;
+		notifierModification("ami");
 	}
 
 	public Integer getEtat() {
@@ -51,6 +59,7 @@ public class Amitie extends ObjetDomaine<String> {
 
 	public void setEtat(Integer etat) {
 		this.etat = etat;
+		notifierModification("etat");
 	}
 
 	/**
@@ -59,12 +68,28 @@ public class Amitie extends ObjetDomaine<String> {
 	public String getId() {
 		return id;
 	}
+	
+	/**
+	 * @return Le demandeur
+	 */
+	public IUtilisateur getDemandeur() {
+		return demandeur;
+	}
+
+	/**
+	 * @param demandeur Le nouveau demandeur
+	 */
+	public void setDemandeur(IUtilisateur demandeur) {
+		this.demandeur = demandeur;
+		notifierModification("demandeur");
+	}
 
 	/**
 	 * @param id Le nouveau id
 	 */
 	public void setId(String id) {
 		this.id = id;
+		notifierModification("id");
 	}
 
 	@Override
@@ -79,7 +104,9 @@ public class Amitie extends ObjetDomaine<String> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((ami == null) ? 0 : ami.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((utilisateur == null) ? 0 : utilisateur.hashCode());
 		return result;
 	}
 
@@ -98,15 +125,30 @@ public class Amitie extends ObjetDomaine<String> {
 			return false;
 		}
 		Amitie other = (Amitie) obj;
-		if (id == null) {
-			if (other.id != null) {
+		if (ami == null) {
+			if (other.getAmi() != null) {
 				return false;
 			}
-		} else if (!id.equals(other.id)) {
+		} else if (!ami.equals(other.getAmi())) {
+			return false;
+		}
+		if (id == null) {
+			if (other.getId() != null) {
+				return false;
+			}
+		} else if (!id.equals(other.getId())) {
+			return false;
+		}
+		if (utilisateur == null) {
+			if (other.getUtilisateur() != null) {
+				return false;
+			}
+		} else if (!utilisateur.equals(other.getUtilisateur())) {
 			return false;
 		}
 		return true;
 	}
 
+	
 	
 }

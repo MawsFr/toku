@@ -4,10 +4,6 @@ public abstract class Notification<T> {
 	protected T objet;
 	protected String texte;
 	
-	public abstract void supprimer();
-	public abstract void accepter();
-	public abstract void refuser();
-	
 	/**
 	 * @return Le objet
 	 */
@@ -21,6 +17,22 @@ public abstract class Notification<T> {
 	public void setObjet(T objet) {
 		this.objet = objet;
 	}
+
+	/**
+	 * @return Le texte
+	 */
+	public String getTexte() {
+		return texte;
+	}
+
+	/**
+	 * @param texte Le nouveau texte
+	 */
+	public void setTexte(String texte) {
+		this.texte = texte;
+	}
+	
+	
 	
 	
 	

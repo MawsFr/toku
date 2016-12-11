@@ -26,7 +26,7 @@ import fr.lille1.univ.coo.tp.vue.composants.fenetre.Fermable;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Validable;
 import fr.lille1.univ.coo.tp.vue.listes.JTexteFiltre;
 import fr.lille1.univ.coo.tp.vue.listes.JUtilisateurList;
-import fr.lille1.univ.coo.tp.vue.listes.cellrenderer.UtilisateurListCellRenderer;
+import fr.lille1.univ.coo.tp.vue.listes.cellrenderer.RechercheAmiListCellRenderer;
 
 public class RechercheAmis extends JDialog implements Validable, Fermable {
 
@@ -48,7 +48,7 @@ public class RechercheAmis extends JDialog implements Validable, Fermable {
 
 		utilisateurs = new JUtilisateurList(membres);
 		utilisateurs.setMessageVide(MESSAGE_VIDE);
-		utilisateurs.setCellRenderer(new UtilisateurListCellRenderer());
+		utilisateurs.setCellRenderer(new RechercheAmiListCellRenderer());
 		utilisateurs.setSelectedIndex(0);
 		utilisateurs.addMouseListener(new DemandeAmiMouseAdapter(this, utilisateurs));
 		filtre = utilisateurs.getTexte();

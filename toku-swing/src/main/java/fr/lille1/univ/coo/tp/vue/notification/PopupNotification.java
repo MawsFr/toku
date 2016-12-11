@@ -56,7 +56,6 @@ public class PopupNotification extends JFrame {
 		ongletDiscussion = new JPanel();
 
 		ongletDemandeAmi.setLayout(new BorderLayout());
-		amitieModel = new IObservableListModel<>(Application.getInstance().getSession().getUtilisateur().getAmitie());
 
 		List<Filtre> criteresAmis = new ArrayList<>();
 		filtreAmi = new OUFiltre(criteresAmis);
@@ -87,6 +86,7 @@ public class PopupNotification extends JFrame {
 
 	public void rafraichirAmitie() throws DomainException {
 		ongletDemandeAmi.removeAll();
+		amitieModel = new IObservableListModel<>(Application.getInstance().getSession().getUtilisateur().getAmitie());
 		amitieModel.filtrer(filtreAmi);
 		JPanel notifsAmi = new JPanel();
 		notifsAmi.setLayout(new BoxLayout(notifsAmi, BoxLayout.Y_AXIS));

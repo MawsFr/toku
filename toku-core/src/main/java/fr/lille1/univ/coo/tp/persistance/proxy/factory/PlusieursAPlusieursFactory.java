@@ -52,7 +52,7 @@ public class PlusieursAPlusieursFactory<T extends IObjetDomaine<?>> implements F
 //		jointures.add(jointTableAssociee);
 		
 		try {
-			List<T> liste = dao.rechercherParPropriete(notreColonne, id);
+ 			List<T> liste = dao.rechercherParPropriete(notreColonne, id);
 			ObservableList<T> o = new ObservableList<T>(liste);
 			o.ajouterObservateur(UnitOfWork.getInstance(leurType));
 			return o;

@@ -94,5 +94,13 @@ public class References {
 	public void supprimer(Class<?> classe, Object id) {
 		get(classe).remove(id);
 	}
+	
+	public void toutSupprimer() {
+		for(Map<?, ?> cle : references.values()) {
+			cle.clear();
+		}
+		references.clear();
+		instance = null;
+	}
 
 }

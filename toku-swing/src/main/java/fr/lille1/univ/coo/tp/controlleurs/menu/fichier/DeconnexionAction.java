@@ -1,4 +1,4 @@
-package fr.lille1.univ.coo.tp.controlleurs.connexion;
+package fr.lille1.univ.coo.tp.controlleurs.menu.fichier;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;

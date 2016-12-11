@@ -21,6 +21,15 @@ public class AmisListMouseAdapter extends JObservableListMouseAdapter<Amitie> {
 		if(element == null) {
 			return;
 		}
+		if(element.getEtat().equals(Amitie.ETAT_EN_ATTENTE)) {
+			JOptionPane.showMessageDialog(FenetrePrincipale.getInstance().getFenetre(), "Cet utilisateur n'a pas encore répondu à votre demande d'ami !", "Erreur", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+		if(element.getEtat().equals(Amitie.ETAT_REFUSEE)) {
+			JOptionPane.showMessageDialog(FenetrePrincipale.getInstance().getFenetre(), "Cet utilisateur a refusé votre demande d'ami ! Harcelez le en lui re-demandant !", "Erreur", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 		Discussion discussion = null;
 		try {
 			discussion = Service.getDiscussionService().creerDiscussion("Discussion privée entre : " + element.getUtilisateur().getPseudo() + " et " + element.getAmi().getPseudo(), Discussion.TYPE_PRIVE);
@@ -29,6 +38,7 @@ public class AmisListMouseAdapter extends JObservableListMouseAdapter<Amitie> {
 			Service.getDiscussionService().ajouterUtilisateur(discussion, element.getAmi(), AffectationDiscussion.ETAT_EN_ATTENTE);
 			Service.getDiscussionService().validerAffectations();
 			FenetreDiscussion fenetre = new FenetreDiscussion(discussion);
+			fenetre.getPanneauPrincipal().setRightComponent(null);
 //        fenetre.getLblTypeDiscussion().setText("Discussion privée : ");
 			fenetre.getLblNomDiscussion().setText(element.getAmi().getPseudo());
 		} catch (ServiceException e) {

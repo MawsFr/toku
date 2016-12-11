@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 import fr.lille1.univ.coo.tp.annotations.Colonne;
+import fr.lille1.univ.coo.tp.annotations.ColonneVue;
 import fr.lille1.univ.coo.tp.annotations.Id;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAPlusieurs;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
@@ -86,7 +87,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 			List<String> champsListe = new ArrayList<>();
 			Map<String, Object> valeurs = new HashMap<>();
 			for (Field field : classe.getDeclaredFields()) {
-				if(field.getAnnotations().length > 0) {
+				if(field.getAnnotations().length > 0 && !field.isAnnotationPresent(ColonneVue.class)) {
 					String champ = ReflectionUtils.getNomColonne(field);
 					Class<?> type = null;
 					Method getter = classe.getDeclaredMethod(ReflectionUtils.getGetter(field));
@@ -95,13 +96,15 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 						valeurs.put(champ, getter.invoke(objet));
 						champsListe.add(champ);
 					} else if (field.isAnnotationPresent(UnAUn.class) || field.isAnnotationPresent(PlusieursAUn.class)) {
+						Field idField = null;
 						if (field.isAnnotationPresent(UnAUn.class)) {
 							type = getter.invoke(objet).getClass();
+							idField = ReflectionUtils.trouverChampsId(field.getAnnotation(UnAUn.class).sonType());
 						} else if (field.isAnnotationPresent(PlusieursAUn.class)) {
 //							type = field.getAnnotation(PlusieursAUn.class).sonType();
 							type = getter.invoke(objet).getClass();
+							idField = ReflectionUtils.trouverChampsId(field.getAnnotation(PlusieursAUn.class).sonType());
 						}
-						Field idField = ReflectionUtils.trouverChampsId(field.getAnnotation(PlusieursAUn.class).sonType());
 						Method idGetter = type.getDeclaredMethod(ReflectionUtils.getGetter(idField));
 						Object o = idGetter.invoke(getter.invoke(objet));
 						if (o != null) {
@@ -410,7 +413,8 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 	}
 	
 	public T rechercherUnSeulParRequete(Requete requete, final Map<String, Object> clauseWhere) throws DAOException, IndexOutOfBoundsException {
-		return rechercherParRequete(requete, clauseWhere).get(0);
+		List<T> liste = rechercherParRequete(requete, clauseWhere);
+		return liste.isEmpty() ? null : liste.get(0);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -423,7 +427,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 			ps = creerRequetePreparee(connexion, new RequeteParser().visit(requete), false, null, null, proprietes, clauseWhere);
 			resultat = ps.executeQuery();
 			while (resultat.next()) {
-				int id = resultat.getInt(1);
+				Object id = resultat.getObject(1);
 				T recherche = (T) references.rechercher(classe, id);
 				if (recherche == null) {
 					elements.add((T) construire(id, resultat).get());
@@ -518,7 +522,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 			resultat = ps.executeQuery();
 			if (resultat.next()) {
 				String colonneId = ReflectionUtils.trouverId(classe);
-				Integer id = resultat.getInt(colonneId);
+				Object id = resultat.getObject(colonneId);
 				element = (T) references.rechercher(classe, id);
 
 				if (element == null) {
@@ -558,7 +562,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 					proprietes, clauseWhere);
 			resultat = ps.executeQuery();
 			while (resultat.next()) {
-				int id = resultat.getInt(1);
+				Object id = resultat.getObject(1);
 				T recherche = (T) references.rechercher(classe, id);
 				if (recherche == null) {
 					elements.add((T) construire(id, resultat).get());
