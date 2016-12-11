@@ -21,6 +21,7 @@ public @interface Table {
 	 * @return Le nom de la table sinon une chaine vide (le nom de la classe
 	 *         sera pris pour le nom de la table)
 	 */
-	String value() default "";
+	String nom() default "";
+	String cle() default "";
 
 }

@@ -7,7 +7,7 @@ import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 
-@Table("discussion")
+@Table(nom="discussion")
 public interface IDiscussion {
 
 	/**

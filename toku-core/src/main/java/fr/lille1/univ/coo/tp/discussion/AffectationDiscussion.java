@@ -10,7 +10,7 @@ import fr.lille1.univ.coo.tp.filtre.Visiteur;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
-@Table("utilisateur_discussion")
+@Table(nom="utilisateur_discussion")
 public class AffectationDiscussion extends ObjetDomaine<Integer> {
 	public static final int ETAT_EN_ATTENTE = 0; // L'utilisateur n'a pas encore vu la discussion
 	public static final int ETAT_VU = 1; // L'utilisateur a vu la discussion (et donc lu) la premiere fois : cet etat sers pour la notification

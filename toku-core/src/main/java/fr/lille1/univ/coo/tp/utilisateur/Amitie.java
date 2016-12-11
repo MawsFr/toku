@@ -5,14 +5,13 @@ import fr.lille1.univ.coo.tp.annotations.ColonneVue;
 import fr.lille1.univ.coo.tp.annotations.Id;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
-import fr.lille1.univ.coo.tp.annotations.UnAUn;
 import fr.lille1.univ.coo.tp.annotations.Vue;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
 import fr.lille1.univ.coo.tp.filtre.Visiteur;
 
-@Vue("amitie_view")
-@Table("amitie")
+@Vue(nom="amitie_view", cle="id")
+@Table(nom="amitie", cle="id_demande")
 public class Amitie extends ObjetDomaine<String> {
 	public static final int ETAT_EN_ATTENTE = 0;
 	public static final int ETAT_VALIDEE = 1;
@@ -21,14 +20,17 @@ public class Amitie extends ObjetDomaine<String> {
 	
 	@Id
 	private String id;
-	
+
+	@ColonneVue(colonneTable="id")
+	private Integer id_demande;
+
 	@PlusieursAUn(sonType=Utilisateur.class, saCle = "id_utilisateur")
 	private IUtilisateur utilisateur;
 	
 	@PlusieursAUn(sonType=Utilisateur.class, saCle = "id_ami")
 	private IUtilisateur ami;
 	
-	@ColonneVue
+	@ColonneVue(colonneTable="id_utilisateur")
 	@PlusieursAUn(saCle="demandeur", sonType=Utilisateur.class)
 	private IUtilisateur demandeur;
 	
@@ -90,6 +92,22 @@ public class Amitie extends ObjetDomaine<String> {
 	public void setId(String id) {
 		this.id = id;
 		notifierModification("id");
+	}
+	
+	
+
+	/**
+	 * @return Le id_demande
+	 */
+	public Integer getId_demande() {
+		return id_demande;
+	}
+
+	/**
+	 * @param id_demande Le nouveau id_demande
+	 */
+	public void setId_demande(Integer id_demande) {
+		this.id_demande = id_demande;
 	}
 
 	@Override

@@ -58,7 +58,7 @@ public class RequeteParser {
 
 	public String visit(RequeteInsertion requete) {
 		StringBuilder sb = new StringBuilder("INSERT INTO ");
-		sb.append(ReflectionUtils.nomTable(requete.classe));
+		sb.append(ReflectionUtils.nomVue(requete.classe));
 		sb.append(" ( ");
 		for (int i = 0; i < requete.getFields().length; ++i) {
 			sb.append(requete.getFields()[i]);

@@ -7,7 +7,7 @@ import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.discussion.IDiscussion;
 import fr.lille1.univ.coo.tp.role.IRole;
 
-@Table("utilisateur")
+@Table(nom="utilisateur")
 public interface IUtilisateur {
 	public static final String ID = "id";
 	public static final String PSEUDO = "id";

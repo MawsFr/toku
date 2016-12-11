@@ -12,4 +12,6 @@ import java.lang.annotation.Target;
 @Target(FIELD)
 public @interface ColonneVue {
 
+	String colonneTable() default "";
+
 }

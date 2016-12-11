@@ -43,7 +43,7 @@ public class ReflectionUtils {
 	}
 	
 	public static String nomTable(Class<?> classe) {
-		String nom = classe.getAnnotation(Table.class).value();
+		String nom = classe.getAnnotation(Table.class).nom();
 		if(nom.isEmpty()) {
 			nom = classe.getSimpleName();
 		}
@@ -53,7 +53,7 @@ public class ReflectionUtils {
 	
 	public static String nomVue(Class<?> classe) {
 		if(classe.isAnnotationPresent(Vue.class)) {
-			return DAOGenerique.TABLE_PREFIXE + classe.getAnnotation(Vue.class).value().toLowerCase();
+			return DAOGenerique.TABLE_PREFIXE + classe.getAnnotation(Vue.class).nom().toLowerCase();
 		} else {
 			return nomTable(classe);
 		}

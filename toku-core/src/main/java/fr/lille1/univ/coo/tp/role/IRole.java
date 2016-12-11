@@ -2,7 +2,7 @@ package fr.lille1.univ.coo.tp.role;
 
 import fr.lille1.univ.coo.tp.annotations.Table;
 
-@Table("role")
+@Table(nom="role")
 public interface IRole {
 
 	Integer getId();

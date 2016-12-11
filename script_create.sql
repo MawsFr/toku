@@ -181,9 +181,9 @@ CREATE INDEX `fk_message_discussion1_idx` ON `toku`.`projet_message` (`id_discus
 CREATE INDEX `fk_message_utilisateur1_idx` ON `toku`.`projet_message` (`id_utilisateur` ASC);
 
 create VIEW `projet_amitie_view` AS 
-	(select concat(`u`.`id_utilisateur`, '_', `u`.`id_ami`) as id, `u`.`id_utilisateur`, `u`.`id_ami`, `u`.`id_utilisateur` as demandeur, `u`.`etat` from `projet_amitie` `u`) 
+	(select concat(`u`.`id_utilisateur`, '_', `u`.`id_ami`) as id, id as id_demande, `u`.`id_utilisateur`, `u`.`id_ami`, `u`.`id_utilisateur` as demandeur, `u`.`etat` from `projet_amitie` `u`) 
 	union 
-    (select concat(`u`.`id_ami`, '_', `u`.`id_utilisateur`) as id, `u`.`id_ami`, `u`.`id_utilisateur`, `u`.`id_utilisateur` as demandeur, `u`.`etat` from `projet_amitie` `u`);
+    (select concat(`u`.`id_ami`, '_', `u`.`id_utilisateur`) as id, id as id_demande, `u`.`id_ami`, `u`.`id_utilisateur`, `u`.`id_utilisateur` as demandeur, `u`.`etat` from `projet_amitie` `u`);
 
 
 -- Création des roles
