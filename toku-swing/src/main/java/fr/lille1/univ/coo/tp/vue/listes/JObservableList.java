@@ -1,4 +1,4 @@
-package fr.lille1.univ.coo.tp.vue.utilisateurs;
+package fr.lille1.univ.coo.tp.vue.listes;
 
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -7,21 +7,18 @@ import javax.swing.JList;
 
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
+import fr.lille1.univ.coo.tp.vue.listes.mouseadapter.JObservableListMouseAdapter;
 
 public abstract class JObservableList<T extends IObjetDomaine<?>> extends JList<T> {
 	protected static final long serialVersionUID = 1L;
 	protected IObservableList<T> liste;
 	protected IObservableListModel<T> leModel;
 	protected JObservableListMouseAdapter<T> listener;
+	protected String messageVide;
 	
 	private T elementSelectionne;
 
-	public JObservableList() {
-		this.setCellRenderer(getCellRenderer());
-	}
-	
 	public JObservableList(IObservableList<T> utilisateurs) {
-		this();
 		setListe(utilisateurs);
 	}
 
@@ -101,8 +98,22 @@ public abstract class JObservableList<T extends IObjetDomaine<?>> extends JList<
 			g.drawString(message, (getWidth() - fm.stringWidth(message)) / 2, (getHeight()  - fm.getHeight()) / 2);
 		}
 	}
+
+	/**
+	 * @return Le messageVide
+	 */
+	public String getMessageVide() {
+		return messageVide;
+	}
+
+	/**
+	 * @param messageVide Le nouveau messageVide
+	 */
+	public void setMessageVide(String messageVide) {
+		this.messageVide = messageVide;
+	}
 	
-	public abstract String getMessageVide();
+	
 	
 	
 }

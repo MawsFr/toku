@@ -1,4 +1,4 @@
-package fr.lille1.univ.coo.tp.vue.utilisateurs;
+package fr.lille1.univ.coo.tp.vue.listes.cellrenderer;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -10,34 +10,32 @@ import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.discussion.Avatar;
 
-public class UtilisateurListCellRenderer extends JLabel implements ObservableListRenderer<Utilisateur> {
-
-	private static final long serialVersionUID = 1L;
-
+public class UtilisateurListCellRenderer implements ObservableListRenderer<Utilisateur> {
 	@Override
 	public Component getListCellRendererComponent(JList<? extends Utilisateur> list, Utilisateur value, int index,
 			boolean isSelected, boolean cellHasFocus) {
-		setOpaque(true);
+		JLabel label = new JLabel();
+		label.setOpaque(true);
 		if (isSelected) {
-			setBackground(Color.decode("#64B5F6"));
-			setForeground(Color.WHITE);
+			label.setBackground(Color.decode("#64B5F6"));
+			label.setForeground(Color.WHITE);
 		} else {
 			if(index % 2 == 0) {
-				setBackground(Color.WHITE);
+				label.setBackground(Color.WHITE);
 			} else {
-				setBackground(Color.LIGHT_GRAY);
+				label.setBackground(Color.LIGHT_GRAY);
 			}
-			setForeground(Color.BLACK);
+			label.setForeground(Color.BLACK);
 		}
 
 		Avatar avatar = new Avatar(); // TODO : Faire en sorte qu'on puisse redimensionner l'avatar
 //		setSize(20, 20);
 		avatar.setImage(value.getAvatar());
 		String utilisateur = value.getPseudo() + "(" + value.getNom() + " " + value.getPrenom() + ")" +(value == Application.getInstance().getSession().getUtilisateur() ? " (Vous)" : "");
-		setIcon(avatar);
-		setText(utilisateur);
-		setFont(list.getFont());
-		return this;
+		label.setIcon(avatar);
+		label.setText(utilisateur);
+		label.setFont(list.getFont());
+		return label;
 	}
 
 }

@@ -15,7 +15,7 @@ import fr.lille1.univ.coo.tp.filtre.Filtre;
 import fr.lille1.univ.coo.tp.filtre.OUFiltre;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.FenetrePrincipale;
-import fr.lille1.univ.coo.tp.vue.utilisateurs.JFiltrableList;
+import fr.lille1.univ.coo.tp.vue.listes.JFiltrableList;
 
 public class FiltrerUtilisateurAction extends FiltrerAction<Utilisateur> {
 	public FiltrerUtilisateurAction(JFiltrableList<Utilisateur> liste) {

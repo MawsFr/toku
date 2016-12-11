@@ -1,12 +1,11 @@
-package fr.lille1.univ.coo.tp.controlleurs.discussion;
+package fr.lille1.univ.coo.tp.vue.listes.mouseadapter;
 
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.vue.discussion.FenetreDiscussion;
-import fr.lille1.univ.coo.tp.vue.utilisateurs.JDiscussionList;
-import fr.lille1.univ.coo.tp.vue.utilisateurs.JObservableListMouseAdapter;
+import fr.lille1.univ.coo.tp.vue.listes.JAffectationList;
 
 public class DiscussionListMouseAdapter extends JObservableListMouseAdapter<AffectationDiscussion> {
-	public DiscussionListMouseAdapter(JDiscussionList listeDiscussions) {
+	public DiscussionListMouseAdapter(JAffectationList listeDiscussions) {
 		super(listeDiscussions);
 	}
 

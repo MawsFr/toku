@@ -1,4 +1,4 @@
-package fr.lille1.univ.coo.tp.vue.utilisateurs;
+package fr.lille1.univ.coo.tp.vue.listes.cellrenderer;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -8,30 +8,29 @@ import javax.swing.JList;
 
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 
-public class DiscussionListCellRenderer extends JLabel implements ObservableListRenderer<AffectationDiscussion> {
-
-	private static final long serialVersionUID = 1L;
+public class DiscussionListCellRenderer implements ObservableListRenderer<AffectationDiscussion> {
 
 	@Override
 	public Component getListCellRendererComponent(JList<? extends AffectationDiscussion> list, AffectationDiscussion value, int index,
 			boolean isSelected, boolean cellHasFocus) {
-		setOpaque(true);
+		JLabel label = new JLabel();
+		label.setOpaque(true);
 		if (isSelected) {
-			setBackground(Color.decode("#64B5F6"));
-			setForeground(Color.WHITE);
+			label.setBackground(Color.decode("#64B5F6"));
+			label.setForeground(Color.WHITE);
 		} else {
 			if(index % 2 == 0) {
-				setBackground(Color.WHITE);
+				label.setBackground(Color.WHITE);
 			} else {
-				setBackground(Color.LIGHT_GRAY);
+				label.setBackground(Color.LIGHT_GRAY);
 			}
-			setForeground(Color.BLACK);
+			label.setForeground(Color.BLACK);
 		}
 
 		String discussion = value.getDiscussion().getNom() + " (" + value.getDiscussion().getAffectations().getListe().size() + " membre(s))";
-		setText(discussion);
-		setFont(list.getFont());
-		return this;
+		label.setText(discussion);
+		label.setFont(list.getFont());
+		return label;
 	}
 
 }

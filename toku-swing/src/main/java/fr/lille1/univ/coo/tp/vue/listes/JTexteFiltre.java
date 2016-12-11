@@ -1,4 +1,4 @@
-package fr.lille1.univ.coo.tp.vue.utilisateurs;
+package fr.lille1.univ.coo.tp.vue.listes;
 
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.vue.composants.JTextFieldHint;
@@ -8,8 +8,8 @@ public class JTexteFiltre<T extends IObjetDomaine<?>> extends JTextFieldHint {
 	private IObservableListModel<T> leModel;
 	private JFiltrableList<T> liste;
 	
-	public JTexteFiltre(IObservableListModel<T> leModel) {
-		this.leModel = leModel;
+	public JTexteFiltre(JObservableList<T> leModel) {
+		this.leModel = leModel.getLeModel();
 	}
 
 	/**

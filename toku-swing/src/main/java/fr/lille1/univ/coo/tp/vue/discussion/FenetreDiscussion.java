@@ -20,7 +20,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
@@ -32,9 +31,15 @@ import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.utils.Log;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Fermable;
-import fr.lille1.univ.coo.tp.vue.utilisateurs.JAffectationList;
+import fr.lille1.univ.coo.tp.vue.listes.JAffectationList;
+import fr.lille1.univ.coo.tp.vue.listes.JMessageList;
+import fr.lille1.univ.coo.tp.vue.listes.cellrenderer.AffectationListCellRenderer;
+import fr.lille1.univ.coo.tp.vue.listes.cellrenderer.MessageListCellRenderer;
 
 public class FenetreDiscussion extends JFrame implements Fermable {
+
+	public static final String MESSAGE_VIDE_AFFECTATION = "Aucun utilisateur sur cette dicussion !";
+	private static final String MESSAGE_VIDE_MESSAGES = "Aucun message dans cette discussion";
 
 	private static final long serialVersionUID = 1L;
 
@@ -83,12 +88,16 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 			}
 		});
 		listeMessages = new JMessageList(iDiscussion.getMessages());
+		listeMessages.setMessageVide(MESSAGE_VIDE_MESSAGES);
+		listeMessages.setCellRenderer(new MessageListCellRenderer());
 		btnEnvoyer = new JButton(envoyerAction);
 		btnPrioritaire = new JToggleButton("Prioritaire");
 		btnAccuseReception = new JToggleButton("Accusé");
 		btnChiffre = new JToggleButton("Chiffré");
 		btnExpire = new JToggleButton("Expire");
 		listeMembres = new JAffectationList(iDiscussion.getAffectations());
+		listeMembres.setCellRenderer(new AffectationListCellRenderer());
+		listeMembres.setMessageVide(MESSAGE_VIDE_AFFECTATION);
 		barreMenu = new JMenuBar();
 		menuFichier = new JMenu("Fichier");
 		menuFermer = new JMenuItem("Fermer");

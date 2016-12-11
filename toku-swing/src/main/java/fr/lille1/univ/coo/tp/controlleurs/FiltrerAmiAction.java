@@ -15,7 +15,7 @@ import fr.lille1.univ.coo.tp.filtre.Filtre;
 import fr.lille1.univ.coo.tp.filtre.OUFiltre;
 import fr.lille1.univ.coo.tp.utilisateur.Amitie;
 import fr.lille1.univ.coo.tp.vue.FenetrePrincipale;
-import fr.lille1.univ.coo.tp.vue.utilisateurs.JFiltrableList;
+import fr.lille1.univ.coo.tp.vue.listes.JFiltrableList;
 
 public class FiltrerAmiAction extends FiltrerAction<Amitie> {
 	public FiltrerAmiAction(JFiltrableList<Amitie> liste) {

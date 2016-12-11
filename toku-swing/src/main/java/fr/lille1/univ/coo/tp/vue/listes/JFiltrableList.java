@@ -1,4 +1,4 @@
-package fr.lille1.univ.coo.tp.vue.utilisateurs;
+package fr.lille1.univ.coo.tp.vue.listes;
 
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
@@ -7,10 +7,6 @@ public abstract class JFiltrableList<T extends IObjetDomaine<?>> extends JObserv
 	private static final long serialVersionUID = 1L;
 	private JTexteFiltre<T> texte;
 
-	public JFiltrableList() {
-		super();
-	}
-	
 	public JFiltrableList(IObservableList<T> utilisateurs) {
 		super(utilisateurs);
 	}
@@ -18,7 +14,7 @@ public abstract class JFiltrableList<T extends IObjetDomaine<?>> extends JObserv
 	@Override
 	public void setListe(IObservableList<T> liste) {
 		super.setListe(liste);
-		this.texte = new JTexteFiltre<T>(this.leModel);
+		this.texte = new JTexteFiltre<T>(this);
 	}
 
 	/**

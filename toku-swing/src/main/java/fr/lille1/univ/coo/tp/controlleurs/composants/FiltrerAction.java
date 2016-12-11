@@ -5,7 +5,7 @@ import javax.swing.event.DocumentListener;
 
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.filtre.Filtreur;
-import fr.lille1.univ.coo.tp.vue.utilisateurs.JFiltrableList;
+import fr.lille1.univ.coo.tp.vue.listes.JFiltrableList;
 
 public abstract class FiltrerAction<T extends IObjetDomaine> extends Filtreur implements DocumentListener {
 

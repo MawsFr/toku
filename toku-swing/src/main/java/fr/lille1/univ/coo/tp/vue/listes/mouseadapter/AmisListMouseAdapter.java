@@ -1,4 +1,4 @@
-package fr.lille1.univ.coo.tp.controlleurs;
+package fr.lille1.univ.coo.tp.vue.listes.mouseadapter;
 
 import javax.swing.JOptionPane;
 
@@ -9,8 +9,7 @@ import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.utilisateur.Amitie;
 import fr.lille1.univ.coo.tp.vue.FenetrePrincipale;
 import fr.lille1.univ.coo.tp.vue.discussion.FenetreDiscussion;
-import fr.lille1.univ.coo.tp.vue.utilisateurs.JObservableList;
-import fr.lille1.univ.coo.tp.vue.utilisateurs.JObservableListMouseAdapter;
+import fr.lille1.univ.coo.tp.vue.listes.JObservableList;
 
 public class AmisListMouseAdapter extends JObservableListMouseAdapter<Amitie> {
 	public AmisListMouseAdapter(JObservableList<Amitie> liste) {

@@ -1,6 +1,8 @@
-package fr.lille1.univ.coo.tp.vue.utilisateurs;
+package fr.lille1.univ.coo.tp.vue.listes.mouseadapter;
 
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
+import fr.lille1.univ.coo.tp.vue.listes.JObservableList;
+import fr.lille1.univ.coo.tp.vue.utilisateurs.GestionUtilisateurs;
 
 public class GestionUtilisateurMouseAdapter extends JObservableListMouseAdapter<Utilisateur> {
 	private GestionUtilisateurs gestionUtilisateur;

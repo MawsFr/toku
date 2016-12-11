@@ -5,14 +5,17 @@ import java.awt.Container;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
+import fr.lille1.univ.coo.tp.vue.listes.JAffectationList;
+import fr.lille1.univ.coo.tp.vue.listes.JAmisList;
+
 public class PopupNotification extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	
 	private Container c;
 	private JTabbedPane onglets;
-	private JNotificationList notifAmi;
-	private JNotificationList notifDiscussion;
+	private JAmisList notifAmi;
+	private JAffectationList notifDiscussion;
 	
 	
 	public PopupNotification() {

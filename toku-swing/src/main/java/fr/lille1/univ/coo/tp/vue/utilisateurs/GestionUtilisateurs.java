@@ -18,6 +18,10 @@ import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.BarreMenuPrincipale;
 import fr.lille1.univ.coo.tp.vue.FenetrePrincipale;
 import fr.lille1.univ.coo.tp.vue.composants.GBC;
+import fr.lille1.univ.coo.tp.vue.listes.JTexteFiltre;
+import fr.lille1.univ.coo.tp.vue.listes.JUtilisateurList;
+import fr.lille1.univ.coo.tp.vue.listes.cellrenderer.UtilisateurListCellRenderer;
+import fr.lille1.univ.coo.tp.vue.listes.mouseadapter.GestionUtilisateurMouseAdapter;
 
 public class GestionUtilisateurs extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -25,6 +29,7 @@ public class GestionUtilisateurs extends JDialog {
 	public static final String MODIFIER_UTILISATEUR = "Modifier";
 	public static final String SUPPRIMER_UTILISATEUR = "Supprimer";
 	public static final String AIDE_FILTRE = "pseudo ou nom ou prenom";
+	public static final String MESSAGE_VIDE = "Aucun utilisateurs !";
 	
 	private Container c;
 	private JUtilisateurList utilisateurs;
@@ -40,6 +45,8 @@ public class GestionUtilisateurs extends JDialog {
 		c.setLayout(new GridBagLayout());
 		
 		utilisateurs = new JUtilisateurList(membres);
+		utilisateurs.setMessageVide(MESSAGE_VIDE);
+		utilisateurs.setCellRenderer(new UtilisateurListCellRenderer());
 		utilisateurs.setSelectedIndex(0);
 		utilisateurs.addMouseListener(new GestionUtilisateurMouseAdapter(this, utilisateurs));
 		btnAjouter = new JButton(AjouterUtilisateurAction.getInstance(this));

@@ -72,7 +72,7 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 	@Override
 	public boolean estAdministrateur(IUtilisateur utilisateur) throws ServiceException {
 		try {
-			return utilisateur.getRole() == new DAOGenerique<>(Role.class).rechercher(Role.ROLE_ADMINISTRATEUR);
+			return utilisateur.getRole().equals(new DAOGenerique<>(Role.class).rechercher(Role.ROLE_ADMINISTRATEUR));
 		} catch (DAOException e) {
 			throw new ServiceException("Erreur lors de la vérification des droits administrateurs", e);
 		}

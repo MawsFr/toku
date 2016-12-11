@@ -1,4 +1,4 @@
-package fr.lille1.univ.coo.tp.vue.discussion;
+package fr.lille1.univ.coo.tp.vue.listes.cellrenderer;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -10,11 +10,8 @@ import javax.swing.JPanel;
 
 import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.discussion.message.Message;
-import fr.lille1.univ.coo.tp.vue.utilisateurs.ObservableListRenderer;
 
 public class MessageListCellRenderer implements ObservableListRenderer<Message> {
-
-	private static final long serialVersionUID = 1L;
 
 	@Override
 	public Component getListCellRendererComponent(JList<? extends Message> list, Message value, int index,

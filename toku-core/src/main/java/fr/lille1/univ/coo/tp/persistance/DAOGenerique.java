@@ -240,12 +240,18 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 
 			for (String champ : champs) {
 				Field field = classe.getDeclaredField(champ);
+				Class<?> type = null;
 				if (field.getAnnotations().length > 0) {
 					Method getter = classe.getDeclaredMethod(ReflectionUtils.getGetter(field));
 					// boolean accessible = field.isAccessible();
 					// field.setAccessible(true);
 					if (field.isAnnotationPresent(Colonne.class)) {
 						clauseSet.put(ReflectionUtils.getNomColonne(field), getter.invoke(objet));
+					} else if (field.isAnnotationPresent(PlusieursAUn.class)) {
+						type = getter.invoke(objet).getClass();
+						Field idChamps = ReflectionUtils.trouverChampsId(type);
+						Method idGetter = type.getDeclaredMethod(ReflectionUtils.getGetter(idChamps));
+						clauseSet.put(ReflectionUtils.getNomColonne(field), idGetter.invoke(getter.invoke(objet)));
 					}
 				}
 				// field.setAccessible(accessible);
