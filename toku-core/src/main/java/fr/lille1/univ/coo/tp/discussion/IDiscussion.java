@@ -4,11 +4,12 @@ import java.util.List;
 
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.discussion.message.Message;
+import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 
 @Table(nom="discussion")
-public interface IDiscussion {
+public interface IDiscussion extends IObjetDomaine<Integer>{
 
 	/**
 	 * @return Le id

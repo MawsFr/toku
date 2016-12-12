@@ -1,5 +1,6 @@
 package fr.lille1.univ.coo.tp.utilisateur;
 
+import fr.lille1.univ.coo.tp.discussion.IDiscussion;
 import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.validateur.ValidationException;
 
@@ -31,6 +32,7 @@ public interface IUtilisateurService {
 	public void ajouterCentreInteret(int id);
 	public void creerCentreInteret(String nom);
 	public boolean estAdministrateur(IUtilisateur utilisateur) throws ServiceException;
+	public boolean estModerateur(IDiscussion discussion, IUtilisateur utilisateur);
 	public IObservableList<Utilisateur> rechercherTout() throws ServiceException;
 	void validerAmi() throws ServiceException;
 	

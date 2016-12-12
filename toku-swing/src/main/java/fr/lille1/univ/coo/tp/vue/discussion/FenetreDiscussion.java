@@ -25,7 +25,10 @@ import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
+import fr.lille1.univ.coo.tp.controlleurs.discussion.AffecterAction;
+import fr.lille1.univ.coo.tp.controlleurs.discussion.DesaffecterAction;
 import fr.lille1.univ.coo.tp.controlleurs.discussion.EnvoyerMessageAction;
+import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.discussion.IDiscussion;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
@@ -35,6 +38,7 @@ import fr.lille1.univ.coo.tp.vue.listes.JAffectationList;
 import fr.lille1.univ.coo.tp.vue.listes.JMessageList;
 import fr.lille1.univ.coo.tp.vue.listes.cellrenderer.AffectationListCellRenderer;
 import fr.lille1.univ.coo.tp.vue.listes.cellrenderer.MessageListCellRenderer;
+import fr.lille1.univ.coo.tp.vue.listes.mouseadapter.AffectationListMouseAdapter;
 
 public class FenetreDiscussion extends JFrame implements Fermable {
 
@@ -44,6 +48,8 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	private static final long serialVersionUID = 1L;
 
 	public static final Object BTN_ENVOYER = "Envoyer";
+	public static final Object BTN_PLUS = "+";
+	public static final Object BTN_MOINS = "-";
 	
 	private Container c;
 	private JLabel lblTypeDiscussion;
@@ -67,6 +73,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	private JCheckBox chckbxValiderAvecEntre;
 	private JPanel panneauDroite;
 	private JSplitPane panneauPrincipal;
+	private JPanel panneauBoutonMembres;
 	
 	public FenetreDiscussion(IDiscussion iDiscussion) {
 		this.discussion = iDiscussion;
@@ -99,6 +106,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		btnExpire = new JToggleButton("Expire");
 		listeMembres = new JAffectationList(iDiscussion.getAffectations());
 		listeMembres.setCellRenderer(new AffectationListCellRenderer());
+		listeMembres.addMouseListener(new AffectationListMouseAdapter(listeMembres));
 		listeMembres.setMessageVide(MESSAGE_VIDE_AFFECTATION);
 		barreMenu = new JMenuBar();
 		menuFichier = new JMenu("Fichier");
@@ -121,9 +129,9 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		JPanel panneauDroite2 = new JPanel();
 		JScrollPane scrollMembres = new JScrollPane();
 		JPanel panneauMembres = new JPanel();
-		JPanel panneauBoutonMembres = new JPanel();
-		JButton btnAjouterMembre = new JButton("+");
-		JButton btnSupprimerMembre = new JButton("-");
+		panneauBoutonMembres = new JPanel();
+		JButton btnAjouterMembre = new JButton(new AffecterAction(this));
+		JButton btnSupprimerMembre = new JButton(new DesaffecterAction(this));
 
 		panneauPrincipal.setResizeWeight(1.0);
 		panneauPrincipal.setOneTouchExpandable(true);
@@ -237,6 +245,24 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 				JOptionPane.showMessageDialog(this, "Erreur lors de l'envoi du message", "Erreur", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+	}
+	
+	public void desaffecter() {
+		AffectationDiscussion affectation = listeMembres.getElementSelectionne();
+		try {
+			Service.getDiscussionService().supprimerUtilisateur(affectation, discussion, affectation.getUtilisateur());
+			Service.getDiscussionService().validerAffectations();
+//			JOptionPane.showMessageDialog(this, "Utilisateur supprimé", "Erreur", JOptionPane.INFORMATION_MESSAGE);
+			if(discussion.getAffectations().getListe().size() == 0) {
+				Service.getDiscussionService().supprimerDiscussion(discussion);
+				Service.getDiscussionService().validerDiscussions();
+				this.dispose();
+			}
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+		}
+		
 	}
 	
 	@Override
@@ -508,6 +534,20 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	 */
 	public void setPanneauPrincipal(JSplitPane panneauPrincipal) {
 		this.panneauPrincipal = panneauPrincipal;
+	}
+
+	/**
+	 * @return Le panneauBoutonMembres
+	 */
+	public JPanel getPanneauBoutonMembres() {
+		return panneauBoutonMembres;
+	}
+
+	/**
+	 * @param panneauBoutonMembres Le nouveau panneauBoutonMembres
+	 */
+	public void setPanneauBoutonMembres(JPanel panneauBoutonMembres) {
+		this.panneauBoutonMembres = panneauBoutonMembres;
 	}
 	
 	

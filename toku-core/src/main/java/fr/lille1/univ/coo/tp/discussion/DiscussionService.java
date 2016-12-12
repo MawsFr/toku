@@ -37,16 +37,48 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 		UnitOfWork.getInstance(Discussion.class).creation(discussion);
 		return discussion;
 	}
+	
+	@Override
+	public void supprimerDiscussion(IDiscussion discussion) throws ServiceException {
+		Utilisateur utilisateur = Application.getInstance().getSession().getUtilisateur();
+		if(!Service.getUtilisateurService().estAdministrateur(utilisateur) && !Service.getUtilisateurService().estModerateur(discussion, utilisateur)) {
+			throw new ServiceException("Vous n'avez pas les droits (admin / modo) pour supprimer cette discussion");
+		}
+		UnitOfWork.getInstance(Discussion.class).suppression(discussion);
+	}
 
 	@Override
 	public void ajouterUtilisateur(IDiscussion discussion, IUtilisateur utilisateur, Integer etat)
 			throws ServiceException {
+		if(discussion.getMembres().contains(utilisateur)) {
+			throw new ServiceException("Cet ami est déjà dans la discussion !");
+		}
 		AffectationDiscussion affectationDiscussion = new AffectationDiscussion();
 		affectationDiscussion.setDiscussion(discussion);
 		affectationDiscussion.setUtilisateur(utilisateur);
 		affectationDiscussion.setEtat(etat);
 		utilisateur.getAffectations().ajouter(affectationDiscussion);
 		discussion.getAffectations().ajouter(affectationDiscussion);
+	}
+	
+	@Override
+	public void supprimerUtilisateur(AffectationDiscussion affectation, IDiscussion discussion,
+			IUtilisateur iUtilisateur) throws ServiceException {
+		Utilisateur utilisateur = Application.getInstance().getSession().getUtilisateur();
+		
+		if(affectation == null) {
+			throw new ServiceException("Veuillez selectionner une personne à enlever de la discussion");
+		}
+		if(affectation.getUtilisateur().equals(utilisateur) && discussion.getAffectations().getListe().size() > 1) {
+			throw new ServiceException("Vous ne pouvez pas vous enlever du groupe tant qu'il reste d'autres personnes");
+		}
+		
+		if(affectation.getUtilisateur().equals(discussion.getModerateur()) && discussion.getAffectations().getListe().size() > 1) {
+			throw new ServiceException("Vous ne pouvez pas enlever le modérateur du groupe tant qu'il reste des gens");
+		}
+		
+		discussion.getAffectations().supprimer(affectation);
+		utilisateur.getAffectations().supprimer(affectation);
 	}
 
 	@Override
@@ -65,7 +97,6 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 
 		discussion.getMessages().ajouter(message);
 		validerMessages();
-
 	}
 
 	@Override
@@ -119,5 +150,7 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 			throw new ServiceException(e);
 		}
 	}
+
+	
 
 }

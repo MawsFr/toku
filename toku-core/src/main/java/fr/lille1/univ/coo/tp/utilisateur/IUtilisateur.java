@@ -5,10 +5,11 @@ import java.util.List;
 import fr.lille1.univ.coo.tp.annotations.Table;
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.discussion.IDiscussion;
+import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.role.IRole;
 
 @Table(nom="utilisateur")
-public interface IUtilisateur {
+public interface IUtilisateur extends IObjetDomaine<Integer>{
 	public static final String ID = "id";
 	public static final String PSEUDO = "id";
 	public static final String NOM = "id";

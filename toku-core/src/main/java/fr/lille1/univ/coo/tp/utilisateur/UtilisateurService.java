@@ -9,6 +9,7 @@ import fr.lille1.univ.coo.tp.cryptage.CryptageException;
 import fr.lille1.univ.coo.tp.cryptage.CrypteurMD5;
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.discussion.Discussion;
+import fr.lille1.univ.coo.tp.discussion.IDiscussion;
 import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
@@ -94,6 +95,11 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 		} catch (DAOException e) {
 			throw new ServiceException("Erreur lors de la vérification des droits administrateurs", e);
 		}
+	}
+	
+	@Override
+	public boolean estModerateur(IDiscussion discussion, IUtilisateur utilisateur) {
+		return discussion.getModerateur().equals(utilisateur);
 	}
 	
 	@Override
@@ -260,5 +266,7 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 		// TODO Auto-generated method stub
 
 	}
+
+	
 
 }
