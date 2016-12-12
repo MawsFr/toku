@@ -186,10 +186,10 @@ public class Discussion extends ObjetDomaine<Integer> implements IDiscussion {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof Discussion)) {
+		if (!(obj instanceof IDiscussion)) {
 			return false;
 		}
-		Discussion other = (Discussion) obj;
+		IDiscussion other = (IDiscussion) obj;
 		if (id == null) {
 			if (other.getId() != null) {
 				return false;

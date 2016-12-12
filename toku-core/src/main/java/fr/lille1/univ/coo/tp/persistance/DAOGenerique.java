@@ -265,7 +265,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 			Method idGetter = classe.getDeclaredMethod(ReflectionUtils.getGetter(idChamps));
 			// boolean accessible = idChamps.isAccessible();
 			// idChamps.setAccessible(true);
-			clauseWhere.put(idChamps.getName(), idGetter.invoke(objet));
+			clauseWhere.put(ReflectionUtils.getNomColonne(idChamps), idGetter.invoke(objet));
 			// idChamps.setAccessible(accessible);
 
 			modifier(clauseSet, clauseWhere);

@@ -17,5 +17,5 @@ public abstract class RequeteJoin extends RequeteWhere {
 		this.clauseJoin.put(classe, criteres);
 		return this;
 	}
-	
+
 }

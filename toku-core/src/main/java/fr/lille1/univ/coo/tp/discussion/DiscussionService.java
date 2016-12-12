@@ -13,34 +13,34 @@ import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
 public class DiscussionService extends Service<Discussion> implements IDiscussionService {
 	private static IDiscussionService instance;
+
 	protected DiscussionService() {
 	}
-	
+
 	public static IDiscussionService getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new DiscussionService();
 		}
-		
+
 		return instance;
 	}
-	
-	
-	
+
 	@Override
 	public Discussion creerDiscussion(String string, int type) throws ServiceException {
 		Utilisateur moderateur = Application.getInstance().getSession().getUtilisateur();
-		
+
 		Discussion discussion = new Discussion();
 		discussion.setNom(string);
 		discussion.setModerateur(moderateur);
 		discussion.setLeType(type);
-		
+
 		UnitOfWork.getInstance(Discussion.class).creation(discussion);
 		return discussion;
 	}
-	
+
 	@Override
-	public void ajouterUtilisateur(Discussion discussion, IUtilisateur utilisateur, Integer etat) throws ServiceException {
+	public void ajouterUtilisateur(IDiscussion discussion, IUtilisateur utilisateur, Integer etat)
+			throws ServiceException {
 		AffectationDiscussion affectationDiscussion = new AffectationDiscussion();
 		affectationDiscussion.setDiscussion(discussion);
 		affectationDiscussion.setUtilisateur(utilisateur);
@@ -48,9 +48,10 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 		utilisateur.getAffectations().ajouter(affectationDiscussion);
 		discussion.getAffectations().ajouter(affectationDiscussion);
 	}
-	
+
 	@Override
-	public void envoyerMessage(IDiscussion discussion, String texte, Boolean accuse, Boolean prioritaire, Boolean chiffre, Integer expire) throws ServiceException {
+	public void envoyerMessage(IDiscussion discussion, String texte, Boolean accuse, Boolean prioritaire,
+			Boolean chiffre, Integer expire) throws ServiceException {
 		Message message = new Message();
 		message.setDiscussion(discussion);
 		message.setUtilisateur(Application.getInstance().getSession().getUtilisateur());
@@ -61,12 +62,34 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 		message.setExpiration(expire);
 		message.setPrioritaire(prioritaire);
 		message.setLu(false);
-		
+
 		discussion.getMessages().ajouter(message);
 		validerMessages();
-		
+
 	}
-	
+
+	@Override
+	public IDiscussion rechercherDiscussionPriveeAvec(IUtilisateur ami) {
+		/* select * from projet_discussion d
+		join projet_utilisateur_discussion a1 on d.id = a1.id_discussion 
+		join projet_utilisateur_discussion a2 on d.id = a2.id_discussion 
+		where ((a1.id_utilisateur = 1 and a2.id_utilisateur = 5) or (a1.id_utilisateur = 5 and a2.id_utilisateur = 1)) and d.leType = 2
+		group by d.id
+		 * 
+		 * */
+		
+		Utilisateur utilisateur = Application.getInstance().getSession().getUtilisateur();
+		for(AffectationDiscussion affectation : utilisateur.getAffectations().getListe()) {
+			IDiscussion discussion = affectation.getDiscussion();
+			if(discussion.getLeType().equals(Discussion.TYPE_PRIVE) && discussion.getMembres().contains(utilisateur) && discussion.getMembres().contains(ami)) {
+				return discussion;
+			}
+		}
+		
+		return null;
+
+	}
+
 	@Override
 	public void validerMessages() throws ServiceException {
 		try {
@@ -76,7 +99,7 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 			throw new ServiceException(e);
 		}
 	}
-	
+
 	@Override
 	public void validerDiscussions() throws ServiceException {
 		try {
@@ -86,7 +109,7 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 			throw new ServiceException(e);
 		}
 	}
-	
+
 	@Override
 	public void validerAffectations() throws ServiceException {
 		try {

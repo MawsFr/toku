@@ -25,6 +25,7 @@ public class RequeteParser {
 
 		sb.append(" FROM ").append(ReflectionUtils.nomVue(requete.classe)).append(" ");
 		sb.append(visit(new RequeteWhere(requete.classe, requete.clauseWhere)));
+		sb.append(visit(new RequeteGroupBy(requete.classe, requete.clauseGroupBy)));
 		if(requete.clauseLimit > 0) {
 			sb.append("LIMIT ").append(requete.clauseLimit).toString();
 		}
@@ -104,6 +105,22 @@ public class RequeteParser {
 		return sb.toString();
 	}
 
+	public String visit(RequeteGroupBy requete) {
+		if(requete.clauseGroupBy == null || requete.clauseGroupBy.isEmpty()) {
+			return "";
+		}
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(" GROUP BY ");
+		for(Iterator<String> it = requete.clauseGroupBy.iterator(); it.hasNext();) {
+			sb.append(it.next());
+			if(it.hasNext()) {
+				sb.append(", ");
+			}
+		}
+		return sb.toString();
+	}
+	
 	public String visit(Critere critere) {
 		return critere.accept(this);
 	}

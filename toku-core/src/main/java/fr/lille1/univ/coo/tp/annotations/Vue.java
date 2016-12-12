@@ -12,6 +12,5 @@ import java.lang.annotation.Target;
 @Target(TYPE)
 public @interface Vue {
 	String nom();
-	String cle();
 
 }

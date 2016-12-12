@@ -10,7 +10,7 @@ import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
 import fr.lille1.univ.coo.tp.filtre.Visiteur;
 
-@Vue(nom="amitie_view", cle="id")
+@Vue(nom="amitie_view")
 @Table(nom="amitie", cle="id_demande")
 public class Amitie extends ObjetDomaine<String> {
 	public static final int ETAT_EN_ATTENTE = 0;
