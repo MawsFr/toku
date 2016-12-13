@@ -24,6 +24,7 @@ public class AfficherNotificationsAction extends AbstractAction {
 		}
 		try {
 			notifs.rafraichirAmitie();
+			notifs.rafraichirAffectation();
 			notifs.setVisible(true);
 		} catch (DomainException e) {
 			e.printStackTrace();

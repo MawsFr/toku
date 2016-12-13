@@ -62,25 +62,28 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 	}
 	
 	@Override
-	public void supprimerUtilisateur(AffectationDiscussion affectation, IDiscussion discussion,
-			IUtilisateur iUtilisateur) throws ServiceException {
+	public void supprimerUtilisateur(AffectationDiscussion affectation, IDiscussion discussion) throws ServiceException {
 		Utilisateur utilisateur = Application.getInstance().getSession().getUtilisateur();
 		
 		if(affectation == null) {
 			throw new ServiceException("Veuillez selectionner une personne à enlever de la discussion");
 		}
-		if(affectation.getUtilisateur().equals(utilisateur) && discussion.getAffectations().getListe().size() > 1) {
-			throw new ServiceException("Vous ne pouvez pas vous enlever du groupe tant qu'il reste d'autres personnes");
-		}
-		
+//		if(affectation.getUtilisateur().equals(utilisateur) && discussion.getAffectations().getListe().size() > 1) {
+//			throw new ServiceException("Vous ne pouvez pas vous retirer du groupe tant qu'il reste d'autres personnes");
+//		}
 		if(affectation.getUtilisateur().equals(discussion.getModerateur()) && discussion.getAffectations().getListe().size() > 1) {
-			throw new ServiceException("Vous ne pouvez pas enlever le modérateur du groupe tant qu'il reste des gens");
+			if(utilisateur.equals(affectation.getUtilisateur())) {
+				throw new ServiceException("Vous ne pouvez pas vous retirer du groupe tant qu'il reste des gens");
+			} else {
+				throw new ServiceException("Vous ne pouvez pas retirer le modérateur du groupe tant qu'il reste des gens");
+				
+			}
 		}
 		
 		discussion.getAffectations().supprimer(affectation);
-		utilisateur.getAffectations().supprimer(affectation);
+		affectation.getUtilisateur().getAffectations().supprimer(affectation);
 	}
-
+	
 	@Override
 	public void envoyerMessage(IDiscussion discussion, String texte, Boolean accuse, Boolean prioritaire,
 			Boolean chiffre, Integer expire) throws ServiceException {

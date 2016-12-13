@@ -1,5 +1,7 @@
 package fr.lille1.univ.coo.tp.vue.listes.mouseadapter;
 
+import java.awt.event.MouseEvent;
+
 import fr.lille1.univ.coo.tp.utilisateur.Amitie;
 import fr.lille1.univ.coo.tp.vue.discussion.FenetreAffectation;
 import fr.lille1.univ.coo.tp.vue.listes.JObservableList;
@@ -13,17 +15,17 @@ public class NouvelleAffectationListMouseAdapter extends JObservableListMouseAda
 	}
 
 	@Override
-	public void doubleClic(Amitie element) {
+	public void doubleClic(Amitie element, MouseEvent e) {
 		fenetreAffectation.ajouterAmi(element);
 	}
 
 	@Override
-	public void clic(Amitie element) {
+	public void clic(Amitie element, MouseEvent e) {
 
 	}
 
 	@Override
-	public void clicDroit(Amitie element) {
+	public void clicDroit(Amitie element, MouseEvent e) {
 
 	}
 

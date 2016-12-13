@@ -37,7 +37,7 @@ public class EstEnAttente extends Filtre {
 
 	@Override
 	public void visit(AffectationDiscussion affectation) throws DomainException {
-		setResultat(affectation.getEtat().equals(AffectationDiscussion.ETAT_EN_ATTENTE));
+		setResultat(affectation.getEtat().equals(AffectationDiscussion.ETAT_EN_ATTENTE) || affectation.getEtat().equals(AffectationDiscussion.ETAT_VU) );
 	}
 	
 	

@@ -25,10 +25,13 @@ import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
+import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.controlleurs.discussion.AffecterAction;
 import fr.lille1.univ.coo.tp.controlleurs.discussion.DesaffecterAction;
 import fr.lille1.univ.coo.tp.controlleurs.discussion.EnvoyerMessageAction;
+import fr.lille1.univ.coo.tp.controlleurs.discussion.QuitterGroupeAction;
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
+import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.discussion.IDiscussion;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
@@ -39,6 +42,7 @@ import fr.lille1.univ.coo.tp.vue.listes.JMessageList;
 import fr.lille1.univ.coo.tp.vue.listes.cellrenderer.AffectationListCellRenderer;
 import fr.lille1.univ.coo.tp.vue.listes.cellrenderer.MessageListCellRenderer;
 import fr.lille1.univ.coo.tp.vue.listes.mouseadapter.AffectationListMouseAdapter;
+import javax.swing.Action;
 
 public class FenetreDiscussion extends JFrame implements Fermable {
 
@@ -50,6 +54,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	public static final Object BTN_ENVOYER = "Envoyer";
 	public static final Object BTN_PLUS = "+";
 	public static final Object BTN_MOINS = "-";
+	public static final Object BTN_QUITTER = "Quitter la discussion";
 	
 	private Container c;
 	private JLabel lblTypeDiscussion;
@@ -74,6 +79,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	private JPanel panneauDroite;
 	private JSplitPane panneauPrincipal;
 	private JPanel panneauBoutonMembres;
+	private JButton btnQuitterLeGroupe;
 	
 	public FenetreDiscussion(IDiscussion iDiscussion) {
 		this.discussion = iDiscussion;
@@ -106,7 +112,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		btnExpire = new JToggleButton("Expire");
 		listeMembres = new JAffectationList(iDiscussion.getAffectations());
 		listeMembres.setCellRenderer(new AffectationListCellRenderer());
-		listeMembres.addMouseListener(new AffectationListMouseAdapter(listeMembres));
+		listeMembres.addMouseListener(new AffectationListMouseAdapter(this));
 		listeMembres.setMessageVide(MESSAGE_VIDE_AFFECTATION);
 		barreMenu = new JMenuBar();
 		menuFichier = new JMenu("Fichier");
@@ -205,6 +211,9 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		panneauMembres.add(scrollMembres, BorderLayout.CENTER);
 		
 		panneauDroite2.add(panneauMembres, BorderLayout.CENTER);
+		
+		btnQuitterLeGroupe = new JButton(new QuitterGroupeAction(this));
+		panneauMembres.add(btnQuitterLeGroupe, BorderLayout.SOUTH);
 		panneauBoutonMembres.setBorder(new TitledBorder(null, "Modération", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panneauDroite2.add(panneauBoutonMembres, BorderLayout.SOUTH);
 		panneauBoutonMembres.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 5));
@@ -234,9 +243,14 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 			Boolean prioritaire = btnPrioritaire.isSelected();
 			Boolean chiffre = btnChiffre.isSelected();
 			Integer expire = 2;
-			
 			try {
 				Service.getDiscussionService().envoyerMessage(discussion, texte, accuse, prioritaire, chiffre, expire);
+				for(AffectationDiscussion affectationDiscussion : discussion.getAffectations().getListe()) {
+					if(!affectationDiscussion.getUtilisateur().equals(Application.getInstance().getSession().getUtilisateur())) {
+						affectationDiscussion.setEtat(AffectationDiscussion.ETAT_VU);
+					}
+				}
+				Service.getDiscussionService().validerAffectations();
 				Log.info("Message envoye");
 				txtMessage.setText("");
 				txtMessage.setCaretPosition(0);
@@ -247,10 +261,12 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		}
 	}
 	
-	public void desaffecter() {
-		AffectationDiscussion affectation = listeMembres.getElementSelectionne();
+	public void desaffecter(AffectationDiscussion affectation) {
+		if(affectation == null) {
+			affectation = listeMembres.getElementSelectionne();
+		}
 		try {
-			Service.getDiscussionService().supprimerUtilisateur(affectation, discussion, affectation.getUtilisateur());
+			Service.getDiscussionService().supprimerUtilisateur(affectation, discussion);
 			Service.getDiscussionService().validerAffectations();
 //			JOptionPane.showMessageDialog(this, "Utilisateur supprimé", "Erreur", JOptionPane.INFORMATION_MESSAGE);
 			if(discussion.getAffectations().getListe().size() == 0) {
@@ -264,6 +280,20 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		}
 		
 	}
+	
+	public void quitter() {
+		AffectationDiscussion affectationDiscussion = null;
+		for(AffectationDiscussion affectation : discussion.getAffectations().getListe()) {
+			if(affectation.getUtilisateur().equals(Application.getInstance().getSession().getUtilisateur())) {
+				affectationDiscussion = affectation;
+				break;
+			}
+		}
+		if(affectationDiscussion != null) {
+			desaffecter(affectationDiscussion);
+		}
+	}
+	
 	
 	@Override
 	public void fermer() {
@@ -549,6 +579,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	public void setPanneauBoutonMembres(JPanel panneauBoutonMembres) {
 		this.panneauBoutonMembres = panneauBoutonMembres;
 	}
+
 	
 	
 	

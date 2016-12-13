@@ -8,6 +8,8 @@ import javax.swing.JList;
 
 import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
+import fr.lille1.univ.coo.tp.service.Service;
+import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 
 public class AffectationListCellRenderer implements ObservableListRenderer<AffectationDiscussion> {
@@ -28,7 +30,16 @@ public class AffectationListCellRenderer implements ObservableListRenderer<Affec
 			label.setForeground(Color.BLACK);
 		}
 		IUtilisateur utilisateur = value.getUtilisateur();
-		String nom = utilisateur.getPseudo() + (utilisateur == Application.getInstance().getSession().getUtilisateur() ? " (Vous)" : "");
+		String nom = utilisateur.getPseudo();
+		try {
+			if(Service.getUtilisateurService().estAdministrateur(utilisateur)) {
+				nom += " (Admin)";
+			} else if(Service.getUtilisateurService().estModerateur(value.getDiscussion(), utilisateur)){
+				nom += " (Modérateur)";
+			}
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
 		label.setText(nom);
 		label.setFont(list.getFont());
 		return label;

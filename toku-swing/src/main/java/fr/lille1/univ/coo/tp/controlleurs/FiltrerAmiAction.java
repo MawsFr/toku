@@ -27,6 +27,9 @@ public class FiltrerAmiAction extends FiltrerAction<Amitie> {
 		String texte = this.liste.getTexte().getText();
 		if(texte.isEmpty()) {
 			setFiltre(null);
+			if(liste.getLeModel().getFiltreDeBase() != null) {
+				setFiltre(liste.getLeModel().getFiltreDeBase());
+			}
 		} else {
 			List<Filtre> criteres = new ArrayList<>();
 			ALePseudo aLePseudo = new ALePseudo(texte);

@@ -18,11 +18,14 @@ import javax.swing.JTabbedPane;
 
 import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.controlleurs.amitie.AccepterAmiAction;
+import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
+import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.filtre.EstEnAttente;
 import fr.lille1.univ.coo.tp.filtre.EstRefusee;
 import fr.lille1.univ.coo.tp.filtre.EstValide;
 import fr.lille1.univ.coo.tp.filtre.Filtre;
+import fr.lille1.univ.coo.tp.filtre.NONFiltre;
 import fr.lille1.univ.coo.tp.filtre.OUFiltre;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
@@ -48,6 +51,7 @@ public class PopupNotification extends JFrame {
 	private Filtre filtreDiscussion;
 
 	private IObservableListModel<Amitie> amitieModel;
+	private IObservableListModel<AffectationDiscussion> discussionModel;
 
 
 	public PopupNotification() {
@@ -56,28 +60,26 @@ public class PopupNotification extends JFrame {
 		ongletDiscussion = new JPanel();
 
 		ongletDemandeAmi.setLayout(new BorderLayout());
+		ongletDiscussion.setLayout(new BorderLayout());
 
 		List<Filtre> criteresAmis = new ArrayList<>();
 		filtreAmi = new OUFiltre(criteresAmis);
 
-		EstEnAttente enAttenteAmi = new EstEnAttente();
+		EstEnAttente enAttente = new EstEnAttente();
 		EstValide estValideAmi = new EstValide();
 		EstRefusee estRefuseeAmi = new EstRefusee();
 
-		criteresAmis.add(enAttenteAmi);
+		criteresAmis.add(enAttente);
 		criteresAmis.add(estValideAmi);
 		criteresAmis.add(estRefuseeAmi);
 
-		//		ongletDemandeAmi.add(new JScrollPane(notifAmi), BorderLayout.CENTER);
 		// Discussion
+		filtreDiscussion = new EstEnAttente();
+		
 		onglets.addTab(ONGLET_DEMANDE_AMI, ongletDemandeAmi);
 		onglets.addTab(ONGLET_DISCUSSION, ongletDiscussion);
 
 		setContentPane(onglets);
-
-		//		notifDiscussion = new JAffectationList(Application.getInstance().getSession().getUtilisateur().getAffectations());
-		////		notifAmi.setCellRenderer(new DemandeAmisListCellRenderer());
-		//		notifAmi.setMessageVide(MESSAGE_GROUPE_VIDE);
 
 		setSize(400, 400);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -91,11 +93,25 @@ public class PopupNotification extends JFrame {
 		JPanel notifsAmi = new JPanel();
 		notifsAmi.setLayout(new BoxLayout(notifsAmi, BoxLayout.Y_AXIS));
 		for(int i = 0; i < amitieModel.size(); ++i) {
-			notifsAmi.add(new NotificationPanel(amitieModel.get(i)));
+			notifsAmi.add(new AmitieNotificationPanel(amitieModel.get(i)));
 		}
 		ongletDemandeAmi.add(new JScrollPane(notifsAmi), BorderLayout.CENTER);
 		
 	}
+	
+	public void rafraichirAffectation() throws DomainException {
+		ongletDiscussion.removeAll();
+		discussionModel = new IObservableListModel<>(Application.getInstance().getSession().getUtilisateur().getAffectations());
+		discussionModel.filtrer(filtreDiscussion);
+		JPanel notifsDiscussion = new JPanel();
+		notifsDiscussion.setLayout(new BoxLayout(notifsDiscussion, BoxLayout.Y_AXIS));
+		for(int i = 0; i < discussionModel.size(); ++i) {
+			notifsDiscussion.add(new AffectationNotificationPanel(discussionModel.get(i)));
+		}
+		ongletDiscussion.add(new JScrollPane(notifsDiscussion), BorderLayout.CENTER);
+		
+	}
+	
 
 	/**
 	 * @return Le onglets

@@ -20,19 +20,19 @@ public abstract class JObservableListMouseAdapter<T extends IObjetDomaine<?>> ex
 		
 		if(e.getButton() == MouseEvent.BUTTON3) {
 			System.out.println("Clique droit !");
-			clicDroit(element);
+			clicDroit(element, e);
 		} else if(e.getButton() == MouseEvent.BUTTON1) {
 			if(e.getClickCount() == 1) {
-				clic(element);
+				clic(element, e);
 			} else if (e.getClickCount() == 2) {
-				doubleClic(element);
+				doubleClic(element, e);
 			}
 		}
 	}
 
-	public abstract void doubleClic(T element);
-	public abstract void clic(T element);
-	public abstract void clicDroit(T element);
+	public abstract void doubleClic(T element, MouseEvent e);
+	public abstract void clic(T element, MouseEvent e);
+	public abstract void clicDroit(T element, MouseEvent e);
 
 	public T getElementSelectionne(MouseEvent e) {
 		if (e.getClickCount() > 0 && liste.getSelectedIndex() >= 0) {

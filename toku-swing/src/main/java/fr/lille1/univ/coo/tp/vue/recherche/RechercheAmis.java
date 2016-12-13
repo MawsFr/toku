@@ -77,8 +77,8 @@ public class RechercheAmis extends JDialog implements Validable, Fermable {
 		c.add(bas, BorderLayout.SOUTH);
 
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setSize(300, 300);
-		setMinimumSize(new Dimension(300, 300));
+		setSize(400, 400);
+		setMinimumSize(new Dimension(400, 400));
 		setPreferredSize(getSize());
 		// setResizable(false);
 		setLocationRelativeTo(null);

@@ -1,9 +1,13 @@
 package fr.lille1.univ.coo.tp.vue.listes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.DefaultListModel;
 
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
+import fr.lille1.univ.coo.tp.filtre.ETFiltre;
 import fr.lille1.univ.coo.tp.filtre.Filtrable;
 import fr.lille1.univ.coo.tp.filtre.Filtre;
 import fr.lille1.univ.coo.tp.observateur.Observateur;
@@ -13,6 +17,7 @@ public class IObservableListModel<T extends IObjetDomaine<?>> extends DefaultLis
 
 	private static final long serialVersionUID = 1L;
 	private IObservableList<T> utilisateurs;
+	private Filtre filtreDeBase;
 
 	public IObservableListModel(IObservableList<T> liste) {
 		this.utilisateurs = liste;
@@ -56,6 +61,13 @@ public class IObservableListModel<T extends IObjetDomaine<?>> extends DefaultLis
 			}
 		} else {
 			for(T t : utilisateurs.getListe()) {
+				if(filtreDeBase != null) {
+					List<Filtre> filtres = new ArrayList<>();
+					filtres.add(filtre);
+					filtres.add(filtreDeBase);
+					ETFiltre et = new ETFiltre(filtres);
+					filtre = et;
+				}
 				filtre.visit(t);
 				if(filtre.getResultat().equals(true)) {
 					if(!this.contains(t)) {
@@ -69,5 +81,35 @@ public class IObservableListModel<T extends IObjetDomaine<?>> extends DefaultLis
 			}
 		}
 		
+	}
+
+	/**
+	 * @return Le utilisateurs
+	 */
+	public IObservableList<T> getUtilisateurs() {
+		return utilisateurs;
+	}
+
+	/**
+	 * @param utilisateurs Le nouveau utilisateurs
+	 */
+	public void setUtilisateurs(IObservableList<T> utilisateurs) {
+		this.utilisateurs = utilisateurs;
+	}
+
+	/**
+	 * @return Le filtreDeBase
+	 */
+	public Filtre getFiltreDeBase() {
+		return filtreDeBase;
+	}
+
+	/**
+	 * @param filtreDeBase Le nouveau filtreDeBase
+	 */
+	public void setFiltreDeBase(Filtre filtreDeBase) {
+		this.filtreDeBase = filtreDeBase;
 	}	
+	
+	
 }

@@ -6,13 +6,13 @@ import javax.swing.AbstractAction;
 
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
-import fr.lille1.univ.coo.tp.vue.notification.NotificationPanel;
+import fr.lille1.univ.coo.tp.vue.notification.AmitieNotificationPanel;
 
 public class AccepterAmiAction extends AbstractAction {
 
-	private NotificationPanel notification;
+	private AmitieNotificationPanel notification;
 	
-	public AccepterAmiAction(NotificationPanel notification) {
+	public AccepterAmiAction(AmitieNotificationPanel notification) {
 		this.notification = notification;
 		putValue(NAME, "Accepter");
 	}

@@ -14,7 +14,7 @@ import fr.lille1.univ.coo.tp.controlleurs.amitie.RefuserAmiAction;
 import fr.lille1.univ.coo.tp.utilisateur.Amitie;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
-public class NotificationPanel extends JPanel{
+public class AmitieNotificationPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
 
 	private Amitie amitie;
@@ -27,7 +27,7 @@ public class NotificationPanel extends JPanel{
 
 	private JButton btnAccepter;
 
-	public NotificationPanel(Amitie amitie) {
+	public AmitieNotificationPanel(Amitie amitie) {
 		this.amitie = amitie;
 		btnAccepter = new JButton(new AccepterAmiAction(this));
 		btnRefuser = new JButton(new RefuserAmiAction(this));

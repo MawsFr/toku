@@ -32,12 +32,12 @@ public class EstValide extends Filtre {
 
 	@Override
 	public void visit(Amitie amitie) throws DomainException {
-		setResultat(amitie.getEtat().equals(Amitie.ETAT_VALIDEE));
+		setResultat(amitie.getEtat().equals(Amitie.ETAT_VALIDEE) || amitie.getEtat().equals(Amitie.ETAT_TRAITEE));
 	}
 
 	@Override
 	public void visit(AffectationDiscussion affectation) throws DomainException {
-		setResultat(affectation.getEtat().equals(AffectationDiscussion.ETAT_VU));
+		setResultat(affectation.getEtat().equals(AffectationDiscussion.ETAT_LU));
 	}
 	
 	

@@ -1,5 +1,7 @@
 package fr.lille1.univ.coo.tp.vue.listes.mouseadapter;
 
+import java.awt.event.MouseEvent;
+
 import javax.swing.JOptionPane;
 
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
@@ -18,7 +20,7 @@ public class AmisListMouseAdapter extends JObservableListMouseAdapter<Amitie> {
 	}
 
 	@Override
-	public void doubleClic(Amitie element) {
+	public void doubleClic(Amitie element, MouseEvent e) {
 		if(element == null) {
 			return;
 		}
@@ -45,20 +47,20 @@ public class AmisListMouseAdapter extends JObservableListMouseAdapter<Amitie> {
 			fenetre.getPanneauPrincipal().setRightComponent(null);
 			//        fenetre.getLblTypeDiscussion().setText("Discussion privée : ");
 			fenetre.getLblNomDiscussion().setText(element.getAmi().getPseudo());
-		} catch (ServiceException e) {
-			e.printStackTrace();
+		} catch (ServiceException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(FenetrePrincipale.getInstance().getFenetre(), "Erreur lors du cryptage du mot de passe !", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
 
 	@Override
-	public void clic(Amitie element) {
+	public void clic(Amitie element, MouseEvent e) {
 
 	}
 
 	@Override
-	public void clicDroit(Amitie element) {
+	public void clicDroit(Amitie element, MouseEvent e) {
 
 	}
 

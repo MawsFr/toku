@@ -9,6 +9,8 @@ import javax.swing.JScrollPane;
 
 import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.controlleurs.FiltrerAmiAction;
+import fr.lille1.univ.coo.tp.domain.DomainException;
+import fr.lille1.univ.coo.tp.filtre.EstValide;
 import fr.lille1.univ.coo.tp.utilisateur.Amitie;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.listes.JAmisList;
@@ -38,6 +40,7 @@ public class OngletAmis extends JPanel {
 		listeAmis.setMessageVide(MESSAGE_VIDE);
 		listeAmis.setCellRenderer(new AmitieListCellRenderer());
 		listeAmis.addMouseListener(new AmisListMouseAdapter(listeAmis));
+		
 		this.add(new JScrollPane(listeAmis), BorderLayout.CENTER);
 		
 		JPanel recherche = new JPanel();
