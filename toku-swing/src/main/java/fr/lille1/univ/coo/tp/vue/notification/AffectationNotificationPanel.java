@@ -11,11 +11,16 @@ import javax.swing.JPanel;
 import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.controlleurs.amitie.AccepterAmiAction;
 import fr.lille1.univ.coo.tp.controlleurs.amitie.RefuserAmiAction;
+import fr.lille1.univ.coo.tp.controlleurs.notifications.AfficherNotificationsAction;
+import fr.lille1.univ.coo.tp.controlleurs.notifications.SupprimerNotifAction;
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.discussion.Discussion;
+import fr.lille1.univ.coo.tp.domain.DomainException;
+import fr.lille1.univ.coo.tp.service.Service;
+import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.utilisateur.Amitie;
 
-public class AffectationNotificationPanel extends JPanel{
+public class AffectationNotificationPanel extends NotificationPanel {
 	private static final long serialVersionUID = 1L;
 
 	private AffectationDiscussion affectation;
@@ -26,7 +31,7 @@ public class AffectationNotificationPanel extends JPanel{
 
 	public AffectationNotificationPanel(AffectationDiscussion affectationDiscussion) {
 		this.affectation = affectationDiscussion;
-		btnSupprimer = new JButton("x");
+		btnSupprimer = new JButton(new SupprimerNotifAction(this));
 		this.setLayout(new BorderLayout());
 
 		JPanel barreSupprimer = new JPanel();
@@ -43,6 +48,16 @@ public class AffectationNotificationPanel extends JPanel{
 		this.setPreferredSize(new Dimension(200, 100));
 		actualiser();
 
+	}
+	
+	@Override
+	public void supprimer() {
+		try {
+			Service.getDiscussionService().supprimerNotifDiscussion(affectation);
+			AfficherNotificationsAction.getNotifs().rafraichirAffectation();
+		} catch (ServiceException | DomainException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void actualiser() {

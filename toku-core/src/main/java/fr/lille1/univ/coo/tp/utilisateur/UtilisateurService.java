@@ -166,6 +166,11 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 		validerAmi();
 	}
 
+	@Override
+	public void supprimerNotifAmi(Amitie demande) throws ServiceException {
+		demande.setEtat(Amitie.ETAT_TRAITEE);
+		validerAmi();
+	}
 	
 	@Override
 	public void validerAmi() throws ServiceException {
@@ -195,9 +200,8 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 	}
 
 	@Override
-	public void supprimerAmi(int idAmi) {
-		// TODO Auto-generated method stub
-
+	public void supprimerAmi(Amitie idAmi) {
+		UnitOfWork.getInstance(Amitie.class).suppression(idAmi);
 	}
 
 	@Override

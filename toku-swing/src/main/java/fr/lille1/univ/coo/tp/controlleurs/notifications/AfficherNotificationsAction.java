@@ -19,16 +19,20 @@ public class AfficherNotificationsAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e1) {
-		if(notifs == null) {
-			notifs = new PopupNotification();
-		}
+		getNotifs();
 		try {
-			notifs.rafraichirAmitie();
-			notifs.rafraichirAffectation();
-			notifs.setVisible(true);
+			getNotifs().rafraichirAmitie();
+			getNotifs().rafraichirAffectation();
+			getNotifs().setVisible(true);
 		} catch (DomainException e) {
 			e.printStackTrace();
 		}
 	}
 
+	public static PopupNotification getNotifs() {
+		if(notifs == null) {
+			notifs = new PopupNotification();
+		}
+		return notifs;
+	}
 }

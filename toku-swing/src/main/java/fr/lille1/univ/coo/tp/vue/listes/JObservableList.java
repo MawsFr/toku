@@ -15,7 +15,7 @@ public abstract class JObservableList<T extends IObjetDomaine<?>> extends JList<
 	protected IObservableListModel<T> leModel;
 	protected JObservableListMouseAdapter<T> listener;
 	protected String messageVide;
-	
+
 	private T elementSelectionne;
 
 	public JObservableList(IObservableList<T> utilisateurs) {
@@ -30,7 +30,8 @@ public abstract class JObservableList<T extends IObjetDomaine<?>> extends JList<
 	}
 
 	/**
-	 * @param liste Le nouveau utilisateurs
+	 * @param liste
+	 *            Le nouveau utilisateurs
 	 */
 	public void setListe(IObservableList<T> liste) {
 		this.liste = liste;
@@ -38,7 +39,7 @@ public abstract class JObservableList<T extends IObjetDomaine<?>> extends JList<
 		this.setModel(leModel);
 
 	}
-	
+
 	/**
 	 * @return Le leModel
 	 */
@@ -47,20 +48,21 @@ public abstract class JObservableList<T extends IObjetDomaine<?>> extends JList<
 	}
 
 	/**
-	 * @param leModel Le nouveau leModel
+	 * @param leModel
+	 *            Le nouveau leModel
 	 */
 	public void setLeModel(IObservableListModel<T> leModel) {
 		this.leModel = leModel;
 	}
-	
+
 	public void ajouter(T t) {
 		this.liste.ajouter(t);
 	}
-	
+
 	public void suppression(T t) {
 		this.liste.supprimer(t);
 	}
-	
+
 	/**
 	 * @return Le listener
 	 */
@@ -69,7 +71,8 @@ public abstract class JObservableList<T extends IObjetDomaine<?>> extends JList<
 	}
 
 	/**
-	 * @param listener Le nouveau listener
+	 * @param listener
+	 *            Le nouveau listener
 	 */
 	public void setListener(JObservableListMouseAdapter<T> listener) {
 		this.listener = listener;
@@ -83,7 +86,8 @@ public abstract class JObservableList<T extends IObjetDomaine<?>> extends JList<
 	}
 
 	/**
-	 * @param elementSelectionne Le nouveau elementSelectionne
+	 * @param elementSelectionne
+	 *            Le nouveau elementSelectionne
 	 */
 	public void setElementSelectionne(T elementSelectionne) {
 		this.elementSelectionne = elementSelectionne;
@@ -92,10 +96,10 @@ public abstract class JObservableList<T extends IObjetDomaine<?>> extends JList<
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if(liste.getListe().isEmpty()) {
+		if (liste.getListe().isEmpty()) {
 			FontMetrics fm = g.getFontMetrics();
-			String message = getMessageVide(); 
-			g.drawString(message, (getWidth() - fm.stringWidth(message)) / 2, (getHeight()  - fm.getHeight()) / 2);
+			String message = getMessageVide();
+			g.drawString(message, (getWidth() - fm.stringWidth(message)) / 2, (getHeight() - fm.getHeight()) / 2);
 		}
 	}
 
@@ -107,13 +111,11 @@ public abstract class JObservableList<T extends IObjetDomaine<?>> extends JList<
 	}
 
 	/**
-	 * @param messageVide Le nouveau messageVide
+	 * @param messageVide
+	 *            Le nouveau messageVide
 	 */
 	public void setMessageVide(String messageVide) {
 		this.messageVide = messageVide;
 	}
-	
-	
-	
-	
+
 }

@@ -73,6 +73,7 @@ public class Message extends ObjetDomaine<Integer> {
 	 */
 	public void setTexte(String texte) {
 		this.texte = texte;
+		notifierModification("texte");
 	}
 	
 	/**
@@ -87,6 +88,7 @@ public class Message extends ObjetDomaine<Integer> {
 	 */
 	public void setUtilisateur(IUtilisateur utilisateur) {
 		this.utilisateur = utilisateur;
+		notifierModification("utilisateur");
 	}
 	
 	/**
@@ -101,6 +103,7 @@ public class Message extends ObjetDomaine<Integer> {
 	 */
 	public void setDate_creation(Date date_creation) {
 		this.date_creation = date_creation;
+		notifierModification("date_creation");
 	}
 
 	/**
@@ -115,6 +118,7 @@ public class Message extends ObjetDomaine<Integer> {
 	 */
 	public void setAccuse_reception(Boolean accuse_reception) {
 		this.accuse_reception = accuse_reception;
+		notifierModification("accuse_reception");
 	}
 
 	/**
@@ -129,6 +133,7 @@ public class Message extends ObjetDomaine<Integer> {
 	 */
 	public void setLu(Boolean lu) {
 		this.lu = lu;
+		notifierModification("lu");
 	}
 
 	/**
@@ -143,6 +148,7 @@ public class Message extends ObjetDomaine<Integer> {
 	 */
 	public void setExpiration(Integer expiration) {
 		this.expiration = expiration;
+		notifierModification("expiration");
 	}
 
 	/**
@@ -157,6 +163,7 @@ public class Message extends ObjetDomaine<Integer> {
 	 */
 	public void setPrioritaire(Boolean prioritaire) {
 		this.prioritaire = prioritaire;
+		notifierModification("prioritaire");
 	}
 
 	/**
@@ -171,6 +178,7 @@ public class Message extends ObjetDomaine<Integer> {
 	 */
 	public void setChiffre(Boolean chiffre) {
 		this.chiffre = chiffre;
+		notifierModification("chiffre");
 	}
 	
 	
@@ -180,6 +188,7 @@ public class Message extends ObjetDomaine<Integer> {
 	 */
 	public void setId(Integer id) {
 		this.id = id;
+		notifierModification("id");
 	}
 
 	/**
@@ -187,6 +196,7 @@ public class Message extends ObjetDomaine<Integer> {
 	 */
 	public void setDiscussion(IDiscussion discussion) {
 		this.discussion = discussion;
+		notifierModification("discussion");
 	}
 
 	@Override

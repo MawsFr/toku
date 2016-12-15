@@ -101,7 +101,19 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 		discussion.getMessages().ajouter(message);
 		validerMessages();
 	}
+	
+	@Override
+	public void supprimerNotifDiscussion(AffectationDiscussion affectation) throws ServiceException {
+		affectation.setEtat(AffectationDiscussion.ETAT_VU);
+		validerAffectations();
+	}
 
+	@Override
+	public void lireMessage(Message message) throws ServiceException {
+		message.setLu(true);
+		validerMessages();
+	}
+	
 	@Override
 	public IDiscussion rechercherDiscussionPriveeAvec(IUtilisateur ami) {
 		/* select * from projet_discussion d

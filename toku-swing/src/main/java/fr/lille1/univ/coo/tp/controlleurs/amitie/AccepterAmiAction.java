@@ -9,7 +9,7 @@ import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.vue.notification.AmitieNotificationPanel;
 
 public class AccepterAmiAction extends AbstractAction {
-
+	private static final long serialVersionUID = 1L;
 	private AmitieNotificationPanel notification;
 	
 	public AccepterAmiAction(AmitieNotificationPanel notification) {
@@ -22,7 +22,8 @@ public class AccepterAmiAction extends AbstractAction {
 		try {
 			Service.getUtilisateurService().accepterDemandeAmi(notification.getAmitie());
 			notification.actualiser();
-		} catch (ServiceException e1) {
+//			FenetrePrincipale.getInstance().getPanneauPrincipal().getPanneauAccueil().getOngletAmis().getListeAmis().getLeModel().filtrer(null);
+		} catch (ServiceException  e1) {
 			e1.printStackTrace();
 		}
 	}

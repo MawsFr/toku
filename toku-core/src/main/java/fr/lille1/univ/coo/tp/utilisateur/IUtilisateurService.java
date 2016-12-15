@@ -15,7 +15,8 @@ public interface IUtilisateurService {
 	public void demanderEnAmi(IUtilisateur destinataire) throws ServiceException;
 	public void accepterDemandeAmi(Amitie demande) throws ServiceException;
 	public void refuserDemandeAmi(Amitie demande) throws ServiceException;
-	public void supprimerAmi(int idAmi);
+	public void supprimerNotifAmi(Amitie demande) throws ServiceException;
+	public void supprimerAmi(Amitie ami);
 	
 	public void creerDiscussion(String nom);
 	public void creerDiscussionPrive(int idAmi);

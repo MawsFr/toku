@@ -66,6 +66,9 @@ public class GestionUtilisateurs extends JDialog {
 		gbc.descendre().ajouter(btnModifier);
 		gbc.descendre().ajouter(btnSupprimer);
 		
+		utilisateurs.setSelectedIndex(0);
+		utilisateurs.setElementSelectionne(utilisateurs.getLeModel().get(0));
+		
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		pack();
 //		setSize(300, 300);

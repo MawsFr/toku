@@ -23,6 +23,7 @@ public class IObservableListModel<T extends IObjetDomaine<?>> extends DefaultLis
 		this.utilisateurs = liste;
 		for(T element : liste.getListe()) {
 			addElement(element);
+			element.ajouterObservateur(this);
 		}
 		liste.ajouterObservateur(this);
 	}
@@ -33,6 +34,12 @@ public class IObservableListModel<T extends IObjetDomaine<?>> extends DefaultLis
 	@Override
 	public void modification(T objet, String propriete) {
 		this.fireContentsChanged(this, 0, getSize());
+		try {
+			filtrer(filtreDeBase);
+		} catch (DomainException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -41,6 +48,12 @@ public class IObservableListModel<T extends IObjetDomaine<?>> extends DefaultLis
 	@Override
 	public void creation(T objet) {
 		addElement(objet);
+		try {
+			filtrer(filtreDeBase);
+		} catch (DomainException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -49,25 +62,34 @@ public class IObservableListModel<T extends IObjetDomaine<?>> extends DefaultLis
 	@Override
 	public void suppression(T objet) {
 		removeElement(objet);
+		try {
+			filtrer(filtreDeBase);
+		} catch (DomainException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void filtrer(Filtre filtre) throws DomainException {
-		if(filtre == null) {
+		if(filtre == null && filtreDeBase == null) {
 			for(T t : utilisateurs.getListe()) {
 				if(!this.contains(t)) {
 					this.addElement(t);
 				}
 			}
-		} else {
+		} 
+		if (filtreDeBase != null || filtre != null) {
 			for(T t : utilisateurs.getListe()) {
+				List<Filtre> filtres = new ArrayList<>();
 				if(filtreDeBase != null) {
-					List<Filtre> filtres = new ArrayList<>();
-					filtres.add(filtre);
 					filtres.add(filtreDeBase);
-					ETFiltre et = new ETFiltre(filtres);
-					filtre = et;
 				}
+				if(filtre != null) {
+					filtres.add(filtre);
+				}
+				ETFiltre et = new ETFiltre(filtres);
+				filtre = et;
 				filtre.visit(t);
 				if(filtre.getResultat().equals(true)) {
 					if(!this.contains(t)) {

@@ -2,7 +2,6 @@ package fr.lille1.univ.coo.tp.controlleurs.gestion.utilisateur;
 
 import java.awt.event.ActionEvent;
 
-import javax.jws.soap.SOAPBinding.Use;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 

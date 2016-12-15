@@ -54,4 +54,48 @@ public class OngletAmis extends JPanel {
 		this.add(recherche, BorderLayout.NORTH);
 	}
 
+	/**
+	 * @return Le listeAmis
+	 */
+	public JAmisList getListeAmis() {
+		return listeAmis;
+	}
+
+	/**
+	 * @param listeAmis Le nouveau listeAmis
+	 */
+	public void setListeAmis(JAmisList listeAmis) {
+		this.listeAmis = listeAmis;
+	}
+
+	/**
+	 * @return Le utilisateur
+	 */
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	/**
+	 * @param utilisateur Le nouveau utilisateur
+	 */
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+
+	/**
+	 * @return Le filtre
+	 */
+	public JTexteFiltre<Amitie> getFiltre() {
+		return filtre;
+	}
+
+	/**
+	 * @param filtre Le nouveau filtre
+	 */
+	public void setFiltre(JTexteFiltre<Amitie> filtre) {
+		this.filtre = filtre;
+	}
+
+	
+
 }

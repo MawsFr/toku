@@ -15,11 +15,9 @@ import javax.swing.JScrollPane;
 
 import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.controlleurs.FiltrerAmiAction;
-import fr.lille1.univ.coo.tp.controlleurs.FiltrerUtilisateurAction;
 import fr.lille1.univ.coo.tp.controlleurs.composants.FermerAction;
 import fr.lille1.univ.coo.tp.controlleurs.composants.ValiderAction;
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
-import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.discussion.IDiscussion;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
@@ -31,11 +29,8 @@ import fr.lille1.univ.coo.tp.vue.composants.fenetre.Fermable;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Validable;
 import fr.lille1.univ.coo.tp.vue.listes.JAmisList;
 import fr.lille1.univ.coo.tp.vue.listes.JTexteFiltre;
-import fr.lille1.univ.coo.tp.vue.listes.JUtilisateurList;
 import fr.lille1.univ.coo.tp.vue.listes.cellrenderer.AmitieListCellRenderer;
-import fr.lille1.univ.coo.tp.vue.listes.cellrenderer.RechercheAmiListCellRenderer;
 import fr.lille1.univ.coo.tp.vue.listes.mouseadapter.NouvelleAffectationListMouseAdapter;
-import fr.lille1.univ.coo.tp.vue.recherche.DemandeAmiMouseAdapter;
 
 public class FenetreAffectation extends JDialog implements Validable, Fermable {
 

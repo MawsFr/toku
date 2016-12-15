@@ -5,6 +5,7 @@ import fr.lille1.univ.coo.tp.annotations.ColonneVue;
 import fr.lille1.univ.coo.tp.annotations.Id;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;
+import fr.lille1.univ.coo.tp.annotations.UnAUn;
 import fr.lille1.univ.coo.tp.annotations.Vue;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.domain.ObjetDomaine;
@@ -21,6 +22,7 @@ public class Amitie extends ObjetDomaine<String> {
 	@Id
 	private String id;
 
+	@Colonne
 	@ColonneVue(colonneTable="id")
 	private Integer id_demande;
 
@@ -31,7 +33,7 @@ public class Amitie extends ObjetDomaine<String> {
 	private IUtilisateur ami;
 	
 	@ColonneVue(colonneTable="id_utilisateur")
-	@PlusieursAUn(saCle="demandeur", sonType=Utilisateur.class)
+	@UnAUn(saCle="demandeur", sonType=Utilisateur.class)
 	private IUtilisateur demandeur;
 	
 	@Colonne

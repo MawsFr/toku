@@ -21,7 +21,7 @@ public class SuppressionCommiter extends Commiter {
 	@Override
 	public void action(Class<?> classe, IObjetDomaine<?> o) throws DomainException {
 		try {
-			new DAOGenerique<>(Utilisateur.class).supprimer(o.getId());
+			new DAOGenerique<>(classe).supprimer(o);
 		} catch (DAOException e) {
 			throw new DomainException(e);
 		}

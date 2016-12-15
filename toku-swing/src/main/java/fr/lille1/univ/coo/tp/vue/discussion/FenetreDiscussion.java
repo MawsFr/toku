@@ -42,7 +42,6 @@ import fr.lille1.univ.coo.tp.vue.listes.JMessageList;
 import fr.lille1.univ.coo.tp.vue.listes.cellrenderer.AffectationListCellRenderer;
 import fr.lille1.univ.coo.tp.vue.listes.cellrenderer.MessageListCellRenderer;
 import fr.lille1.univ.coo.tp.vue.listes.mouseadapter.AffectationListMouseAdapter;
-import javax.swing.Action;
 
 public class FenetreDiscussion extends JFrame implements Fermable {
 
@@ -89,8 +88,8 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		
 		envoyerAction = new EnvoyerMessageAction(this);
 		
-		lblTypeDiscussion = new JLabel("Groupe: ");
-		lblNomDiscussion = new JLabel("New label");
+		lblTypeDiscussion = new JLabel(iDiscussion.getLeType().equals(Discussion.TYPE_GROUPE) ? "Groupe : " : "");
+		lblNomDiscussion = new JLabel(iDiscussion.getNom());
 		txtMessage = new JEditorPane();
 		txtMessage.addKeyListener(new KeyAdapter() {
 			@Override

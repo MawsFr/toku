@@ -35,16 +35,16 @@ public class ReflectionUtils {
 	}
 
 	public static Field trouverChampsId(Class<?> classe) {
-		if(classe.isAnnotationPresent(Table.class)) {
-			Table table = classe.getAnnotation(Table.class);
-			if(!table.cle().isEmpty()) {
-				for (Field field : classe.getDeclaredFields()) {
-					if (field.getName().equals(table.cle())) {
-						return field;
-					}
-				}
-			}
-		}
+//		if(classe.isAnnotationPresent(Table.class)) {
+//			Table table = classe.getAnnotation(Table.class);
+//			if(!table.cle().isEmpty()) {
+//				for (Field field : classe.getDeclaredFields()) {
+//					if (field.getName().equals(table.cle())) {
+//						return field;
+//					}
+//				}
+//			}
+//		}
 		for (Field field : classe.getDeclaredFields()) {
 			if (field.isAnnotationPresent(Id.class)) {
 				return field;

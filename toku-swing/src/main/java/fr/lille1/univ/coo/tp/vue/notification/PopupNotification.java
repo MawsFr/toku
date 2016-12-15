@@ -93,7 +93,9 @@ public class PopupNotification extends JFrame {
 		JPanel notifsAmi = new JPanel();
 		notifsAmi.setLayout(new BoxLayout(notifsAmi, BoxLayout.Y_AXIS));
 		for(int i = 0; i < amitieModel.size(); ++i) {
-			notifsAmi.add(new AmitieNotificationPanel(amitieModel.get(i)));
+			if(!amitieModel.get(i).getEtat().equals(Amitie.ETAT_TRAITEE)) {
+				notifsAmi.add(new AmitieNotificationPanel(amitieModel.get(i)));
+			}
 		}
 		ongletDemandeAmi.add(new JScrollPane(notifsAmi), BorderLayout.CENTER);
 		
@@ -106,7 +108,9 @@ public class PopupNotification extends JFrame {
 		JPanel notifsDiscussion = new JPanel();
 		notifsDiscussion.setLayout(new BoxLayout(notifsDiscussion, BoxLayout.Y_AXIS));
 		for(int i = 0; i < discussionModel.size(); ++i) {
-			notifsDiscussion.add(new AffectationNotificationPanel(discussionModel.get(i)));
+//			if(discussionModel.get(i).getEtat().equals(AffectationDiscussion.ETAT_EN_ATTENTE)) {
+				notifsDiscussion.add(new AffectationNotificationPanel(discussionModel.get(i)));
+//			}
 		}
 		ongletDiscussion.add(new JScrollPane(notifsDiscussion), BorderLayout.CENTER);
 		

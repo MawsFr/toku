@@ -11,10 +11,15 @@ import javax.swing.JPanel;
 import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.controlleurs.amitie.AccepterAmiAction;
 import fr.lille1.univ.coo.tp.controlleurs.amitie.RefuserAmiAction;
+import fr.lille1.univ.coo.tp.controlleurs.notifications.AfficherNotificationsAction;
+import fr.lille1.univ.coo.tp.controlleurs.notifications.SupprimerNotifAction;
+import fr.lille1.univ.coo.tp.domain.DomainException;
+import fr.lille1.univ.coo.tp.service.Service;
+import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.utilisateur.Amitie;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
-public class AmitieNotificationPanel extends JPanel{
+public class AmitieNotificationPanel extends NotificationPanel {
 	private static final long serialVersionUID = 1L;
 
 	private Amitie amitie;
@@ -31,7 +36,7 @@ public class AmitieNotificationPanel extends JPanel{
 		this.amitie = amitie;
 		btnAccepter = new JButton(new AccepterAmiAction(this));
 		btnRefuser = new JButton(new RefuserAmiAction(this));
-		btnSupprimer = new JButton("x");
+		btnSupprimer = new JButton(new SupprimerNotifAction(this));
 		this.setLayout(new BorderLayout());
 
 		JPanel barreAction = new JPanel();
@@ -61,6 +66,7 @@ public class AmitieNotificationPanel extends JPanel{
 		if(estDemandeur) {
 			cacherActions();
 			if(amitie.getEtat().equals(Amitie.ETAT_EN_ATTENTE)) {
+				btnSupprimer.setVisible(false);
 				texte.setText(amitie.getAmi().getPseudo() + " a bien reçu votre demande d'ajout en ami. ");
 			} else {
 				if(amitie.getEtat().equals(Amitie.ETAT_REFUSEE)) {
@@ -80,6 +86,29 @@ public class AmitieNotificationPanel extends JPanel{
 					texte.setText(amitie.getAmi().getPseudo() + " a été notifié de votre acceptation");
 				}
 			}
+		}
+	}
+	
+	@Override
+	public void supprimer() {
+		try {
+			boolean estDemandeur = amitie.getDemandeur().equals(Application.getInstance().getSession().getUtilisateur());
+			if(estDemandeur) {
+				if(amitie.getEtat().equals(Amitie.ETAT_VALIDEE)) {
+					Service.getUtilisateurService().supprimerNotifAmi(amitie);
+					AfficherNotificationsAction.getNotifs().rafraichirAmitie();
+				} else if(amitie.getEtat().equals(Amitie.ETAT_REFUSEE)) {
+					Service.getUtilisateurService().supprimerAmi(amitie);
+					Service.getUtilisateurService().validerAmi();
+				}
+			} else {
+				if(amitie.getEtat().equals(Amitie.ETAT_EN_ATTENTE)) {
+					Service.getUtilisateurService().refuserDemandeAmi(amitie);
+					AfficherNotificationsAction.getNotifs().rafraichirAmitie();
+				}
+			}
+		} catch (ServiceException | DomainException e) {
+			e.printStackTrace();
 		}
 	}
 	
