@@ -17,24 +17,12 @@ public interface IUtilisateurService {
 	public void refuserDemandeAmi(Amitie demande) throws ServiceException;
 	public void supprimerNotifAmi(Amitie demande) throws ServiceException;
 	public void supprimerAmi(Amitie ami);
-	
-	public void creerDiscussion(String nom);
-	public void creerDiscussionPrive(int idAmi);
-	public void envoyerMessage(int idGroupe, String message);
-	public void envoyerMessagePrive(int idGroupe, int idDestinataire, String message, boolean accuseReception, int expiration, boolean prioritaire, boolean chiffre);
-	public void quitterGroupe(int idGroupe);
-	
-	public void lireMessage(int id);
-	public void lireMessagePrive(int id);
-	
-	public void recevoirNotification(String texte);
-	public void supprimerNotification(int id);
-	
-	public void ajouterCentreInteret(int id);
-	public void creerCentreInteret(String nom);
-	public boolean estAdministrateur(IUtilisateur utilisateur) throws ServiceException;
-	public boolean estModerateur(IDiscussion discussion, IUtilisateur utilisateur);
-	public IObservableList<Utilisateur> rechercherTout() throws ServiceException;
-	void validerAmi() throws ServiceException;
+	public void validerAmi() throws ServiceException;
+	boolean estModerateur(IDiscussion discussion, IUtilisateur utilisateur);
+	boolean estAdministrateur(IUtilisateur utilisateur) throws ServiceException;
+	IObservableList<Utilisateur> rechercherTout() throws ServiceException;
+	public void supprimer(Utilisateur utilisateur, IObservableList<Utilisateur> liste) throws ServiceException;
+	void validerChangements() throws ServiceException;
+	String getMotDePasse(Utilisateur selectionne) throws ServiceException;
 	
 }

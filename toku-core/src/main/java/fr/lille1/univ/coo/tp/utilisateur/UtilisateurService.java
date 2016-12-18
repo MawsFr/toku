@@ -103,6 +103,18 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 	}
 	
 	@Override
+	public String getMotDePasse(Utilisateur selectionne) throws ServiceException {
+		Map<String, Object> conditions = new HashMap<>();
+		conditions.put("id", selectionne.getId());
+		try {
+			return (String) new DAOGenerique<>(Utilisateur.class).rechercherUneProprieteUnSeul("mot_de_passe", conditions);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new ServiceException(e);
+		}
+	}
+	
+	@Override
 	public void demanderEnAmi(IUtilisateur ami) throws ServiceException {
 		Utilisateur utilisateur = Application.getInstance().getSession().getUtilisateur();
 		if(ami.equals(utilisateur)) {
@@ -155,6 +167,20 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 	}
 	
 	@Override
+	public void supprimer(Utilisateur utilisateur, IObservableList<Utilisateur> liste) throws ServiceException {
+		for(AffectationDiscussion affectation : utilisateur.getAffectations().getListe()) {
+			Service.getDiscussionService().supprimerUtilisateur(affectation, affectation.getDiscussion(), true);
+		}
+		for(Amitie amitie : Application.getInstance().getSession().getUtilisateur().getAmitie().getListe()) {
+			if(amitie.getAmi().equals(utilisateur)) {
+				supprimerAmi(amitie);
+				break;
+			}
+		}
+		liste.supprimer(utilisateur);
+	}
+	
+	@Override
 	public void accepterDemandeAmi(Amitie demande) throws ServiceException {
 		demande.setEtat(Amitie.ETAT_VALIDEE);
 		validerAmi();
@@ -177,7 +203,7 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 		try {
 			UnitOfWork.getInstance(Amitie.class).commit();
 		} catch (DomainException e) {
-			e.printStackTrace();
+			UnitOfWork.getInstance(Amitie.class).annuler();
 			throw new ServiceException(e);
 		}
 	}
@@ -200,64 +226,18 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 	}
 
 	@Override
-	public void supprimerAmi(Amitie idAmi) {
-		idAmi.getUtilisateur().getAmitie().supprimer(idAmi);
+	public void supprimerAmi(Amitie ami) {
+		ami.getUtilisateur().getAmitie().supprimer(ami);
 	}
-
+	
 	@Override
-	public void creerDiscussion(String nom) {
-
-	}
-
-	@Override
-	public void creerDiscussionPrive(int idAmi) {
-
-	}
-
-	@Override
-	public void envoyerMessage(int idGroupe, String message) {
-
-	}
-
-	@Override
-	public void envoyerMessagePrive(int idGroupe, int idDestinataire, String message, boolean accuseReception,
-			int expiration, boolean prioritaire, boolean chiffre) {
-
-	}
-
-	@Override
-	public void quitterGroupe(int idGroupe) {
-
-	}
-
-	@Override
-	public void lireMessage(int id) {
-
-	}
-
-	@Override
-	public void lireMessagePrive(int id) {
-
-	}
-
-	@Override
-	public void recevoirNotification(String texte) {
-
-	}
-
-	@Override
-	public void supprimerNotification(int id) {
-
-	}
-
-	@Override
-	public void ajouterCentreInteret(int id) {
-
-	}
-
-	@Override
-	public void creerCentreInteret(String nom) {
-		
+	public void validerChangements() throws ServiceException {
+		try {
+			UnitOfWork.getInstance(Utilisateur.class).commit();
+		} catch (DomainException e) {
+			UnitOfWork.getInstance(Utilisateur.class).annuler();
+			throw new ServiceException(e);
+		}
 	}
 
 	

@@ -247,7 +247,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 				Service.getDiscussionService().envoyerMessage(discussion, texte, accuse, prioritaire, chiffre, expire); //TODO : Design pattern decorator
 				for(AffectationDiscussion affectationDiscussion : discussion.getAffectations().getListe()) {
 					if(!affectationDiscussion.getUtilisateur().equals(Application.getInstance().getSession().getUtilisateur())) {
-						affectationDiscussion.setEtat(AffectationDiscussion.ETAT_VU);
+						affectationDiscussion.setEtat(AffectationDiscussion.ETAT_NOUVEAUX_MESSAGES);
 					}
 				}
 				Service.getDiscussionService().validerAffectations();
@@ -283,6 +283,9 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		AffectationDiscussion affectation = listeMembres.getElementSelectionne();
 		try {
 			Service.getDiscussionService().passerDroitModo(discussion, affectation.getUtilisateur());
+			if(!Service.getUtilisateurService().estAdministrateur(Application.getInstance().getSession().getUtilisateur())) {
+				panneauBoutonMembres.setVisible(false);
+			}
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);

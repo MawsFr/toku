@@ -61,9 +61,9 @@ public class AffectationNotificationPanel extends NotificationPanel {
 	}
 
 	public void actualiser() {
-		if(affectation.getEtat().equals(AffectationDiscussion.ETAT_EN_ATTENTE)) {
+		if(affectation.getEtat().equals(AffectationDiscussion.ETAT_NOUVELLE_DISCUSSION)) {
 			texte.setText("Vous avez été ajouté à la discussion " + affectation.getDiscussion().getNom());
-		} else if(affectation.getEtat().equals(AffectationDiscussion.ETAT_VU)) {
+		} else if(affectation.getEtat().equals(AffectationDiscussion.ETAT_NOUVEAUX_MESSAGES)) {
 			texte.setText("Vous avez de nouveaux messages dans la discussion " + affectation.getDiscussion().getNom());
 		}
 	}

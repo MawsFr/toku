@@ -36,7 +36,7 @@ public class DiscussionListMouseAdapter extends JObservableListMouseAdapter<Affe
 			}
 		}
 		try {
-			element.setEtat(AffectationDiscussion.ETAT_LU);
+			element.setEtat(AffectationDiscussion.ETAT_OUVERTE);
 			Service.getDiscussionService().validerAffectations();
 		} catch (ServiceException e1) {
 			e1.printStackTrace();

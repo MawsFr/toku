@@ -96,11 +96,11 @@ public class AmitieNotificationPanel extends NotificationPanel {
 			if(estDemandeur) {
 				if(amitie.getEtat().equals(Amitie.ETAT_VALIDEE)) {
 					Service.getUtilisateurService().supprimerNotifAmi(amitie);
-					AfficherNotificationsAction.getNotifs().rafraichirAmitie();
 				} else if(amitie.getEtat().equals(Amitie.ETAT_REFUSEE)) {
 					Service.getUtilisateurService().supprimerAmi(amitie);
 					Service.getUtilisateurService().validerAmi();
 				}
+				AfficherNotificationsAction.getNotifs().rafraichirAmitie();
 			} else {
 				if(amitie.getEtat().equals(Amitie.ETAT_EN_ATTENTE)) {
 					Service.getUtilisateurService().refuserDemandeAmi(amitie);

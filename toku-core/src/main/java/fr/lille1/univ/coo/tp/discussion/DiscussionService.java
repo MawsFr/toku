@@ -120,12 +120,22 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 		message.setLu(false);
 
 		discussion.getMessages().ajouter(message);
+		// Mettre a jour l'etat des affectations
+		for(AffectationDiscussion affectation : discussion.getAffectations().getListe()) {
+			affectation.setEtat(AffectationDiscussion.ETAT_NOUVEAUX_MESSAGES);
+		}
 		validerMessages();
+		validerAffectations();
 	}
 	
 	@Override
 	public void supprimerNotifDiscussion(AffectationDiscussion affectation) throws ServiceException {
-		affectation.setEtat(AffectationDiscussion.ETAT_VU);
+		if(affectation.getEtat().equals(AffectationDiscussion.ETAT_NOUVELLE_DISCUSSION)) {
+			affectation.setEtat(AffectationDiscussion.ETAT_VU);
+		}
+		if(affectation.getEtat().equals(AffectationDiscussion.ETAT_NOUVEAUX_MESSAGES)) {
+			affectation.setEtat(AffectationDiscussion.ETAT_OUVERTE);
+		}
 		validerAffectations();
 	}
 

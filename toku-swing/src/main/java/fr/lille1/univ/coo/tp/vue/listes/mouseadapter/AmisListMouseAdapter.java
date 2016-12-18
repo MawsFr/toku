@@ -43,8 +43,8 @@ public class AmisListMouseAdapter extends JObservableListMouseAdapter<Amitie> {
 			if(discussion == null) {
 				discussion = Service.getDiscussionService().creerDiscussion("Discussion privée entre : " + element.getUtilisateur().getPseudo() + " et " + element.getAmi().getPseudo(), Discussion.TYPE_PRIVE);
 				Service.getDiscussionService().validerDiscussions();
-				Service.getDiscussionService().ajouterUtilisateur(discussion, element.getUtilisateur(), AffectationDiscussion.ETAT_LU);
-				Service.getDiscussionService().ajouterUtilisateur(discussion, element.getAmi(), AffectationDiscussion.ETAT_EN_ATTENTE);
+				Service.getDiscussionService().ajouterUtilisateur(discussion, element.getUtilisateur(), AffectationDiscussion.ETAT_OUVERTE);
+				Service.getDiscussionService().ajouterUtilisateur(discussion, element.getAmi(), AffectationDiscussion.ETAT_NOUVELLE_DISCUSSION);
 				Service.getDiscussionService().validerAffectations();
 			}
 			FenetreDiscussion fenetre = new FenetreDiscussion(discussion);

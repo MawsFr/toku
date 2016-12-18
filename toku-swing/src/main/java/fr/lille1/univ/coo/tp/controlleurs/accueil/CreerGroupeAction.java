@@ -33,7 +33,7 @@ public class CreerGroupeAction extends AbstractAction {
 			try {
 				Discussion discussion = Service.getDiscussionService().creerDiscussion(nom, Discussion.TYPE_GROUPE);
 				Service.getDiscussionService().validerDiscussions();
-				Service.getDiscussionService().ajouterUtilisateur(discussion, utilisateur, AffectationDiscussion.ETAT_LU);
+				Service.getDiscussionService().ajouterUtilisateur(discussion, utilisateur, AffectationDiscussion.ETAT_OUVERTE);
 				Service.getDiscussionService().validerAffectations();
 				new FenetreDiscussion(discussion);
 			} catch (ServiceException e1) {

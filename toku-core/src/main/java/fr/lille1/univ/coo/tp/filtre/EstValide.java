@@ -37,7 +37,7 @@ public class EstValide extends Filtre {
 
 	@Override
 	public void visit(AffectationDiscussion affectation) throws DomainException {
-		setResultat(affectation.getEtat().equals(AffectationDiscussion.ETAT_LU));
+		setResultat(affectation.getEtat().equals(AffectationDiscussion.ETAT_OUVERTE));
 	}
 	
 	

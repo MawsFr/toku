@@ -33,7 +33,6 @@ import fr.lille1.univ.coo.tp.vue.composants.JShowablePaswordTextFIeld;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Annulable;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Fermable;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Validable;
-import fr.lille1.univ.coo.tp.vue.utilisateurs.FenetreProfil.ModeEdition;
 
 public class FenetreProfil extends JDialog implements Validable, Annulable, Fermable {
 	private static final long serialVersionUID = 1L;
@@ -102,7 +101,12 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 
 		OutilsSwing.setTaille(150, 20, txtPseudo, txtMDP, txtNom, txtPrenom, comboRole);
 
-		btnOk = new JButton(new ValiderAction(this, mode == ModeEdition.AJOUT ? BTN_CREER : BTN_MODIFIER));
+		ValiderAction valider = new ValiderAction(this, mode == ModeEdition.AJOUT ? BTN_CREER : BTN_MODIFIER);
+		btnOk = new JButton(valider);
+		txtMDP.getPassword().addActionListener(valider);
+		txtPseudo.addActionListener(valider);
+		txtPrenom.addActionListener(valider);
+		txtNom.addActionListener(valider);
 		okEtNouveau = new JCheckBox(BTN_OK_ET_AUTRE);
 		btnAnnuler = new JButton(new AnnulerAction(this, BTN_ANNULER));
 
@@ -171,7 +175,7 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 				valideur.valider(utilisateur);
 				utilisateur.setMotDePasse(new CrypteurMD5().crypter(motDePasse));
 				parent.getUtilisateurs().ajouter(utilisateur);
-				Service.getAdministrateurService().validerChangements();
+				Service.getUtilisateurService().validerChangements();
 				if(okEtNouveau.isSelected()) {
 					txtPseudo.setText("");
 					txtMDP.getPassword().setText("");;
@@ -202,16 +206,19 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 				if(!utilisateur.getRole().equals(comboRole.getSelectedItem())) {
 					utilisateur.setRole((Role) comboRole.getSelectedItem());
 				}
-				Service.getAdministrateurService().validerChangements();
+				Service.getUtilisateurService().validerChangements();
 				fermer();
 				break;
 			default:
 				break;
 
 			}
-		} catch (CryptageException | ServiceException | ValidationException e) {
+		} catch (CryptageException | ValidationException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Ce pseudo est déjà pris existe déjà", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}

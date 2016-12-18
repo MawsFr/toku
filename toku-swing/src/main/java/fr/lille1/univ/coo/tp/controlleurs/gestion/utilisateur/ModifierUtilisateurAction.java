@@ -35,7 +35,7 @@ public class ModifierUtilisateurAction extends AbstractAction {
 		Utilisateur selectionne = gestionUtilisateurs.getUtilisateurs().getElementSelectionne();
 		String mdp = null;
 		try {
-			mdp = Service.getAdministrateurService().getMotDePasse(selectionne);
+			mdp = Service.getUtilisateurService().getMotDePasse(selectionne);
 			new FenetreProfil(gestionUtilisateurs, FenetreProfil.ModeEdition.MODIF, selectionne, mdp);
 		} catch (ServiceException e) {
 			e.printStackTrace();

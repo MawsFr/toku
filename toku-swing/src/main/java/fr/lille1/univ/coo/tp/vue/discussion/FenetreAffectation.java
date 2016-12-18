@@ -107,7 +107,7 @@ public class FenetreAffectation extends JDialog implements Validable, Fermable {
 		}
 		try {
 			if(discussion != null) {
-				Service.getDiscussionService().ajouterUtilisateur(discussion, element.getAmi(), AffectationDiscussion.ETAT_EN_ATTENTE);
+				Service.getDiscussionService().ajouterUtilisateur(discussion, element.getAmi(), AffectationDiscussion.ETAT_NOUVELLE_DISCUSSION);
 				Service.getDiscussionService().validerAffectations();
 				JOptionPane.showMessageDialog(this, element.getUtilisateur().getPseudo() + " a bien reçu votre invitation à la discussion!", "Affectation d'ami",
 						JOptionPane.INFORMATION_MESSAGE);

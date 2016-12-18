@@ -273,9 +273,9 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 					if (field.isAnnotationPresent(Colonne.class)) {
 						clauseSet.put(ReflectionUtils.getNomColonne(field), getter.invoke(objet));
 					} else if (field.isAnnotationPresent(PlusieursAUn.class)) {
-						type = getter.invoke(objet).getClass();
+						type = field.getAnnotation(PlusieursAUn.class).sonType();
 						Field idChamps = ReflectionUtils.trouverChampsId(type);
-						Method idGetter = type.getDeclaredMethod(ReflectionUtils.getGetter(idChamps));
+						Method idGetter = getter.invoke(objet).getClass().getDeclaredMethod(ReflectionUtils.getGetter(idChamps));
 						clauseSet.put(ReflectionUtils.getNomColonne(field), idGetter.invoke(getter.invoke(objet)));
 					}
 				}

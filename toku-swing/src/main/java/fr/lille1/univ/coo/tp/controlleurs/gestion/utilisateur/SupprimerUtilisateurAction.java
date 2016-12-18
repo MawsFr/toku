@@ -40,9 +40,10 @@ public class SupprimerUtilisateurAction extends AbstractAction {
 					"Êtes-vous sûr de vouloir supprimer l'utilisateur " + gestionUtilisateurs.getUtilisateurs().getElementSelectionne().getPseudo() + " ?",
 					"Suppression utilisateur",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				gestionUtilisateurs.getUtilisateurs().suppression(utilisateur);
 				try {
-					Service.getAdministrateurService().validerChangements();
+					Service.getUtilisateurService().supprimer(utilisateur, gestionUtilisateurs.getUtilisateurs().getListe());
+					Service.getUtilisateurService().validerChangements();
+					JOptionPane.showMessageDialog(gestionUtilisateurs, "Utilisateur supprimé !", "Suppression réussie", JOptionPane.INFORMATION_MESSAGE);
 				} catch (ServiceException e) {
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(gestionUtilisateurs, "Erreur lors de la suppression : " + e.getCause(), "Erreur", JOptionPane.ERROR_MESSAGE);

@@ -17,7 +17,7 @@ public class SupprimerAmitie  extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		
 	}
 
 }

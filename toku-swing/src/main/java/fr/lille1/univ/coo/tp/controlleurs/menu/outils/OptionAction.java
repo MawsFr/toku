@@ -36,7 +36,7 @@ public class OptionAction extends AbstractAction {
 		String mdp = null;
 		try {
 			Utilisateur utilisateur = Application.getInstance().getSession().getUtilisateur();
-			mdp = Service.getAdministrateurService().getMotDePasse(utilisateur);
+			mdp = Service.getUtilisateurService().getMotDePasse(utilisateur);
 			new FenetreProfil(FenetrePrincipale.getInstance().getFenetre(), ModeEdition.MODIF, utilisateur, mdp);
 
 		} catch (ServiceException e) {
