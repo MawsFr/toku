@@ -34,7 +34,8 @@ public class AffectationListCellRenderer implements ObservableListRenderer<Affec
 		try {
 			if(Service.getUtilisateurService().estAdministrateur(utilisateur)) {
 				nom += " (Admin)";
-			} else if(Service.getUtilisateurService().estModerateur(value.getDiscussion(), utilisateur)){
+			} 
+			if(Service.getUtilisateurService().estModerateur(value.getDiscussion(), utilisateur)){
 				nom += " (Modérateur)";
 			}
 		} catch (ServiceException e) {

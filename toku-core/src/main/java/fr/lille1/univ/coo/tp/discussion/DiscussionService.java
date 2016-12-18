@@ -3,6 +3,8 @@ package fr.lille1.univ.coo.tp.discussion;
 import java.util.Date;
 
 import fr.lille1.univ.coo.tp.Application;
+import fr.lille1.univ.coo.tp.cryptage.CryptageException;
+import fr.lille1.univ.coo.tp.cryptage.CrypteurROT13;
 import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.service.Service;
@@ -62,7 +64,7 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 	}
 	
 	@Override
-	public void supprimerUtilisateur(AffectationDiscussion affectation, IDiscussion discussion) throws ServiceException {
+	public void supprimerUtilisateur(AffectationDiscussion affectation, IDiscussion discussion, boolean passerDroitModo) throws ServiceException {
 		Utilisateur utilisateur = Application.getInstance().getSession().getUtilisateur();
 		
 		if(affectation == null) {
@@ -75,13 +77,27 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 			if(utilisateur.equals(affectation.getUtilisateur())) {
 				throw new ServiceException("Vous ne pouvez pas vous retirer du groupe tant qu'il reste des gens");
 			} else {
-				throw new ServiceException("Vous ne pouvez pas retirer le modérateur du groupe tant qu'il reste des gens");
+				if(passerDroitModo) {
+					for(AffectationDiscussion a : discussion.getAffectations().getListe()) {
+						if(!a.getUtilisateur().equals(utilisateur)) {
+							passerDroitModo(discussion, a.getUtilisateur());
+							break;
+						}
+					}
+				} else {
+					throw new ServiceException("Vous ne pouvez pas retirer le modérateur du groupe tant qu'il reste des gens");
+				}
 				
 			}
 		}
 		
 		discussion.getAffectations().supprimer(affectation);
 		affectation.getUtilisateur().getAffectations().supprimer(affectation);
+		validerAffectations();
+		if (discussion.getAffectations().getListe().isEmpty()) {
+			supprimerDiscussion(discussion);
+			validerDiscussions();
+		}
 	}
 	
 	@Override
@@ -90,7 +106,12 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 		Message message = new Message();
 		message.setDiscussion(discussion);
 		message.setUtilisateur(Application.getInstance().getSession().getUtilisateur());
-		message.setTexte(texte);
+		try {
+			message.setTexte(chiffre ? new CrypteurROT13().crypter(texte) : texte);
+		} catch (CryptageException e) {
+			e.printStackTrace();
+			throw new ServiceException("Erreur lors du cryptage", e);
+		}
 		message.setDate_creation(new Date());
 		message.setAccuse_reception(accuse);
 		message.setChiffre(chiffre);
@@ -135,6 +156,12 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 		return null;
 
 	}
+	
+	@Override
+	public void passerDroitModo(IDiscussion discussion, IUtilisateur utilisateur) throws ServiceException {
+		discussion.setModerateur(utilisateur);
+		validerDiscussions();
+	}
 
 	@Override
 	public void validerMessages() throws ServiceException {
@@ -142,6 +169,7 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 			UnitOfWork.getInstance(Message.class).commit();
 		} catch (DomainException e) {
 			e.printStackTrace();
+			annulerMessage();
 			throw new ServiceException(e);
 		}
 	}
@@ -152,6 +180,7 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 			UnitOfWork.getInstance(Discussion.class).commit();
 		} catch (DomainException e) {
 			e.printStackTrace();
+			annulerDiscussion();
 			throw new ServiceException(e);
 		}
 	}
@@ -162,8 +191,23 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 			UnitOfWork.getInstance(AffectationDiscussion.class).commit();
 		} catch (DomainException e) {
 			e.printStackTrace();
+			annulerAffectation();
 			throw new ServiceException(e);
 		}
+	}
+	
+	@Override
+	public void annulerDiscussion() {
+		UnitOfWork.getInstance(Discussion.class).annuler();
+	}
+	
+	@Override
+	public void annulerAffectation() {
+		UnitOfWork.getInstance(AffectationDiscussion.class).annuler();
+	}
+	@Override
+	public void annulerMessage() {
+		UnitOfWork.getInstance(Message.class).annuler();
 	}
 
 	

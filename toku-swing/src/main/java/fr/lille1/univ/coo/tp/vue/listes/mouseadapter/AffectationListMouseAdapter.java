@@ -7,6 +7,7 @@ import javax.swing.JPopupMenu;
 
 import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.controlleurs.discussion.DesaffecterAction;
+import fr.lille1.univ.coo.tp.controlleurs.discussion.PasserDroitModo;
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
@@ -39,7 +40,7 @@ public class AffectationListMouseAdapter extends JObservableListMouseAdapter<Aff
 			try {
 				if(Service.getUtilisateurService().estAdministrateur(utilisateur) || Service.getUtilisateurService().estModerateur(element.getDiscussion(), utilisateur)){
 					JPopupMenu menuAffectation = new JPopupMenu("Administration");
-					JMenuItem menuPasserDroitModo = new JMenuItem("Passer les droit modo");
+					JMenuItem menuPasserDroitModo = new JMenuItem(new PasserDroitModo(fenetre));
 					JMenuItem menuSupprimerAffectation = new JMenuItem(new DesaffecterAction(fenetre));
 					menuSupprimerAffectation.setText("Supprimer de la discussion");
 

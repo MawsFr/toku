@@ -6,8 +6,6 @@ import fr.lille1.univ.coo.tp.utilisateur.IUtilisateurService;
 import fr.lille1.univ.coo.tp.utilisateur.UtilisateurService;
 import fr.lille1.univ.coo.tp.utilisateur.administrateur.AdministrateurService;
 import fr.lille1.univ.coo.tp.utilisateur.administrateur.IAdministrateurService;
-import fr.lille1.univ.coo.tp.utilisateur.moderateur.IModerateurService;
-import fr.lille1.univ.coo.tp.utilisateur.moderateur.ModerateurService;
 
 public abstract class Service<T> {
 	
@@ -17,10 +15,6 @@ public abstract class Service<T> {
 
 	public static IDiscussionService getDiscussionService() {
 		return DiscussionService.getInstance();
-	}
-	
-	public static IModerateurService getModerateurService() {
-		return ModerateurService.getInstance();
 	}
 	
 	public static IAdministrateurService getAdministrateurService() {

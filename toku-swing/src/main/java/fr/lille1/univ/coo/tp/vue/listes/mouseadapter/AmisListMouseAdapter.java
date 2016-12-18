@@ -1,8 +1,12 @@
 package fr.lille1.univ.coo.tp.vue.listes.mouseadapter;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.discussion.Discussion;
@@ -61,7 +65,26 @@ public class AmisListMouseAdapter extends JObservableListMouseAdapter<Amitie> {
 
 	@Override
 	public void clicDroit(Amitie element, MouseEvent e) {
+		if(element != null) {
+			JPopupMenu menuAffectation = new JPopupMenu("Gestion amis");
+			JMenuItem menuSupprimerAmi = new JMenuItem("Supprimer l'ami");
+			menuSupprimerAmi.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Service.getUtilisateurService().supprimerAmi(element);
+						Service.getUtilisateurService().validerAmi();
+					} catch (ServiceException e1) {
+						e1.printStackTrace();
+						JOptionPane.showMessageDialog(FenetrePrincipale.getInstance().getFenetre(), e1.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			});
 
+			menuAffectation.add(menuSupprimerAmi);
+			menuAffectation.show(liste, e.getX(), e.getY());
+		}
 	}
 
 }

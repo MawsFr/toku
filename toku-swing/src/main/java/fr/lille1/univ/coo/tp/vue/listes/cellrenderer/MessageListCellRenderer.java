@@ -51,12 +51,7 @@ public class MessageListCellRenderer implements ObservableListRenderer<Message> 
 
 		}
 
-		String message = "Erreur de cryptage";
-		try {
-			message = value.getUtilisateur().getPseudo() + " : " + (value.getChiffre() ? new CrypteurROT13().crypter(value.getTexte()) :  value.getTexte());
-		} catch (CryptageException e) {
-			e.printStackTrace();
-		}
+		String message = value.getUtilisateur().getPseudo() + " : " + value.getTexte();
 		messagePanel.add(new JLabel(message));
 		if(utilisateur.equals(value.getUtilisateur())) {
 			messagePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));

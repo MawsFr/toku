@@ -28,7 +28,7 @@ public class BarreMenuPrincipale extends JMenuBar {
 	
 	public static final String MENU_OUTILS = "Outils";
 	public static final String MENU_TOUJOURS_VISIBLE = "Toujours visible";
-	public static final String MENU_OPTIONS = "Options";
+	public static final String MENU_OPTIONS = "Modifier mon profil";
 	
 	public static final String MENU_MODERATEUR = "Modération";
 	

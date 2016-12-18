@@ -114,7 +114,7 @@ public class FenetreAffectation extends JDialog implements Validable, Fermable {
 			}
 		} catch (ServiceException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(FenetrePrincipale.getInstance().getFenetre(), "Erreur lors de l'affectation", "Erreur", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

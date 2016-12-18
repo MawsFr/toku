@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -32,6 +33,7 @@ import fr.lille1.univ.coo.tp.vue.composants.JShowablePaswordTextFIeld;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Annulable;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Fermable;
 import fr.lille1.univ.coo.tp.vue.composants.fenetre.Validable;
+import fr.lille1.univ.coo.tp.vue.utilisateurs.FenetreProfil.ModeEdition;
 
 public class FenetreProfil extends JDialog implements Validable, Annulable, Fermable {
 	private static final long serialVersionUID = 1L;
@@ -69,8 +71,18 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 
 	public FenetreProfil(GestionUtilisateurs parent, ModeEdition mode, Utilisateur utilisateur, String mdp) {
 		super(parent, mode == ModeEdition.AJOUT ? TITRE_AJOUT : TITRE_MODIF, ModalityType.APPLICATION_MODAL);
-		this.mode = mode;
 		this.parent = parent;
+		init(mode, utilisateur, mdp);
+
+	}
+
+	/**
+	 * @param mode
+	 * @param utilisateur
+	 * @param mdp
+	 */
+	public void init(ModeEdition mode, Utilisateur utilisateur, String mdp) {
+		this.mode = mode;
 		this.utilisateur = utilisateur;
 		this.mdp = mdp;
 
@@ -125,6 +137,7 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 		try {
 			if(!Service.getUtilisateurService().estAdministrateur(Application.getInstance().getSession().getUtilisateur())) {
 				txtPseudo.setEnabled(false);
+				comboRole.setEnabled(false);
 			}
 		} catch (ServiceException e) {
 			// TODO : Erreur
@@ -135,7 +148,11 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
+	}
 
+	public FenetreProfil(JFrame parent, ModeEdition mode, Utilisateur utilisateur2, String mdp) {
+		super(parent, mode == ModeEdition.AJOUT ? TITRE_AJOUT : TITRE_MODIF, ModalityType.APPLICATION_MODAL);
+		init(mode, utilisateur2, mdp);
 	}
 
 	@Override

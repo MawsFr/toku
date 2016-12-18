@@ -54,6 +54,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	public static final Object BTN_PLUS = "+";
 	public static final Object BTN_MOINS = "-";
 	public static final Object BTN_QUITTER = "Quitter la discussion";
+	public static final Object LBL_PASSER_DROIT_MODO = "Passer les droits modo";
 	
 	private Container c;
 	private JLabel lblTypeDiscussion;
@@ -243,7 +244,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 			Boolean chiffre = btnChiffre.isSelected();
 			Integer expire = 2;
 			try {
-				Service.getDiscussionService().envoyerMessage(discussion, texte, accuse, prioritaire, chiffre, expire);
+				Service.getDiscussionService().envoyerMessage(discussion, texte, accuse, prioritaire, chiffre, expire); //TODO : Design pattern decorator
 				for(AffectationDiscussion affectationDiscussion : discussion.getAffectations().getListe()) {
 					if(!affectationDiscussion.getUtilisateur().equals(Application.getInstance().getSession().getUtilisateur())) {
 						affectationDiscussion.setEtat(AffectationDiscussion.ETAT_VU);
@@ -265,12 +266,9 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 			affectation = listeMembres.getElementSelectionne();
 		}
 		try {
-			Service.getDiscussionService().supprimerUtilisateur(affectation, discussion);
-			Service.getDiscussionService().validerAffectations();
+			Service.getDiscussionService().supprimerUtilisateur(affectation, discussion, false);
 //			JOptionPane.showMessageDialog(this, "Utilisateur supprimé", "Erreur", JOptionPane.INFORMATION_MESSAGE);
-			if(discussion.getAffectations().getListe().size() == 0) {
-				Service.getDiscussionService().supprimerDiscussion(discussion);
-				Service.getDiscussionService().validerDiscussions();
+			if(discussion.getAffectations().getListe().size() == 0 || affectation.getUtilisateur().equals(Application.getInstance().getSession().getUtilisateur())) {
 				this.dispose();
 			}
 		} catch (ServiceException e) {
@@ -280,7 +278,18 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		
 	}
 	
-	public void quitter() {
+
+	public void passerDroitModo() {
+		AffectationDiscussion affectation = listeMembres.getElementSelectionne();
+		try {
+			Service.getDiscussionService().passerDroitModo(discussion, affectation.getUtilisateur());
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	public void quitterLaDiscussion() {
 		AffectationDiscussion affectationDiscussion = null;
 		for(AffectationDiscussion affectation : discussion.getAffectations().getListe()) {
 			if(affectation.getUtilisateur().equals(Application.getInstance().getSession().getUtilisateur())) {
@@ -578,9 +587,4 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 	public void setPanneauBoutonMembres(JPanel panneauBoutonMembres) {
 		this.panneauBoutonMembres = panneauBoutonMembres;
 	}
-
-	
-	
-	
-	
 }

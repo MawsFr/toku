@@ -201,74 +201,63 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 
 	@Override
 	public void supprimerAmi(Amitie idAmi) {
-		UnitOfWork.getInstance(Amitie.class).suppression(idAmi);
+		idAmi.getUtilisateur().getAmitie().supprimer(idAmi);
 	}
 
 	@Override
 	public void creerDiscussion(String nom) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void creerDiscussionPrive(int idAmi) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void envoyerMessage(int idGroupe, String message) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void envoyerMessagePrive(int idGroupe, int idDestinataire, String message, boolean accuseReception,
 			int expiration, boolean prioritaire, boolean chiffre) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void quitterGroupe(int idGroupe) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void lireMessage(int id) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void lireMessagePrive(int id) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void recevoirNotification(String texte) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void supprimerNotification(int id) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void ajouterCentreInteret(int id) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void creerCentreInteret(String nom) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	

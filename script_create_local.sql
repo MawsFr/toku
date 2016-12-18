@@ -45,7 +45,6 @@ CREATE TABLE IF NOT EXISTS `toku`.`projet_utilisateur` (
   `mot_de_passe` VARCHAR(45) NOT NULL,
   `nom` VARCHAR(45) NOT NULL,
   `prenom` VARCHAR(45) NOT NULL,
-  `pseudo_archive` VARCHAR(45) NULL,
   `avatar` VARCHAR(45) NULL,
   PRIMARY KEY (`id`, `id_role`),
   CONSTRAINT `fk_role`
@@ -76,13 +75,13 @@ CREATE TABLE IF NOT EXISTS `toku`.`projet_amitie` (
   CONSTRAINT `fk_utilisateur_amis_id_utilisateur`
     FOREIGN KEY (`id_utilisateur`)
     REFERENCES `toku`.`projet_utilisateur` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_utilisateur_amis_id_ami`
     FOREIGN KEY (`id_ami`)
     REFERENCES `toku`.`projet_utilisateur` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = INNODB;
 
 CREATE INDEX `fk_utilisateur_has_utilisateur_utilisateur2_idx` ON `toku`.`projet_amitie` (`id_ami` ASC);
@@ -105,8 +104,8 @@ CREATE TABLE IF NOT EXISTS `toku`.`projet_discussion` (
   CONSTRAINT `fk_groupe_utilisateur_id_moderateur`
     FOREIGN KEY (`id_moderateur`)
     REFERENCES `toku`.`projet_utilisateur` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = INNODB;
 
 CREATE UNIQUE INDEX `id_UNIQUE` ON `toku`.`projet_discussion` (`id` ASC);
@@ -130,13 +129,13 @@ CREATE TABLE IF NOT EXISTS `toku`.`projet_utilisateur_discussion` (
   CONSTRAINT `fk_discussion_utilisateur_id_discussion`
     FOREIGN KEY (`id_discussion`)
     REFERENCES `toku`.`projet_discussion` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_discussion_utilisateur_id_utilisateur`
     FOREIGN KEY (`id_utilisateur`)
     REFERENCES `toku`.`projet_utilisateur` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = INNODB;
 
 CREATE INDEX `fk_groupe_has_utilisateur_utilisateur1_idx` ON `toku`.`projet_utilisateur_discussion` (`id_utilisateur` ASC);
@@ -164,13 +163,13 @@ CREATE TABLE IF NOT EXISTS `toku`.`projet_message` (
   CONSTRAINT `fk_message_discussion`
     FOREIGN KEY (`id_discussion`)
     REFERENCES `toku`.`projet_discussion` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_message_utilisateur`
     FOREIGN KEY (`id_utilisateur`)
     REFERENCES `toku`.`projet_utilisateur` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = INNODB
 DEFAULT CHARACTER SET = eucjpms;
 
@@ -179,6 +178,8 @@ CREATE UNIQUE INDEX `id_UNIQUE` ON `toku`.`projet_message` (`id` ASC);
 CREATE INDEX `fk_message_discussion1_idx` ON `toku`.`projet_message` (`id_discussion` ASC);
 
 CREATE INDEX `fk_message_utilisateur1_idx` ON `toku`.`projet_message` (`id_utilisateur` ASC);
+
+DROP VIEW IF EXISTS `toku`.`projet_amitie_view` ;
 
 create VIEW `projet_amitie_view` AS 
 	(select concat(`u`.`id_utilisateur`, '_', `u`.`id_ami`) as id, id as id_demande, `u`.`id_utilisateur`, `u`.`id_ami`, `u`.`id_utilisateur` as demandeur, `u`.`etat` from `projet_amitie` `u`) 
@@ -192,13 +193,6 @@ INSERT INTO projet_role (id, nom) VALUES (2, "Administrateur");
 
 -- Creation du user admin
 INSERT INTO projet_utilisateur (id_role, pseudo, mot_de_passe, nom, prenom) VALUES (2, "admin", "21232f297a57a5a743894a0e4a801fc3", "Root", "Administrateur");
-
--- INSERT INTO projet_amitie (id_utilisateur, id_ami, etat) VALUES ((SELECT id FROM projet_utilisateur WHERE pseudo = "admin"), (SELECT id FROM projet_utilisateur WHERE pseudo = "admin"), 3);
-
--- Creation de dummy users
---INSERT INTO projet_utilisateur (id_role, pseudo, mot_de_passe, nom, prenom) VALUES (1, "maws", "21232f297a57a5a743894a0e4a801fc3", "Nez", "Mustapha");
---INSERT INTO projet_utilisateur (id_role, pseudo, mot_de_passe, nom, prenom) VALUES (1, "knew", "21232f297a57a5a743894a0e4a801fc3", "Nez", "Khalil");
---INSERT INTO projet_utilisateur (id_role, pseudo, mot_de_passe, nom, prenom) VALUES (1, "aypub", "21232f297a57a5a743894a0e4a801fc3", "Nez", "Ayoub");
 
 SET SQL_MODE = '';
 GRANT USAGE ON *.* TO toku;
