@@ -16,6 +16,7 @@ import java.lang.annotation.Target;
 /**
  * Cette annotation permet de creer des proxy dans une relation 1 - 1
  */
+@Deprecated
 public @interface UnAUn {
 
 	/**

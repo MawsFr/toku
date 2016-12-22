@@ -10,7 +10,9 @@ import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -57,7 +59,13 @@ public class FenetrePrincipale {
 		c.add(panneauPrincipal, BorderLayout.CENTER);
 		c.add(barreEtat, BorderLayout.SOUTH);
 
-		Image icone = new ImageIcon(Application.class.getResource(Constantes.CHEMIN_APP_ICONE)).getImage();
+		Image icone = null;
+		try {
+			icone = new ImageIcon(ImageIO.read(Application.class.getResourceAsStream(Constantes.CHEMIN_APP_ICONE))).getImage();
+		} catch (IOException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
 		if(SystemTray.isSupported()) {
 			TrayIcon trayIcon = new TrayIcon(icone);
 			try {

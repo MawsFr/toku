@@ -2,8 +2,8 @@ package fr.lille1.univ.coo.tp.filtre;
 
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
 import fr.lille1.univ.coo.tp.discussion.Discussion;
-import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.domain.DomainException;
+import fr.lille1.univ.coo.tp.message.Message;
 import fr.lille1.univ.coo.tp.role.Role;
 import fr.lille1.univ.coo.tp.utilisateur.Amitie;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;

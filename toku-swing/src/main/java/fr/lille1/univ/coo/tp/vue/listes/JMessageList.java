@@ -1,6 +1,6 @@
 package fr.lille1.univ.coo.tp.vue.listes;
 
-import fr.lille1.univ.coo.tp.discussion.message.Message;
+import fr.lille1.univ.coo.tp.message.Message;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 
 public class JMessageList extends JFiltrableList<Message> {

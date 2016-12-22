@@ -1,4 +1,4 @@
-package fr.lille1.univ.coo.tp.discussion.message;
+package fr.lille1.univ.coo.tp.message;
 
 import fr.lille1.univ.coo.tp.cryptage.CryptageException;
 import fr.lille1.univ.coo.tp.cryptage.CrypteurROT13;

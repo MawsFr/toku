@@ -2,8 +2,10 @@ package fr.lille1.univ.coo.tp.vue.composants;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.IOException;
 import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -24,8 +26,12 @@ public class JShowablePaswordTextFIeld extends JPanel {
 		password.setMinimumSize(password.getPreferredSize());
 		this.add(password, BorderLayout.CENTER);
 		
-		URL img = Application.class.getResource(Constantes.CHEMIN_VOIR_MDP);
-		ImageIcon icon = new ImageIcon(img);
+		ImageIcon icon = null;
+		try {
+			icon = new ImageIcon(ImageIO.read(Application.class.getResourceAsStream(Constantes.CHEMIN_VOIR_MDP)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		JToggleButton montrer = new JToggleButton(icon);
 		montrer.setFocusable(false);

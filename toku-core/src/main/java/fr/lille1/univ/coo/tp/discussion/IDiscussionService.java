@@ -1,6 +1,6 @@
 package fr.lille1.univ.coo.tp.discussion;
 
-import fr.lille1.univ.coo.tp.discussion.message.Message;
+import fr.lille1.univ.coo.tp.message.Message;
 import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 

@@ -3,8 +3,9 @@ package fr.lille1.univ.coo.tp.vue.connexion;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
-import java.net.URL;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -42,8 +43,13 @@ public class PanneauConnexion extends JPanel {
 		GBC gbc = new GBC(this);
 
 		// Logo
-		URL img = Application.class.getResource(Constantes.CHEMIN_LOGO);
-		ImageIcon icon = new ImageIcon(img);
+		ImageIcon icon = null;
+		try {
+			icon = new ImageIcon(ImageIO.read(Application.class.getResourceAsStream(Constantes.CHEMIN_LOGO)));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		JLabel label = new JLabel(icon);
 		gbc.reset().setPosition(0, 0).setWidth(GBC.REMAINDER).setAnchor(GBC.PAGE_START).ajouter(label);
 

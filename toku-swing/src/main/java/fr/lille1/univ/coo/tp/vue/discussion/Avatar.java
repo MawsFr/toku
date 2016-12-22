@@ -27,8 +27,8 @@ public class Avatar extends ImageIcon {
 	public void setImage(String avatar_url) {
 		BufferedImage cadre = null;
 		try {
-			image = avatar_url != null ? ImageIO.read(new URL(avatar_url)) : ImageIO.read(Application.class.getResource(Constantes.CHEMIN_NO_AVATAR));
-			cadre = ImageIO.read(Application.class.getResource(Constantes.CHEMIN_CADRE_AVATAR));
+			image = avatar_url != null ? ImageIO.read(new URL(avatar_url)) : ImageIO.read(Application.class.getResourceAsStream(Constantes.CHEMIN_NO_AVATAR));
+			cadre = ImageIO.read(Application.class.getResourceAsStream(Constantes.CHEMIN_CADRE_AVATAR));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

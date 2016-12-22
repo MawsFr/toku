@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.cryptage.CryptageException;
 import fr.lille1.univ.coo.tp.cryptage.CrypteurROT13;
-import fr.lille1.univ.coo.tp.discussion.message.Message;
+import fr.lille1.univ.coo.tp.message.Message;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;

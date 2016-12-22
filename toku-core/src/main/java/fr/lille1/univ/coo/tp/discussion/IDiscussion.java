@@ -3,8 +3,8 @@ package fr.lille1.univ.coo.tp.discussion;
 import java.util.List;
 
 import fr.lille1.univ.coo.tp.annotations.Table;
-import fr.lille1.univ.coo.tp.discussion.message.Message;
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
+import fr.lille1.univ.coo.tp.message.Message;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 

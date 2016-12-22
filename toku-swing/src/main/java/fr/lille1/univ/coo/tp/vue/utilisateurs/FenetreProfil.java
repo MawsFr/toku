@@ -160,7 +160,7 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 	}
 
 	@Override
-	public void valider() {
+	public void valider() { // TODO : A déplacer dans la couche Service
 		UtilisateurValideur valideur = new UtilisateurValideur();
 		String motDePasse;
 		try {

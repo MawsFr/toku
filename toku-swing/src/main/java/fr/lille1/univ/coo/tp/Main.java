@@ -7,7 +7,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.connexions.Configuration;
 import fr.lille1.univ.coo.tp.connexions.LocalMysqlConfiguration;
 import fr.lille1.univ.coo.tp.persistance.DAOException;

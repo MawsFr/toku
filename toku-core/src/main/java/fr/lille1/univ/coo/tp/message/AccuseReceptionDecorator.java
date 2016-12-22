@@ -1,4 +1,4 @@
-package fr.lille1.univ.coo.tp.discussion.message;
+package fr.lille1.univ.coo.tp.message;
 
 public class AccuseReceptionDecorator extends Message {
 	protected Message message;
