@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import fr.lille1.univ.coo.tp.annotations.Colonne;
-import fr.lille1.univ.coo.tp.annotations.ColonneVue;
 import fr.lille1.univ.coo.tp.annotations.Id;
 import fr.lille1.univ.coo.tp.annotations.PlusieursAUn;
 import fr.lille1.univ.coo.tp.annotations.Table;

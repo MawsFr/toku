@@ -11,7 +11,6 @@ import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 import fr.lille1.univ.coo.tp.vue.accueil.PanneauAccueil;
 import fr.lille1.univ.coo.tp.vue.recherche.RechercheAmis;
-import fr.lille1.univ.coo.tp.vue.utilisateurs.GestionUtilisateurs;
 
 public class RechercherAmisAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;

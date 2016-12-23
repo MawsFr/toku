@@ -24,7 +24,6 @@ public class GestionUtilisateurMouseAdapter extends JObservableListMouseAdapter<
 
 	@Override
 	public void clic(Utilisateur element, MouseEvent e) {
-		
 	}
 
 	@Override

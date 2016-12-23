@@ -28,7 +28,7 @@ public class JShowablePaswordTextFIeld extends JPanel {
 		
 		ImageIcon icon = null;
 		try {
-			icon = new ImageIcon(ImageIO.read(Application.class.getResourceAsStream(Constantes.CHEMIN_VOIR_MDP)));
+			icon = new ImageIcon(ImageIO.read(Application.class.getResource(Constantes.CHEMIN_VOIR_MDP)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

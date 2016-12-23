@@ -1,34 +1,23 @@
 package fr.lille1.univ.coo.tp.vue.notification;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 import fr.lille1.univ.coo.tp.Application;
-import fr.lille1.univ.coo.tp.controlleurs.amitie.AccepterAmiAction;
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
-import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.filtre.EstEnAttente;
 import fr.lille1.univ.coo.tp.filtre.EstRefusee;
 import fr.lille1.univ.coo.tp.filtre.EstValide;
 import fr.lille1.univ.coo.tp.filtre.Filtre;
-import fr.lille1.univ.coo.tp.filtre.NONFiltre;
 import fr.lille1.univ.coo.tp.filtre.OUFiltre;
-import fr.lille1.univ.coo.tp.service.Service;
-import fr.lille1.univ.coo.tp.service.ServiceException;
 import fr.lille1.univ.coo.tp.utilisateur.Amitie;
 import fr.lille1.univ.coo.tp.vue.listes.IObservableListModel;
 

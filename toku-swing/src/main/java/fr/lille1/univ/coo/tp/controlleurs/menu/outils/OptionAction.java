@@ -3,7 +3,6 @@ package fr.lille1.univ.coo.tp.controlleurs.menu.outils;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.JOptionPane;
 
 import fr.lille1.univ.coo.tp.Application;
 import fr.lille1.univ.coo.tp.service.Service;

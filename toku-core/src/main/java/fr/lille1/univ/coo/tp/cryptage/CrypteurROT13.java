@@ -1,5 +1,10 @@
 package fr.lille1.univ.coo.tp.cryptage;
 
+/**
+ * Cette classe crypte en rot 13
+ * @author Maws
+ *
+ */
 public class CrypteurROT13 implements Crypteur {
 
 	@Override

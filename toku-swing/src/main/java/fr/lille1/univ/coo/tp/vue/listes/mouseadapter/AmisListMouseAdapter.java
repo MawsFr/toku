@@ -49,8 +49,7 @@ public class AmisListMouseAdapter extends JObservableListMouseAdapter<Amitie> {
 			}
 			FenetreDiscussion fenetre = new FenetreDiscussion(discussion);
 			fenetre.getPanneauPrincipal().setRightComponent(null);
-			//        fenetre.getLblTypeDiscussion().setText("Discussion privée : ");
-			fenetre.getLblNomDiscussion().setText(element.getAmi().getPseudo());
+			fenetre.getLblNomDiscussion().setText(discussion.getNom());
 		} catch (ServiceException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(FenetrePrincipale.getInstance().getFenetre(), "Erreur lors du cryptage du mot de passe !", "Erreur", JOptionPane.ERROR_MESSAGE);

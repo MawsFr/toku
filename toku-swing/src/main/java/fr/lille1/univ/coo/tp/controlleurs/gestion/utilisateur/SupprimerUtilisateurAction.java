@@ -14,18 +14,9 @@ import fr.lille1.univ.coo.tp.vue.utilisateurs.GestionUtilisateurs;
 public class SupprimerUtilisateurAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
-	private static SupprimerUtilisateurAction instance;
 	private GestionUtilisateurs gestionUtilisateurs;
 	
-	public static SupprimerUtilisateurAction getInstance(GestionUtilisateurs gestionUtilisateurs) {
-		if(instance == null) {
-			instance = new SupprimerUtilisateurAction(gestionUtilisateurs);
-		}
-		
-		return instance;
-	}
-	
-	private SupprimerUtilisateurAction(GestionUtilisateurs gestionUtilisateurs) {
+	public SupprimerUtilisateurAction(GestionUtilisateurs gestionUtilisateurs) {
 		super(GestionUtilisateurs.SUPPRIMER_UTILISATEUR);
 		this.gestionUtilisateurs = gestionUtilisateurs;
 	}

@@ -77,7 +77,7 @@ public class BarreMenuPrincipale extends JMenuBar {
 		menuModerateur = OutilsSwing.creerMenuCache(MENU_MODERATEUR, this);
 		
 		menuAdmin = OutilsSwing.creerMenuCache(MENU_ADMIN, this);
-		menuGererUtilisateurs = OutilsSwing.creerSousMenu(menuAdmin, GestionUtilisateursAction.getInstance());
+		menuGererUtilisateurs = OutilsSwing.creerSousMenu(menuAdmin, new GestionUtilisateursAction());
 	}
 
 	public void afficherMenuAdmin() {

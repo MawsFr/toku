@@ -4,10 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagLayout;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,7 +18,6 @@ import fr.lille1.univ.coo.tp.controlleurs.accueil.RechercherAmisAction;
 import fr.lille1.univ.coo.tp.controlleurs.notifications.AfficherNotificationsAction;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.vue.FenetrePrincipale;
-import fr.lille1.univ.coo.tp.vue.composants.GBC;
 import fr.lille1.univ.coo.tp.vue.discussion.Avatar;
 
 public class PanneauAccueil extends JPanel {

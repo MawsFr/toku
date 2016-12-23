@@ -1,7 +1,6 @@
 package fr.lille1.univ.coo.tp.controlleurs.menu.admin;
 
 import java.awt.event.ActionEvent;
-import java.lang.ref.WeakReference;
 
 import javax.swing.AbstractAction;
 
@@ -14,17 +13,7 @@ import fr.lille1.univ.coo.tp.vue.utilisateurs.GestionUtilisateurs;
 
 public class GestionUtilisateursAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;
-	private static GestionUtilisateursAction instance;
-
-	public static GestionUtilisateursAction getInstance() {
-		if(instance == null) {
-			instance = new GestionUtilisateursAction();
-		}
-		
-		return instance;
-	}
-	
-	private GestionUtilisateursAction() {
+	public GestionUtilisateursAction() {
 		super(BarreMenuPrincipale.MENU_GERER_UTILISATEURS);
 	}
 	
@@ -34,7 +23,7 @@ public class GestionUtilisateursAction extends AbstractAction {
 		IObservableList<Utilisateur> utilisateurs;
 		try {
 			utilisateurs = Service.getUtilisateurService().rechercherTout();
-			new GestionUtilisateurs((IObservableList<Utilisateur>) new WeakReference<IObservableList<Utilisateur>>(utilisateurs).get());
+			new GestionUtilisateurs(utilisateurs);
 		} catch (ServiceException e1) {
 			e1.printStackTrace();
 		}

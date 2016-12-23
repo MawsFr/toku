@@ -49,9 +49,9 @@ public class GestionUtilisateurs extends JDialog {
 		utilisateurs.setCellRenderer(new UtilisateurListCellRenderer());
 		utilisateurs.setSelectedIndex(0);
 		utilisateurs.addMouseListener(new GestionUtilisateurMouseAdapter(this, utilisateurs));
-		btnAjouter = new JButton(AjouterUtilisateurAction.getInstance(this));
-		btnModifier = new JButton(ModifierUtilisateurAction.getInstance(this));
-		btnSupprimer = new JButton(SupprimerUtilisateurAction.getInstance(this));
+		btnAjouter = new JButton(new AjouterUtilisateurAction(this));
+		btnModifier = new JButton(new ModifierUtilisateurAction(this));
+		btnSupprimer = new JButton(new SupprimerUtilisateurAction(this));
 		filtre = utilisateurs.getTexte();
 		filtre.getDocument().addDocumentListener(new FiltrerUtilisateurAction(utilisateurs));
 		filtre.setHint(AIDE_FILTRE);

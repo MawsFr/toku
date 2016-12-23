@@ -8,17 +8,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import fr.lille1.univ.coo.tp.Application;
-import fr.lille1.univ.coo.tp.controlleurs.amitie.AccepterAmiAction;
-import fr.lille1.univ.coo.tp.controlleurs.amitie.RefuserAmiAction;
 import fr.lille1.univ.coo.tp.controlleurs.notifications.AfficherNotificationsAction;
 import fr.lille1.univ.coo.tp.controlleurs.notifications.SupprimerNotifAction;
 import fr.lille1.univ.coo.tp.discussion.AffectationDiscussion;
-import fr.lille1.univ.coo.tp.discussion.Discussion;
 import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
-import fr.lille1.univ.coo.tp.utilisateur.Amitie;
 
 public class AffectationNotificationPanel extends NotificationPanel {
 	private static final long serialVersionUID = 1L;

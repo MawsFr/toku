@@ -14,18 +14,9 @@ import fr.lille1.univ.coo.tp.vue.utilisateurs.GestionUtilisateurs;
 public class ModifierUtilisateurAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;
 
-	private static ModifierUtilisateurAction instance;
 	private GestionUtilisateurs gestionUtilisateurs;
 	
-	public static ModifierUtilisateurAction getInstance(GestionUtilisateurs gestionUtilisateurs) {
-		if(instance == null) {
-			instance = new ModifierUtilisateurAction(gestionUtilisateurs);
-		}
-		
-		return instance;
-	}
-	
-	private ModifierUtilisateurAction(GestionUtilisateurs gestionUtilisateurs) {
+	public ModifierUtilisateurAction(GestionUtilisateurs gestionUtilisateurs) {
 		super(GestionUtilisateurs.MODIFIER_UTILISATEUR);
 		this.gestionUtilisateurs = gestionUtilisateurs;
 	}

@@ -35,7 +35,7 @@ public class AffectationDiscussion extends ObjetDomaine<Integer> {
 
 	public void setUtilisateur(IUtilisateur utilisateur) {
 		this.utilisateur = utilisateur;
-		
+		notifierModification("utilisateur");
 	}
 
 	public IDiscussion getDiscussion() {
@@ -44,6 +44,7 @@ public class AffectationDiscussion extends ObjetDomaine<Integer> {
 
 	public void setDiscussion(IDiscussion discussion) {
 		this.discussion = discussion;
+		notifierModification("discussion");
 		
 	}
 
@@ -53,6 +54,7 @@ public class AffectationDiscussion extends ObjetDomaine<Integer> {
 
 	public void setEtat(Integer etat) {
 		this.etat = etat;
+		notifierModification("etat");
 	}
 
 	@Override
@@ -65,6 +67,7 @@ public class AffectationDiscussion extends ObjetDomaine<Integer> {
 	 */
 	public void setId(Integer id) {
 		this.id = id;
+		notifierModification("id");
 	}
 
 	@Override

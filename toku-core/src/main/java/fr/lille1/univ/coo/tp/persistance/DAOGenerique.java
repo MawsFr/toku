@@ -28,15 +28,15 @@ import fr.lille1.univ.coo.tp.annotations.UnAPlusieurs;
 import fr.lille1.univ.coo.tp.annotations.UnAUn;
 import fr.lille1.univ.coo.tp.annotations.Vue;
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
-import fr.lille1.univ.coo.tp.persistance.proxy.VirtualProxyBuilder;
-import fr.lille1.univ.coo.tp.persistance.proxy.factory.Factories;
-import fr.lille1.univ.coo.tp.persistance.proxy.factory.Factory;
-import fr.lille1.univ.coo.tp.persistance.proxy.factory.PlusieursAPlusieursFactory;
-import fr.lille1.univ.coo.tp.persistance.proxy.factory.PlusieursAUnFactory;
-import fr.lille1.univ.coo.tp.persistance.proxy.factory.UnAPlusieursFactory;
-import fr.lille1.univ.coo.tp.persistance.proxy.factory.UnAUnFactory;
 import fr.lille1.univ.coo.tp.persistance.requete.Requete;
 import fr.lille1.univ.coo.tp.persistance.requete.RequeteParser;
+import fr.lille1.univ.coo.tp.proxy.VirtualProxyBuilder;
+import fr.lille1.univ.coo.tp.proxy.factory.Factories;
+import fr.lille1.univ.coo.tp.proxy.factory.Factory;
+import fr.lille1.univ.coo.tp.proxy.factory.PlusieursAPlusieursFactory;
+import fr.lille1.univ.coo.tp.proxy.factory.PlusieursAUnFactory;
+import fr.lille1.univ.coo.tp.proxy.factory.UnAPlusieursFactory;
+import fr.lille1.univ.coo.tp.proxy.factory.UnAUnFactory;
 import fr.lille1.univ.coo.tp.utilisateur.IObservableList;
 import fr.lille1.univ.coo.tp.utils.Log;
 import fr.lille1.univ.coo.tp.utils.ReflectionUtils;
@@ -53,7 +53,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 	private Connection connexion;
 
 	private Class<?> classe;
-	private RequeteBuilder rp;
+	private RequeteBuilder rb;
 	private static References references;
 
 	/**
@@ -65,7 +65,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 	public DAOGenerique(final Class<?> classe) {
 		this.classe = classe;
 		this.connexion = GestionnaireConnexion.getConnexion();
-		this.rp = new RequeteBuilder(classe);
+		this.rb = new RequeteBuilder(classe);
 		references = References.getInstance();
 	}
 
@@ -141,7 +141,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 					// field.setAccessible(accessible);
 				}
 			}
-			ps = creerRequetePreparee(connexion, rp.insertion(champsListe), true, champsListe, valeurs, null, null);
+			ps = creerRequetePreparee(connexion, rb.insertion(champsListe), true, champsListe, valeurs, null, null);
 			System.out.println(ps);
 			connexion.setAutoCommit(false);
 			ps.executeUpdate();
@@ -207,7 +207,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 			Map<String, Object> valeurs = new HashMap<>();
 			Object id = getter.invoke(objet);
 			valeurs.put(idChamp, id);
-			ps = creerRequetePreparee(connexion, rp.suppression(champsListe), false, null, null, champsListe, valeurs);
+			ps = creerRequetePreparee(connexion, rb.suppression(champsListe), false, null, null, champsListe, valeurs);
 			connexion.setAutoCommit(false);
 			ps.executeUpdate();
 			connexion.commit();
@@ -324,7 +324,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 		try {
 			final List<String> proprietes = new ArrayList<>(clauseSet.keySet());
 			final List<String> where = new ArrayList<>(clauseWhere.keySet());
-			ps = creerRequetePreparee(connexion, rp.modification(proprietes, where), false, proprietes, clauseSet,
+			ps = creerRequetePreparee(connexion, rb.modification(proprietes, where), false, proprietes, clauseSet,
 					where, clauseWhere);
 			connexion.setAutoCommit(false);
 			ps.executeUpdate();
@@ -410,7 +410,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 		final List<T> elements = new ArrayList<>();
 		final List<String> proprietes = new ArrayList<>(clauseWhere.keySet());
 		try {
-			ps = creerRequetePreparee(connexion, rp.rechercherParPropriete(proprietes), false, null, null, proprietes,
+			ps = creerRequetePreparee(connexion, rb.rechercherParPropriete(proprietes), false, null, null, proprietes,
 					clauseWhere);
 			resultat = ps.executeQuery();
 			while (resultat.next()) {
@@ -513,7 +513,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 		final List<String> proprietes = new ArrayList<>(clauseWhere.keySet());
 		final Map<String, Object> elements = new HashMap<>();
 		try {
-			ps = creerRequetePreparee(connexion, rp.rechercherDesProprietes(nomProprietes, proprietes), false, null,
+			ps = creerRequetePreparee(connexion, rb.rechercherDesProprietes(nomProprietes, proprietes), false, null,
 					null, proprietes, clauseWhere);
 			resultat = ps.executeQuery();
 			if (resultat.next()) {
@@ -550,7 +550,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 		T element = null;
 		final List<String> proprietes = new ArrayList<>(clauseWhere.keySet());
 		try {
-			ps = creerRequetePreparee(connexion, rp.rechercherParPropriete(proprietes, 1), false, null, null,
+			ps = creerRequetePreparee(connexion, rb.rechercherParPropriete(proprietes, 1), false, null, null,
 					proprietes, clauseWhere);
 			resultat = ps.executeQuery();
 			if (resultat.next()) {
@@ -591,7 +591,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 		final List<T> elements = new ArrayList<>();
 		final List<String> proprietes = new ArrayList<>(clauseWhere.keySet());
 		try {
-			ps = creerRequetePreparee(connexion, rp.rechercherParJointure(jointure, proprietes), false, null, null,
+			ps = creerRequetePreparee(connexion, rb.rechercherParJointure(jointure, proprietes), false, null, null,
 					proprietes, clauseWhere);
 			resultat = ps.executeQuery();
 			while (resultat.next()) {
@@ -672,6 +672,14 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 		return ps;
 	}
 
+	/**
+	 * Construit un objet du domaine à partir du resultset
+	 * @param id L'id de l'objet
+	 * @param resultat Le resultset
+	 * @return Un objet de type T
+	 * @throws DAOException
+	 * @throws SQLException
+	 */
 	public WeakReference<? extends IObjetDomaine<?>> construire(final Object id, final ResultSet resultat)
 			throws DAOException, SQLException {
 		// Colonnes : id | nom | prenom | pere | evaluation
@@ -777,6 +785,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 	}
 
 	/**
+	 * Créer un proxy d'une list d'objets
 	 * @param objet
 	 * @param champ
 	 * @param factory
@@ -792,6 +801,7 @@ public class DAOGenerique<T extends IObjetDomaine<?>> {
 	}
 
 	/**
+	 * Créé un proxy d'un objet
 	 * @param objet
 	 * @param champ
 	 * @param factory

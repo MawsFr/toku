@@ -1,3 +1,4 @@
+
 package fr.lille1.univ.coo.tp.discussion;
 
 import java.util.Date;
@@ -9,7 +10,7 @@ import fr.lille1.univ.coo.tp.domain.DomainException;
 import fr.lille1.univ.coo.tp.message.Message;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
-import fr.lille1.univ.coo.tp.service.unitofwork.UnitOfWork;
+import fr.lille1.univ.coo.tp.unitofwork.UnitOfWork;
 import fr.lille1.univ.coo.tp.utilisateur.IUtilisateur;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
@@ -121,8 +122,10 @@ public class DiscussionService extends Service<Discussion> implements IDiscussio
 
 		discussion.getMessages().ajouter(message);
 		// Mettre a jour l'etat des affectations
-		for(AffectationDiscussion affectation : discussion.getAffectations().getListe()) {
-			affectation.setEtat(AffectationDiscussion.ETAT_NOUVEAUX_MESSAGES);
+		for(AffectationDiscussion affectationDiscussion : discussion.getAffectations().getListe()) {
+			if(!affectationDiscussion.getUtilisateur().equals(Application.getInstance().getSession().getUtilisateur())) {
+				affectationDiscussion.setEtat(AffectationDiscussion.ETAT_NOUVEAUX_MESSAGES);
+			}
 		}
 		validerMessages();
 		validerAffectations();

@@ -45,7 +45,7 @@ public class PanneauConnexion extends JPanel {
 		// Logo
 		ImageIcon icon = null;
 		try {
-			icon = new ImageIcon(ImageIO.read(Application.class.getResourceAsStream(Constantes.CHEMIN_LOGO)));
+			icon = new ImageIcon(ImageIO.read(Application.class.getResource(Constantes.CHEMIN_LOGO)));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

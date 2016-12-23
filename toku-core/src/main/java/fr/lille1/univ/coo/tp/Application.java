@@ -1,5 +1,10 @@
 package fr.lille1.univ.coo.tp;
 
+/**
+ * Cette classe stock la session de l'utilisateur
+ * @author Maws
+ *
+ */
 public class Application {
 	private static Application instance;
 	private Session session;

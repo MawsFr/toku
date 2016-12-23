@@ -30,6 +30,7 @@ import fr.lille1.univ.coo.tp.vue.listes.cellrenderer.RechercheAmiListCellRendere
 
 public class RechercheAmis extends JDialog implements Validable, Fermable {
 
+	private static final String AJOUTER_DES_AMIS = "Ajouter des amis";
 	private static final long serialVersionUID = 1L;
 	private static final String MESSAGE_VIDE = "Aucun utilisateur n'est présent dans notre pauvre base";
 	private static final String AIDE_FILTRE = "pseudo ou nom ou prenom";
@@ -40,7 +41,7 @@ public class RechercheAmis extends JDialog implements Validable, Fermable {
 	private JButton btnFermer;
 
 	public RechercheAmis(IObservableList<Utilisateur> membres) {
-		super(FenetrePrincipale.getInstance().getFenetre(), BarreMenuPrincipale.MENU_GERER_UTILISATEURS,
+		super(FenetrePrincipale.getInstance().getFenetre(), AJOUTER_DES_AMIS,
 				ModalityType.APPLICATION_MODAL);
 
 		c = getContentPane();

@@ -3,6 +3,11 @@ package fr.lille1.univ.coo.tp.cryptage;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Cette classe crypte en MD5
+ * @author Maws
+ *
+ */
 public class CrypteurMD5 implements Crypteur {
 	private MessageDigest md;
 

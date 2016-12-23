@@ -34,6 +34,7 @@ import fr.lille1.univ.coo.tp.vue.listes.mouseadapter.NouvelleAffectationListMous
 
 public class FenetreAffectation extends JDialog implements Validable, Fermable {
 
+	private static final String AFFECTER_DES_UTILISATEURS = "Affecter des utilisateurs";
 	private static final String BTN_AJOUTER_À_LA_DISCUSSION = "Ajouter à la discussion";
 	private static final long serialVersionUID = 1L;
 	private static final String MESSAGE_VIDE = "Vous n'avez aucun amis ... parlez tout seul !";
@@ -46,7 +47,7 @@ public class FenetreAffectation extends JDialog implements Validable, Fermable {
 	private IDiscussion discussion;
 
 	public FenetreAffectation(FenetreDiscussion fenetre) {
-		super(fenetre, BarreMenuPrincipale.MENU_GERER_UTILISATEURS,
+		super(fenetre, AFFECTER_DES_UTILISATEURS,
 				ModalityType.APPLICATION_MODAL);
 		this.discussion = fenetre.getDiscussion();
 		c = getContentPane();

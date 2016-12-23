@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
-import fr.lille1.univ.coo.tp.service.unitofwork.UnitOfWork;
+import fr.lille1.univ.coo.tp.unitofwork.UnitOfWork;
 
 /**
  * Cette classe permet d'implémenté l'identity map qui permet d'avoir qu'une

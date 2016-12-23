@@ -3,6 +3,10 @@ package fr.lille1.univ.coo.tp.persistance.requete;
 import fr.lille1.univ.coo.tp.domain.IObjetDomaine;
 import fr.lille1.univ.coo.tp.utilisateur.Utilisateur;
 
+/**
+ * Cette classe permet de créer des requete
+ *
+ */
 public abstract class Requete {
 	protected Class<? extends IObjetDomaine<?>> classe;
 	

@@ -33,7 +33,7 @@ public class Amitie extends ObjetDomaine<String> {
 	private IUtilisateur ami;
 	
 	@ColonneVue(colonneTable="id_utilisateur")
-	@PlusieursAUn(saCle="demandeur", sonType=Utilisateur.class)
+	@UnAUn(saCle="demandeur", sonType=Utilisateur.class)
 	private IUtilisateur demandeur;
 	
 	@Colonne

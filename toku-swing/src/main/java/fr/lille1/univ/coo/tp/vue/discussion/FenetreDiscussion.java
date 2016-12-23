@@ -223,7 +223,7 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 		btnSupprimerMembre.setPreferredSize(new Dimension(29, 29));
 		panneauBoutonMembres.add(btnSupprimerMembre);
 		
-		setJMenuBar(barreMenu);
+//		setJMenuBar(barreMenu);
 		barreMenu.add(menuFichier);
 		menuFichier.add(menuFermer);
 		
@@ -245,11 +245,6 @@ public class FenetreDiscussion extends JFrame implements Fermable {
 			Integer expire = 2;
 			try {
 				Service.getDiscussionService().envoyerMessage(discussion, texte, accuse, prioritaire, chiffre, expire); //TODO : Design pattern decorator
-				for(AffectationDiscussion affectationDiscussion : discussion.getAffectations().getListe()) {
-					if(!affectationDiscussion.getUtilisateur().equals(Application.getInstance().getSession().getUtilisateur())) {
-						affectationDiscussion.setEtat(AffectationDiscussion.ETAT_NOUVEAUX_MESSAGES);
-					}
-				}
 				Service.getDiscussionService().validerAffectations();
 				Log.info("Message envoye");
 				txtMessage.setText("");

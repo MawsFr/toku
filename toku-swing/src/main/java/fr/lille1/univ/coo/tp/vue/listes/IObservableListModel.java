@@ -37,7 +37,6 @@ public class IObservableListModel<T extends IObjetDomaine<?>> extends DefaultLis
 		try {
 			filtrer(filtreDeBase);
 		} catch (DomainException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -51,7 +50,6 @@ public class IObservableListModel<T extends IObjetDomaine<?>> extends DefaultLis
 		try {
 			filtrer(filtreDeBase);
 		} catch (DomainException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -65,7 +63,6 @@ public class IObservableListModel<T extends IObjetDomaine<?>> extends DefaultLis
 		try {
 			filtrer(filtreDeBase);
 		} catch (DomainException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

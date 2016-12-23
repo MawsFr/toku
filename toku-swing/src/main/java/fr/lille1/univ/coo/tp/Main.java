@@ -9,6 +9,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import fr.lille1.univ.coo.tp.connexions.Configuration;
 import fr.lille1.univ.coo.tp.connexions.LocalMysqlConfiguration;
+import fr.lille1.univ.coo.tp.connexions.WebtpConfiguration;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.GestionnaireConnexion;
 import fr.lille1.univ.coo.tp.vue.FenetrePrincipale;
@@ -21,7 +22,7 @@ import fr.lille1.univ.coo.tp.vue.FenetrePrincipale;
  */
 public class Main {
 	
-	private static final String MDP = "root";
+//	private static final String MDP = "root";
 
 	private Main() {}
 
@@ -57,8 +58,8 @@ public class Main {
 			config.setParametres(Configuration.MYSQL_PARAMETRES);
 			break;
 		case 2:
-//			config = new WebtpConfiguration();
-			config = new LocalMysqlConfiguration();
+			config = new WebtpConfiguration();
+			//config = new LocalMysqlConfiguration();
 			break;
 		case 3:
 			System.out.println("Au revoir !");
@@ -69,12 +70,12 @@ public class Main {
 		}
 		System.out.println("Saisissez le mot de passe" + (choix == 2 ? " fourni " : " (ex : toor) ") + ":");
 
-//		if (console == null) {
-//			config.setMdp(new String(sc.nextLine()));
-//		} else {
-//			config.setMdp(new String(console.readPassword("")));
-//		}
-		config.setMdp(MDP);
+		if (console == null) {
+			config.setMdp(new String(sc.nextLine()));
+		} else {
+			config.setMdp(new String(console.readPassword("")));
+		}
+//		config.setMdp(MDP);
 		sc.close();
 
 		try {

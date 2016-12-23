@@ -15,14 +15,14 @@ import fr.lille1.univ.coo.tp.message.Message;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.DAOGenerique;
 import fr.lille1.univ.coo.tp.persistance.References;
-import fr.lille1.univ.coo.tp.persistance.proxy.factory.RechercherToutFactory;
 import fr.lille1.univ.coo.tp.persistance.requete.CritereEGALE;
 import fr.lille1.univ.coo.tp.persistance.requete.CritereET;
 import fr.lille1.univ.coo.tp.persistance.requete.Requete;
+import fr.lille1.univ.coo.tp.proxy.factory.RechercherToutFactory;
 import fr.lille1.univ.coo.tp.role.Role;
 import fr.lille1.univ.coo.tp.service.Service;
 import fr.lille1.univ.coo.tp.service.ServiceException;
-import fr.lille1.univ.coo.tp.service.unitofwork.UnitOfWork;
+import fr.lille1.univ.coo.tp.unitofwork.UnitOfWork;
 import fr.lille1.univ.coo.tp.validateur.ValidationException;
 import fr.lille1.univ.coo.tp.validateur.Valideur;
 
@@ -152,7 +152,7 @@ public class UtilisateurService extends Service<Utilisateur> implements IUtilisa
 					if(amitie.getDemandeur().equals(utilisateur)) {
 						throw new ServiceException("Vous avez déjà invité " + ami.getPseudo());
 					} else {
-						throw new ServiceException(ami.getPseudo() + " vous a déjà invité, veuillez accepter sa demande");
+						throw new ServiceException(ami.getPseudo() + " vous a déjà invité, veuillez attendre qu'il accepte votre demande");
 					}
 				} else if (amitie.getEtat().equals(Amitie.ETAT_TRAITEE) || amitie.getEtat().equals(Amitie.ETAT_VALIDEE)) {
 					throw new ServiceException("Vous êtes déjà amis avec cette personne");

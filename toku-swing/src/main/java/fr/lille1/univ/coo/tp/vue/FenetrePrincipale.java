@@ -61,7 +61,7 @@ public class FenetrePrincipale {
 
 		Image icone = null;
 		try {
-			icone = new ImageIcon(ImageIO.read(Application.class.getResourceAsStream(Constantes.CHEMIN_APP_ICONE))).getImage();
+			icone = new ImageIcon(ImageIO.read(Application.class.getResource(Constantes.CHEMIN_APP_ICONE))).getImage();
 		} catch (IOException e3) {
 			// TODO Auto-generated catch block
 			e3.printStackTrace();

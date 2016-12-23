@@ -36,7 +36,7 @@ public class Message extends ObjetDomaine<Integer> {
 	private Boolean accuse_reception;
 	
 	@Colonne
-	private Boolean lu; //TODO : a enlever
+	private Boolean lu;
 	
 	@Colonne
 	private Integer expiration;
