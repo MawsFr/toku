@@ -8,7 +8,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import fr.lille1.univ.coo.tp.connexions.Configuration;
-import fr.lille1.univ.coo.tp.connexions.LocalMysqlConfiguration;
 import fr.lille1.univ.coo.tp.connexions.WebtpConfiguration;
 import fr.lille1.univ.coo.tp.persistance.DAOException;
 import fr.lille1.univ.coo.tp.persistance.GestionnaireConnexion;
@@ -59,7 +58,7 @@ public class Main {
 			break;
 		case 2:
 			config = new WebtpConfiguration();
-			//config = new LocalMysqlConfiguration();
+//			config = new LocalMysqlConfiguration();
 			break;
 		case 3:
 			System.out.println("Au revoir !");

@@ -202,6 +202,10 @@ public class FenetreProfil extends JDialog implements Validable, Annulable, Ferm
 				if(!utilisateur.getNom().equals(txtNom.getText())) {
 					utilisateur.setNom(txtNom.getText());
 				}
+				
+				if(!utilisateur.getPrenom().equals(txtPrenom.getText())) {
+					utilisateur.setPrenom(txtPrenom.getText());
+				}
 
 				if(!utilisateur.getRole().equals(comboRole.getSelectedItem())) {
 					utilisateur.setRole((Role) comboRole.getSelectedItem());
