@@ -49,7 +49,7 @@ public class BarreMenuPrincipale extends JMenuBar {
 
 	// Menu Outils
 	private JMenu menuOutils;
-	private JMenuItem menuOptions;
+	private JMenuItem menuModifierProfil;
 	private JCheckBoxMenuItem menuToujourVisible;
 	
 	//Menu Moderateur
@@ -72,7 +72,7 @@ public class BarreMenuPrincipale extends JMenuBar {
 
 		menuOutils = OutilsSwing.creerMenu(MENU_OUTILS, this);
 		menuToujourVisible = OutilsSwing.creerSousMenuCochable(menuOutils, ToujoursVisibleAction.getInstance());
-		menuOptions = OutilsSwing.creerSousMenu(menuOutils, OptionAction.getInstance());
+		menuModifierProfil = OutilsSwing.creerSousMenuDesactive(menuOutils, OptionAction.getInstance());
 		
 		menuModerateur = OutilsSwing.creerMenuCache(MENU_MODERATEUR, this);
 		
@@ -120,10 +120,6 @@ public class BarreMenuPrincipale extends JMenuBar {
 		return menuOutils;
 	}
 
-	public JMenuItem getMenuOptions() {
-		return menuOptions;
-	}
-
 	public JCheckBoxMenuItem getMenuToujourVisible() {
 		return menuToujourVisible;
 	}
@@ -164,10 +160,6 @@ public class BarreMenuPrincipale extends JMenuBar {
 		this.menuOutils = menuOutils;
 	}
 
-	public void setMenuOptions(JMenuItem menuOptions) {
-		this.menuOptions = menuOptions;
-	}
-
 	public void setMenuToujourVisible(JCheckBoxMenuItem menuToujourVisible) {
 		this.menuToujourVisible = menuToujourVisible;
 	}
@@ -182,6 +174,20 @@ public class BarreMenuPrincipale extends JMenuBar {
 
 	public void setMenuGererUtilisateurs(JMenuItem menuGererUtilisateurs) {
 		this.menuGererUtilisateurs = menuGererUtilisateurs;
+	}
+
+	/**
+	 * @return Le menuModifierProfil
+	 */
+	public JMenuItem getMenuModifierProfil() {
+		return menuModifierProfil;
+	}
+
+	/**
+	 * @param menuModifierProfil Le nouveau menuModifierProfil
+	 */
+	public void setMenuModifierProfil(JMenuItem menuModifierProfil) {
+		this.menuModifierProfil = menuModifierProfil;
 	}
 	
 	

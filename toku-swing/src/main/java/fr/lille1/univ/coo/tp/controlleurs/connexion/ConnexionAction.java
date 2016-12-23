@@ -1,11 +1,7 @@
 package fr.lille1.univ.coo.tp.controlleurs.connexion;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
@@ -69,6 +65,7 @@ public class ConnexionAction extends AbstractAction {
 				JOptionPane.showMessageDialog(connexion.getFenetre().getFenetre(), e.getCause().getMessage(), "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
 			}
 			fenetre.getMenu().getMenuDeconnecter().setEnabled(true);
+			fenetre.getMenu().getMenuModifierProfil().setEnabled(true);
 			fenetre.getPanneauPrincipal().getPanneauAccueil().initialiser();
 			fenetre.getPanneauPrincipal().getPanneauAccueil().afficherOnglet(0);
 			fenetre.getPanneauPrincipal().afficherEcran(PanneauPrincipal.PANNEAU_ACCUEIL);
